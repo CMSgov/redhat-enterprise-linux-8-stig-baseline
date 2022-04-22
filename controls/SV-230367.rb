@@ -1,3 +1,4 @@
+if not ["www", "blog", "foo", "bar"].include?(user)
 control 'SV-230367' do
   title "RHEL 8 user account passwords must be configured so that existing
 passwords are restricted to a 60-day maximum lifetime."
@@ -32,10 +33,10 @@ lifetime restriction.
   tag fix_id: 'F-33011r567848_fix'
   tag cci: ['CCI-000199']
   tag nist: ['IA-5 (1) (d)']
-
   shadow.users.each do |user|
     # filtering on non-system accounts (uid >= 1000)
     next unless user(user).uid >= 1000
+    next if ["ec2-user", "nessus_service"].include?(user)
     describe shadow.users(user) do
       its('max_days.first.to_i') { should cmp <= 60 }
       its('max_days.first.to_i') { should cmp > 0 }
