@@ -1,5 +1,5 @@
 control 'SV-230227' do
-  title "RHEL 8 must display the Standard Mandatory DoD Notice and Consent
+  title "RHEL 8 must display the Standard Mandatory #{input('org_name')[:acronym]} Notice and Consent
 Banner before granting local or remote access to the system via a command line
 user logon."
   desc  "Display of a standardized and approved use notification before
@@ -10,7 +10,7 @@ Executive Orders, directives, policies, regulations, standards, and guidance.
     System use notifications are required only for access via logon interfaces
 with human users and are not required when such human interfaces do not exist.
 
-    The banner must be formatted in accordance with applicable DoD policy. Use
+    The banner must be formatted in accordance with applicable #{input('org_name')[:acronym]} policy. Use
 the following verbiage for operating systems that can accommodate banners of
 1300 characters:
 
@@ -45,7 +45,7 @@ Agreement for details.\"
   "
   desc  'rationale', ''
   desc  'check', "
-    Verify RHEL 8 displays the Standard Mandatory DoD Notice and Consent Banner
+    Verify RHEL 8 displays the Standard Mandatory #{input('org_name')[:acronym]} Notice and Consent Banner
 before granting access to the operating system via a command line user logon.
 
     Check that RHEL 8 displays a banner at the command line login screen with
@@ -82,15 +82,15 @@ by attorneys, psychotherapists, or clergy, and their assistants. Such
 communications and work product are private and confidential. See User
 Agreement for details.”
 
-    If the banner text does not match the Standard Mandatory DoD Notice and
+    If the banner text does not match the Standard Mandatory #{input('org_name')[:acronym]} Notice and
 Consent Banner exactly, this is a finding.
   "
   desc 'fix', "
-    Configure RHEL 8 to display the Standard Mandatory DoD Notice and Consent
+    Configure RHEL 8 to display the Standard Mandatory #{input('org_name')[:acronym]} Notice and Consent
 Banner before granting access to the system via command line logon.
 
     Edit the \"/etc/issue\" file to replace the default text with the Standard
-Mandatory DoD Notice and Consent Banner. The DoD-required text is:
+Mandatory #{input('org_name')[:acronym]} Notice and Consent Banner. The #{input('org_name')[:acronym]}-required text is:
 
     \"You are accessing a U.S. Government (USG) Information System (IS) that is
 provided for USG-authorized use only.

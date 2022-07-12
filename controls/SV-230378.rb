@@ -3,7 +3,7 @@ control 'SV-230378' do
 prompts following a failed logon attempt."
   desc  "Configuring the operating system to implement organization-wide
 security implementation guides and security checklists verifies compliance with
-federal standards and establishes a common security baseline across the DoD
+federal standards and establishes a common security baseline across the #{input('org_name')[:acronym]}
 that reflects the most restrictive security posture consistent with operational
 requirements.
 

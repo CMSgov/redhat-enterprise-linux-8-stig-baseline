@@ -1,5 +1,5 @@
 control 'SV-230225' do
-  title "RHEL 8 must display the Standard Mandatory DoD Notice and Consent
+  title "RHEL 8 must display the Standard Mandatory #{input('org_name')[:acronym]} Notice and Consent
 Banner before granting local or remote access to the system via a ssh logon."
   desc  "Display of a standardized and approved use notification before
 granting access to the operating system ensures privacy and security
@@ -9,7 +9,7 @@ Executive Orders, directives, policies, regulations, standards, and guidance.
     System use notifications are required only for access via logon interfaces
 with human users and are not required when such human interfaces do not exist.
 
-    The banner must be formatted in accordance with applicable DoD policy. Use
+    The banner must be formatted in accordance with applicable #{input('org_name')[:acronym]} policy. Use
 the following verbiage for operating systems that can accommodate banners of
 1300 characters:
 
@@ -50,7 +50,7 @@ limitations on the number of characters that can be displayed in the banner:
   desc  'rationale', ''
   desc  'check', "
     Verify any publicly accessible connection to the operating system displays
-the Standard Mandatory DoD Notice and Consent Banner before granting access to
+the Standard Mandatory #{input('org_name')[:acronym]} Notice and Consent Banner before granting access to
 the system.
 
     Check for the location of the banner file being used with the following
@@ -66,7 +66,7 @@ contains the ssh banner (in this case \"/etc/issue\").
     If the line is commented out, this is a finding.
 
     View the file specified by the banner keyword to check that it matches the
-text of the Standard Mandatory DoD Notice and Consent Banner:
+text of the Standard Mandatory #{input('org_name')[:acronym]} Notice and Consent Banner:
 
     \"You are accessing a U.S. Government (USG) Information System (IS) that is
 provided for USG-authorized use only. By using this IS (which includes any
@@ -94,14 +94,14 @@ communications and work product are private and confidential. See User
 Agreement for details.\"
 
     If the system does not display a graphical logon banner or the banner does
-not match the Standard Mandatory DoD Notice and Consent Banner, this is a
+not match the Standard Mandatory #{input('org_name')[:acronym]} Notice and Consent Banner, this is a
 finding.
 
-    If the text in the file does not match the Standard Mandatory DoD Notice
+    If the text in the file does not match the Standard Mandatory #{input('org_name')[:acronym]} Notice
 and Consent Banner, this is a finding.
   "
   desc 'fix', "
-    Configure the operating system to display the Standard Mandatory DoD Notice
+    Configure the operating system to display the Standard Mandatory #{input('org_name')[:acronym]} Notice
 and Consent Banner before granting access to the system via the ssh.
 
     Edit the \"/etc/ssh/sshd_config\" file to uncomment the banner keyword and
@@ -112,8 +112,8 @@ SSH that is provided by a third-party vendor). An example configuration line is:
     banner /etc/issue
 
     Either create the file containing the banner or replace the text in the
-file with the Standard Mandatory DoD Notice and Consent Banner. The
-DoD-required text is:
+file with the Standard Mandatory #{input('org_name')[:acronym]} Notice and Consent Banner. The
+#{input('org_name')[:acronym]}-required text is:
 
     \"You are accessing a U.S. Government (USG) Information System (IS) that is
 provided for USG-authorized use only. By using this IS (which includes any

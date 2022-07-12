@@ -10,7 +10,7 @@ it takes to crack a password. Use of more characters in a password helps to
 increase exponentially the time and/or resources required to compromise the
 password.
 
-    The DoD minimum password requirement is 15 characters.
+    The #{input('org_name')[:acronym]} minimum password requirement is 15 characters.
   "
   desc  'rationale', ''
   desc  'check', "

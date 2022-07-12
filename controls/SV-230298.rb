@@ -2,7 +2,7 @@ control 'SV-230298' do
   title 'The rsyslog service must be running in RHEL 8.'
   desc  "Configuring RHEL 8 to implement organization-wide security
 implementation guides and security checklists ensures compliance with federal
-standards and establishes a common security baseline across the DoD that
+standards and establishes a common security baseline across the #{input('org_name')[:acronym]} that
 reflects the most restrictive security posture consistent with operational
 requirements.
 

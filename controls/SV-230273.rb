@@ -1,7 +1,7 @@
 control 'SV-230273' do
   title "RHEL 8 must have the packages required for multifactor authentication
 installed."
-  desc  "Using an authentication device, such as a DoD Common Access Card (CAC)
+  desc  "Using an authentication device, such as a #{input('org_name')[:acronym]} Common Access Card (CAC)
 or token that is separate from the information system, ensures that even if the
 information system is compromised, credentials stored on the authentication
 device will not be affected.
@@ -9,12 +9,12 @@ device will not be affected.
     Multifactor solutions that require devices separate from information
 systems gaining access include, for example, hardware tokens providing
 time-based or challenge-response authenticators and smart cards such as the
-U.S. Government Personal Identity Verification (PIV) card and the DoD CAC.
+U.S. Government Personal Identity Verification (PIV) card and the #{input('org_name')[:acronym]} CAC.
 
     A privileged account is defined as an information system account with
 authorizations of a privileged user.
 
-    Remote access is access to DoD nonpublic information systems by an
+    Remote access is access to #{input('org_name')[:acronym]} nonpublic information systems by an
 authorized user (or an information system) communicating through an external,
 non-organization-controlled network. Remote access methods include, for
 example, dial-up, broadband, and wireless.

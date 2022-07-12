@@ -3,7 +3,7 @@ control 'SV-230504' do
 for allowing connections to other systems."
   desc  "Failure to restrict network connectivity only to authorized systems
 permits inbound connections from malicious systems. It also permits outbound
-connections that may facilitate exfiltration of DoD data.
+connections that may facilitate exfiltration of #{input('org_name')[:acronym]} data.
 
     RHEL 8 incorporates the \"firewalld\" daemon, which allows for many
 different configurations. One of these configurations is zones. Zones can be

@@ -19,7 +19,7 @@ setting the credit components to a negative value, not only will those
 components be required, they will not count towards the total \"score\" of
 \"minlen\". This will enable \"minlen\" to require a 15-character minimum.
 
-    The DoD minimum password requirement is 15 characters.
+    The #{input('org_name')[:acronym]} minimum password requirement is 15 characters.
   "
   desc  'rationale', ''
   desc  'check', "
