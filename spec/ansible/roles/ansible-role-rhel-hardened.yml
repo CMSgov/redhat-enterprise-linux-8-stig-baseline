@@ -6,5 +6,6 @@
     - roles/rhel8STIG
   serial: 50
   become: yes
-  #vars:
+  vars:
+    rhel8stig_bootloader_password_hash: 'changethispassword'
   #  - deployment_task: configure_apps.yml

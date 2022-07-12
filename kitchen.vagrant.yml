@@ -28,6 +28,7 @@ provisioner:
   ansible_verbose: true
   roles_path: spec/ansible/roles
   galaxy_ignore_certs: true
+  requirements_path: spec/ansible/roles/requirements.yml
 
 platforms:
   - name: rhel-8
