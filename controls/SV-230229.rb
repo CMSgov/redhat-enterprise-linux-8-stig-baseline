@@ -81,6 +81,7 @@ bundle from cyber.mil and copy the #{input('org_name')[:acronym]}_PKE_CA_chain.p
 
 
   describe x509_certificate(ca_file) do
-    its('issuer_cn') { should match 'CN=DoD' }
+    #its('issuer_cn') { should match 'CN=DoD' }
+    its('issuer_cn') { should match 'CN=#{input('org_name')[:acronym]}' }
   end
 end

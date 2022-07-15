@@ -34,11 +34,11 @@ automatically terminated at the end of the session or after 10 minutes of
 inactivity.
 
     Check that the \"ClientAliveInterval\" variable is set to a value of
-\"600\" or less by performing the following command:
+\"#{input('system_inactivity_timeout')}\" or less by performing the following command:
 
     $ sudo grep -i clientalive /etc/ssh/sshd_config
 
-    ClientAliveInterval 600
+    ClientAliveInterval #{input('system_inactivity_timeout')}
     ClientAliveCountMax 0
 
     If \"ClientAliveInterval\" does not exist, does not have a value of \"600\"
@@ -51,7 +51,7 @@ inactivity.
 
     Modify or append the following lines in the \"/etc/ssh/sshd_config\" file:
 
-    ClientAliveInterval 600
+    ClientAliveInterval #{input('system_inactivity_timeout')}
 
     In order for the changes to take effect, the SSH daemon must be restarted.
 
@@ -76,7 +76,7 @@ inactivity.
     end
   else
     describe sshd_config do
-      its('ClientAliveInterval') { should cmp <= '600' }
+      its('ClientAliveInterval') { should cmp <= '#{input('system_inactivity_timeout')}' }
     end
   end
 end

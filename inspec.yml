@@ -15,6 +15,53 @@ inputs:
       acronym: "DoD"
       full_form: "Department of Defense"
 
+#SV-230244, SV-244525
+  - name: mins_of_inactivity
+    desc: Maximum number of minutes of account inactivity before account lockout
+    type: Numeric
+    value: 30
+
+  - name: system_inactivity_timeout
+    description: Maximum system inactivity timeout (time in seconds).
+    type: Numeric
+    value: 1800
+
+#SV-230331, SV-230374
+  - name: temp_account_expire_time
+    desc: Temporary (short term) should be set with an expiration date/time
+    type: Numeric
+    value: 72
+
+#SV-230483, SV-244543:
+  - name: storage_volume
+    desc:
+    type: Numeric
+    value: 75
+
+  - name: storage_space_left
+    desc:
+    type: Numeric
+    value: 25
+
+  #SV-230332, SV-230333, SV-230334, SV-230335, SV-230336, SV-230337, SV-230338, SV-230340, SV-230341, SV-230344
+  - name: unsuccessful_attempts
+    description: Maximum number of unsuccessful attempts before lockout
+    type: Numeric
+    value: 3
+
+#need to add
+  #SV-230353
+  - name: system_inactivity_timeout
+    description: Maximum system inactivity timeout (time in seconds).
+    type: Numeric
+    value: 900
+
+#  #SV-230356
+#  - name: max_retry
+#    description: Maximum number of retry attempts for login
+#    type: Numeric
+#    value: 3
+
 #  - name: disable_slow_controls
 #    description: Controls that are known to consistently have long run times can be disabled with this attribute
 #    type: Boolean

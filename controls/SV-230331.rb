@@ -1,6 +1,6 @@
 control 'SV-230331' do
   title "RHEL 8 temporary user accounts must be provisioned with an expiration
-time of 72 hours or less."
+time of #{input('temp_account_expire_time')} hours or less."
   desc  "If temporary user accounts remain active when no longer needed or for
 an excessive period, these accounts may be used to gain unauthorized access. To
 mitigate this risk, automated termination of all temporary accounts must be set
@@ -20,21 +20,21 @@ exceed access control policy requirements.
   desc  'rationale', ''
   desc  'check', "
     Verify that temporary accounts have been provisioned with an expiration
-date of 72 hours.
+date of #{input('temp_account_expire_time')} hours.
 
     For every existing temporary account, run the following command to obtain
 its account expiration information.
 
     $ sudo chage -l system_account_name
 
-    Verify each of these accounts has an expiration date set within 72 hours.
+    Verify each of these accounts has an expiration date set within #{input('temp_account_expire_time')} hours.
 
     If any temporary accounts have no expiration date set or do not expire
-within 72 hours, this is a finding.
+within #{input('temp_account_expire_time')} hours, this is a finding.
   "
   desc 'fix', "
     If a temporary account must be created configure the system to terminate
-the account after a 72 hour time period with the following command to set an
+the account after a #{input('temp_account_expire_time')} hour time period with the following command to set an
 expiration date on it. Substitute \"system_account_name\" with the account to
 be created.
 

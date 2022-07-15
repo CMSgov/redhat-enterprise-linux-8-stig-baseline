@@ -1,5 +1,5 @@
 control 'SV-230335' do
-  title "RHEL 8 must automatically lock an account when three unsuccessful
+  title "RHEL 8 must automatically lock an account when #{input('unsuccessful_atempts')} unsuccessful
 logon attempts occur during a 15-minute time period."
   desc  "By limiting the number of failed logon attempts, the risk of
 unauthorized system access via user password guessing, otherwise known as
@@ -24,7 +24,7 @@ directory must be set with the \"dir\" option.
 RHEL version 8.0 or 8.1, this check is not applicable.
 
     Verify the \"/etc/security/faillock.conf\" file is configured to lock an
-account after three unsuccessful logon attempts within 15 minutes:
+account after #{input('unsuccessful_atempts')} unsuccessful logon attempts within 15 minutes:
 
     $ sudo grep 'fail_interval =' /etc/security/faillock.conf
 
@@ -34,7 +34,7 @@ account after three unsuccessful logon attempts within 15 minutes:
 or commented out, this is a finding.
   "
   desc  'fix', "
-    Configure the operating system to lock an account when three unsuccessful
+    Configure the operating system to lock an account when #{input('unsuccessful_atempts')} unsuccessful
 logon attempts occur in 15 minutes.
 
     Add/Modify the \"/etc/security/faillock.conf\" file to match the following
