@@ -15,7 +15,7 @@ inputs:
       acronym: "DoD"
       full_form: "Department of Defense"
 
-#SV-230244, SV-244525
+#SV-230244, SV-244525:
   - name: mins_of_inactivity
     desc: Maximum number of minutes of account inactivity before account lockout
     type: Numeric
@@ -26,11 +26,13 @@ inputs:
     type: Numeric
     value: 1800
 
-#SV-230331, SV-230374
+#SV-230331, SV-230374:
   - name: temp_account_expire_time
     desc: Temporary (short term) should be set with an expiration date/time
     type: Numeric
-    value: 72
+    value: 
+      hours: 72
+      days: 1
 
 #SV-230483, SV-244543:
   - name: storage_volume
@@ -43,18 +45,18 @@ inputs:
     type: Numeric
     value: 25
 
-  #SV-230332, SV-230333, SV-230334, SV-230335, SV-230336, SV-230337, SV-230338, SV-230340, SV-230341, SV-230344
+  #SV-230332, SV-230333, SV-230334, SV-230335, SV-230336, SV-230337, SV-230338, SV-230340, SV-230341, SV-230344:
   - name: unsuccessful_attempts
     description: Maximum number of unsuccessful attempts before lockout
     type: Numeric
     value: 3
 
-#need to add
-  #SV-230353
-  - name: system_inactivity_timeout
-    description: Maximum system inactivity timeout (time in seconds).
+  - name: fail_interval_time #SV-230535
+    description: Interval of time in which the consecutive failed logon attempts must occur in order for the account to be locked out
     type: Numeric
-    value: 900
+    value: 
+      minutes: 15
+      seconds: 900
 
 #  #SV-230356
 #  - name: max_retry

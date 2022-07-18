@@ -1,6 +1,6 @@
 control 'SV-230335' do
   title "RHEL 8 must automatically lock an account when #{input('unsuccessful_atempts')} unsuccessful
-logon attempts occur during a 15-minute time period."
+logon attempts occur during a #{input('fail_interval')[:minutes]}-minute time period."
   desc  "By limiting the number of failed logon attempts, the risk of
 unauthorized system access via user password guessing, otherwise known as
 brute-force attacks, is reduced. Limits are imposed by locking the account.
@@ -24,13 +24,13 @@ directory must be set with the \"dir\" option.
 RHEL version 8.0 or 8.1, this check is not applicable.
 
     Verify the \"/etc/security/faillock.conf\" file is configured to lock an
-account after #{input('unsuccessful_atempts')} unsuccessful logon attempts within 15 minutes:
+account after #{input('unsuccessful_atempts')} unsuccessful logon attempts within #{input('fail_interval')[:minutes]} minutes:
 
     $ sudo grep 'fail_interval =' /etc/security/faillock.conf
 
-    fail_interval = 900
+    fail_interval = #{input('fail_interval')[:seconds]}
 
-    If the \"fail_interval\" option is not set to \"900\" or more, is missing
+    If the \"fail_interval\" option is not set to \"#{input('fail_interval')[:seconds]}\" or more, is missing
 or commented out, this is a finding.
   "
   desc  'fix', "
@@ -40,7 +40,7 @@ logon attempts occur in 15 minutes.
     Add/Modify the \"/etc/security/faillock.conf\" file to match the following
 line:
 
-    fail_interval = 900
+    fail_interval = #{input('fail_interval')[:seconds]}
   "
   impact 0.5
   tag severity: 'medium'

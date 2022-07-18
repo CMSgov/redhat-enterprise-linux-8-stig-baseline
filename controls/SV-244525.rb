@@ -76,7 +76,7 @@ inactivity.
     end
   else
     describe sshd_config do
-      its('ClientAliveInterval') { should cmp <= '#{input('system_inactivity_timeout')}' }
+      its('ClientAliveInterval') { should cmp <= "#{input('system_inactivity_timeout')}" }
     end
   end
 end

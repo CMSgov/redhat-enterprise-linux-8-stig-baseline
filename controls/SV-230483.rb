@@ -48,7 +48,7 @@ adding/modifying the following line in the /etc/audit/auditd.conf file.
     end
   else
     describe auditd_conf do
-      its('space_left') { should cmp '#{input('storage_space_left')}%' }
+      its('space_left') { should cmp "#{input('storage_space_left')}%" }
     end
   end
 end

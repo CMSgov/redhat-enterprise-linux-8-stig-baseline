@@ -1,7 +1,7 @@
 control 'SV-230337' do
   title "RHEL 8 must automatically lock an account until the locked account is
 released by an administrator when #{input('unsuccessful_atempts')} unsuccessful logon attempts occur
-during a 15-minute time period."
+during a #{input('fail_interval_time')[:minutes]}-minute time period."
   desc  "By limiting the number of failed logon attempts, the risk of
 unauthorized system access via user password guessing, otherwise known as
 brute-force attacks, is reduced. Limits are imposed by locking the account.
@@ -37,7 +37,7 @@ out, this is a finding.
   "
   desc 'fix', "
     Configure the operating system to lock an account until released by an
-administrator when #{input('unsuccessful_atempts')} unsuccessful logon attempts occur in 15 minutes.
+administrator when #{input('unsuccessful_atempts')} unsuccessful logon attempts occur in #{input('fail_interval_time')[:minutes]} minutes.
 
     Add/Modify the \"/etc/security/faillock.conf\" file to match the following
 line:

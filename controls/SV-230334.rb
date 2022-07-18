@@ -1,6 +1,6 @@
 control 'SV-230334' do
   title "RHEL 8 must automatically lock an account when #{input('unsuccessful_atempts')} unsuccessful
-logon attempts occur during a 15-minute time period."
+logon attempts occur during a #{input('fail_interval_time')[:minutes]}-minute time period."
   desc  "By limiting the number of failed logon attempts, the risk of
 unauthorized system access via user password guessing, otherwise known as
 brute-force attacks, is reduced. Limits are imposed by locking the account.
@@ -19,11 +19,11 @@ directory must be set with the \"dir\" option.
   desc  'rationale', ''
   desc  'check', "
     Check that the system locks an account after #{input('unsuccessful_atempts')} unsuccessful logon
-attempts within a period of 15 minutes with the following commands:
+attempts within a period of #{input('fail_interval_time')[:minutes]} minutes with the following commands:
 
     Note: If the System Administrator demonstrates the use of an approved
 centralized account management method that locks an account after #{input('unsuccessful_atempts')}
-unsuccessful logon attempts within a period of 15 minutes, this requirement is
+unsuccessful logon attempts within a period of #{input('fail_interval_time')[:minutes]} minutes, this requirement is
 not applicable.
 
     Note: This check applies to RHEL versions 8.0 and 8.1, if the system is
@@ -32,18 +32,18 @@ RHEL version 8.2 or newer, this check is not applicable.
     $ sudo grep pam_faillock.so /etc/pam.d/password-auth
 
     auth required pam_faillock.so preauth dir=/var/log/faillock silent audit
-deny=#{input('unsuccessful_atempts')} even_deny_root fail_interval=900 unlock_time=0
+deny=#{input('unsuccessful_atempts')} even_deny_root fail_interval=#{input('fail_interval_time')[:seconds]} unlock_time=0
     auth required pam_faillock.so authfail dir=/var/log/faillock unlock_time=0
     account required pam_faillock.so
 
-    If the \"fail_interval\" option is not set to \"900\" or less (but not
+    If the \"fail_interval\" option is not set to \"#{input('fail_interval_time')[:seconds]}\" or less (but not
 \"0\") on the \"preauth\" lines with the \"pam_faillock.so\" module, or is
 missing from this line, this is a finding.
 
     $ sudo grep pam_faillock.so /etc/pam.d/system-auth
 
     auth required pam_faillock.so preauth dir=/var/log/faillock silent audit
-deny=#{input('unsuccessful_atempts')} even_deny_root fail_interval=900 unlock_time=0
+deny=#{input('unsuccessful_atempts')} even_deny_root fail_interval=#{input('fail_interval_time')[:seconds]} unlock_time=0
     auth required pam_faillock.so authfail dir=/var/log/faillock unlock_time=0
     account required pam_faillock.so
 
@@ -53,13 +53,13 @@ missing from this line, this is a finding.
   "
   desc 'fix', "
     Configure the operating system to lock an account when #{input('unsuccessful_atempts')} unsuccessful
-logon attempts occur in 15 minutes.
+logon attempts occur in #{input('fail_interval_time')[:minutes]} minutes.
 
     Add/Modify the appropriate sections of the \"/etc/pam.d/system-auth\" and
 \"/etc/pam.d/password-auth\" files to match the following lines:
 
     auth required pam_faillock.so preauth dir=/var/log/faillock silent audit
-deny=#{input('unsuccessful_atempts')} even_deny_root fail_interval=900 unlock_time=0
+deny=#{input('unsuccessful_atempts')} even_deny_root fail_interval=#{input('fail_interval_time')[:seconds]} unlock_time=0
     auth required pam_faillock.so authfail dir=/var/log/faillock unlock_time=0
     account required pam_faillock.so
 

@@ -23,7 +23,7 @@ attempts with the following commands:
 
     Note: If the System Administrator demonstrates the use of an approved
 centralized account management method that locks an account after #{input('unsuccessful_atempts')}
-unsuccessful logon attempts within a period of 15 minutes, this requirement is
+unsuccessful logon attempts within a period of #{input('fail_interval_time')[:minutes]} minutes, this requirement is
 not applicable.
 
     Note: This check applies to RHEL versions 8.0 and 8.1, if the system is
@@ -46,7 +46,7 @@ this is a finding.
     $ sudo grep pam_faillock.so /etc/pam.d/system-auth
 
     auth required pam_faillock.so preauth dir=/var/log/faillock silent audit
-deny=#{input('unsuccessful_atempts')} even_deny_root fail_interval=900 unlock_time=0
+deny=#{input('unsuccessful_atempts')} even_deny_root fail_interval=#{input('fail_interval_time')[:seconds]} unlock_time=0
     auth required pam_faillock.so authfail dir=/var/log/faillock unlock_time=0
     account required pam_faillock.so
 
@@ -65,7 +65,7 @@ logon attempts occur.
 \"/etc/pam.d/password-auth\" files to match the following lines:
 
     auth required pam_faillock.so preauth dir=/var/log/faillock silent audit
-deny=#{input('unsuccessful_atempts')} even_deny_root fail_interval=900 unlock_time=0
+deny=#{input('unsuccessful_atempts')} even_deny_root fail_interval=#{input('fail_interval_time')[:seconds]} unlock_time=0
     auth required pam_faillock.so authfail dir=/var/log/faillock unlock_time=0
     account required pam_faillock.so
 

@@ -6,10 +6,10 @@ verifier:
     - cli
     - json:spec/results/%{platform}_%{suite}.json
   inspec_tests:
-    - name: Red Hat 8 STIG
-      path: .
+    - name: CMS ARS 5.0 Red Hat 8 Overlay
+      path: /Users/ssayed/overlays/forks/cms-ars-5.0-red-hat-enterprise-linux-8-stig-overlay
   input_files:
-    - kitchen.inputs.yml
+    - /Users/ssayed/overlays/forks/cms-ars-5.0-red-hat-enterprise-linux-8-stig-overlay/overlay-inputs.yml
   load_plugins: true
 
 platforms:
@@ -17,6 +17,9 @@ platforms:
 
 suites:
   - name: vanilla
+    attributes: 
+      category:
+        system_categorization: <%= ENV['MODERATE'] %>
     provisioner:
       playbook: spec/ansible/roles/ansible-role-rhel-vanilla.yml
   - name: hardened
