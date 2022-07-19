@@ -11,7 +11,7 @@ procedures when there is a need for short-term accounts without the demand for
 immediacy in account activation.
 
     If temporary accounts are used, RHEL 8 must be configured to automatically
-terminate these types of accounts after a #{input('org_name')[:acronym]}-defined time period of 72 hours.
+terminate these types of accounts after a #{input('org_name')[:acronym]}-defined time period of #{input('temp_account_expire_time')[:hours]} hours.
 
     To address access requirements, many RHEL 8 operating systems may be
 integrated with enterprise-level authentication/access mechanisms that meet or
