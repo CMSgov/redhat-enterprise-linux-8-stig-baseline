@@ -2,9 +2,8 @@ name: EC2 Testing Matrix
 
 on:
   push:
-    branches: [ master ]
+    branches: [ main ]
   pull_request:
-    branches: [ master ]
 
 jobs:
   my-job:
