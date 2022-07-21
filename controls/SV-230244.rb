@@ -40,7 +40,7 @@ following command:
 
     $ sudo grep -i clientalive /etc/ssh/sshd_config
 
-    ClientAliveInterval #{input('system_inactivity_timeout')}
+    ClientAliveInterval #{input('client_alive_interval')}
     ClientAliveCountMax 0
 
     If \"ClientAliveCountMax\" do not exist, is not set to a value of \"0\" in

@@ -1,5 +1,5 @@
 control 'SV-230353' do
-  title "RHEL 8 must automatically lock command line user sessions after #{input('fail_interval_time')[:minutes]}
+  title "RHEL 8 must automatically lock command line user sessions after #{input('fail_interval_mins')}
 minutes of inactivity."
   desc  "Terminating an idle session within a short time period reduces the
 window of opportunity for unauthorized personnel to take control of a
@@ -19,7 +19,7 @@ and releases the resources associated with that session.
   "
   desc  'rationale', ''
   desc  'check', "
-    Verify the operating system initiates a session lock after #{input('fail_interval_time')[:minutes]} minutes of
+    Verify the operating system initiates a session lock after #{input('fail_interval_mins')} minutes of
 inactivity.
 
     Check the value of the system inactivity timeout with the following command:
@@ -28,15 +28,15 @@ inactivity.
 
     set -g lock-after-time 900
 
-    If \"lock-after-time\" is not set to \"#{input('fail_interval_time')[:seconds]}\" or less in the global tmux
+    If \"lock-after-time\" is not set to \"#{input('fail_interval')}\" or less in the global tmux
 configuration file to enforce session lock after inactivity, this is a finding.
   "
   desc 'fix', "
-    Configure the operating system to enforce session lock after a period of #{input('fail_interval_time')[:minutes]}
+    Configure the operating system to enforce session lock after a period of #{input('fail_interval_mins')}
 minutes of inactivity by adding the following line to the \"/etc/tmux.conf\"
 global configuration file:
 
-    set -g lock-after-time #{input('fail_interval_time')[:seconds]}
+    set -g lock-after-time #{input('fail_interval')}
   "
   impact 0.5
   tag severity: 'medium'
