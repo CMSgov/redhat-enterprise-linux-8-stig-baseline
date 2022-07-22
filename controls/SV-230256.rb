@@ -1,5 +1,5 @@
 control 'SV-230256' do
-  title "The RHEL 8 operating system must implement DoD-approved TLS encryption
+  title "The RHEL 8 operating system must implement #{input('org_name')[:acronym]}-approved TLS encryption
 in the GnuTLS package."
   desc  "Without cryptographic integrity protections, information can be
 altered by unauthorized users without detection.
@@ -27,7 +27,7 @@ policy defines employed algorithms in the
   "
   desc  'rationale', ''
   desc  'check', "
-    Verify the GnuTLS library is configured to only allow DoD-approved SSL/TLS
+    Verify the GnuTLS library is configured to only allow #{input('org_name')[:acronym]}-approved SSL/TLS
 Versions:
 
     $ sudo grep -io +vers.*  /etc/crypto-policies/back-ends/gnutls.config
@@ -40,7 +40,7 @@ Versions:
 disable unapproved SSL/TLS versions, this is a finding.
   "
   desc 'fix', "
-    Configure the RHEL 8 GnuTLS library to use only DoD-approved encryption by
+    Configure the RHEL 8 GnuTLS library to use only #{input('org_name')[:acronym]}-approved encryption by
 adding the following line to \"/etc/crypto-policies/back-ends/gnutls.config\":
 
     +VERS-ALL:-VERS-DTLS0.9:-VERS-SSL3.0:-VERS-TLS1.0:-VERS-TLS1.1:-VERS-DTLS1.0

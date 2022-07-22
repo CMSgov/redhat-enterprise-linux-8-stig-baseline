@@ -2,7 +2,7 @@ control 'SV-230484' do
   title "RHEL 8 must securely compare internal information system clocks at
 least every 24 hours with a server synchronized to an authoritative time
 source, such as the United States Naval Observatory (USNO) time servers, or a
-time server designated for the appropriate DoD network (NIPRNet/SIPRNet),
+time server designated for the appropriate #{input('org_name')[:acronym]} network (NIPRNet/SIPRNet),
 and/or the Global Positioning System (GPS)."
   desc  "Inaccurate time stamps make it more difficult to correlate events and
 can lead to an inaccurate analysis. Determining the correct time a particular
@@ -48,14 +48,14 @@ least every 24 hours with an NTP server with the following commands:
     If the \"maxpoll\" option is set to a number greater than 16 or the line is
 commented out, this is a finding.
 
-    Verify the \"chrony.conf\" file is configured to an authoritative DoD time
+    Verify the \"chrony.conf\" file is configured to an authoritative #{input('org_name')[:acronym]} time
 source by running the following command:
 
     $ sudo grep -i server /etc/chrony.conf
     server 0.us.pool.ntp.mil
 
     If the parameter \"server\" is not set or is not set to an authoritative
-DoD time source, this is a finding.
+    #{input('org_name')[:acronym]} time source, this is a finding.
   "
   desc 'fix', "
     Configure the operating system to securely compare internal information

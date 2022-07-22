@@ -1,14 +1,14 @@
 control 'SV-244543' do
   title "RHEL 8 must notify the System Administrator (SA) and Information
 System Security Officer (ISSO) (at a minimum) when allocated audit record
-storage volume 75 percent utilization."
+storage volume #{input('storage_volume')} percent utilization."
   desc  "If security personnel are not notified immediately when storage volume
-reaches 75 percent utilization, they are unable to plan for audit record
+reaches #{input('storage_volume')} percent utilization, they are unable to plan for audit record
 storage capacity expansion."
   desc  'rationale', ''
   desc  'check', "
     Verify RHEL 8 notifies the SA and ISSO (at a minimum) when allocated audit
-record storage volume reaches 75 percent of the repository maximum audit record
+record storage volume reaches #{input('storage_volume')} percent of the repository maximum audit record
 storage capacity with the following command:
 
     $ sudo grep -w space_left_action /etc/audit/auditd.conf
@@ -24,7 +24,7 @@ this is a finding.
   "
   desc  'fix', "
     Configure the operating system to initiate an action to notify the SA and
-ISSO (at a minimum) when allocated audit record storage volume reaches 75
+ISSO (at a minimum) when allocated audit record storage volume reaches #{input('storage_volume')}
 percent of the repository maximum audit record storage capacity by
 adding/modifying the following line in the /etc/audit/auditd.conf file.
 

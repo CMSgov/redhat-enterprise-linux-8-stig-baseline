@@ -4,13 +4,13 @@ file to use a FIPS 140-2 approved cryptographic hashing algorithm for system
 authentication."
   desc  "Unapproved mechanisms that are used for authentication to the
 cryptographic module are not verified and therefore cannot be relied upon to
-provide confidentiality or integrity, and DoD data may be compromised.
+provide confidentiality or integrity, and #{input('org_name')[:acronym]} data may be compromised.
 
     RHEL 8 systems utilizing encryption are required to use FIPS-compliant
 mechanisms for authenticating to cryptographic modules.
 
     FIPS 140-2 is the current standard for validating that mechanisms used to
-access cryptographic modules utilize authentication that meets DoD
+access cryptographic modules utilize authentication that meets #{input('org_name')[:acronym]}
 requirements. This allows for Security Levels 1, 2, 3, or 4 for use on a
 general-purpose computing system.
   "

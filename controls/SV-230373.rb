@@ -31,7 +31,7 @@ after the password expiration.
 
     $ sudo useradd -D -f 35
 
-    DoD recommendation is 35 days, but a lower value is acceptable. The value
+    #{input('org_name')[:acronym]} recommendation is 35 days, but a lower value is acceptable. The value
 \"-1\" will disable this feature, and \"0\" will disable the account
 immediately after the password expires.
   "

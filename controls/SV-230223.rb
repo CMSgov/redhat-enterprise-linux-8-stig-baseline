@@ -27,7 +27,7 @@ keystrokes may generate a non-unique key.
   "
   desc  'rationale', ''
   desc  'check', "
-    Verify the operating system implements DoD-approved encryption to protect
+    Verify the operating system implements #{input('org_name')[:acronym]}-approved encryption to protect
 the confidentiality of remote access sessions.
 
     Check to see if FIPS mode is enabled with the following command:
@@ -59,7 +59,7 @@ FIPS mode, or the system does not have a value of \"1\" for \"fips_enabled\" in
 \"/proc/sys/crypto\", this is a finding.
   "
   desc 'fix', "
-    Configure the operating system to implement DoD-approved encryption by
+    Configure the operating system to implement #{input('org_name')[:acronym]}-approved encryption by
 following the steps below:
 
     To enable strict FIPS compliance, the fips=1 kernel option needs to be

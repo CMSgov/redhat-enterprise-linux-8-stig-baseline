@@ -1,5 +1,5 @@
 control 'SV-230363' do
-  title "RHEL 8 must require the change of at least 8 characters when passwords
+  title "RHEL 8 must require the change of at least #{input('difok')} characters when passwords
 are changed."
   desc  "Use of a complex password helps to increase the time and resources
 required to compromise the password. Password complexity, or strength, is a
@@ -22,20 +22,20 @@ that must not be present in the old password.
 
     $ sudo grep difok /etc/security/pwquality.conf
 
-    difok = 8
+    difok = #{input('difok')}
 
-    If the value of \"difok\" is set to less than \"8\" or is commented out,
+    If the value of \"difok\" is set to less than \"#{input('difok')}\" or is commented out,
 this is a finding.
   "
   desc 'fix', "
-    Configure the operating system to require the change of at least eight of
+    Configure the operating system to require the change of at least #{input('difok')} of
 the total number of characters when passwords are changed by setting the
 \"difok\" option.
 
     Add the following line to \"/etc/security/pwquality.conf\" (or modify the
 line to have the required value):
 
-    difok = 8
+    difok = #{input('difok')}
   "
   impact 0.5
   tag severity: 'medium'

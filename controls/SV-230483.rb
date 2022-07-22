@@ -1,20 +1,20 @@
 control 'SV-230483' do
   title "RHEL 8 must take action when allocated audit record storage volume
-reaches 75 percent of the repository maximum audit record storage capacity."
+reaches #{input('storage_volume')} percent of the repository maximum audit record storage capacity."
   desc  "If security personnel are not notified immediately when storage volume
-reaches 75 percent utilization, they are unable to plan for audit record
+reaches #{input('storage_volume')} percent utilization, they are unable to plan for audit record
 storage capacity expansion."
   desc  'rationale', ''
   desc  'check', "
     Verify RHEL 8 takes action when allocated audit record storage volume
-reaches 75 percent of the repository maximum audit record storage capacity with
+reaches #{input('storage_volume')} percent of the repository maximum audit record storage capacity with
 the following commands:
 
     $ sudo grep -w space_left /etc/audit/auditd.conf
 
-    space_left = 25%
+    space_left = #{input('storage_space_left')}%
 
-    If the value of the \"space_left\" keyword is not set to \"25%\" or if the
+    If the value of the \"space_left\" keyword is not set to \"#{input('storage_space_left')}%\" or if the
 line is commented out, ask the System Administrator to indicate how the system
 is providing real-time alerts to the SA and ISSO.
 
@@ -23,11 +23,11 @@ this is a finding.
   "
   desc  'fix', "
     Configure the operating system to initiate an action to notify the SA and
-ISSO (at a minimum) when allocated audit record storage volume reaches 75
+ISSO (at a minimum) when allocated audit record storage volume reaches #{input('storage_volume')}
 percent of the repository maximum audit record storage capacity by
 adding/modifying the following line in the /etc/audit/auditd.conf file.
 
-    space_left = 25%
+    space_left = #{input('storage_space_left')}%
 
     Note: Option names and values in the auditd.conf file are case insensitive.
   "
@@ -48,7 +48,7 @@ adding/modifying the following line in the /etc/audit/auditd.conf file.
     end
   else
     describe auditd_conf do
-      its('space_left') { should cmp '25%' }
+      its('space_left') { should cmp "#{input('storage_space_left')}%" }
     end
   end
 end

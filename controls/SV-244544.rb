@@ -7,7 +7,7 @@ access to the system via ports, services, and protocols.
 devices and information systems, which lack automated control capabilities,
 increase risk and make remote user access management difficult at best.
 
-    Remote access is access to DoD nonpublic information systems by an
+    Remote access is access to #{input('org_name')[:acronym]} nonpublic information systems by an
 authorized user (or an information system) communicating through an external,
 non-organization-controlled network. Remote access methods include, for
 example, dial-up, broadband, and wireless.

@@ -9,7 +9,7 @@ compromise the RHEL 8 operating system.
 wireless mice, keyboards, displays, etc.) used with RHEL 8 systems. Wireless
 peripherals (e.g., Wi-Fi/Bluetooth/IR Keyboards, Mice, and Pointing Devices and
 Near Field Communications [NFC]) present a unique challenge by creating an
-open, unsecured port on a computer. Wireless peripherals must meet DoD
+open, unsecured port on a computer. Wireless peripherals must meet #{input('org_name')[:acronym]}
 requirements for wireless data transmission and be approved for use by the
 Authorizing Official (AO). Even though some wireless peripherals, such as mice
 and pointing devices, do not ordinarily carry information that need to be

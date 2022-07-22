@@ -1,5 +1,5 @@
 control 'SV-230226' do
-  title "RHEL 8 must display the Standard Mandatory DoD Notice and Consent
+  title "RHEL 8 must display the Standard Mandatory #{input('org_name')[:acronym]} Notice and Consent
 Banner before granting local or remote access to the system via a graphical
 user logon."
   desc  "Display of a standardized and approved use notification before
@@ -10,7 +10,7 @@ Executive Orders, directives, policies, regulations, standards, and guidance.
     System use notifications are required only for access via logon interfaces
 with human users and are not required when such human interfaces do not exist.
 
-    The banner must be formatted in accordance with applicable DoD policy. Use
+    The banner must be formatted in accordance with applicable #{input('org_name')[:acronym]} policy. Use
 the following verbiage for operating systems that can accommodate banners of
 1300 characters:
 
@@ -45,14 +45,14 @@ Agreement for details.\"
   "
   desc  'rationale', ''
   desc  'check', "
-    Verify RHEL 8 displays the Standard Mandatory DoD Notice and Consent Banner
+    Verify RHEL 8 displays the Standard Mandatory #{input('org_name')[:acronym]} Notice and Consent Banner
 before granting access to the operating system via a graphical user logon.
 
     Note: This requirement assumes the use of the RHEL 8 default graphical user
 interface, Gnome Shell. If the system does not have any graphical user
 interface installed, this requirement is Not Applicable.
 
-    Check that the operating system displays the exact Standard Mandatory DoD
+    Check that the operating system displays the exact Standard Mandatory #{input('org_name')[:acronym]}
 Notice and Consent Banner text with the command:
 
     $ sudo grep banner-message-text /etc/dconf/db/local.d/*
@@ -83,11 +83,11 @@ Agreement for details. '
      \" characters are for formatting only. They will not be displayed on the
 graphical interface.
 
-    If the banner does not match the Standard Mandatory DoD Notice and Consent
+    If the banner does not match the Standard Mandatory #{input('org_name')[:acronym]} Notice and Consent
 Banner exactly, this is a finding.
   "
   desc  'fix', "
-    Configure the operating system to display the Standard Mandatory DoD Notice
+    Configure the operating system to display the Standard Mandatory #{input('org_name')[:acronym]} Notice
 and Consent Banner before granting access to the system.
 
     Note: If the system does not have a graphical user interface installed,

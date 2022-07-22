@@ -5,7 +5,7 @@ algorithms."
   desc  "Without cryptographic integrity protections, information can be
 altered by unauthorized users without detection.
 
-    Remote access (e.g., RDP) is access to DoD nonpublic information systems by
+    Remote access (e.g., RDP) is access to #{input('org_name')[:acronym]} nonpublic information systems by
 an authorized user (or an information system) communicating through an
 external, non-organization-controlled network. Remote access methods include,
 for example, dial-up, broadband, and wireless.
