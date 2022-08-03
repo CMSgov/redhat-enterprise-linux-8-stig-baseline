@@ -21,7 +21,7 @@ directory must be set with the \"dir\" option.
 following commands:
 
     Note: If the System Administrator demonstrates the use of an approved
-centralized account management method that locks an account after #{input('unsuccessful_atempts')}
+centralized account management method that locks an account after #{input('unsuccessful_attempts')}
 unsuccessful logon attempts within a period of #{input('fail_interval_mins')} minutes, this requirement is
 not applicable.
 
@@ -31,7 +31,7 @@ RHEL version 8.2 or newer, this check is not applicable.
     $ sudo grep pam_faillock.so /etc/pam.d/password-auth
 
     auth required pam_faillock.so preauth dir=/var/log/faillock silent audit
-deny=#{input('unsuccessful_atempts')} even_deny_root fail_interval=#{input('fail_interval')} unlock_time= #{input('unlock_time')}
+deny=#{input('unsuccessful_attempts')} even_deny_root fail_interval=#{input('fail_interval')} unlock_time= #{input('unlock_time')}
     auth required pam_faillock.so authfail dir=/var/log/faillock unlock_time= #{input('unlock_time')}
     account required pam_faillock.so
 
@@ -42,7 +42,7 @@ directory on the \"preauth\" and \"authfail\" lines with the
     $ sudo grep pam_faillock.so /etc/pam.d/system-auth
 
     auth required pam_faillock.so preauth dir=/var/log/faillock silent audit
-deny=#{input('unsuccessful_atempts')} even_deny_root fail_interval=#{input('fail_interval')} unlock_time= #{input('unlock_time')}
+deny=#{input('unsuccessful_attempts')} even_deny_root fail_interval=#{input('fail_interval')} unlock_time= #{input('unlock_time')}
     auth required pam_faillock.so authfail dir=/var/log/faillock unlock_time= #{input('unlock_time')}
     account required pam_faillock.so
 
@@ -61,7 +61,7 @@ directory after a reboot.
 in the contents being cleared in the event of a reboot.
 
     auth required pam_faillock.so preauth dir=/var/log/faillock silent audit
-deny=#{input('unsuccessful_atempts')} even_deny_root fail_interval=#{input('fail_interval')} unlock_time= #{input('unlock_time')}
+deny=#{input('unsuccessful_attempts')} even_deny_root fail_interval=#{input('fail_interval')} unlock_time= #{input('unlock_time')}
     auth required pam_faillock.so authfail dir=/var/log/faillock unlock_time= #{input('unlock_time')}
     account required pam_faillock.so
 

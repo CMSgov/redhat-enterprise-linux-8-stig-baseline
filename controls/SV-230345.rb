@@ -1,6 +1,6 @@
 control 'SV-230345' do
   title "RHEL 8 must include root when automatically locking an account until
-the locked account is released by an administrator when #{input('unsuccessful_atempts')} unsuccessful
+the locked account is released by an administrator when #{input('unsuccessful_attempts')} unsuccessful
 logon attempts occur during a #{input('fail_interval_mins')}-minute time period."
   desc  "By limiting the number of failed logon attempts, the risk of
 unauthorized system access via user password guessing, otherwise known as
@@ -36,7 +36,7 @@ this is a finding.
   "
   desc 'fix', "
     Configure the operating system to include root when locking an account
-after #{input('unsuccessful_atempts')} unsuccessful logon attempts occur in #{input('fail_interval_mins')} minutes.
+after #{input('unsuccessful_attempts')} unsuccessful logon attempts occur in #{input('fail_interval_mins')} minutes.
 
     Add/Modify the \"/etc/security/faillock.conf\" file to match the following
 line:

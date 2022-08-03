@@ -19,7 +19,7 @@ suites:
   - name: vanilla
     attributes: 
       category:
-        system_categorization: <%= ENV['MODERATE'] %>
+        system_categorization: <%= ENV['Moderate'] %>
     provisioner:
       playbook: spec/ansible/roles/ansible-role-rhel-vanilla.yml
   - name: hardened
