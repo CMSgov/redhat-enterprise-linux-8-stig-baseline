@@ -7,9 +7,9 @@ verifier:
     - json:spec/results/%{platform}_%{suite}.json
   inspec_tests:
     - name: CMS ARS 5.0 Red Hat 8 Overlay
-      path: /Users/ssayed/overlays/forks/cms-ars-5.0-red-hat-enterprise-linux-8-stig-overlay
+      path: /Users/ssayed/overlays/cms-ars-5.0-red-hat-enterprise-linux-8-stig-overlay
   input_files:
-    - /Users/ssayed/overlays/forks/cms-ars-5.0-red-hat-enterprise-linux-8-stig-overlay/overlay-inputs.yml
+    - /Users/ssayed/overlays/cms-ars-5.0-red-hat-enterprise-linux-8-stig-overlay/overlay-inputs.yml
   load_plugins: true
 
 platforms:
