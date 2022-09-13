@@ -27,7 +27,7 @@ inputs:
     value: 600
 
 #SV-230353
-  - name: system_inactivity_timeout # also used in SV-230353
+  - name: system_inactivity_timeout
     desc: Maximum system inactivity timeout (time in seconds).
     type: Numeric
     value: 900
