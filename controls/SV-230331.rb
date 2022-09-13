@@ -30,7 +30,7 @@ its account expiration information.
     Verify each of these accounts has an expiration date set within #{input('temp_account_expire_time')[:hours]} hours.
 
     If any temporary accounts have no expiration date set or do not expire
-within #{input('temp_account_expire_time')} hours, this is a finding.
+within #{input('temp_account_expire_time')[:hours]} hours, this is a finding.
   "
   desc 'fix', "
     If a temporary account must be created configure the system to terminate

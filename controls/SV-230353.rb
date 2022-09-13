@@ -26,7 +26,7 @@ inactivity.
 
     $ sudo grep -i lock-after-time /etc/tmux.conf
 
-    set -g lock-after-time 900
+    set -g lock-after-time #{input('system_inactivity_timeout')}
 
     If \"lock-after-time\" is not set to \"#{input('fail_interval')}\" or less in the global tmux
 configuration file to enforce session lock after inactivity, this is a finding.

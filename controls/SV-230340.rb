@@ -32,8 +32,8 @@ RHEL version 8.2 or newer, this check is not applicable.
     $ sudo grep pam_faillock.so /etc/pam.d/password-auth
 
     auth required pam_faillock.so preauth dir=/var/log/faillock silent audit
-deny=#{input('unsuccessful_attempts')} even_deny_root fail_interval=#{input('fail_interval')} unlock_time= #{input('unlock_time')}
-    auth required pam_faillock.so authfail dir=/var/log/faillock unlock_time= #{input('unlock_time')}
+deny=#{input('unsuccessful_attempts')} even_deny_root fail_interval=#{input('fail_interval')} unlock_time=#{input('unlock_time')}
+    auth required pam_faillock.so authfail dir=/var/log/faillock unlock_time=#{input('unlock_time')}
     account required pam_faillock.so
 
     If the \"silent\" option is missing from the \"preauth\" line with the
@@ -42,8 +42,8 @@ deny=#{input('unsuccessful_attempts')} even_deny_root fail_interval=#{input('fai
     $ sudo grep pam_faillock.so /etc/pam.d/system-auth
 
     auth required pam_faillock.so preauth dir=/var/log/faillock silent audit
-deny=#{input('unsuccessful_attempts')} even_deny_root fail_interval=#{input('fail_interval')} unlock_time= #{input('unlock_time')}
-    auth required pam_faillock.so authfail dir=/var/log/faillock unlock_time= #{input('unlock_time')}
+deny=#{input('unsuccessful_attempts')} even_deny_root fail_interval=#{input('fail_interval')} unlock_time=#{input('unlock_time')}
+    auth required pam_faillock.so authfail dir=/var/log/faillock unlock_time=#{input('unlock_time')}
     account required pam_faillock.so
 
     If the \"silent\" option is missing from the \"preauth\" line with the
@@ -57,8 +57,8 @@ presented at logon attempts.
 \"/etc/pam.d/password-auth\" files to match the following lines:
 
     auth required pam_faillock.so preauth dir=/var/log/faillock silent audit
-deny=#{input('unsuccessful_attempts')} even_deny_root fail_interval=#{input('fail_interval')} unlock_time= #{input('unlock_time')}
-    auth required pam_faillock.so authfail dir=/var/log/faillock unlock_time= #{input('unlock_time')}
+deny=#{input('unsuccessful_attempts')} even_deny_root fail_interval=#{input('fail_interval')} unlock_time=#{input('unlock_time')}
+    auth required pam_faillock.so authfail dir=/var/log/faillock unlock_time=#{input('unlock_time')}
     account required pam_faillock.so
 
     The \"sssd\" service must be restarted for the changes to take effect. To

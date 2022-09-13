@@ -12,7 +12,7 @@ the following commands:
 
     $ sudo grep -w space_left /etc/audit/auditd.conf
 
-    space_left = #{input('storage_space_left')}%
+    space_left =#{input('storage_space_left')}%
 
     If the value of the \"space_left\" keyword is not set to \"#{input('storage_space_left')}%\" or if the
 line is commented out, ask the System Administrator to indicate how the system
@@ -27,7 +27,7 @@ ISSO (at a minimum) when allocated audit record storage volume reaches #{input('
 percent of the repository maximum audit record storage capacity by
 adding/modifying the following line in the /etc/audit/auditd.conf file.
 
-    space_left = #{input('storage_space_left')}%
+    space_left =#{input('storage_space_left')}%
 
     Note: Option names and values in the auditd.conf file are case insensitive.
   "

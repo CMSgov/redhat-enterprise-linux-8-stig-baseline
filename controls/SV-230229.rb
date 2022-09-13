@@ -43,12 +43,12 @@ command:
           Version: 3 (0x2)
           Serial Number: 1 (0x1)
           Signature Algorithm: sha256WithRSAEncryption
-          Issuer: C = US, O = U.S. Government, OU = #{input('org_name')[:acronym]}, OU = PKI, CN = #{input('org_name')[:acronym]}
+          Issuer: C = US, O = U.S. Government, OU =#{input('org_name')[:acronym]}, OU = PKI, CN =#{input('org_name')[:acronym]}
 Root CA 3
           Validity
              Not Before: Mar 20 18:46:41 2012 GMT
              Not After   : Dec 30 18:46:41 2029 GMT
-          Subject: C = US, O = U.S. Government, OU = #{input('org_name')[:acronym]}, OU = PKI, CN = #{input('org_name')[:acronym]}
+          Subject: C = US, O = U.S. Government, OU =#{input('org_name')[:acronym]}, OU = PKI, CN =#{input('org_name')[:acronym]}
 Root CA 3
           Subject Public Key Info:
              Public Key Algorithm: rsaEncryption
