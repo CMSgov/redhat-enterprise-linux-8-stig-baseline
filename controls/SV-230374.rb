@@ -25,14 +25,14 @@ control policy requirements.
   desc  'rationale', ''
   desc  'check', "
     Verify emergency accounts have been provisioned with an expiration date of
-    #{input('temp_account_expire_time'[:hours])} hours.
+    #{input('temp_account_expire_time')[:hours]} hours.
 
     For every existing emergency account, run the following command to obtain
 its account expiration information.
 
     $ sudo chage -l system_account_name
 
-    Verify each of these accounts has an expiration date set within #{input('temp_account_expire_time')} hours.
+    Verify each of these accounts has an expiration date set within #{input('temp_account_expire_time')[:hours]} hours.
     If any emergency accounts have no expiration date set or do not expire
 within #{input('temp_account_expire_time')[:hours]} hours, this is a finding.
   "
