@@ -28,7 +28,7 @@ account after #{input('unsuccessful_attempts')} unsuccessful logon attempts:
 
     $ sudo grep 'deny =' /etc/security/faillock.conf
 
-    deny =#{input('unsuccessful_attempts')}
+    deny = #{input('unsuccessful_attempts')}
 
     If the \"deny\" option is not set to \"#{input('unsuccessful_attempts')}\" or less (but not \"0\"), is
 missing or commented out, this is a finding.
@@ -40,7 +40,7 @@ logon attempts occur.
     Add/Modify the \"/etc/security/faillock.conf\" file to match the following
 line:
 
-    deny =#{input('unsuccessful_attempts')}
+    deny = #{input('unsuccessful_attempts')}
   "
   impact 0.5
   tag severity: 'medium'

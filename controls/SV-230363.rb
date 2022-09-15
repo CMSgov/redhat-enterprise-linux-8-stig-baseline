@@ -22,7 +22,7 @@ that must not be present in the old password.
 
     $ sudo grep difok /etc/security/pwquality.conf
 
-    difok =#{input('difok')}
+    difok = #{input('difok')}
 
     If the value of \"difok\" is set to less than \"#{input('difok')}\" or is commented out,
 this is a finding.
@@ -35,7 +35,7 @@ the total number of characters when passwords are changed by setting the
     Add the following line to \"/etc/security/pwquality.conf\" (or modify the
 line to have the required value):
 
-    difok =#{input('difok')}
+    difok = #{input('difok')}
   "
   impact 0.5
   tag severity: 'medium'

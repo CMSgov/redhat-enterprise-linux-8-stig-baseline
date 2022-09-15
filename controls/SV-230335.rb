@@ -28,7 +28,7 @@ account after #{input('unsuccessful_attempts')} unsuccessful logon attempts with
 
     $ sudo grep 'fail_interval =' /etc/security/faillock.conf
 
-    fail_interval =#{input('fail_interval')}
+    fail_interval = #{input('fail_interval')}
 
     If the \"fail_interval\" option is not set to \"#{input('fail_interval')}\" or more, is missing
 or commented out, this is a finding.
@@ -40,7 +40,7 @@ logon attempts occur in 15 minutes.
     Add/Modify the \"/etc/security/faillock.conf\" file to match the following
 line:
 
-    fail_interval =#{input('fail_interval')}
+    fail_interval = #{input('fail_interval')}
   "
   impact 0.5
   tag severity: 'medium'
