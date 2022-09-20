@@ -1,7 +1,5 @@
 # RedHat Enterprise Linux 8.x Security Technical Implementation Guide InSpec Profile
 
-[[_TOC_]]
-
 The Redhat Enterprise Linux 8.X Security Technical Implementation Guide (RHEL8.x STIG) InSpec Profile can help programs automate their compliance checks of RedHat Enterprise Linux 7.x System to Department of Defense (DoD) requirements.
 
 - Profile Version: `1.3.1`
@@ -12,6 +10,21 @@ This profile was developed to reduce the time it takes to perform a security che
 The results of a profile run will provide information needed to support an Authority to Operate (ATO) decision for the applicable technology.
 
 The RHEL8 STIG Profile uses the [InSpec](https://github.com/inspec/inspec) open-source compliance validation language to support automation of the required compliance, security and policy testing for Assessment and Authorization (A&A) and Authority to Operate (ATO) decisions and Continuous Authority to Operate (cATO) processes.
+
+Table of Contents
+=================
+
+* [RedHat Enterprise Linux 8.x Security Technical Implementation Guide InSpec Profile](#redhat-enterprise-linux-8x-security-technical-implementation-guide-inspec-profile)
+   * [RedHat 8.x Enterprise Linux Security Technical Implementation Guide (RHEL8 STIG)](#redhat-8x-enterprise-linux-security-technical-implementation-guide-rhel8-stig)
+* [Getting Started and Intended Usage](#getting-started-and-intended-usage)
+   * [Intended Usage - main vs releases](#intended-usage---main-vs-releases)
+   * [Environment Aware Testing](#environment-aware-testing)
+   * [Tailoring to Your Environment](#tailoring-to-your-environment)
+* [Running the Profile](#running-the-profile)
+   * [(connected) Running the Profile Directly](#connected-running-the-profile-directly)
+   * [(disconnected) Running the profile from a local archive copy](#disconnected-running-the-profile-from-a-local-archive-copy)
+   * [Different Run Options](#different-run-options)
+* [Using Heimdall for Viewing Test Results and Exporting for Checklist and eMASS](#using-heimdall-for-viewing-test-results-and-exporting-for-checklist-and-emass)
 
 ## RedHat 8.x Enterprise Linux Security Technical Implementation Guide (RHEL8 STIG)
 
