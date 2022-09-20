@@ -17,7 +17,7 @@ inputs:
 
 #SV-230244, SV-244525:
   - name: mins_of_inactivity
-    desc: Maximum number of minutes of account inactivity before account lockout
+    desc: Maximum number of minutes of account inactivity before session lockout
     type: Numeric
     value: 10
 
@@ -31,6 +31,11 @@ inputs:
     desc: Maximum system inactivity timeout (time in seconds).
     type: Numeric
     value: 900
+
+  - name: system_inactivity_timeout_minutes
+    desc: Maximum system inactivity timeout (time in minutes).
+    type: Numeric
+    value: 15
 
 #SV-230331, SV-230374:
   - name: temp_account_expire_time
@@ -57,12 +62,12 @@ inputs:
     type: Numeric
     value: 3
 
-  - name: fail_interval # also in SV-230535 
+  - name: fail_interval 
     desc: Interval of time in which the consecutive failed logon attempts must occur in order for the account to be locked out (time in seconds)
     type: Numeric
     value: 900
 
-  - name: fail_interval_mins # also in SV-230535
+  - name: fail_interval_mins 
     desc: Interval of time in which the consecutive failed logon attempts must occur in order for the account to be locked out (time in minutes)
     type: Numeric
     value: 15
