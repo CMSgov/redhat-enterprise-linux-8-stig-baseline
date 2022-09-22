@@ -1,6 +1,6 @@
 control 'SV-230336' do
-  title "RHEL 8 must automatically lock an account until the locked account is
-released by an administrator when #{input('unsuccessful_attempts')} unsuccessful logon attempts occur
+  title "RHEL 8 must automatically lock an account #{if input('lockout_time') == 0? then 'until the locked account is released by an administrator' else \"for #{input('lockout_time')/60} minutes\"}
+  when #{input('unsuccessful_attempts')} unsuccessful logon attempts occur
 during a #{input('fail_interval')/60}-minute time period."
   desc  "By limiting the number of failed logon attempts, the risk of
 unauthorized system access via user password guessing, otherwise known as
