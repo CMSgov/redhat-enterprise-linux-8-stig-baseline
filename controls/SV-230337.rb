@@ -29,9 +29,9 @@ attempts:
 
     $ sudo grep 'unlock_time =' /etc/security/faillock.conf
 
-    unlock_time = 0
+    unlock_time = #{input('lockout_time')}
 
-    If the \"unlock_time\" option is not set to \"0\", is missing or commented
+    If the \"unlock_time\" option is not set to \"#{input('lockout_time')}\", is missing or commented
 out, this is a finding.
   "
   desc 'fix', "
@@ -40,7 +40,7 @@ out, this is a finding.
     Add/Modify the \"/etc/security/faillock.conf\" file to match the following
 line:
 
-    unlock_time = 0
+    unlock_time = #{input('lockout_time')}
   "
   impact 0.5
   tag severity: 'medium'

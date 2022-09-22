@@ -37,7 +37,7 @@ not applicable.
     $ sudo grep pam_faillock.so /etc/pam.d/password-auth
 
     auth required pam_faillock.so preauth dir=/var/log/faillock silent audit
-deny=3 even_deny_root fail_interval=900 unlock_time=#{input('lockout_time')}
+deny=#{input('unsuccessful_attempts')} even_deny_root fail_interval=#{input('fail_interval')} unlock_time=#{input('lockout_time')}
     auth required pam_faillock.so authfail dir=/var/log/faillock unlock_time=#{input('lockout_time')}
     account required pam_faillock.so
 
@@ -47,7 +47,7 @@ deny=3 even_deny_root fail_interval=900 unlock_time=#{input('lockout_time')}
     $ sudo grep pam_faillock.so /etc/pam.d/system-auth
 
     auth required pam_faillock.so preauth dir=/var/log/faillock silent audit
-deny=3 even_deny_root fail_interval=900 unlock_time=#{input('lockout_time')}
+deny=#{input('unsuccessful_attempts')} even_deny_root fail_interval=#{input('fail_interval')} unlock_time=#{input('lockout_time')}
     auth required pam_faillock.so authfail dir=/var/log/faillock unlock_time=#{input('lockout_time')}
     account required pam_faillock.so
 
@@ -62,7 +62,7 @@ unsuccessful logon attempts occur.
 \"/etc/pam.d/password-auth\" files to match the following lines:
 
     auth required pam_faillock.so preauth dir=/var/log/faillock silent audit
-deny=3 even_deny_root fail_interval=900 unlock_time=#{input('lockout_time')}
+deny=#{input('unsuccessful_attempts')} even_deny_root fail_interval=#{input('fail_interval')} unlock_time=#{input('lockout_time')}
     auth required pam_faillock.so authfail dir=/var/log/faillock unlock_time=#{input('lockout_time')}
     account required pam_faillock.so
 

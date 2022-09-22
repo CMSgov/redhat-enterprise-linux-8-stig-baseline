@@ -47,7 +47,7 @@ deny=#{input('unsuccessful_attempts')} even_deny_root fail_interval=#{input('fai
     auth required pam_faillock.so authfail dir=/var/log/faillock unlock_time=#{input('lockout_time')}
     account required pam_faillock.so
 
-    If the \"fail_interval\" option is not set to \"900\" or less (but not
+    If the \"fail_interval\" option is not set to \"#{input('fail_interval')}\" or less (but not
 \"0\") on the \"preauth\" lines with the \"pam_faillock.so\" module, or is
 missing from this line, this is a finding.
   "
