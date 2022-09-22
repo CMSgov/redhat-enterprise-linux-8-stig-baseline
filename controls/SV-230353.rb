@@ -1,5 +1,5 @@
 control 'SV-230353' do
-  title "RHEL 8 must automatically lock command line user sessions after #{input('system_inactivity_timeout_minutes')}
+  title "RHEL 8 must automatically lock command line user sessions after #{input('system_inactivity_timeout')/60}
 minutes of inactivity."
   desc  "Terminating an idle session within a short time period reduces the
 window of opportunity for unauthorized personnel to take control of a
@@ -19,7 +19,7 @@ and releases the resources associated with that session.
   "
   desc  'rationale', ''
   desc  'check', "
-    Verify the operating system initiates a session lock after #{input('system_inactivity_timeout_minutes')} minutes of
+    Verify the operating system initiates a session lock after #{input('system_inactivity_timeout')/60} minutes of
 inactivity.
 
     Check the value of the system inactivity timeout with the following command:
@@ -32,7 +32,7 @@ inactivity.
 configuration file to enforce session lock after inactivity, this is a finding.
   "
   desc 'fix', "
-    Configure the operating system to enforce session lock after a period of #{input('system_inactivity_timeout_minutes')}
+    Configure the operating system to enforce session lock after a period of #{input('system_inactivity_timeout')/60}
 minutes of inactivity by adding the following line to the \"/etc/tmux.conf\"
 global configuration file:
 
