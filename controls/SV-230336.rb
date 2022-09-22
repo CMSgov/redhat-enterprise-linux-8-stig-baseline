@@ -1,5 +1,5 @@
 control 'SV-230336' do
-  title "RHEL 8 must automatically lock an account #{if input('lockout_time') == 0? then 'until the locked account is released by an administrator' else 'the other string'} unsuccessful logon attempts occur during a #{input('fail_interval')/60}-minute time period."
+  title "RHEL 8 must automatically lock an account #{if input('lockout_time') == 0? then 'until the locked account is released by an administrator'} unsuccessful logon attempts occur during a #{input('fail_interval')/60}-minute time period."
   desc  "By limiting the number of failed logon attempts, the risk of
 unauthorized system access via user password guessing, otherwise known as
 brute-force attacks, is reduced. Limits are imposed by locking the account.
