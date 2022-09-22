@@ -32,11 +32,6 @@ inputs:
     type: Numeric
     value: 900
 
-  - name: system_inactivity_timeout_minutes
-    desc: Maximum system inactivity timeout (time in minutes).
-    type: Numeric
-    value: 15
-
 #SV-230331, SV-230374:
   - name: temp_account_expire_time
     desc: Temporary (short term) should be set with an expiration date/time
