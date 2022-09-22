@@ -22,7 +22,7 @@ following commands:
 
     Note: If the System Administrator demonstrates the use of an approved
 centralized account management method that locks an account after #{input('unsuccessful_attempts')}
-unsuccessful logon attempts within a period of #{input('fail_interval_mins')} minutes, this requirement is
+unsuccessful logon attempts within a period of #{input('fail_interval')/60} minutes, this requirement is
 not applicable.
 
     Note: This check applies to RHEL versions 8.0 and 8.1, if the system is
@@ -31,8 +31,8 @@ RHEL version 8.2 or newer, this check is not applicable.
     $ sudo grep pam_faillock.so /etc/pam.d/password-auth
 
     auth required pam_faillock.so preauth dir=/var/log/faillock silent audit
-deny=#{input('unsuccessful_attempts')} even_deny_root fail_interval=#{input('fail_interval')} unlock_time=#{input('unlock_time')}
-    auth required pam_faillock.so authfail dir=/var/log/faillock unlock_time=#{input('unlock_time')}
+deny=#{input('unsuccessful_attempts')} even_deny_root fail_interval=#{input('fail_interval')} unlock_time=#{input('lockout_time')}
+    auth required pam_faillock.so authfail dir=/var/log/faillock unlock_time=#{input('lockout_time')}
     account required pam_faillock.so
 
     If the \"dir\" option is not set to a non-default documented tally log
@@ -42,8 +42,8 @@ directory on the \"preauth\" and \"authfail\" lines with the
     $ sudo grep pam_faillock.so /etc/pam.d/system-auth
 
     auth required pam_faillock.so preauth dir=/var/log/faillock silent audit
-deny=#{input('unsuccessful_attempts')} even_deny_root fail_interval=#{input('fail_interval')} unlock_time=#{input('unlock_time')}
-    auth required pam_faillock.so authfail dir=/var/log/faillock unlock_time=#{input('unlock_time')}
+deny=#{input('unsuccessful_attempts')} even_deny_root fail_interval=#{input('fail_interval')} unlock_time=#{input('lockout_time')}
+    auth required pam_faillock.so authfail dir=/var/log/faillock unlock_time=#{input('lockout_time')}
     account required pam_faillock.so
 
     If the \"dir\" option is not set to a non-default documented tally log
@@ -61,8 +61,8 @@ directory after a reboot.
 in the contents being cleared in the event of a reboot.
 
     auth required pam_faillock.so preauth dir=/var/log/faillock silent audit
-deny=#{input('unsuccessful_attempts')} even_deny_root fail_interval=#{input('fail_interval')} unlock_time=#{input('unlock_time')}
-    auth required pam_faillock.so authfail dir=/var/log/faillock unlock_time=#{input('unlock_time')}
+deny=#{input('unsuccessful_attempts')} even_deny_root fail_interval=#{input('fail_interval')} unlock_time=#{input('lockout_time')}
+    auth required pam_faillock.so authfail dir=/var/log/faillock unlock_time=#{input('lockout_time')}
     account required pam_faillock.so
 
     The \"sssd\" service must be restarted for the changes to take effect. To

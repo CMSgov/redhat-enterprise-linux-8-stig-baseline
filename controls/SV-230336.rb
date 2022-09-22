@@ -18,7 +18,7 @@ directory must be set with the \"dir\" option.
   desc  'rationale', ''
   desc  'check', "
     Check that the system locks an account after #{input('unsuccessful_attempts')} unsuccessful logon
-attempts within a period of #{input('fail_interval')/60} minutes until released by an administrator with
+attempts within a period of #{input('fail_interval')/60} minutes #{input('lockout_time') == 0? 'until released by an administrator' : "for #{input('lockout_time')/60} minutes"} with
 the following commands:
 
     Note: If the System Administrator demonstrates the use of an approved
@@ -52,8 +52,7 @@ deny=#{input('unsuccessful_attempts')} even_deny_root fail_interval=#{input('fai
 these lines, this is a finding.
   "
   desc 'fix', "
-    Configure the operating system to lock an account until released by an
-administrator when #{input('unsuccessful_attempts')} unsuccessful logon attempts occur in #{input('fail_interval')/60} minutes.
+    Configure the operating system to lock an account #{input('lockout_time') == 0? 'until released by an administrator' : "for #{input('lockout_time')/60} minutes"} when #{input('unsuccessful_attempts')} unsuccessful logon attempts occur in #{input('fail_interval')/60} minutes.
 
     Add/Modify the appropriate sections of the \"/etc/pam.d/system-auth\" and
 \"/etc/pam.d/password-auth\" files to match the following lines:
