@@ -17,7 +17,7 @@ inputs:
 
 #SV-230244, SV-244525:
   - name: mins_of_inactivity
-    desc: Maximum number of minutes of account inactivity before account lockout
+    desc: Maximum number of minutes of account inactivity before session lockout
     type: Numeric
     value: 10
 
@@ -57,25 +57,15 @@ inputs:
     type: Numeric
     value: 3
 
-  - name: fail_interval # also in SV-230535 
+  - name: fail_interval 
     desc: Interval of time in which the consecutive failed logon attempts must occur in order for the account to be locked out (time in seconds)
     type: Numeric
     value: 900
 
-  - name: fail_interval_mins # also in SV-230535
-    desc: Interval of time in which the consecutive failed logon attempts must occur in order for the account to be locked out (time in minutes)
-    type: Numeric
-    value: 15
-
-  - name: unlock_time
-    desc: Amount of time it will take for an account to be unlocked
+  - name: lockout_time
+    desc: Minimum amount of time account must be locked out after failed logins. This attribute should never be set greater than 604800 (time in seconds). ("0" or "never" locks until released by an administrator)
     type: Numeric
     value: 0
-
-  - name: lockout_time
-    desc: Minimum amount of time account must be locked out after failed logins. This attribute should never be set greater than 604800 (time in seconds).
-    type: Numeric
-    value: 604800
 
   #SV-230356
   - name: max_retry

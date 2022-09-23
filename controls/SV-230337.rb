@@ -1,7 +1,6 @@
 control 'SV-230337' do
-  title "RHEL 8 must automatically lock an account until the locked account is
-released by an administrator when #{input('unsuccessful_attempts')} unsuccessful logon attempts occur
-during a #{input('fail_interval_mins')}-minute time period."
+  title "RHEL 8 must automatically lock an account #{input('lockout_time') == 0? 'until the locked account is released by an administrator' : "for #{input('lockout_time')/60} minutes"} when #{input('unsuccessful_attempts')} unsuccessful logon attempts occur
+during a #{input('fail_interval')/60}-minute time period."
   desc  "By limiting the number of failed logon attempts, the risk of
 unauthorized system access via user password guessing, otherwise known as
 brute-force attacks, is reduced. Limits are imposed by locking the account.
@@ -25,24 +24,23 @@ directory must be set with the \"dir\" option.
 RHEL version 8.0 or 8.1, this check is not applicable.
 
     Verify the \"/etc/security/faillock.conf\" file is configured to lock an
-account until released by an administrator after #{input('unsuccessful_attempts')} unsuccessful logon
+account #{input('lockout_time') == 0? 'until released by an administrator' : "for #{input('lockout_time')/60} minutes"} after #{input('unsuccessful_attempts')} unsuccessful logon
 attempts:
 
     $ sudo grep 'unlock_time =' /etc/security/faillock.conf
 
-    unlock_time = 0
+    unlock_time = #{input('lockout_time')}
 
-    If the \"unlock_time\" option is not set to \"0\", is missing or commented
+    If the \"unlock_time\" option is not set to \"#{input('lockout_time')}\", is missing or commented
 out, this is a finding.
   "
   desc 'fix', "
-    Configure the operating system to lock an account until released by an
-administrator when #{input('unsuccessful_attempts')} unsuccessful logon attempts occur in #{input('fail_interval_mins')} minutes.
+    Configure the operating system to lock an account #{input('lockout_time') == 0? 'until released by an administrator' : "for #{input('lockout_time')/60} minutes"} when #{input('unsuccessful_attempts')} unsuccessful logon attempts occur in #{input('fail_interval')/60} minutes.
 
     Add/Modify the \"/etc/security/faillock.conf\" file to match the following
 line:
 
-    unlock_time = 0
+    unlock_time = #{input('lockout_time')}
   "
   impact 0.5
   tag severity: 'medium'
