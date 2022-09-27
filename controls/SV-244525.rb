@@ -30,7 +30,7 @@ and others, refer to the sshd_config man pages.
   desc  'rationale', ''
   desc  'check', "
     Verify all network connections associated with SSH traffic are
-automatically terminated at the end of the session or after #{input('mins_of_inactivity')} minutes of
+automatically terminated at the end of the session or after #{input('client_alive_interval')/60} minutes of
 inactivity.
 
     Check that the \"ClientAliveInterval\" variable is set to a value of
@@ -46,7 +46,7 @@ or less in \"/etc/ssh/sshd_config\", or is commented out, this is a finding.
   "
   desc  'fix', "
     Configure RHEL 8 to automatically terminate all network connections
-associated with SSH traffic at the end of a session or after #{input('mins_of_inactivity')} minutes of
+associated with SSH traffic at the end of a session or after #{input('client_alive_interval')/60} minutes of
 inactivity.
 
     Modify or append the following lines in the \"/etc/ssh/sshd_config\" file:
