@@ -16,10 +16,6 @@ inputs:
       full_form: "Department of Defense"
 
 #SV-230244, SV-244525:
-  - name: mins_of_inactivity
-    desc: Maximum number of minutes of account inactivity before session lockout
-    type: Numeric
-    value: 10
 
   - name: client_alive_interval 
     desc: Interval of network connections associated with SSH 
