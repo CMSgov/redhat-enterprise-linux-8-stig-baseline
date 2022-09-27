@@ -1,6 +1,6 @@
 control 'SV-230244' do
   title "RHEL 8 must be configured so that all network connections associated
-with SSH traffic are terminated at the end of the session or after #{input('mins_of_inactivity')} minutes
+with SSH traffic are terminated at the end of the session or after #{input('client_alive_interval')/60} minutes
 of inactivity, except to fulfill documented and validated mission requirements."
   desc  "Terminating an idle SSH session within a short time period reduces the
 window of opportunity for unauthorized personnel to take control of a
@@ -32,7 +32,7 @@ and others, refer to the sshd_config man pages.
   desc  'rationale', ''
   desc  'check', "
     Verify all network connections associated with SSH traffic are
-automatically terminated at the end of the session or after #{input('mins_of_inactivity')} minutes of
+automatically terminated at the end of the session or after #{input('client_alive_interval')/60} minutes of
 inactivity.
 
     Check that the \"ClientAliveCountMax\" is set to \"0\" by performing the
@@ -48,7 +48,7 @@ following command:
   "
   desc  'fix', "
     Configure RHEL 8 to automatically terminate all network connections
-associated with SSH traffic at the end of a session or after #{input('mins_of_inactivity')} minutes of
+associated with SSH traffic at the end of a session or after #{input('client_alive_interval')/60} minutes of
 inactivity.
 
     Modify or append the following lines in the \"/etc/ssh/sshd_config\" file:
