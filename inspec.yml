@@ -246,6 +246,7 @@ inputs:
     type: Array
     value: []
 
+  #SV-230346
   - name: maxlogins_limit
     desc: Amount of max logins allowed
     type: String
