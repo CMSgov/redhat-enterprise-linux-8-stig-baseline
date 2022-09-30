@@ -28,13 +28,31 @@ inputs:
     type: Numeric
     value: 900
 
-#SV-230331, SV-230374:
+#SV-230331
+  - name: temporary_accounts
+    desc: Temporary user accounts
+    type: Array
+    value: []
+    
   - name: temp_account_expire_time
     desc: Temporary (short term) should be set with an expiration date/time
     type: Hash
     value: 
       hours: 72
       days: 3
+      
+#SV-230374:
+  - name: emergency_accounts
+    desc: Emergency user accounts
+    type: Array
+    value: []
+    
+  - name: emergency_account_expire_time
+    desc: Emergency (short term) should be set with an expiration date/time
+    type: Hash
+    value: 
+      hours: 72
+      days: 3      
 
 #SV-230483, SV-244543:
   - name: storage_volume
@@ -240,11 +258,6 @@ inputs:
     desc: Maximum number of days if account inactivity before account lockout
     type: Numeric
     value: 35
-
-  - name: temporary_accounts
-    desc: Temporary user accounts
-    type: Array
-    value: []
 
   #SV-230346
   - name: maxlogins_limit
