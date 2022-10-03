@@ -35,7 +35,7 @@ or commented out, this is a finding.
   "
   desc  'fix', "
     Configure the operating system to lock an account when #{input('unsuccessful_attempts')} unsuccessful
-logon attempts occur in 15 minutes.
+logon attempts occur in #{input('fail_interval')/60} minutes.
 
     Add/Modify the \"/etc/security/faillock.conf\" file to match the following
 line:
