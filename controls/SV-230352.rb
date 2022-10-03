@@ -1,5 +1,5 @@
 control 'SV-230352' do
-  title "RHEL 8 must automatically lock graphical user sessions after 15
+  title "RHEL 8 must automatically lock graphical user sessions after #{input('system_inactivity_timeout')/60}
 minutes of inactivity."
   desc  "A session lock is a temporary action taken when a user stops work and
 moves away from the immediate physical vicinity of the information system but
@@ -15,7 +15,7 @@ necessary to temporarily vacate the immediate physical vicinity.
   "
   desc  'rationale', ''
   desc  'check', "
-    Verify the operating system initiates a session lock after a 15-minute
+    Verify the operating system initiates a session lock after a #{input('system_inactivity_timeout')/60}-minute
 period of inactivity for graphical user interfaces with the following commands:
 
     This requirement assumes the use of the RHEL 8 default graphical user
@@ -24,13 +24,13 @@ interface installed, this requirement is Not Applicable.
 
     $ sudo gsettings get org.gnome.desktop.session idle-delay
 
-    uint32 900
+    uint32 #{input('system_inactivity_timeout')}
 
-    If \"idle-delay\" is set to \"0\" or a value greater than \"900\", this is
+    If \"idle-delay\" is set to \"0\" or a value greater than \"#{input('system_inactivity_timeout')}\", this is
 a finding.
   "
   desc 'fix', "
-    Configure the operating system to initiate a screensaver after a 15-minute
+    Configure the operating system to initiate a screensaver after a #{input('system_inactivity_timeout')/60}-minute
 period of inactivity for graphical user interfaces.
 
     Create a database to contain the system-wide screensaver settings (if it
@@ -42,8 +42,8 @@ does not already exist) with the following command:
 lines:
 
     [org/gnome/desktop/session]
-    # Set the lock time out to 900 seconds before the session is considered idle
-    idle-delay=uint32 900
+    # Set the lock time out to #{input('system_inactivity_timeout')} seconds before the session is considered idle
+    idle-delay=uint32 #{input('system_inactivity_timeout')}
 
     Update the system databases:
 
