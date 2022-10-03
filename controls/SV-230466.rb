@@ -47,7 +47,7 @@ faillock tallies are stored with the following commands:
     $ sudo grep -i pam_faillock.so /etc/pam.d/system-auth
 
     auth     required          pam_faillock.so preauth dir=/var/log/faillock
-silent deny=3 fail_interval=900 even_deny_root
+silent deny=#{input('unsuccessful_attempts')} fail_interval=#{input('fail_interval')} even_deny_root
 
     For RHEL versions 8.2 and newer:
 
