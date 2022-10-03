@@ -30,8 +30,8 @@ attempts occur with the following commands:
     If the system is RHEL version 8.2 or newer, this check is not applicable.
 
     Note: If the System Administrator demonstrates the use of an approved
-centralized account management method that locks an account after three
-unsuccessful logon attempts within a period of 15 minutes, this requirement is
+centralized account management method that locks an account after #{input('unsuccessful_attempts')}
+unsuccessful logon attempts within a period of #{input('fail_interval')/60} minutes, this requirement is
 not applicable.
 
     $ sudo grep pam_faillock.so /etc/pam.d/password-auth
