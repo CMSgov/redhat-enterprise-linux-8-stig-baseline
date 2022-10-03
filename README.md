@@ -1,407 +1,245 @@
-# RHEL8 STIG Automated Compliance Validation Profile
+# redhat-enterprise-linux-8-stig-baseline
 
-<b>RHEL 8.X</b> STIG Automated Compliance Validation Profile works with Chef InSpec to perform automated compliance checks of <b>RHEL8</b>.
+InSpec profile to validate the secure configuration of Red Hat Enterprise Linux 8 against [DISA's](https://public.cyber.mil/stigs/) Red Hat Enterprise Linux 8 STIG Version 1 Release 3.
 
-This automated Security Technical Implementation Guide (STIG) validator was developed to reduce the time it takes to perform a security check based upon STIG Guidance from DISA. These check results should provide information needed to receive a secure authority to operate (ATO) certification for the applicable technology.
-<b>RHEL8</b> uses [Chef InSpec](https://github.com/chef/inspec), which provides an open source compliance, security and policy testing framework that dynamically extracts system configuration information.
+This RHEL8 Check Profile also performs checks for both the VM Operating System and container based UBI checks. 
 
-<b>**Please note: **</b> This RHEL8 Check Profile performs checks for both the VM Operating System and conatiner based UBI checks. Link [here](https://gitlab.dsolab.io/scv-content/inspec/operating-systems/redhat-enterprise-linux-8-stig-baseline/-/blob/master/README.md#normal-checks) for VM normal checks, and [here](https://gitlab.dsolab.io/scv-content/inspec/operating-systems/redhat-enterprise-linux-8-stig-baseline/-/blob/master/README.md#ubi8-container-applicable-checks) for the UBI list of checks.
+## Tailoring to Your Environment
 
-## RHEL8 STIG Overview
+The following inputs may be configured in an inputs ".yml" file for the profile to run correctly for your specific environment. More information about InSpec inputs can be found in the [InSpec Profile Documentation](https://www.inspec.io/docs/reference/profiles/).
 
-The <b>RHEL8</b> STIG (https://public.cyber.mil/stigs/) by the United States Defense Information Systems Agency (DISA) offers a comprehensive compliance guide for the configuration and operation of various technologies.
-DISA has created and maintains a set of security guidelines for applications, computer systems or networks connected to the DoD. These guidelines are the primary security standards used by many DoD agencies. In addition to defining security guidelines, the STIG also stipulates how security training should proceed and when security checks should occur. Organizations must stay compliant with these guidelines or they risk having their access to the DoD terminated.
+```
+# Used by InSpec check SV-230309
+# InSpec Tests that are known to consistently have long run times can be disabled with this attribute
+# Description: Controls that are known to consistently have long run times can be disabled with this attribute
+# Type: Boolean
+# (default value): false
+disable_slow_controls: 
 
-[STIG](https://en.wikipedia.org/wiki/Security_Technical_Implementation_Guide)s are the configuration standards for United States Department of Defense (DoD) Information Assurance (IA) and IA-enabled devices/systems published by the United States Defense Information Systems Agency (DISA). Since 1998, DISA has played a critical role enhancing the security posture of DoD's security systems by providing the STIGs. The STIGs contain technical guidance to "lock down" information systems/software that might otherwise be vulnerable to a malicious computer attack.
+# Used by InSpec check SV-230548
+# Description: Flag to designate if the target is a container host
+# Type: Boolean
+# (default value): false
+container_host:
 
-The requirements associated with the <b>RHEL8</b> STIG are derived from the [National Institute of Standards and Technology](https://en.wikipedia.org/wiki/National_Institute_of_Standards_and_Technology) (NIST) [Special Publication (SP) 800-53, Revision 4](https://en.wikipedia.org/wiki/NIST_Special_Publication_800-53) and related documents.
+# Used by InSpec check SV-230234
+# Description: Main grub boot config file
+# Type: String
+# (default value): "/boot/efi/EFI/redhat/grub.cfg"
+grub_uefi_main_cfg:
 
-While the RHEL8 STIG automation profile check was developed to provide technical guidance to validate information with security systems such as applications, the guidance applies to all organizations that need to meet internal security as well as compliance standards.
+# Used by InSpec check SV-230234
+# Description: Grub boot config files
+# Type: Array
+# (default value): ["/boot/efi/EFI/redhat/user.cfg"]
+grub_uefi_user_boot_files: []
 
-### This STIG Automated Compliance Validation Profile was developed based upon:
+# Used by InSpec check SV-230317, SV-230321, SV-230322, SV-230325, SV-230328, SV-230309, SV-230320
+# Description: Users exempt from home directory-based controls in array format
+# Type: Array
+# (default value): ["vagrant"]
+exempt_home_users: []
 
-- RHEL8 Security Technical Implementation Guide
+# Used by InSpec check SV-230317, SV-230321, SV-230322, SV-230325, SV-230328, SV-230309, SV-230320
+# Description: These shells do not allow a user to login
+# Type: Array
+# (default value):
+#      - "/sbin/nologin"
+#      - "/sbin/halt"
+#      - "/sbin/shutdown"
+#      - "/bin/false"
+#      - "/bin/sync"
+#      - "/bin/true"
+non_interactive_shells: []
 
-### Update History
+# Used by InSpec check SV-230379
+# Description: System accounts that support approved system activities.
+# Type: Array
+# (default value):
+#      - "root"
+#      - "bin"
+#      - "daemon"
+#      - "adm"
+#      - "lp"
+#      - "sync"
+#      - "shutdown"
+#      - "halt"
+#      - "mail"
+#      - "operator"
+#      - "nobody"
+#      - "systemd-bus-proxy"
+#      - "dbus"
+#      - "polkitd"
+#      - "postfix"
+#      - "sssd"
+#      - "chrony"
+#      - "systemd-network"
+#      - "sshd"
+#      - "ntp"
+known_system_accounts: []
 
-| Guidance Name                             | Guidance Version | Guidance Location                         | Profile Version | Profile Release Date | STIG EOL | Profile EOL |
-| ----------------------------------------- | ---------------- | ----------------------------------------- | --------------- | -------------------- | -------- | ----------- |
-| Red Hat Enterprise Linux 8 STIG Benchmark | v1r3             | https://public.cyber.mil/stigs/downloads/ | 2.0.1           | 09/02/2021           | NA       | NA          |
-| Red Hat Enterprise Linux 8 STIG Benchmark | v1r3             | https://public.cyber.mil/stigs/downloads/ | 2.0.2           | 12/08/2021           | NA       | NA          |
-| Red Hat Enterprise Linux 8 STIG Benchmark | v1r3             | https://public.cyber.mil/stigs/downloads/ | 2.1.0           | 12/14/2021           | NA       | NA          |
+# Description: Accounts of known managed users
+# Type: Array
+# (default value): ["vagrant"]
+user_accounts: []
 
-## Getting Started
+# Used by InSpec check SV-230379
+# Description: The path to the logging package
+# Type: String
+# (default value): "/etc/rsyslog.conf"
+log_pkg_path:
 
-### Requirements
+# Used by InSpec check SV-230235
+# Description: Main grub boot config file
+# Type: String
+# (default value): "/boot/grub2/grub.cfg"
+grub_main_cfg: 
 
-#### RHEL8  
-- Local or remote access to the RHEL8 Operating System
-- Account providing appropriate permissions to perform audit scan
+# Description: Grub boot config files
+# Type: Array
+# (default value):["/boot/grub2/user.cfg"]
+grub_user_boot_files: []
 
-#### Required software on RHEL8 OS
-- git
-- [InSpec](https://www.chef.io/products/chef-inspec/)
+# Used by InSpec check SV-230537
+# Description: Set to 'true' if IPv4 is enabled on the system.
+# Type: Boolean
+# (default value): true
+ipv4_enabled:
 
-### Setup Environment on RHEL8 OS
-#### Install InSpec
-Goto https://www.inspec.io/downloads/ and consult the documentation for your Operating System to download and install InSpec.
+# Used by InSpec check SV-230537
+# Description: Set to 'true' if IPv6 is enabled on the system.
+# Type: Boolean
+# (default value): true
+ipv6_enabled:
 
-#### Ensure InSpec version is at least 4.23.10 
-```sh
-inspec --version
+# Used by InSpec check SV-230493
+# Description: Device or system does not have a camera installed.
+# Type: Boolean
+# (default value): true
+camera_installed:
+
+# Used by InSpec check SV-230503
+# Description: 'Device or operating system has a Bluetooth adapter installed'
+# Type: Boolean
+# (default value): true
+bluetooth_installed:
+
+# Used by InSpec check SV-230242
+# Description: System accounts that support approved system activities.
+# Type: Array
+# (default value): 
+#      - 'root'
+#      - 'bin'
+#      - 'daemon'
+#      - 'adm'
+#      - 'lp'
+#      - 'sync'
+#      - 'shutdown'
+#      - 'halt'
+#      - 'mail'
+#      - 'operator'
+#      - 'nobody'
+#      - 'systemd-bus-proxy'
+#      - 'dbus'
+#      - 'polkitd'
+#      - 'postfix'
+#      - 'sssd'
+#      - 'chrony'
+#      - 'systemd-network'
+#      - 'sshd'
+#      - 'ntp'
+known_system_accounts: []
+
+# Description: Smart card status (enabled or disabled)
+# Type: String
+# (default value): 'enabled'
+smart_card_status: 
+
+# Used by InSpec check SV-230263
+# Description: Name of integrity checking tool
+# Type: String
+# (default value): 'aide'
+file_integrity_tool: 
+
+# Used by InSpec check SV-230484
+# Description: Timeserver used in /etc/chrony.conf
+# Type: String
+# (default value): 0.us.pool.ntp.mil
+authoritative_timeserver: 
+
+# Used by InSpec check SV-230537
+# Description: File systems listed in /etc/fstab which are not removable media devices
+# Type: Array
+# (default value): ["/", "/tmp", "none", "/home"]
+non_removable_media_fs: []
+
+# Used by InSpec check SV-230230
+# Description: List of full paths to private key files on the system
+# Type: Array
+# (default value): []
+private_key_files: []
+
+# Used by InSpec check SV-230229
+# Description: Path to an accepted trust anchor certificate file (DoD)
+# Type: String
+# (default value): "/etc/sssd/pki/sssd_auth_ca_db.pem"
+root_ca_file: 
+
+# Description: Temporary user accounts
+# Type: Array
+# (default value): []
+temporary_accounts: []
+
+# Description: Documented tally log directory
+# Type: String
+# (default value): '/var/log/faillock'
+log_directory: 
+
 ```
 
-### Update Profile Input Values
-Update the following `Inputs` in `inspec.yml` if the default values differ in your platform.
+## Running This Overlay Directly from Github
 
-```yml
-  - name: disable_slow_controls
-    description: Controls that are known to consistently have long run times can be disabled with this attribute
-    type: Boolean
-    value: false
-
-  #SV-230548
-  - name: container_host
-    description: Flag to designate if the target is a container host
-    type: Boolean
-    value: false
-
-  # SV-230368
-  - name: min_reuse_generations
-    description: Number of reuse generations
-    type: Numeric
-    value: 5
-
-  # SV-230369, SV-230370
-  - name: min_len
-    description: Minimum number of characters for a new password
-    type: Numeric
-    value: 15
-
-  # SV-230234
-  - name: grub_uefi_main_cfg
-    description: Main grub boot config file
-    type: String
-    value: "/boot/efi/EFI/redhat/grub.cfg"
-
-  - name: grub_uefi_user_boot_files
-    description: Grub boot config files
-    type: Array
-    value: ["/boot/efi/EFI/redhat/user.cfg"]
-
-  # SV-230317, SV-230321, SV-230322, SV-230325, SV-230328, SV-230309, SV-230320
-  - name: exempt_home_users
-    description: Users exempt from home directory-based controls in array format
-    type: Array
-    value: ["vagrant"]
-
-  - name: non_interactive_shells
-    description: These shells do not allow a user to login
-    type: Array
-    value:
-      - "/sbin/nologin"
-      - "/sbin/halt"
-      - "/sbin/shutdown"
-      - "/bin/false"
-      - "/bin/sync"
-      - "/bin/true"
-
-  # SV-230379
-  - name: known_system_accounts
-    description: System accounts that support approved system activities.
-    type: Array
-    value:
-      - "root"
-      - "bin"
-      - "daemon"
-      - "adm"
-      - "lp"
-      - "sync"
-      - "shutdown"
-      - "halt"
-      - "mail"
-      - "operator"
-      - "nobody"
-      - "systemd-bus-proxy"
-      - "dbus"
-      - "polkitd"
-      - "postfix"
-      - "sssd"
-      - "chrony"
-      - "systemd-network"
-      - "sshd"
-      - "ntp"
-
-  - name: user_accounts
-    description: Accounts of known managed users
-    type: Array
-    value: ["vagrant"]
-
-  # SV-230379
-  - name: log_pkg_path
-    description: The path to the logging package
-    type: String
-    value: "/etc/rsyslog.conf"
-
-  # SV-230235
-  - name: grub_main_cfg
-    description: Main grub boot config file
-    type: String
-    value: "/boot/grub2/grub.cfg"
-
-  - name: grub_user_boot_files
-    description: Grub boot config files
-    type: Array
-    value:
-      - "/boot/grub2/user.cfg"
-
-  # SV-230537
-  - name: ipv4_enabled
-    description: Set to 'true' if IPv4 is enabled on the system.
-    type: Boolean
-    value: true
-
-  # SV-230537
-  - name: ipv6_enabled
-    description: Set to 'true' if IPv6 is enabled on the system.
-    type: Boolean
-    value: true
-
-  # SV-230493
-  - name: camera_installed
-    description: Device or system does not have a camera installed.
-    type: Boolean
-    value: true
-
-  # SV-230503
-  - name: bluetooth_installed
-    description: 'Device or operating system has a Bluetooth adapter installed'
-    type: Boolean
-    value: true
-
-  # SV-230242
-  - name: known_system_accounts
-    description: System accounts that support approved system activities.
-    type: Array
-    value: 
-      - 'root'
-      - 'bin'
-      - 'daemon'
-      - 'adm'
-      - 'lp'
-      - 'sync'
-      - 'shutdown'
-      - 'halt'
-      - 'mail'
-      - 'operator'
-      - 'nobody'
-      - 'systemd-bus-proxy'
-      - 'dbus'
-      - 'polkitd'
-      - 'postfix'
-      - 'sssd'
-      - 'chrony'
-      - 'systemd-network'
-      - 'sshd'
-      - 'ntp'
-
-  - name: smart_card_status
-    description: Smart card status (enabled or disabled)
-    type: String
-    value: 'enabled'
-
-  # SV-230263
-  - name: file_integrity_tool
-    description: Name of tool
-    type: String
-    value: 'aide'
-  # SV-230484
-  - name: authoritative_timeserver
-    description: Timeserver used in /etc/chrony.conf
-    type: String
-    value: 0.us.pool.ntp.mil
-
-  # SV-230537
-  - name: non_removable_media_fs
-    description: File systems listed in /etc/fstab which are not removable media devices
-    type: Array
-    value: ["/", "/tmp", "none", "/home"]
-
-  # SV-230230
-  - name: private_key_files
-    description: List of full paths to private key files on the system
-    type: Array
-    value: []
-
-  #SV-230229
-  - name: root_ca_file
-    description: Path to an accepted trust anchor certificate file (DoD)
-    type: String
-    value: "/etc/sssd/pki/sssd_auth_ca_db.pem"
-
-  #SV-230333
-  - name: unsuccessful_attempts
-    description: Maximum number of unsuccessful attempts before lockout
-    type: Numeric
-    value: 3
-
-  #SV-230353
-  - name: system_inactivity_timeout
-    description: Maximum system inactivity timeout (time in seconds).
-    type: Numeric
-    value: 900
-
-  #SV-230356
-  - name: max_retry
-    description: Maximum number of retry attempts for login
-    type: Numeric
-    value: 3
-
-  #SV-230363
-  - name: difok
-    description: Minimum number of characters that must be different from previous password
-    type: Numeric
-    value: 8
-
-  #SV-230373
-  - name: days_of_inactivity
-    description: Maximum number of days if account inactivity before account lockout
-    type: Numeric
-    value: 35
-
-  - name: temporary_accounts
-    description: Temporary user accounts
-    type: Array
-    value: []
-
-  - name: banner_message_text_cli
-    description: Banner message text for command line interface logins.
-    type: String
-    value: "You are accessing a U.S. Government (USG) Information System (IS) that is \
-    provided for USG-authorized use only. By using this IS (which includes any \
-    device attached to this IS), you consent to the following conditions: -The USG \
-    routinely intercepts and monitors communications on this IS for purposes \
-    including, but not limited to, penetration testing, COMSEC monitoring, network \
-    operations and defense, personnel misconduct (PM), law enforcement (LE), and \
-    counterintelligence (CI) investigations. -At any time, the USG may inspect and \
-    seize data stored on this IS. -Communications using, or data stored on, this \
-    IS are not private, are subject to routine monitoring, interception, and \
-    search, and may be disclosed or used for any USG-authorized purpose. -This IS \
-    includes security measures (e.g., authentication and access controls) to \
-    protect USG interests--not for your personal benefit or privacy. \
-    -Notwithstanding the above, using this IS does not constitute consent to PM, \
-    LE or CI investigative searching or monitoring of the content of privileged \
-    communications, or work product, related to personal representation or \
-    services by attorneys, psychotherapists, or clergy, and their assistants. Such \
-    communications and work product are private and confidential. See User \
-    Agreement for details."
-
-
-  - name: banner_message_text_ral
-    description: Banner message text for remote access logins.
-    type: String
-    value: "You are accessing a U.S. Government (USG) Information System (IS) that is \
-    provided for USG-authorized use only. By using this IS (which includes any \
-    device attached to this IS), you consent to the following conditions: -The USG \
-    routinely intercepts and monitors communications on this IS for purposes \
-    including, but not limited to, penetration testing, COMSEC monitoring, network \
-    operations and defense, personnel misconduct (PM), law enforcement (LE), and \
-    counterintelligence (CI) investigations. -At any time, the USG may inspect and \
-    seize data stored on this IS. -Communications using, or data stored on, this \
-    IS are not private, are subject to routine monitoring, interception, and \
-    search, and may be disclosed or used for any USG-authorized purpose. -This IS \
-    includes security measures (e.g., authentication and access controls) to \
-    protect USG interests--not for your personal benefit or privacy. \
-    -Notwithstanding the above, using this IS does not constitute consent to PM, \
-    LE or CI investigative searching or monitoring of the content of privileged \
-    communications, or work product, related to personal representation or \
-    services by attorneys, psychotherapists, or clergy, and their assistants. Such \
-    communications and work product are private and confidential. See User \
-    Agreement for details."
-
-  - name: banner_message_text_gui
-    description: Banner message text for graphical user interface logins.
-    type: String
-    value: "You are accessing a U.S. Government (USG) Information System (IS) that is \
-    provided for USG-authorized use only. By using this IS (which includes any \
-    device attached to this IS), you consent to the following conditions: -The USG \
-    routinely intercepts and monitors communications on this IS for purposes \
-    including, but not limited to, penetration testing, COMSEC monitoring, network \
-    operations and defense, personnel misconduct (PM), law enforcement (LE), and \
-    counterintelligence (CI) investigations. -At any time, the USG may inspect and \
-    seize data stored on this IS. -Communications using, or data stored on, this \
-    IS are not private, are subject to routine monitoring, interception, and \
-    search, and may be disclosed or used for any USG-authorized purpose. -This IS \
-    includes security measures (e.g., authentication and access controls) to \
-    protect USG interests--not for your personal benefit or privacy. \
-    -Notwithstanding the above, using this IS does not constitute consent to PM, \
-    LE or CI investigative searching or monitoring of the content of privileged \
-    communications, or work product, related to personal representation or \
-    services by attorneys, psychotherapists, or clergy, and their assistants. Such \
-    communications and work product are private and confidential. See User \
-    Agreement for details."
-
-  - name: maxlogins_limit
-    description: Amount of max logins allowed
-    type: String
-    value: '10'
-
-  - name: unsuccessful_attempts
-    description: number of unsuccessful attempts
-    type: Numeric
-    value: 3
-
-  - name: fail_interval
-    description: Interval of time in which the consecutive failed logon attempts must occur in order for the account to be locked out (time in seconds)
-    type: Numeric
-    value: 900
-
-  - name: lockout_time
-    description: Minimum amount of time account must be locked out after failed logins. This attribute should never be set greater than 604800 (time in seconds).
-    type: Numeric
-    value: 604800
-
-  - name: log_directory
-    description: Documented tally log directory
-    type: String
-    value: '/var/log/faillock'
+Against a remote target using ssh with escalated privileges (i.e., inspec installed on a separate runner host)
+```bash
+inspec exec https://github.com/CMSgov/redhat-enterprise-linux-8-stig-baseline/archive/<Release version # or Development "main" branch>.tar.gz -t ssh://TARGET_USERNAME:TARGET_PASSWORD@TARGET_IP:TARGET_PORT --sudo --sudo-password=<SUDO_PASSWORD_IF_REQUIRED> --input-file <path_to_your_input_file/name_of_your_input_file.yml> --reporter json:<path_to_your_output_file/name_of_your_output_file.json> 
 ```
 
-### How to execute this instance  
-(See: https://www.inspec.io/docs/reference/cli/)
-
-
-
-
-### How to execute this instance  
-(See: https://www.inspec.io/docs/reference/cli/
-
-#### Execute a single Control in the Profile 
-**Note**: Replace the profile's directory name - e.g. - `<Profile>` with `.` if currently in the profile's root directory.
-
-```sh
-inspec exec <Profile> -t ssh://TARGET_USERNAME@TARGET_IP:TARGET_PORT --sudo -i <your_PEM_KEY> --controls=<control_id> --show-progress
+Against a remote target using a pem key with escalated privileges (i.e., inspec installed on a separate runner host)
+```bash
+inspec exec https://github.com/CMSgov/redhat-enterprise-linux-8-stig-baseline/archive/<Release version # or Development "main" branch>.tar.gz -t ssh://TARGET_USERNAME@TARGET_IP:TARGET_PORT --sudo -i <your_PEM_KEY> --input-file <path_to_your_input_file/name_of_your_input_file.yml> --reporter json:<path_to_your_output_file/name_of_your_output_file.json>  
 ```
 
-#### Execute a Single Control when password is required for privilege escalation 
+Against a local Red Hat host with escalated privileges (i.e., inspec installed on the target)
+```bash
+sudo inspec exec https://github.com/CMSgov/redhat-enterprise-linux-8-stig-baseline/archive/<Release version # or Development "main" branch>.tar.gz --input-file <path_to_your_input_file/name_of_your_input_file.yml> --reporter json:<path_to_your_output_file/name_of_your_output_file.json> 
 ```
-inspec exec <Profile> -t ssh://TARGET_USERNAME@TARGET_IP:TARGET_PORT --sudo --sudo-password=$SUDO_PASSWORD -i <your_PEM_KEY> --controls=<control_id> --show-progress
+### Different Run Options
+
+  [Full exec options](https://docs.chef.io/inspec/cli/#options-3)
+
+## Running This Overlay from a local Archive copy
+If your runner is not always expected to have direct access to GitHub, use the following steps to create an archive bundle of this overlay and all of its dependent tests:
+
+(Git is required to clone the InSpec profile using the instructions below. Git can be downloaded from the [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) site.) 
+
+```
+mkdir profiles
+cd profiles
+git clone -b <Release version # or Development "main" branch> https://github.com/CMSgov/redhat-enterprise-linux-8-stig-baseline.git
+inspec archive redhat-enterprise-linux-8-stig-baseline
+sudo inspec exec <name of generated archive> --input-file <path_to_your_input_file/name_of_your_input_file.yml> --reporter json:<path_to_your_output_file/name_of_your_output_file.json> 
 ```
 
-#### Execute a Single Control and save results as JSON 
-```sh
-inspec exec <Profile> -t ssh://TARGET_USERNAME@TARGET_IP:TARGET_PORT --sudo -i <your_PEM_KEY> --controls=<control_id> --show-progress --reporter json:results.json
+For every successive run, follow these steps to always have the latest version of this overlay and dependent profiles:
+
+```
+cd redhat-enterprise-linux-8-stig-baseline
+git pull
+cd ..
+inspec archive redhat-enterprise-linux-8-stig-baseline --overwrite
+sudo inspec exec <name of generated archive> --input-file <path_to_your_input_file/name_of_your_input_file.yml> --reporter json:<path_to_your_output_file/name_of_your_output_file.json> 
 ```
 
-#### Execute All Controls in the Profile 
-```sh
-inspec exec <Profile>  -t ssh://TARGET_USERNAME@TARGET_IP:TARGET_PORT --sudo -i <your_PEM_KEY> --show-progress
-```
-
-#### Execute all the Controls in the Profile and save results as JSON 
-```sh
-inspec exec <Profile> -t ssh://TARGET_USERNAME@TARGET_IP:TARGET_PORT --sudo -i <your_PEM_KEY> --show-progress  --reporter json:results.json
-```
 
 ## Check Overview:
 
@@ -956,10 +794,32 @@ Defense Information Systems Agency (DISA) https://www.disa.mil/
 
 STIG support by DISA Risk Management Team and Cyber Exchange https://public.cyber.mil/
 
-## Feedback and Support
-
-For questions or comments regarding the validation profile, please contact the DISA SD DevSecOps Helpdesk: disa.meade.sd.mbx.devsecops-mailbox@mail.mil
-
 ## Legal Notices
 
 Copyright © 2020 Defense Information Systems Agency (DISA)
+
+## Authors
+* Sumaa Sayed
+* Shivani Karikar
+
+## Special Thanks
+* Eugene Aronne
+* Will Dower
+
+## Contributing and Getting Help
+To report a bug or feature request, please open an [issue](https://github.com/CMSgov/redhat-enterprise-linux-8-stig-baseline/issues/new).
+
+### NOTICE
+© 2022 The MITRE Corporation.
+
+Approved for Public Release; Distribution Unlimited. Case Number 18-3678.
+
+### NOTICE 
+
+MITRE grants permission to reproduce, distribute, modify, and otherwise use this software to the extent permitted by the licensed terms provided in the LICENSE.md file included with this project.
+ 
+This software was produced by The MITRE Corporation for the U. S. Government under contract. As such the U.S. Government has certain use and data rights in this software. No use other than those granted to the U. S. Government, or to those acting on behalf of the U. S. Government, under these contract arrangements is authorized without the express written permission of The MITRE Corporation.
+ 
+For further information, please contact The MITRE Corporation, Contracts Management Office, 7515 Colshire Drive, McLean, VA 22102-7539, (703) 983-6000.
+
+DISA STIGs are published at: https://public.cyber.mil/stigs/
