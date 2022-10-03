@@ -60,6 +60,8 @@ lines:
   tag cci: ['CCI-000057']
   tag nist: ['AC-11 a']
 
+  system_inactivity_timeout = input('system_inactivity_timeout')
+
   if virtualization.system.eql?('docker')
     impact 0.0
     describe "Control not applicable within a container" do
@@ -68,7 +70,7 @@ lines:
   else
     if package('gnome-desktop3').installed?
       describe command("gsettings get org.gnome.desktop.session idle-delay | cut -d ' ' -f2") do
-        its('stdout.strip') { should cmp <= 900 }
+        its('stdout.strip') { should cmp <= system_inactivity_timeout }
         its('stdout.strip') { should cmp >= 0 }
       end
     else
