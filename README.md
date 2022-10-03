@@ -190,6 +190,11 @@ root_ca_file:
 # (default value): []
 temporary_accounts: []
 
+# Description: Emergency user accounts
+# Type: Array
+# (default value): []
+emergency_accounts: []
+
 # Description: Documented tally log directory
 # Type: String
 # (default value): '/var/log/faillock'
