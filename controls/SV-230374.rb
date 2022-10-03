@@ -1,6 +1,6 @@
 control 'SV-230374' do
   title "RHEL 8 emergency accounts must be automatically removed or disabled
-after the crisis is resolved or within #{input('temp_account_expire_time')[:hours]} hours."
+after the crisis is resolved or within #{input('emergency_account_expire_time')[:hours]} hours."
   desc  "Emergency accounts are privileged accounts established in response to
 crisis situations where the need for rapid account activation is required.
 Therefore, emergency account activation may bypass normal account authorization
@@ -25,24 +25,24 @@ control policy requirements.
   desc  'rationale', ''
   desc  'check', "
     Verify emergency accounts have been provisioned with an expiration date of
-    #{input('temp_account_expire_time')[:hours]} hours.
+    #{input('emergency_account_expire_time')[:hours]} hours.
 
     For every existing emergency account, run the following command to obtain
 its account expiration information.
 
     $ sudo chage -l system_account_name
 
-    Verify each of these accounts has an expiration date set within #{input('temp_account_expire_time')[:hours]} hours.
+    Verify each of these accounts has an expiration date set within #{input('emergency_account_expire_time')[:hours]} hours.
     If any emergency accounts have no expiration date set or do not expire
-within #{input('temp_account_expire_time')[:hours]} hours, this is a finding.
+within #{input('emergency_account_expire_time')[:hours]} hours, this is a finding.
   "
   desc 'fix', "
     If an emergency account must be created, configure the system to terminate
-the account after #{input('temp_account_expire_time')[:hours]} hours with the following command to set an expiration date
+the account after #{input('emergency_account_expire_time')[:hours]} hours with the following command to set an expiration date
 for the account. Substitute \"system_account_name\" with the account to be
 created.
 
-    $ sudo chage -E `date -d \"+#{input('temp_account_expire_time')[:days]} days\" +%Y-%m-%d` system_account_name
+    $ sudo chage -E `date -d \"+#{input('emergency_account_expire_time')[:days]} days\" +%Y-%m-%d` system_account_name
 
     The automatic expiration or disabling time period may be extended as needed
 until the crisis is resolved.
@@ -57,16 +57,16 @@ until the crisis is resolved.
   tag cci: ['CCI-001682']
   tag nist: ['AC-2 (2)']
 
-  temporary_accounts = input('temporary_accounts')
-  max_day = input('temp_account_expire_time')[:days]
+  emergency_accounts = input('emergency_accounts')
+  max_day = input('emergency_account_expire_time')[:days]
 
-  if temporary_accounts.empty?
-    describe 'Temporary accounts' do
-      subject { temporary_accounts }
+  if emergency_accounts.empty?
+    describe 'Emergency accounts' do
+      subject { emergency_accounts }
       it { should be_empty }
     end
   else
-    temporary_accounts.each do |acct|
+    emergency_accounts.each do |acct|
       describe user(acct.to_s) do
         its('maxdays') { should cmp <= max_day }
         its('maxdays') { should cmp > 0 }
