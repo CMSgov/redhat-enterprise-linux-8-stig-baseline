@@ -218,20 +218,6 @@ Against a local Red Hat host with escalated privileges (i.e., inspec installed o
 ```bash
 sudo inspec exec https://github.com/CMSgov/redhat-enterprise-linux-8-stig-baseline/archive/<Release version number or Development "main" branch>.tar.gz --input-file <path_to_your_input_file/name_of_your_input_file.yml> --reporter json:<path_to_your_output_file/name_of_your_output_file.json> 
 ```
-### Different Run Options
-
-  [Full exec options](https://docs.chef.io/inspec/cli/#options-3)
-
-## Running This Overlay from a local Archive copy
-If your runner is not always expected to have direct access to GitHub, use the following steps to create an archive bundle of this overlay and all of its dependent tests:
-
-(Git is required to clone the InSpec profile using the instructions below. Git can be downloaded from the [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) site.) 
-
-```
-mkdir profiles
-cd profiles
-git clone -b <Release version number or Development "main" branch> https://github.com/CMSgov/redhat-enterprise-linux-8-stig-baseline.git
-```
 
 ## Running This Overlay Directly from Github
 
