@@ -1,7 +1,7 @@
 control 'SV-230274' do
   title "RHEL 8 must implement certificate status checking for multifactor
 authentication."
-  desc  "Using an authentication device, such as a DoD Common Access Card (CAC)
+  desc  "Using an authentication device, such as a #{input('org_name')[:acronym]} Common Access Card (CAC)
 or token that is separate from the information system, ensures that even if the
 information system is compromised, credentials stored on the authentication
 device will not be affected.
@@ -9,7 +9,7 @@ device will not be affected.
     Multifactor solutions that require devices separate from information
 systems gaining access include, for example, hardware tokens providing
 time-based or challenge-response authenticators and smart cards such as the
-U.S. Government Personal Identity Verification (PIV) card and the DoD CAC.
+U.S. Government Personal Identity Verification (PIV) card and the #{input('org_name')[:acronym]} CAC.
 
     RHEL 8 includes multiple options for configuring certificate status
 checking, but for this requirement focuses on the System Security Services

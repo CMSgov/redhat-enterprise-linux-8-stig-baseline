@@ -1,5 +1,5 @@
 control 'SV-230369' do
-  title 'RHEL 8 passwords must have a minimum of 15 characters.'
+  title "RHEL 8 passwords must have a minimum of #{input('min_len')} characters."
   desc  "The shorter the password, the lower the number of possible
 combinations that need to be tested before the password is compromised.
 
@@ -17,13 +17,13 @@ complexity. Configurations are set in the \"etc/security/pwquality.conf\" file.
 complexity based on the credit components of the \"pwquality\" module. By
 setting the credit components to a negative value, not only will those
 components be required, they will not count towards the total \"score\" of
-\"minlen\". This will enable \"minlen\" to require a 15-character minimum.
+\"minlen\". This will enable \"minlen\" to require a #{input('min_len')}-character minimum.
 
-    The DoD minimum password requirement is 15 characters.
+    The #{input('org_name')[:acronym]} minimum password requirement is #{input('min_len')} characters.
   "
   desc  'rationale', ''
   desc  'check', "
-    Verify the operating system enforces a minimum 15-character password
+    Verify the operating system enforces a minimum #{input('min_len')}-character password
 length. The \"minlen\" option sets the minimum number of characters in a new
 password.
 
@@ -31,19 +31,19 @@ password.
 \"/etc/security/pwquality.conf\" with the following command:
 
     $ sudo grep minlen /etc/security/pwquality.conf
-    minlen = 15
+    minlen = #{input('min_len')}
 
-    If the command does not return a \"minlen\" value of 15 or greater, this is
+    If the command does not return a \"minlen\" value of #{input('min_len')} or greater, this is
 a finding.
   "
   desc 'fix', "
-    Configure operating system to enforce a minimum 15-character password
+    Configure operating system to enforce a minimum #{input('min_len')}-character password
 length.
 
     Add the following line to \"/etc/security/pwquality.conf\" (or modify the
 line to have the required value):
 
-    minlen = 15
+    minlen = #{input('min_len')}
   "
   impact 0.5
   tag severity: 'medium'

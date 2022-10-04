@@ -12,7 +12,7 @@ information system (e.g., module or policy filter).
 generated. This set of events is typically a subset of the list of all events
 for which the system is capable of generating audit records.
 
-    DoD has defined the list of events for which RHEL 8 will provide an audit
+  #{input('org_name')[:acronym]} has defined the list of events for which RHEL 8 will provide an audit
 record generation capability as the following:
 
     1) Successful and unsuccessful attempts to access, modify, or delete
@@ -47,7 +47,7 @@ faillock tallies are stored with the following commands:
     $ sudo grep -i pam_faillock.so /etc/pam.d/system-auth
 
     auth     required          pam_faillock.so preauth dir=/var/log/faillock
-silent deny=3 fail_interval=900 even_deny_root
+silent deny=#{input('unsuccessful_attempts')} fail_interval=#{input('fail_interval')} even_deny_root
 
     For RHEL versions 8.2 and newer:
 

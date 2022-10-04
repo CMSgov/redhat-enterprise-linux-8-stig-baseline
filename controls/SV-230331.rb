@@ -1,6 +1,6 @@
 control 'SV-230331' do
   title "RHEL 8 temporary user accounts must be provisioned with an expiration
-time of 72 hours or less."
+time of #{input('temp_account_expire_time')[:hours]} hours or less."
   desc  "If temporary user accounts remain active when no longer needed or for
 an excessive period, these accounts may be used to gain unauthorized access. To
 mitigate this risk, automated termination of all temporary accounts must be set
@@ -11,7 +11,7 @@ procedures when there is a need for short-term accounts without the demand for
 immediacy in account activation.
 
     If temporary accounts are used, RHEL 8 must be configured to automatically
-terminate these types of accounts after a DoD-defined time period of 72 hours.
+terminate these types of accounts after a #{input('org_name')[:acronym]}-defined time period of #{input('temp_account_expire_time')[:hours]} hours.
 
     To address access requirements, many RHEL 8 operating systems may be
 integrated with enterprise-level authentication/access mechanisms that meet or
@@ -20,25 +20,25 @@ exceed access control policy requirements.
   desc  'rationale', ''
   desc  'check', "
     Verify that temporary accounts have been provisioned with an expiration
-date of 72 hours.
+date of #{input('temp_account_expire_time')[:hours]} hours.
 
     For every existing temporary account, run the following command to obtain
 its account expiration information.
 
     $ sudo chage -l system_account_name
 
-    Verify each of these accounts has an expiration date set within 72 hours.
+    Verify each of these accounts has an expiration date set within #{input('temp_account_expire_time')[:hours]} hours.
 
     If any temporary accounts have no expiration date set or do not expire
-within 72 hours, this is a finding.
+within #{input('temp_account_expire_time')[:hours]} hours, this is a finding.
   "
   desc 'fix', "
     If a temporary account must be created configure the system to terminate
-the account after a 72 hour time period with the following command to set an
+the account after a #{input('temp_account_expire_time')[:hours]} hour time period with the following command to set an
 expiration date on it. Substitute \"system_account_name\" with the account to
 be created.
 
-    $ sudo chage -E `date -d \"+3 days\" +%Y-%m-%d` system_account_name
+    $ sudo chage -E `date -d \"+#{input('temp_account_expire_time')[:days]} days\" +%Y-%m-%d` system_account_name
   "
   impact 0.5
   tag severity: 'medium'
@@ -51,6 +51,7 @@ be created.
   tag nist: ['AC-2 (2)']
 
   temporary_accounts = input('temporary_accounts')
+  max_day = input('temp_account_expire_time')[:days]
 
   if temporary_accounts.empty?
     describe 'Temporary accounts' do
@@ -60,7 +61,7 @@ be created.
   else
     temporary_accounts.each do |acct|
       describe user(acct.to_s) do
-        its('maxdays') { should cmp <= 3 }
+        its('maxdays') { should cmp <= max_day }
         its('maxdays') { should cmp > 0 }
       end
     end

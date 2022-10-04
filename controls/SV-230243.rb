@@ -14,7 +14,7 @@ also commonly referred to as object reuse and residual information protection.
     This requirement generally applies to the design of an information
 technology product, but it can also apply to the configuration of particular
 information system components that are, or use, such products. This can be
-verified by acceptance/validation processes in DoD or other government agencies.
+verified by acceptance/validation processes in #{input('org_name')[:acronym]} or other government agencies.
 
     There may be shared resources with configurable protections (e.g., files in
 storage) that may be assessed on specific information system components.

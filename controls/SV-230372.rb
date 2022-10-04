@@ -9,7 +9,7 @@ stored on the authentication device.
     Multifactor solutions that require devices separate from information
 systems gaining access include, for example, hardware tokens providing
 time-based or challenge-response authenticators and smart cards such as the
-U.S. Government Personal Identity Verification card and the DoD CAC.
+U.S. Government Personal Identity Verification card and the #{input('org_name')[:acronym]} CAC.
 
     There are various methods of implementing multifactor authentication for
 RHEL 8. Some methods include a local system multifactor account mapping or

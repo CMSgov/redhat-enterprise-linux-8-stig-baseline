@@ -30,15 +30,15 @@ attempts occur with the following commands:
     If the system is RHEL version 8.2 or newer, this check is not applicable.
 
     Note: If the System Administrator demonstrates the use of an approved
-centralized account management method that locks an account after three
-unsuccessful logon attempts within a period of 15 minutes, this requirement is
+centralized account management method that locks an account after #{input('unsuccessful_attempts')}
+unsuccessful logon attempts within a period of #{input('fail_interval')/60} minutes, this requirement is
 not applicable.
 
     $ sudo grep pam_faillock.so /etc/pam.d/password-auth
 
     auth required pam_faillock.so preauth dir=/var/log/faillock silent audit
-deny=3 even_deny_root fail_interval=900 unlock_time=0
-    auth required pam_faillock.so authfail dir=/var/log/faillock unlock_time=0
+deny=#{input('unsuccessful_attempts')} even_deny_root fail_interval=#{input('fail_interval')} unlock_time=#{input('lockout_time')}
+    auth required pam_faillock.so authfail dir=/var/log/faillock unlock_time=#{input('lockout_time')}
     account required pam_faillock.so
 
     If the \"audit\" option is missing from the \"preauth\" line with the
@@ -47,8 +47,8 @@ deny=3 even_deny_root fail_interval=900 unlock_time=0
     $ sudo grep pam_faillock.so /etc/pam.d/system-auth
 
     auth required pam_faillock.so preauth dir=/var/log/faillock silent audit
-deny=3 even_deny_root fail_interval=900 unlock_time=0
-    auth required pam_faillock.so authfail dir=/var/log/faillock unlock_time=0
+deny=#{input('unsuccessful_attempts')} even_deny_root fail_interval=#{input('fail_interval')} unlock_time=#{input('lockout_time')}
+    auth required pam_faillock.so authfail dir=/var/log/faillock unlock_time=#{input('lockout_time')}
     account required pam_faillock.so
 
     If the \"audit\" option is missing from the \"preauth\" line with the
@@ -62,8 +62,8 @@ unsuccessful logon attempts occur.
 \"/etc/pam.d/password-auth\" files to match the following lines:
 
     auth required pam_faillock.so preauth dir=/var/log/faillock silent audit
-deny=3 even_deny_root fail_interval=900 unlock_time=0
-    auth required pam_faillock.so authfail dir=/var/log/faillock unlock_time=0
+deny=#{input('unsuccessful_attempts')} even_deny_root fail_interval=#{input('fail_interval')} unlock_time=#{input('lockout_time')}
+    auth required pam_faillock.so authfail dir=/var/log/faillock unlock_time=#{input('lockout_time')}
     account required pam_faillock.so
 
     The \"sssd\" service must be restarted for the changes to take effect. To

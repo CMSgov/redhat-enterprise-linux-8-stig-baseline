@@ -3,7 +3,7 @@ control 'SV-230275' do
   desc  "The use of PIV credentials facilitates standardization and reduces the
 risk of unauthorized access.
 
-    The DoD has mandated the use of the Common Access Card (CAC) to support
+    The #{input('org_name')[:acronym]} has mandated the use of the Common Access Card (CAC) to support
 identity management and personal authentication for systems covered under
 Homeland Security Presidential Directive (HSPD) 12, as well as making the CAC a
 primary component of layered protection for national security systems.

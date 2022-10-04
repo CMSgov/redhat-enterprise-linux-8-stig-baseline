@@ -1,10 +1,10 @@
 control 'SV-230255' do
-  title "The RHEL 8 operating system must implement DoD-approved TLS encryption
+  title "The RHEL 8 operating system must implement #{input('org_name')[:acronym]}-approved TLS encryption
 in the OpenSSL package."
   desc  "Without cryptographic integrity protections, information can be
 altered by unauthorized users without detection.
 
-    Remote access (e.g., RDP) is access to DoD nonpublic information systems by
+    Remote access (e.g., RDP) is access to #{input('org_name')[:acronym]} nonpublic information systems by
 an authorized user (or an information system) communicating through an
 external, non-organization-controlled network. Remote access methods include,
 for example, dial-up, broadband, and wireless.
@@ -22,7 +22,7 @@ file.
   "
   desc  'rationale', ''
   desc  'check', "
-    Verify the OpenSSL library is configured to use only DoD-approved TLS
+    Verify the OpenSSL library is configured to use only #{input('org_name')[:acronym]}-approved TLS
 encryption:
 
     $ sudo grep -i  MinProtocol /etc/crypto-policies/back-ends/opensslcnf.config
@@ -33,7 +33,7 @@ encryption:
 finding.
   "
   desc 'fix', "
-    Configure the RHEL 8 OpenSSL library to use only DoD-approved TLS
+    Configure the RHEL 8 OpenSSL library to use only #{input('org_name')[:acronym]}-approved TLS
 encryption by editing the following line in the
 \"/etc/crypto-policies/back-ends/opensslcnf.config\" file:
 

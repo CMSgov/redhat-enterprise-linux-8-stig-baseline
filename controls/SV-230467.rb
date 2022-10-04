@@ -12,7 +12,7 @@ information system (e.g., module or policy filter).
 generated. This set of events is typically a subset of the list of all events
 for which the system is capable of generating audit records.
 
-    DoD has defined the list of events for which RHEL 8 will provide an audit
+  #{input('org_name')[:acronym]} has defined the list of events for which RHEL 8 will provide an audit
 record generation capability as the following:
 
     1) Successful and unsuccessful attempts to access, modify, or delete

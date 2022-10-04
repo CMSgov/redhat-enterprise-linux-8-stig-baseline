@@ -20,7 +20,7 @@ following command:
 
     The output of the command will give the directory/partition that contains
 the home directories for the non-privileged users on the system (in this
-example, \"/home\") and users’ shell. All accounts with a valid shell (such as
+example, \"/home\") and users' shell. All accounts with a valid shell (such as
 /bin/bash) are considered interactive users.
 
     Check that a file system/partition has been created for the non-privileged
@@ -62,7 +62,6 @@ system/partition."
       skip "Control not applicable within a container"
     end
   else
-    # excluding root because its home directory is usually "/root" (mountpoint "/")
     users.where { !shell.match(ignore_shells) && (uid >= uid_min) }.entries.each do |user_info|
       next if exempt_home_users.include?(user_info.username.to_s)
 

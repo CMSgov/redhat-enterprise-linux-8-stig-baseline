@@ -1,5 +1,5 @@
 control 'SV-230368' do
-  title "RHEL 8 passwords must be prohibited from reuse for a minimum of five
+  title "RHEL 8 passwords must be prohibited from reuse for a minimum of #{input('min_reuse_generations')}
 generations."
   desc  "Password complexity, or strength, is a measure of the effectiveness of
 a password in resisting attempts at guessing and brute-force attacks. If the
@@ -17,7 +17,7 @@ password complexity. This is set in both:
   "
   desc  'rationale', ''
   desc  'check', "
-    Verify the operating system prohibits password reuse for a minimum of five
+    Verify the operating system prohibits password reuse for a minimum of #{input('min_reuse_generations')}
 generations.
 
     Check for the value of the \"remember\" argument in
@@ -26,20 +26,20 @@ command:
 
     $ sudo grep -i remember /etc/pam.d/system-auth /etc/pam.d/password-auth
 
-    password required pam_pwhistory.so use_authtok remember=5 retry=3
+    password required pam_pwhistory.so use_authtok remember=#{input('min_reuse_generations')} retry=3
 
     If the line containing \"pam_pwhistory.so\" does not have the \"remember\"
 module argument set, is commented out, or the value of the \"remember\" module
-argument is set to less than \"5\", this is a finding.
+argument is set to less than \"#{input('min_reuse_generations')}\", this is a finding.
   "
   desc 'fix', "
     Configure the operating system to prohibit password reuse for a minimum of
-five generations.
+    #{input('min_reuse_generations')} generations.
 
     Add the following line in \"/etc/pam.d/system-auth\" and
 \"/etc/pam.d/password-auth\" (or modify the line to have the required value):
 
-    password required pam_pwhistory.so use_authtok remember=5 retry=3
+    password required pam_pwhistory.so use_authtok remember=#{input('min_reuse_generations')} retry=3
   "
   impact 0.5
   tag severity: 'medium'

@@ -1,5 +1,5 @@
 control 'SV-230341' do
-  title "RHEL 8 must prevent system messages from being presented when three
+  title "RHEL 8 must prevent system messages from being presented when #{input('unsuccessful_attempts')}
 unsuccessful logon attempts occur."
   desc  "By limiting the number of failed logon attempts, the risk of
 unauthorized system access via user password guessing, otherwise known as

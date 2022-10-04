@@ -33,7 +33,7 @@ requirement.
 constructing a certification path (which includes status information) to an
 accepted trust anchor.
 
-    Check that the system has a valid DoD root CA installed with the following
+    Check that the system has a valid #{input('org_name')[:acronym]} root CA installed with the following
 command:
 
     $ sudo openssl x509 -text -in /etc/sssd/pki/sssd_auth_ca_db.pem
@@ -43,17 +43,17 @@ command:
           Version: 3 (0x2)
           Serial Number: 1 (0x1)
           Signature Algorithm: sha256WithRSAEncryption
-          Issuer: C = US, O = U.S. Government, OU = DoD, OU = PKI, CN = DoD
+          Issuer: C = US, O = U.S. Government, OU = #{input('org_name')[:acronym]}, OU = PKI, CN = #{input('org_name')[:acronym]}
 Root CA 3
           Validity
              Not Before: Mar 20 18:46:41 2012 GMT
              Not After   : Dec 30 18:46:41 2029 GMT
-          Subject: C = US, O = U.S. Government, OU = DoD, OU = PKI, CN = DoD
+          Subject: C = US, O = U.S. Government, OU = #{input('org_name')[:acronym]}, OU = PKI, CN = #{input('org_name')[:acronym]}
 Root CA 3
           Subject Public Key Info:
              Public Key Algorithm: rsaEncryption
 
-    If the root ca file is not a DoD-issued certificate with a valid date and
+    If the root ca file is not a #{input('org_name')[:acronym]}-issued certificate with a valid date and
 installed in the /etc/sssd/pki/sssd_auth_ca_db.pem location, this is a finding.
   "
   desc 'fix', "
@@ -61,8 +61,8 @@ installed in the /etc/sssd/pki/sssd_auth_ca_db.pem location, this is a finding.
 constructing a certification path (which includes status information) to an
 accepted trust anchor.
 
-    Obtain a valid copy of the DoD root CA file from the PKI CA certificate
-bundle from cyber.mil and copy the DoD_PKE_CA_chain.pem into the following file:
+    Obtain a valid copy of the #{input('org_name')[:acronym]} root CA file from the PKI CA certificate
+bundle from cyber.mil and copy the #{input('org_name')[:acronym]}_PKE_CA_chain.pem into the following file:
 
     /etc/sssd/pki/sssd_auth_ca_db.pem
   "
@@ -79,8 +79,7 @@ bundle from cyber.mil and copy the DoD_PKE_CA_chain.pem into the following file:
 
   ca_file = input('root_ca_file')
 
-
   describe x509_certificate(ca_file) do
-    its('issuer_cn') { should match 'CN=DoD' }
+    its('issuer_cn') { should match "CN= #{input('org_name')[:acronym]}" }
   end
 end

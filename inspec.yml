@@ -1,55 +1,142 @@
 name: redhat-enterprise-linux-8-stig-baseline
 title: redhat-enterprise-linux-8-stig-baseline
-maintainer: DISA DevSecOps Team
-copyright: Defense Information Systems Agency (DISA)
+maintainer: MITRE SAF Team
+copyright: MITRE, 2022
+copyright_email: saf@groups.mitre.org
 license: Apache-2.0
-summary: "This Security Technical Implementation Guide is published as a tool to improve the security of Department of Defense (DoD) information systems. The requirements are derived from the National Institute of Standards and Technology (NIST) 800-53 and related documents. Comments or proposed revisions to this document should be sent via email to the following address: disa.stig_spt@mail.mil."
-version: 2.1.2
+summary: "Inspec Validation Profile for Red Hat Enterprise Linux 8 STIG"
+version: 1.3.0
 inspec_version: ">= 4.0"
 
 inputs:
+  - name: org_name
+    desc: "Name of the organization running this profile"
+    type: Hash
+    value:
+      acronym: "DoD"
+      full_form: "Department of Defense"
+
+#SV-230244, SV-244525, based on SC-10
+
+  - name: client_alive_interval 
+    desc: Interval of network connections associated with SSH 
+    type: Numeric
+    value: 600
+
+#SV-230352, SV-230353 based on AC-11    
+  - name: system_inactivity_timeout
+    desc: Maximum system inactivity timeout (time in seconds).
+    type: Numeric
+    value: 900
+
+#SV-230331
+  - name: temporary_accounts
+    desc: Temporary user accounts
+    type: Array
+    value: []
+    
+  - name: temp_account_expire_time
+    desc: Temporary (short term) should be set with an expiration date/time
+    type: Hash
+    value: 
+      hours: 72
+      days: 3
+      
+#SV-230374:
+  - name: emergency_accounts
+    desc: Emergency user accounts
+    type: Array
+    value: []
+    
+  - name: emergency_account_expire_time
+    desc: Emergency (short term) should be set with an expiration date/time
+    type: Hash
+    value: 
+      hours: 72
+      days: 3      
+
+#SV-230483, SV-244543:
+  - name: storage_volume
+    desc: Amount of audit storage volume
+    type: Numeric
+    value: 75
+
+  - name: storage_space_left
+    desc: Amount of audit storage volume left
+    type: Numeric
+    value: 25
+
+  #SV-230332, SV-230333, SV-230334, SV-230335, SV-230336, SV-230337, SV-230338, SV-230340, SV-230341, SV-230344:
+  - name: unsuccessful_attempts
+    desc: Maximum number of unsuccessful attempts before lockout
+    type: Numeric
+    value: 3
+
+  - name: fail_interval 
+    desc: Interval of time in which the consecutive failed logon attempts must occur in order for the account to be locked out (time in seconds)
+    type: Numeric
+    value: 900
+
+  - name: lockout_time
+    desc: Minimum amount of time account must be locked out after failed logins. This attribute should never be set greater than 604800 (time in seconds). ("0" or "never" locks until released by an administrator)
+    type: Numeric
+    value: 0
+
+  #SV-230356
+  - name: max_retry
+    desc: Maximum number of retry attempts for login
+    type: Numeric
+    value: 3
+
+  #SV-230363
+  - name: difok
+    desc: Minimum number of characters that must be different from previous password
+    type: Numeric
+    value: 8
+
+  # SV-230368
+  - name: min_reuse_generations
+    desc: Number of reuse generations
+    type: Numeric
+    value: 5
+
+
+  # SV-230369, SV-230370
+  - name: min_len
+    desc: Minimum number of characters for a new password
+    type: Numeric
+    value: 15
+
   - name: disable_slow_controls
-    description: Controls that are known to consistently have long run times can be disabled with this attribute
+    desc: Controls that are known to consistently have long run times can be disabled with this attribute
     type: Boolean
     value: false
 
   #SV-230548
   - name: container_host
-    description: Flag to designate if the target is a container host
+    desc: Flag to designate if the target is a container host
     type: Boolean
     value: false
 
-  # SV-230368
-  - name: min_reuse_generations
-    description: Number of reuse generations
-    type: Numeric
-    value: 5
-
-  # SV-230369, SV-230370
-  - name: min_len
-    description: Minimum number of characters for a new password
-    type: Numeric
-    value: 15
-
   # SV-230234
   - name: grub_uefi_main_cfg
-    description: Main grub boot config file
+    desc: Main grub boot config file
     type: String
     value: "/boot/efi/EFI/redhat/grub.cfg"
 
   - name: grub_uefi_user_boot_files
-    description: Grub boot config files
+    desc: Grub boot config files
     type: Array
     value: ["/boot/efi/EFI/redhat/user.cfg"]
 
   # SV-230317, SV-230321, SV-230322, SV-230325, SV-230328, SV-230309, SV-230320
   - name: exempt_home_users
-    description: Users exempt from home directory-based controls in array format
+    desc: Users exempt from home directory-based controls in array format
     type: Array
     value: ["vagrant"]
 
   - name: non_interactive_shells
-    description: These shells do not allow a user to login
+    desc: These shells do not allow a user to login
     type: Array
     value:
       - "/sbin/nologin"
@@ -59,82 +146,56 @@ inputs:
       - "/bin/sync"
       - "/bin/true"
 
-  # SV-230379
-  - name: known_system_accounts
-    description: System accounts that support approved system activities.
-    type: Array
-    value:
-      - "root"
-      - "bin"
-      - "daemon"
-      - "adm"
-      - "lp"
-      - "sync"
-      - "shutdown"
-      - "halt"
-      - "mail"
-      - "operator"
-      - "nobody"
-      - "systemd-bus-proxy"
-      - "dbus"
-      - "polkitd"
-      - "postfix"
-      - "sssd"
-      - "chrony"
-      - "systemd-network"
-      - "sshd"
-      - "ntp"
-
   - name: user_accounts
-    description: Accounts of known managed users
+    desc: Accounts of known managed users
     type: Array
     value: ["vagrant"]
 
   # SV-230379
   - name: log_pkg_path
-    description: The path to the logging package
+    desc: The path to the logging package
     type: String
     value: "/etc/rsyslog.conf"
 
   # SV-230235
   - name: grub_main_cfg
-    description: Main grub boot config file
+    desc: Main grub boot config file
     type: String
     value: "/boot/grub2/grub.cfg"
 
   - name: grub_user_boot_files
-    description: Grub boot config files
+    desc: Grub boot config files
     type: Array
     value:
       - "/boot/grub2/user.cfg"
 
   # SV-230537
   - name: ipv4_enabled
-    description: Set to 'true' if IPv4 is enabled on the system.
+    desc: Set to 'true' if IPv4 is enabled on the system.
     type: Boolean
     value: true
 
   # SV-230537
   - name: ipv6_enabled
-    description: Set to 'true' if IPv6 is enabled on the system.
+    desc: Set to 'true' if IPv6 is enabled on the system.
     type: Boolean
     value: true
 
   # SV-230493
   - name: camera_installed
-    description: Device or system does not have a camera installed.
+    desc: Device or system does not have a camera installed.
     type: Boolean
     value: true
 
   # SV-230503
   - name: bluetooth_installed
-    description: 'Device or operating system has a Bluetooth adapter installed'
+    desc: 'Device or operating system has a Bluetooth adapter installed'
     type: Boolean
     value: true
 
-  # SV-230242
+  # SV-230242, SV-230379
   - name: known_system_accounts
-    description: System accounts that support approved system activities.
+    desc: System accounts that support approved system activities.
     type: Array
     value: 
       - 'root'
@@ -159,76 +220,59 @@ inputs:
       - 'ntp'
 
   - name: smart_card_status
-    description: Smart card status (enabled or disabled)
+    desc: Smart card status (enabled or disabled)
     type: String
     value: 'enabled'
 
   # SV-230263
   - name: file_integrity_tool
-    description: Name of tool
+    desc: Name of tool
     type: String
     value: 'aide'
+
   # SV-230484
   - name: authoritative_timeserver
-    description: Timeserver used in /etc/chrony.conf
+    desc: Timeserver used in /etc/chrony.conf
     type: String
     value: 0.us.pool.ntp.mil
 
   # SV-230537
   - name: non_removable_media_fs
-    description: File systems listed in /etc/fstab which are not removable media devices
+    desc: File systems listed in /etc/fstab which are not removable media devices
     type: Array
     value: ["/", "/tmp", "none", "/home"]
 
   # SV-230230
   - name: private_key_files
-    description: List of full paths to private key files on the system
+    desc: List of full paths to private key files on the system
     type: Array
     value: []
 
   #SV-230229
   - name: root_ca_file
-    description: Path to an accepted trust anchor certificate file (DoD)
+    desc: Path to an accepted trust anchor certificate file (DoD)
     type: String
     value: "/etc/sssd/pki/sssd_auth_ca_db.pem"
 
-  #SV-230333
-  - name: unsuccessful_attempts
-    description: Maximum number of unsuccessful attempts before lockout
-    type: Numeric
-    value: 3
-
-  #SV-230353
-  - name: system_inactivity_timeout
-    description: Maximum system inactivity timeout (time in seconds).
-    type: Numeric
-    value: 900
-
-  #SV-230356
-  - name: max_retry
-    description: Maximum number of retry attempts for login
-    type: Numeric
-    value: 3
-
-  #SV-230363
-  - name: difok
-    description: Minimum number of characters that must be different from previous password
-    type: Numeric
-    value: 8
-
   #SV-230373
   - name: days_of_inactivity
-    description: Maximum number of days if account inactivity before account lockout
+    desc: Maximum number of days if account inactivity before account lockout
     type: Numeric
     value: 35
 
-  - name: temporary_accounts
-    description: Temporary user accounts
-    type: Array
-    value: []
+  #SV-230346
+  - name: maxlogins_limit
+    desc: Amount of max logins allowed
+    type: String
+    value: '10'
+
+  - name: log_directory
+    desc: Documented tally log directory
+    type: String
+    value: '/var/log/faillock'
 
   - name: banner_message_text_cli
-    description: Banner message text for command line interface logins.
+    desc: Banner message text for command line interface logins.
     type: String
     value: "You are accessing a U.S. Government (USG) Information System (IS) that is \
     provided for USG-authorized use only. By using this IS (which includes any \
@@ -251,7 +295,7 @@ inputs:
 
 
   - name: banner_message_text_ral
-    description: Banner message text for remote access logins.
+    desc: Banner message text for remote access logins.
     type: String
     value: "You are accessing a U.S. Government (USG) Information System (IS) that is \
     provided for USG-authorized use only. By using this IS (which includes any \
@@ -273,7 +317,7 @@ inputs:
     Agreement for details."
 
   - name: banner_message_text_gui
-    description: Banner message text for graphical user interface logins.
+    desc: Banner message text for graphical user interface logins.
     type: String
     value: "You are accessing a U.S. Government (USG) Information System (IS) that is \
     provided for USG-authorized use only. By using this IS (which includes any \
@@ -293,28 +337,3 @@ inputs:
     services by attorneys, psychotherapists, or clergy, and their assistants. Such \
     communications and work product are private and confidential. See User \
     Agreement for details."
-
-  - name: maxlogins_limit
-    description: Amount of max logins allowed
-    type: String
-    value: '10'
-
-  - name: unsuccessful_attempts
-    description: number of unsuccessful attempts
-    type: Numeric
-    value: 3
-
-  - name: fail_interval
-    description: Interval of time in which the consecutive failed logon attempts must occur in order for the account to be locked out (time in seconds)
-    type: Numeric
-    value: 900
-
-  - name: lockout_time
-    description: Minimum amount of time account must be locked out after failed logins. This attribute should never be set greater than 604800 (time in seconds).
-    type: Numeric
-    value: 604800
-
-  - name: log_directory
-    description: Documented tally log directory
-    type: String
-    value: '/var/log/faillock'

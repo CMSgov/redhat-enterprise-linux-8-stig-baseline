@@ -1,5 +1,5 @@
 control 'SV-230346' do
-  title "RHEL 8 must limit the number of concurrent sessions to ten for all
+  title "RHEL 8 must limit the number of concurrent sessions to #{input('maxlogins_limit')} for all
 accounts and/or account types."
   desc  "Operating system management includes the ability to control the number
 of users and user sessions that utilize an operating system. Limiting the
@@ -14,29 +14,29 @@ based on mission needs and the operational environment for each system.
   desc  'rationale', ''
   desc  'check', "
     Verify the operating system limits the number of concurrent sessions to
-\"10\" for all accounts and/or account types by issuing the following command:
+\"#{input('maxlogins_limit')}\" for all accounts and/or account types by issuing the following command:
 
     $ sudo grep -r -s '^[^#].*maxlogins' /etc/security/limits.conf
 /etc/security/limits.d/*.conf
 
-    * hard maxlogins 10
+    * hard maxlogins #{input('maxlogins_limit')}
 
     This can be set as a global domain (with the * wildcard) but may be set
 differently for multiple domains.
 
     If the \"maxlogins\" item is missing, commented out, or the value is set
-greater than \"10\" and is not documented with the Information System Security
+greater than \"#{input('maxlogins_limit')}\" and is not documented with the Information System Security
 Officer (ISSO) as an operational requirement for all domains that have the
 \"maxlogins\" item assigned, this is a finding.
   "
   desc 'fix', "
     Configure the operating system to limit the number of concurrent sessions
-to \"10\" for all accounts and/or account types.
+to \"#{input('maxlogins_limit')}\" for all accounts and/or account types.
 
     Add the following line to the top of the /etc/security/limits.conf or in a
 \".conf\" file defined in /etc/security/limits.d/:
 
-    * hard maxlogins 10
+    * hard maxlogins #{input('maxlogins_limit')}
   "
   impact 0.3
   tag severity: 'low'
