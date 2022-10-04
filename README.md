@@ -231,6 +231,37 @@ If your runner is not always expected to have direct access to GitHub, use the f
 mkdir profiles
 cd profiles
 git clone -b <Release version number or Development "main" branch> https://github.com/CMSgov/redhat-enterprise-linux-8-stig-baseline.git
+```
+
+## Running This Overlay Directly from Github
+
+Against a remote target using ssh with escalated privileges (i.e., inspec installed on a separate runner host)
+```bash
+inspec exec https://github.com/CMSgov/redhat-enterprise-linux-8-stig-baseline/archive/<Release version # or Development "main" branch>.tar.gz -t ssh://TARGET_USERNAME:TARGET_PASSWORD@TARGET_IP:TARGET_PORT --sudo --sudo-password=<SUDO_PASSWORD_IF_REQUIRED> --input-file <path_to_your_input_file/name_of_your_input_file.yml> --reporter json:<path_to_your_output_file/name_of_your_output_file.json> 
+```
+
+Against a remote target using a pem key with escalated privileges (i.e., inspec installed on a separate runner host)
+```bash
+inspec exec https://github.com/CMSgov/redhat-enterprise-linux-8-stig-baseline/archive/<Release version # or Development "main" branch>.tar.gz -t ssh://TARGET_USERNAME@TARGET_IP:TARGET_PORT --sudo -i <your_PEM_KEY> --input-file <path_to_your_input_file/name_of_your_input_file.yml> --reporter json:<path_to_your_output_file/name_of_your_output_file.json>  
+```
+
+Against a local Red Hat host with escalated privileges (i.e., inspec installed on the target)
+```bash
+sudo inspec exec https://github.com/CMSgov/redhat-enterprise-linux-8-stig-baseline/archive/<Release version # or Development "main" branch>.tar.gz --input-file <path_to_your_input_file/name_of_your_input_file.yml> --reporter json:<path_to_your_output_file/name_of_your_output_file.json> 
+```
+### Different Run Options
+
+  [Full exec options](https://docs.chef.io/inspec/cli/#options-3)
+
+## Running This Overlay from a local Archive copy
+If your runner is not always expected to have direct access to GitHub, use the following steps to create an archive bundle of this overlay and all of its dependent tests:
+
+(Git is required to clone the InSpec profile using the instructions below. Git can be downloaded from the [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) site.) 
+
+```
+mkdir profiles
+cd profiles
+git clone -b <Release version # or Development "main" branch> https://github.com/CMSgov/redhat-enterprise-linux-8-stig-baseline.git
 inspec archive redhat-enterprise-linux-8-stig-baseline
 sudo inspec exec <name of generated archive> --input-file <path_to_your_input_file/name_of_your_input_file.yml> --reporter json:<path_to_your_output_file/name_of_your_output_file.json> 
 ```
