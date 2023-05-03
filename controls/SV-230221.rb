@@ -28,17 +28,17 @@ https://access.redhat.com/support/policy/updates/errata.
 
     Current End of Extended Update Support for RHEL 8.2 is 30 April 2022.
 
-    Current End of Extended Update Support for RHEL 8.4 is 30 April 2023.
+    Current End of Extended Update Support for RHEL 8.4 is 31 May 2023.
 
-    Current End of Maintenance Support for RHEL 8.5 is 30 April 2022.
+    Current End of Maintenance Support for RHEL 8.5 is 31 May 2022.
 
-    Current End of Extended Update Support for RHEL 8.6 is 30 April 2024.
+    Current End of Extended Update Support for RHEL 8.6 is 31 May 2024.
 
-    Current End of Maintenance Support for RHEL 8.7 is 30 April 2023.
+    Current End of Maintenance Support for RHEL 8.7 is 31 May 2023.
 
-    Current End of Extended Update Support for RHEL 8.8 is 30 April 2025.
+    Current End of Extended Update Support for RHEL 8.8 is 31 May 2025.
 
-    Current End of Maintenance Support for RHEL 8.9 is 30 April 2024.
+    Current End of Maintenance Support for RHEL 8.9 is 31 May 2024.
 
     Current End of Maintenance Support for RHEL 8.10 is 31 May 2029.
 
@@ -65,17 +65,17 @@ https://access.redhat.com/support/policy/updates/errata.
               when /^8\.3/
                 '30 April 2021'
               when /^8\.4/
-                '30 April 2023'
+                '31 May 2023'
               when /^8\.5/
-                '30 April 2022'
+                '31 May 2022'
               when /^8\.6/
-                '30 April 2024'
+                '31 May 2024'
               when /^8\.7/
-                '30 April 2023'
+                '31 May 2023'
               when /^8\.8/
-                '30 April 2025'
+                '31 May 2025'
               when /^8\.9/
-                '30 April 2024'
+                '31 May 2024'
               when /^8\.10/
                 '31 May 2029'
               end
