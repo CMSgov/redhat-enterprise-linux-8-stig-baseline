@@ -299,11 +299,6 @@ inputs:
     type: String
     value: '10'
 
-  - name: unsuccessful_attempts
-    description: number of unsuccessful attempts
-    type: Numeric
-    value: 3
-
   - name: fail_interval
     description: Interval of time in which the consecutive failed logon attempts must occur in order for the account to be locked out (time in seconds)
     type: Numeric
