@@ -38,6 +38,10 @@ jobs:
         run: bundle exec inspec check .
       - name: Run kitchen test
         run: bundle exec kitchen test --destroy=always ${{ matrix.suite }}-rhel-8 || true
+      - name: Save Test Result JSON
+        uses: actions/upload-artifact@v2
+        with:
+          path: spec/results/
       - name: Install SAF CLI
         run: |
           brew install mitre/saf/saf-cli
@@ -47,7 +51,4 @@ jobs:
       - name: Ensure the scan meets our ${{ matrix.suite }} results threshold
         run: |
           saf validate threshold -i spec/results/rhel-8_${{ matrix.suite }}.json -F ${{ matrix.suite }}.threshold.yml
-      - name: Save Test Result JSON
-        uses: actions/upload-artifact@v2
-        with:
-          path: spec/results/
+
