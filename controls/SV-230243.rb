@@ -37,7 +37,6 @@ sticky bit:
 
     $ sudo chmod 1777 [World-Writable Directory]'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 8'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000138-GPOS-00069'
   tag gid: 'V-230243'

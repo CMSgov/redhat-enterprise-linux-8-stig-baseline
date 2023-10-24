@@ -30,7 +30,6 @@ maxclassrepeat = 4
 
 Remove any configurations that conflict with the above value.'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 8'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000072-GPOS-00040'
   tag gid: 'V-230360'

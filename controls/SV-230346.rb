@@ -33,7 +33,6 @@ to "10" for all accounts and/or account types.
 
     * hard maxlogins 10'
   impact 0.3
-  ref 'DPMS Target Red Hat Enterprise Linux 8'
   tag severity: 'low'
   tag gtitle: 'SRG-OS-000027-GPOS-00008'
   tag gid: 'V-230346'

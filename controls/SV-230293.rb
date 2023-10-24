@@ -13,7 +13,6 @@ Check that a file system has been created for "/var/log" with the following comm
 If a separate entry for "/var/log" is not in use, this is a finding.'
   desc 'fix', 'Migrate the "/var/log" path onto a separate file system.'
   impact 0.3
-  ref 'DPMS Target Red Hat Enterprise Linux 8'
   tag severity: 'low'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-230293'

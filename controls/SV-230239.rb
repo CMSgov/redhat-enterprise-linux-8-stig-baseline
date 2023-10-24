@@ -32,7 +32,6 @@ requirement or remove it from the system with the following command:
 
     $ sudo yum remove krb5-workstation'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 8'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000120-GPOS-00061'
   tag gid: 'V-230239'

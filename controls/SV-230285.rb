@@ -23,7 +23,6 @@ If the service is not "enabled" and "active", this is a finding.'
 
      $ sudo systemctl enable rngd.service'
   impact 0.3
-  ref 'DPMS Target Red Hat Enterprise Linux 8'
   tag severity: 'low'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-230285'

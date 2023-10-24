@@ -56,7 +56,6 @@ Example output:
 	 
 Done.'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 8'
   tag check_id: 'C-55147r880728_chk'
   tag severity: 'medium'
   tag gid: 'V-251710'

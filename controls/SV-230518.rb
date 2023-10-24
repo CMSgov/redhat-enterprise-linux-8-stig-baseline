@@ -43,7 +43,6 @@ option by adding /modifying the /etc/fstab with the following line:
     /dev/mapper/rhel-var-log-audit /var/log/audit xfs
 defaults,nodev,nosuid,noexec 0 0'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 8'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000368-GPOS-00154'
   tag gid: 'V-230518'

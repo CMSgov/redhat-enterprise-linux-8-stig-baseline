@@ -30,7 +30,6 @@ if another firewall is installed. If no firewall is installed this is a finding.
 
 $ sudo yum install firewalld.noarch'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 8'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000297-GPOS-00115'
   tag gid: 'V-230505'

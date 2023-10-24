@@ -35,7 +35,6 @@ be created.
 
     $ sudo chage -E `date -d "+3 days" +%Y-%m-%d` system_account_name'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 8'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000002-GPOS-00002'
   tag gid: 'V-230331'

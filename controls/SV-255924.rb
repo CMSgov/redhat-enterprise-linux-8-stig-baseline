@@ -18,7 +18,6 @@ If the entries following "KexAlgorithms" have any algorithms defined other than 
 
 A reboot is required for the changes to take effect.'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 8'
   tag check_id: 'C-59601r917887_chk'
   tag severity: 'medium'
   tag gid: 'V-255924'

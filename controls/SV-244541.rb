@@ -15,7 +15,6 @@ If output is produced, this is a finding.'
     Note: Manual changes to the listed file may be overwritten by the
 "authselect" program.'
   impact 0.7
-  ref 'DPMS Target Red Hat Enterprise Linux 8'
   tag severity: 'high'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-244541'

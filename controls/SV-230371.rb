@@ -30,7 +30,6 @@ accounts, this is a finding.)
   desc 'fix', 'Edit the file "/etc/passwd" and provide each interactive user
 account that has a duplicate User ID (UID) with a unique UID.'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 8'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000104-GPOS-00051'
   tag satisfies: ['SRG-OS-000104-GPOS-00051', 'SRG-OS-000121-GPOS-00062', 'SRG-OS-000042-GPOS-00020']

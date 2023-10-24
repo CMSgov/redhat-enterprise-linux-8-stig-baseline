@@ -41,7 +41,6 @@ updated versions have been installed.
 
     localpkg_gpgcheck=True'
   impact 0.7
-  ref 'DPMS Target Red Hat Enterprise Linux 8'
   tag severity: 'high'
   tag gtitle: 'SRG-OS-000366-GPOS-00153'
   tag gid: 'V-230265'

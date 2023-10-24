@@ -20,7 +20,6 @@ $ sudo yum remove xorg-x11-server-Xorg xorg-x11-server-common xorg-x11-server-ut
 
 A reboot is required for the changes to take effect.'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 8'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-230553'

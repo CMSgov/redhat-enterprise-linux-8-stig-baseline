@@ -26,7 +26,6 @@ Note: The partition of "/home" is used in the example.
 If a separate entry for the file system/partition containing the nonprivileged interactive user home directories does not exist, this is a finding.)
   desc 'fix', 'Migrate the "/home" directory onto a separate file system.'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 8'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-230328'

@@ -18,7 +18,6 @@ If "mailx" package is not installed, this is a finding.'
 
      $ sudo yum install mailx'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 8'
   tag check_id: 'C-60652r902753_chk'
   tag severity: 'medium'
   tag gid: 'V-256974'

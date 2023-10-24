@@ -27,7 +27,6 @@ check the cpuinfo settings with the following command:
   desc 'fix', 'The NX bit execute protection must be enabled in the system
 BIOS.'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 8'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000433-GPOS-00192'
   tag gid: 'V-230276'

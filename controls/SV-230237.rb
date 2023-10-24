@@ -28,7 +28,6 @@ Edit/modify the following line in the "/etc/pam.d/password-auth" file to include
 
 password sufficient pam_unix.so sha512'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 8'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000120-GPOS-00061'
   tag gid: 'V-230237'

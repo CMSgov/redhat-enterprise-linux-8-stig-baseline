@@ -27,7 +27,6 @@ group-owned by "root".
 
     $ sudo chgrp root [FILE]'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 8'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000259-GPOS-00100'
   tag gid: 'V-230262'

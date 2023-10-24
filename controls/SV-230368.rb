@@ -22,7 +22,6 @@ Add the following line in "/etc/pam.d/password-auth" (or modify the line to have
 
      password requisite pam_pwhistory.so use_authtok remember=5 retry=3'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 8'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000077-GPOS-00045'
   tag gid: 'V-230368'

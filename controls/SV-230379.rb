@@ -37,7 +37,6 @@ allow for a normal user to perform administrative-level actions.
 
     Document all authorized accounts on the system.'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 8'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-230379'

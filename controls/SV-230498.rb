@@ -40,7 +40,6 @@ kernel module.
 
     Reboot the system for the settings to take effect.'
   impact 0.3
-  ref 'DPMS Target Red Hat Enterprise Linux 8'
   tag severity: 'low'
   tag gtitle: 'SRG-OS-000095-GPOS-00049'
   tag gid: 'V-230498'

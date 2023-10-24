@@ -34,7 +34,6 @@ functions.
 
     A reboot is required for the changes to take effect.'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 8'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000134-GPOS-00068'
   tag gid: 'V-230240'

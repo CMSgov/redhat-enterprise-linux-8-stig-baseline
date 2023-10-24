@@ -42,7 +42,6 @@ configuration survives kernel updates:
 
     GRUB_CMDLINE_LINUX="slub_debug=P"'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 8'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000134-GPOS-00068'
   tag satisfies: ['SRG-OS-000134-GPOS-00068', 'SRG-OS-000433-GPOS-00192']

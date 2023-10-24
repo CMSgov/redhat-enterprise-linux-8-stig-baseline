@@ -40,7 +40,6 @@ To restart the "rsyslog" service, run the following command:
 
     $ sudo systemctl restart rsyslog.service'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 8'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000032-GPOS-00013'
   tag gid: 'V-230228'

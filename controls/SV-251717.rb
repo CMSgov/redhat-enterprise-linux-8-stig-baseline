@@ -22,7 +22,6 @@ Add the following line in "/etc/pam.d/system-auth" (or modify the line to have t
 
      password requisite pam_pwhistory.so use_authtok remember=5 retry=3'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 8'
   tag check_id: 'C-55154r902747_chk'
   tag severity: 'medium'
   tag gid: 'V-251717'

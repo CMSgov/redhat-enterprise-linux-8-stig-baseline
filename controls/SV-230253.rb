@@ -33,7 +33,6 @@ SSH_USE_STRONG_RNG=32
 
 The SSH service must be restarted for changes to take effect.'
   impact 0.3
-  ref 'DPMS Target Red Hat Enterprise Linux 8'
   tag severity: 'low'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-230253'

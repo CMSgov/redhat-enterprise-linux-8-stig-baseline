@@ -21,7 +21,6 @@ group utilizing MFA, this is a finding.'
   desc 'fix', 'Remove any occurrence of "NOPASSWD" found in "/etc/sudoers"
 file or files in the "/etc/sudoers.d" directory.'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 8'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000373-GPOS-00156'
   tag satisfies: ['SRG-OS-000373-GPOS-00156', 'SRG-OS-000373-GPOS-00157', 'SRG-OS-000373-GPOS-00158']

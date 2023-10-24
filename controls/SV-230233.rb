@@ -20,7 +20,6 @@ Edit/modify the following line in the "/etc/login.defs" file and set "SHA_CRYPT_
 
 SHA_CRYPT_MIN_ROUNDS 5000'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 8'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000073-GPOS-00041'
   tag gid: 'V-230233'

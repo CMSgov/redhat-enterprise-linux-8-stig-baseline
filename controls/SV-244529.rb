@@ -13,7 +13,6 @@ Check that a file system has been created for "/var/tmp" with the following comm
 If a separate entry for "/var/tmp" is not in use, this is a finding.'
   desc 'fix', 'Migrate the "/var/tmp" path onto a separate file system.'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 8'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-244529'

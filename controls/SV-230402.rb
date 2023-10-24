@@ -28,7 +28,6 @@ the following line to "/etc/audit/rules.d/audit.rules"
     Note: Once set, the system must be rebooted for auditing to be changed.  It
 is recommended to add this option as the last step in securing the system.'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 8'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000057-GPOS-00027'
   tag satisfies: ['SRG-OS-000057-GPOS-00027', 'SRG-OS-000058-GPOS-00028', 'SRG-OS-000059-GPOS-00029']

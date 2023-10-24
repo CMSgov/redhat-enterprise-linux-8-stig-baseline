@@ -20,7 +20,6 @@ mode by adding the following line to the
 
     ExecStart=-/usr/lib/systemd/systemd-sulogin-shell emergency'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 8'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000080-GPOS-00048'
   tag gid: 'V-244523'

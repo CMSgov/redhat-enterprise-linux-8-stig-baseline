@@ -19,7 +19,6 @@ $ sudo vi /etc/pam.d/sudo
 
 Remove any occurrences of "pam_succeed_if" in the file.'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 8'
   tag check_id: 'C-55149r809358_chk'
   tag severity: 'medium'
   tag gid: 'V-251712'

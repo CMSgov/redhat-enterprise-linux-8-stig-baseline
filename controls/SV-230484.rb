@@ -57,7 +57,6 @@ the following line in the /etc/chrony.conf file.
 
     server [ntp.server.name] iburst maxpoll 16'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 8'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000355-GPOS-00143'
   tag satisfies: ['SRG-OS-000355-GPOS-00143', 'SRG-OS-000356-GPOS-00144', 'SRG-OS-000359-GPOS-00146']

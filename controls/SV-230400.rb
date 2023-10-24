@@ -33,7 +33,6 @@ setting the correct group-owner as "root" with the following command:
     Replace "[audit_log_directory]" with the correct audit log directory
 path, by default this location is usually "/var/log/audit".'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 8'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000057-GPOS-00027'
   tag satisfies: ['SRG-OS-000057-GPOS-00027', 'SRG-OS-000058-GPOS-00028', 'SRG-OS-000059-GPOS-00029']

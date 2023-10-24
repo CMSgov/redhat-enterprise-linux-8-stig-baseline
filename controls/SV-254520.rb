@@ -55,7 +55,6 @@ Note: SELinux confined users mapped to sysadm_u are not allowed to log in to the
 
 This must be documented with the information system security officer (ISSO) as an operational requirement.'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 8'
   tag check_id: 'C-58004r928594_chk'
   tag severity: 'medium'
   tag gid: 'V-254520'

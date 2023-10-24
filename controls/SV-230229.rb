@@ -52,7 +52,6 @@ Obtain a valid copy of the DoD root CA file from the PKI CA certificate bundle a
 
 /etc/sssd/pki/sssd_auth_ca_db.pem'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 8'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000066-GPOS-00034'
   tag satisfies: ['SRG-OS-000066-GPOS-00034', 'SRG-OS-000384-GPOS-00167']

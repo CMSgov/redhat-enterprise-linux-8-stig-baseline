@@ -20,7 +20,6 @@ Add the following line to the "/etc/pam.d/system-auth" file (or modify the line 
 
      password requisite pam_pwquality.so'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 8'
   tag check_id: 'C-55150r902738_chk'
   tag severity: 'medium'
   tag gid: 'V-251713'

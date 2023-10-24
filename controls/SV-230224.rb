@@ -32,7 +32,6 @@ rest by using disk encryption.
 because existing partitions will need to be resized and changed. To encrypt an
 entire partition, dedicate a partition for encryption in the partition layout.'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 8'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000185-GPOS-00079'
   tag satisfies: ['SRG-OS-000185-GPOS-00079', 'SRG-OS-000404-GPOS-00183', 'SRG-OS-000405-GPOS-00184']

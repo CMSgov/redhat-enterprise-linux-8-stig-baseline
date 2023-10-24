@@ -49,7 +49,6 @@ configuration survives kernel updates:
 
     GRUB_CMDLINE_LINUX="pti=on"'
   impact 0.3
-  ref 'DPMS Target Red Hat Enterprise Linux 8'
   tag severity: 'low'
   tag gtitle: 'SRG-OS-000095-GPOS-00049'
   tag gid: 'V-230491'

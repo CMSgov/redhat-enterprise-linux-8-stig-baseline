@@ -47,7 +47,6 @@ Issue the following command to make the changes take effect:
 
 $ sudo sysctl --system'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 8'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000433-GPOS-00193'
   tag gid: 'V-230280'

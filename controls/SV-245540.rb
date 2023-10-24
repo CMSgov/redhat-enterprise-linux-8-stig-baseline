@@ -23,7 +23,6 @@ Security for Linux (ENSL) in conjunction with SELinux.
     If the daemon is not running, this is a finding.'
   desc 'fix', 'Install and enable the latest McAfee ENSLTP package.'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 8'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000191-GPOS-00080'
   tag gid: 'V-245540'

@@ -14,7 +14,6 @@ Run the following command, replacing "[DIRECTORY]" with any library directory no
 
 $ sudo chgrp root [DIRECTORY]'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 8'
   tag check_id: 'C-55146r810013_chk'
   tag severity: 'medium'
   tag gid: 'V-251709'

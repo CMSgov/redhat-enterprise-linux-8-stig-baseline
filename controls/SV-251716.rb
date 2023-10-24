@@ -33,7 +33,6 @@ retry = 3
 
 Remove any configurations that conflict with the above value.'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 8'
   tag check_id: 'C-55153r858735_chk'
   tag severity: 'medium'
   tag gid: 'V-251716'

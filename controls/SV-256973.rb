@@ -49,7 +49,6 @@ Import Red Hat GPG keys from key file into system keyring:
 	 
 Using the steps listed in the Check Text, confirm the newly imported keys show as installed on the system and verify their fingerprints match vendor values.'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 8'
   tag check_id: 'C-60651r902750_chk'
   tag severity: 'medium'
   tag gid: 'V-256973'

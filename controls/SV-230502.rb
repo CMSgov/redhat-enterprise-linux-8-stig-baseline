@@ -28,7 +28,6 @@ this is a finding.'
     If "autofs" is required for Network File System (NFS), it must be
 documented with the ISSO.'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 8'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000114-GPOS-00059'
   tag gid: 'V-230502'

@@ -28,7 +28,6 @@ removing the rsh-server package from the system with the following command:
 
     $ sudo yum remove rsh-server'
   impact 0.7
-  ref 'DPMS Target Red Hat Enterprise Linux 8'
   tag severity: 'high'
   tag gtitle: 'SRG-OS-000095-GPOS-00049'
   tag satisfies: ['SRG-OS-000095-GPOS-00049', 'SRG-OS-000074-GPOS-00042']

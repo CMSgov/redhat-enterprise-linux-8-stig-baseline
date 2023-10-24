@@ -28,7 +28,6 @@ the SSH daemon, run the following command:
 
     $ sudo systemctl restart sshd.service'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 8'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000109-GPOS-00056'
   tag gid: 'V-230296'

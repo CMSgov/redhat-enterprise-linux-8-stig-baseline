@@ -24,7 +24,6 @@ Add the following line to the "/etc/pam.d/password-auth" file (or modify the lin
 
      password requisite pam_pwquality.so retry=3'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 8'
   tag check_id: 'C-55152r902744_chk'
   tag severity: 'medium'
   tag gid: 'V-251715'

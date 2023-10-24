@@ -16,7 +16,6 @@ following command:
 
     $ sudo ssh-keygen -n [passphrase]'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 8'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000067-GPOS-00035'
   tag gid: 'V-230230'

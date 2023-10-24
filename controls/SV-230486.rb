@@ -19,7 +19,6 @@ If the "cmdport" option is not set to "0", is commented out or missing, this is 
 
      cmdport 0'
   impact 0.3
-  ref 'DPMS Target Red Hat Enterprise Linux 8'
   tag severity: 'low'
   tag gtitle: 'SRG-OS-000095-GPOS-00049'
   tag gid: 'V-230486'

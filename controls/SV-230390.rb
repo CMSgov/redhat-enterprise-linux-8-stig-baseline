@@ -43,7 +43,6 @@ is documented with the ISSO, configure the operating system to notify system
 administration staff and ISSO staff in the event of an audit processing failure
 by setting the "disk_error_action" to "SYSLOG".'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 8'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000047-GPOS-00023'
   tag gid: 'V-230390'
