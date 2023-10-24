@@ -30,7 +30,7 @@ with the following command:
     If \"banner-message-enable\" is set to \"false\" or is missing, this is a
 finding.
   "
-  desc  'fix', "
+  desc 'fix', "
     Configure the operating system to display a banner before granting access
 to the system.
 
@@ -66,21 +66,18 @@ this requirement is Not Applicable.
 
   if virtualization.system.eql?('docker')
     impact 0.0
-    describe "Control not applicable within a container" do
-      skip "Control not applicable within a container"
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
+    end
+  elsif package('gnome-desktop3').installed?
+    describe command('grep ^banner-message-enable /etc/dconf/db/local.d/*') do
+      its('stdout.strip') { should cmp 'banner-message-enable=true' }
     end
   else
-    if package('gnome-desktop3').installed?
-      describe command('grep ^banner-message-enable /etc/dconf/db/local.d/*') do
-        its('stdout.strip') { should cmp 'banner-message-enable=true' }
-      end
-    else
-      impact 0.0
-      describe 'The system does not have GNOME installed' do
-        skip "The system does not have GNOME installed, this requirement is Not
+    impact 0.0
+    describe 'The system does not have GNOME installed' do
+      skip "The system does not have GNOME installed, this requirement is Not
         Applicable."
-      end
     end
   end
 end
-

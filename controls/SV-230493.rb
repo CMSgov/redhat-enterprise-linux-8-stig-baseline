@@ -99,20 +99,18 @@ the following example:
 
   if virtualization.system.eql?('docker')
     impact 0.0
-    describe "Control not applicable within a container" do
-      skip "Control not applicable within a container"
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
+    end
+  elsif input('camera_installed')
+    describe kernel_module('uvcvideo') do
+      it { should_not be_loaded }
+      it { should be_blacklisted }
     end
   else
-    if input('camera_installed')
-      describe kernel_module('uvcvideo') do
-        it { should_not be_loaded }
-        it { should be_blacklisted }
-      end
-    else
-      impact 0.0
-      describe 'Device or operating system does not have a camera installed' do
-        skip 'Device or operating system does not have a camera installed, this control is Not Applicable.'
-      end
+    impact 0.0
+    describe 'Device or operating system does not have a camera installed' do
+      skip 'Device or operating system does not have a camera installed, this control is Not Applicable.'
     end
   end
 end

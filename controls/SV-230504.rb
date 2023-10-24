@@ -62,18 +62,18 @@ functionality.
 
   if virtualization.system.eql?('docker')
     impact 0.0
-    describe "Control not applicable within a container" do
-      skip "Control not applicable within a container"
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
     end
   else
     describe firewalld do
       it { should be_running }
     end
-  
+
     describe firewalld.zone do
       it { should_not be_empty }
     end
-  
+
     firewalld.zone.each do |zone|
       describe "Firewall zone \'#{zone}\' target" do
         subject { firewalld.zone(zone).target }

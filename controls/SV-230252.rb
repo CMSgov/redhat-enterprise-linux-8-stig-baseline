@@ -39,7 +39,7 @@ connection.
 other than \"aes256-ctr,aes192-ctr,aes128-ctr\", the order differs from the
 example above, they are missing, or commented out, this is a finding.
   "
-  desc  'fix', "
+  desc 'fix', "
     Configure the RHEL 8 SSH server to use only ciphers employing FIPS
 140-2-approved algorithms by updating the
 \"/etc/crypto-policies/back-ends/opensshserver.config\" file with the following
@@ -63,8 +63,8 @@ line:
 
   if virtualization.system.eql?('docker') && !file('/etc/sysconfig/sshd').exist?
     impact 0.0
-    describe "Control not applicable - SSH is not installed within containerized RHEL" do
-      skip "Control not applicable - SSH is not installed within containerized RHEL"
+    describe 'Control not applicable - SSH is not installed within containerized RHEL' do
+      skip 'Control not applicable - SSH is not installed within containerized RHEL'
     end
   else
     describe parse_config_file('/etc/crypto-policies/back-ends/opensshserver.config') do
@@ -80,4 +80,3 @@ line:
     end
   end
 end
-

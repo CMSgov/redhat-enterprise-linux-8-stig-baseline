@@ -61,11 +61,11 @@ module_chng
   tag nist: ['AU-12 a']
 
   audit_syscall = 'finit_module'
-  
+
   if virtualization.system.eql?('docker')
     impact 0.0
-    describe "Control not applicable within a container" do
-      skip "Control not applicable within a container"
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
     end
   else
     describe auditd.syscall(audit_syscall) do

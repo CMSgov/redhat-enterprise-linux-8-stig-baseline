@@ -62,7 +62,7 @@ following commands:
     If fapolicyd is not running in enforcement mode on all system mounts with a
 deny-all, permit-by-exception policy, this is a finding.
   "
-  desc  'fix', "
+  desc 'fix', "
     Configure RHEL 8 to employ a deny-all, permit-by-exception application
 whitelisting policy with \"fapolicyd\" using the following command:
 
@@ -101,18 +101,18 @@ to enforcing mode by editing the \"permissive\" line in the
 
   if virtualization.system.eql?('docker')
     impact 0.0
-    describe "Control not applicable within a container" do
-      skip "Control not applicable within a container"
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
     end
   else
     describe parse_config_file('/etc/fapolicyd/fapolicyd.conf') do
       its('permissive') { should eq 0 }
     end
-  
+
     describe file('/etc/fapolicyd/fapolicyd.rules') do
       it { should exist }
     end
-  
+
     describe file('/etc/fapolicyd/fapolicyd.rules').content.strip.split("\n")[-1] do
       it { should cmp 'deny all all' }
     end if file('/etc/fapolicyd/fapolicyd.rules').exist?
@@ -122,10 +122,9 @@ to enforcing mode by editing the \"permissive\" line in the
     describe file('/etc/fapolicyd/fapolicyd.mounts') do
       it { should exist }
     end
-  
+
     describe file('/etc/fapolicyd/fapolicyd.mounts') do
-      its('content.split') { should match_array system_mounts }        
+      its('content.split') { should match_array system_mounts }
     end if file('/etc/fapolicyd/fapolicyd.mounts').exist?
   end
 end
-

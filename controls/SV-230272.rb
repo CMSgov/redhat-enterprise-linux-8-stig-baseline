@@ -34,10 +34,10 @@ finding.
   tag cci: ['CCI-002038']
   tag nist: ['IA-11']
 
-  if virtualization.system.eql?('docker') && !command("sudo").exist?
+  if virtualization.system.eql?('docker') && !command('sudo').exist?
     impact 0.0
-    describe "Control not applicable within a container" do
-      skip "Control not applicable within a container"
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
     end
   else
     describe command('grep -ir authenticate /etc/sudoers /etc/sudoers.d/*') do

@@ -17,7 +17,7 @@ following command:
 \"/usr/lib/systemd/systemd-sulogin-shell rescue\", commented out, or missing,
 this is a finding.
   "
-  desc  'fix', "
+  desc 'fix', "
     Configure the system to require authentication upon booting into rescue
 mode by adding the following line to the
 \"/usr/lib/systemd/system/rescue.service\" file.
@@ -36,8 +36,8 @@ mode by adding the following line to the
 
   if virtualization.system.eql?('docker')
     impact 0.0
-    describe "Control not applicable within a container" do
-      skip "Control not applicable within a container"
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
     end
   else
     describe service('rescue') do

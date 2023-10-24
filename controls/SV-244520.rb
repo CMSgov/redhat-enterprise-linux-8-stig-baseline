@@ -21,7 +21,7 @@ following command:
     If \"rounds\" has a value below \"5000\", or is commented out, this is a
 finding.
   "
-  desc  'fix', "
+  desc 'fix', "
     Configure RHEL 8 to encrypt all stored passwords with a strong
 cryptographic hash.
 
@@ -44,4 +44,3 @@ set \"rounds\" to a value no lower than \"5000\":
     its('lines') { should match_pam_rule('password sufficient pam_unix.so').all_with_integer_arg('rounds', '>=', 5000) }
   end
 end
-

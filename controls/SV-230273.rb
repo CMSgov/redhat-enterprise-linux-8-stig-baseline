@@ -38,7 +38,7 @@ to indicate what type of multifactor authentication is being utilized and what
 packages are installed to support it.  If there is no evidence of multifactor
 authentication being used, this is a finding.
   "
-  desc  'fix', "
+  desc 'fix', "
     Configure the operating system to implement multifactor authentication by
 installing the required package with the following command:
 
@@ -59,20 +59,18 @@ installing the required package with the following command:
 
   if virtualization.system.eql?('docker')
     impact 0.0
-    describe "Control not applicable within a container" do
-      skip "Control not applicable within a container"
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
+    end
+  elsif smart_card_status.eql?('disabled')
+    impact 0.0
+    describe 'The system is not smartcard enabled thus this control is Not Applicable' do
+      skip 'The system is not using Smartcards / PIVs to fulfil the MFA requirement, this control is Not Applicable.'
     end
   else
-    if smart_card_status.eql?('disabled')
-      impact 0.0
-      describe 'The system is not smartcard enabled thus this control is Not Applicable' do
-        skip 'The system is not using Smartcards / PIVs to fulfil the MFA requirement, this control is Not Applicable.'
-      end
-    else
-      mfa_pkg_list.each do |pkg|
-        describe package(pkg) do
-          it { should be_installed }
-        end
+    mfa_pkg_list.each do |pkg|
+      describe package(pkg) do
+        it { should be_installed }
       end
     end
   end

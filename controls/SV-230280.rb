@@ -52,8 +52,8 @@ line to \"/etc/sysctl.d/*.conf\"(or modify the line to have the required value):
 
   if virtualization.system.eql?('docker')
     impact 0.0
-    describe "Control not applicable within a container" do
-      skip "Control not applicable within a container"
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
     end
   else
     describe kernel_parameter('kernel.randomize_va_space') do

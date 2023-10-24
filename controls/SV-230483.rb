@@ -21,7 +21,7 @@ is providing real-time alerts to the SA and ISSO.
     If there is no evidence that real-time alerts are configured on the system,
 this is a finding.
   "
-  desc  'fix', "
+  desc 'fix', "
     Configure the operating system to initiate an action to notify the SA and
 ISSO (at a minimum) when allocated audit record storage volume reaches 75
 percent of the repository maximum audit record storage capacity by
@@ -43,8 +43,8 @@ adding/modifying the following line in the /etc/audit/auditd.conf file.
 
   if virtualization.system.eql?('docker')
     impact 0.0
-    describe "Control not applicable within a container" do
-      skip "Control not applicable within a container"
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
     end
   else
     describe auditd_conf do

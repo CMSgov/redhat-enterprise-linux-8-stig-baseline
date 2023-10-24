@@ -100,21 +100,19 @@ updating the following rules in the \"/etc/audit/rules.d/audit.rules\" file:
 
   if virtualization.system.eql?('docker')
     impact 0.0
-    describe "Control not applicable within a container" do
-      skip "Control not applicable within a container"
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
+    end
+  elsif audit_file
+    describe auditd.file(audit_file) do
+      its('permissions.flatten') { should include 'w' }
+      its('permissions.flatten') { should include 'a' }
+      its('key') { should cmp 'logins' }
     end
   else
-    if audit_file
-      describe auditd.file(audit_file) do
-        its('permissions.flatten') { should include 'w' }
-        its('permissions.flatten') { should include 'a' }
-        its('key') { should cmp 'logins' }
-      end
-    else
-      describe 'No faillock logfile found' do
-        subject { audit_file }
-        it { should_not be nil }
-      end
+    describe 'No faillock logfile found' do
+      subject { audit_file }
+      it { should_not be nil }
     end
   end
 end

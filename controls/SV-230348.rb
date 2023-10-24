@@ -30,7 +30,7 @@ with the following command:
     If the \"lock-command\" is not set in the global settings to call
 \"vlock\", this is a finding.
   "
-  desc  'fix', "
+  desc 'fix', "
     Configure the operating system to enable a user to initiate a session lock
 via tmux.
 
@@ -52,8 +52,8 @@ line:
 
   if virtualization.system.eql?('docker')
     impact 0.0
-    describe "Control not applicable within a container" do
-      skip "Control not applicable within a container"
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
     end
   else
     describe command('grep -i lock-command /etc/tmux.conf') do

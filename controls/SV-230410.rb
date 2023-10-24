@@ -62,8 +62,8 @@ modifications, disabling, and termination events that affect
 
   if virtualization.system.eql?('docker')
     impact 0.0
-    describe "Control not applicable within a container" do
-      skip "Control not applicable within a container"
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
     end
   else
     describe auditd.file(audit_file) do
@@ -71,10 +71,10 @@ modifications, disabling, and termination events that affect
       its('action') { should_not include 'never' }
       its('key') { should cmp 'identity' }
     end
-  
+
     # Resource creates data structure including all usages of file
     perms = auditd.file(audit_file).permissions
-  
+
     perms.each do |perm|
       describe perm do
         it { should include 'w' }

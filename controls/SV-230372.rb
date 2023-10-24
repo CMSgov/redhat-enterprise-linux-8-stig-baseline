@@ -85,12 +85,12 @@ restart the \"sssd\" service, run the following command:
 
   if virtualization.system.eql?('docker')
     impact 0.0
-    describe "Control not applicable within a container" do
-      skip "Control not applicable within a container"
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
     end
   else
     describe ini('/etc/sssd/sssd.conf') do
-        its('pam_cert_auth') { should cmp 'True' }
-      end
+      its('pam_cert_auth') { should cmp 'True' }
+    end
   end
 end

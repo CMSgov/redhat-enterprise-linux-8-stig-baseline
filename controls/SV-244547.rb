@@ -32,7 +32,7 @@ unauthorized peripherals are being blocked.
     If there is no evidence that unauthorized peripherals are being blocked
 before establishing a connection, this is a finding.
   "
-  desc  'fix', "
+  desc 'fix', "
     Install the USBGuard package with the following command:
 
     $ sudo yum install usbguard.x86_64
@@ -49,8 +49,8 @@ before establishing a connection, this is a finding.
 
   if virtualization.system.eql?('docker')
     impact 0.0
-    describe "Control not applicable within a container" do
-      skip "Control not applicable within a container"
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
     end
   else
     describe package('usbguard') do
@@ -58,4 +58,3 @@ before establishing a connection, this is a finding.
     end
   end
 end
-

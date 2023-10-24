@@ -31,7 +31,7 @@ following command:
     If any files or directories are group owned by a group that the directory
 owner is not a member of, this is a finding.
   "
-  desc  'fix', "
+  desc 'fix', "
     Change the group of a local interactive user's files and directories to a
 group that the interactive user is a member. To change the group owner of a
 local interactive user's files and directories, use the following command:
@@ -63,4 +63,3 @@ local interactive user's files and directories, use the following command:
     it { should be_empty }
   end
 end
-

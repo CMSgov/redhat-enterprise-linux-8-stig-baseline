@@ -33,7 +33,7 @@ ago
 
     If the audit service is not \"active\" and \"running\", this is a finding.
   "
-  desc  'fix', "
+  desc 'fix', "
     Configure the audit service to produce audit records containing the
 information needed to establish when (date and time) an event occurred with the
 following commands:
@@ -66,8 +66,8 @@ following commands:
 
   if virtualization.system.eql?('docker')
     impact 0.0
-    describe "Control not applicable within a container" do
-      skip "Control not applicable within a container"
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
     end
   else
     describe service('auditd') do
@@ -76,4 +76,3 @@ following commands:
     end
   end
 end
-

@@ -38,7 +38,7 @@ Officer (ISSO) as an operational requirement, this is a finding.
 SCTP\", and use of the SCTP is not documented with the Information System
 Security Officer (ISSO) as an operational requirement, this is a finding.
   "
-  desc  'fix', "
+  desc 'fix', "
     Configure the operating system to disable the ability to use the SCTP
 kernel module.
 
@@ -62,8 +62,8 @@ kernel module.
 
   if virtualization.system.eql?('docker')
     impact 0.0
-    describe "Control not applicable within a container" do
-      skip "Control not applicable within a container"
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
     end
   else
     describe kernel_module('SCTP') do

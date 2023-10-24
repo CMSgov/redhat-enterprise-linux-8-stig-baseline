@@ -20,7 +20,7 @@ that use a BIOS, use the following command:
     If the grub superusers password does not begin with \"grub.pbkdf2.sha512\",
 this is a finding.
   "
-  desc  'fix', "
+  desc 'fix', "
     Configure the system to require a grub bootloader password for the grub
 superusers account with the grub2-setpassword command, which creates/overwrites
 the /boot/grub2/user.cfg file.
@@ -44,20 +44,18 @@ the following command:
 
   if virtualization.system.eql?('docker')
     impact 0.0
-    describe "Control not applicable within a container" do
-      skip "Control not applicable within a container"
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
+    end
+  elsif file('/sys/firmware/efi').exist?
+    impact 0.0
+    describe 'System running UEFI' do
+      skip 'The System is running UEFI, this control is Not Applicable.'
     end
   else
-    if file('/sys/firmware/efi').exist?
-      impact 0.0
-      describe 'System running UEFI' do
-        skip 'The System is running UEFI, this control is Not Applicable.'
-      end
-    else
-      input('grub_user_boot_files').each do |grub_user_file|
-        describe parse_config_file(grub_user_file) do
-          its('GRUB2_PASSWORD') { should include 'grub.pbkdf2.sha512' }
-        end
+    input('grub_user_boot_files').each do |grub_user_file|
+      describe parse_config_file(grub_user_file) do
+        its('GRUB2_PASSWORD') { should include 'grub.pbkdf2.sha512' }
       end
     end
   end

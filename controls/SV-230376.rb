@@ -55,28 +55,26 @@ line \"[pam]\".
 
   sssd_config = parse_config_file('/etc/sssd/sssd.conf')
 
-  if virtualization.system.eql?('docker') && sssd_config.content == nil
+  if virtualization.system.eql?('docker') && sssd_config.content.nil?
     impact 0.0
-    describe "Control not applicable within a container" do
-      skip "Control not applicable within a container"
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
+    end
+  elsif input('smart_card_status')
+    describe.one do
+      describe 'Cache credentials enabled' do
+        subject { sssd_config.content }
+        it { should_not match /cache_credentials\s*=\s*true/ }
+      end
+      describe 'Offline credentials expiration' do
+        subject { sssd_config }
+        its('pam.offline_credentials_expiration') { should cmp '1' }
+      end
     end
   else
-    if input('smart_card_status')
-      describe.one do
-        describe 'Cache credentials enabled' do
-          subject { sssd_config.content }
-          it { should_not match /cache_credentials\s*=\s*true/ }
-        end
-        describe 'Offline credentials expiration' do
-          subject { sssd_config }
-          its('pam.offline_credentials_expiration') { should cmp '1' }
-        end
-      end
-    else
-      impact 0.0
-      describe 'The system is not utilizing smart card authentication' do
-        skip 'The system is not utilizing smart card authentication, this control is Not Applicable.'
-      end
+    impact 0.0
+    describe 'The system is not utilizing smart card authentication' do
+      skip 'The system is not utilizing smart card authentication, this control is Not Applicable.'
     end
   end
 end

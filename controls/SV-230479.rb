@@ -64,8 +64,8 @@ the name or IP address of the log aggregation server.
 
   if virtualization.system.eql?('docker')
     impact 0.0
-    describe "Control not applicable within a container" do
-      skip "Control not applicable within a container"
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
     end
   else
     describe command('grep @@ /etc/rsyslog.conf /etc/rsyslog.d/*.conf') do

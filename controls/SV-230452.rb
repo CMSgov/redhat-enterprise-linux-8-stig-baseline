@@ -78,20 +78,20 @@ auid>=1000 -F auid!=unset -k perm_access
 
   if virtualization.system.eql?('docker')
     impact 0.0
-    describe "Control not applicable within a container" do
-      skip "Control not applicable within a container"
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
     end
   else
     describe auditd.syscall(audit_syscall) do
-        its('action.uniq') { should eq ['always'] }
-        its('list.uniq') { should eq ['exit'] }
-        its('arch.uniq') { should include 'b32' }
-        its('arch.uniq') { should include 'b64' }
-        its('fields.flatten') { should include 'exit=-EACCES' }
-        its('fields.flatten') { should include 'exit=-EPERM' }
-        its('fields.flatten') { should include 'auid>=1000' }
-        its('fields.flatten') { should include 'auid!=-1' }
-        its('key.uniq') { should cmp 'perm_access' }
+      its('action.uniq') { should eq ['always'] }
+      its('list.uniq') { should eq ['exit'] }
+      its('arch.uniq') { should include 'b32' }
+      its('arch.uniq') { should include 'b64' }
+      its('fields.flatten') { should include 'exit=-EACCES' }
+      its('fields.flatten') { should include 'exit=-EPERM' }
+      its('fields.flatten') { should include 'auid>=1000' }
+      its('fields.flatten') { should include 'auid!=-1' }
+      its('key.uniq') { should cmp 'perm_access' }
     end
   end
 end

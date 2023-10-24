@@ -17,7 +17,7 @@ authenticates with the following command:
     If the \"Compression\" keyword is set to \"yes\", is missing, or the
 returned line is commented out, this is a finding.
   "
-  desc  'fix', "
+  desc 'fix', "
     Uncomment the \"Compression\" keyword in \"/etc/ssh/sshd_config\" (this
 file may be named differently or be in a different location if using a version
 of SSH that is provided by a third-party vendor) on the system and set the
@@ -39,8 +39,8 @@ value to \"delayed\" or \"no\":
 
   if virtualization.system.eql?('docker') && !file('/etc/ssh/sshd_config').exist?
     impact 0.0
-    describe "Control not applicable - SSH is not installed within containerized RHEL" do
-      skip "Control not applicable - SSH is not installed within containerized RHEL"
+    describe 'Control not applicable - SSH is not installed within containerized RHEL' do
+      skip 'Control not applicable - SSH is not installed within containerized RHEL'
     end
   else
     describe sshd_config do

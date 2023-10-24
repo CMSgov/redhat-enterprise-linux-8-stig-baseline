@@ -52,21 +52,21 @@ directory selection lists.
 
   if virtualization.system.eql?('docker')
     impact 0.0
-    describe "Control not applicable within a container" do
-      skip "Control not applicable within a container"
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
     end
   else
     describe package('aide') do
       it { should be_installed }
     end
-  
+
     findings = []
     aide_conf.where { !selection_line.start_with? '!' }.entries.each do |selection|
       unless selection.rules.include? 'acl'
         findings.append(selection.selection_line)
       end
     end
-  
+
     describe "List of monitored files/directories without 'acl' rule" do
       subject { findings }
       it { should be_empty }

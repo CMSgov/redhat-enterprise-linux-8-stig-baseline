@@ -21,7 +21,7 @@ following command:
     If \"rounds\" has a value below \"5000\", or is commented out, this is a
 finding.
   "
-  desc  'fix', "
+  desc 'fix', "
     Configure RHEL 8 to encrypt all stored passwords with a strong
 cryptographic hash.
 

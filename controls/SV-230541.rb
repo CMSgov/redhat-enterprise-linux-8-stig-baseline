@@ -49,19 +49,17 @@ lines in the appropriate file under \"/etc/sysctl.d\":
 
   if virtualization.system.eql?('docker')
     impact 0.0
-    describe "Control not applicable within a container" do
-      skip "Control not applicable within a container"
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
+    end
+  elsif input('ipv6_enabled')
+    describe kernel_parameter('net.ipv6.conf.all.accept_ra') do
+      its('value') { should eq 0 }
     end
   else
-    if input('ipv6_enabled')
-      describe kernel_parameter('net.ipv6.conf.all.accept_ra') do
-        its('value') { should eq 0 }
-      end
-    else
-      impact 0.0
-      describe 'IPv6 not enabled' do
-        skip 'IPv6 is not enabled, this control is Not Applicable.'
-      end
+    impact 0.0
+    describe 'IPv6 not enabled' do
+      skip 'IPv6 is not enabled, this control is Not Applicable.'
     end
   end
 end

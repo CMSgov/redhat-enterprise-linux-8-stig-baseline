@@ -69,14 +69,14 @@ functions.
 
   if virtualization.system.eql?('docker')
     impact 0.0
-    describe "Control not applicable within a container" do
-      skip "Control not applicable within a container"
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
     end
   else
     describe command('sestatus') do
       its('stdout') { should match /^Loaded\spolicy\sname:\s+targeted\n?$/ }
     end
-  
+
     describe parse_config_file('/etc/selinux/config') do
       its('SELINUXTYPE') { should eq 'targeted' }
     end

@@ -44,21 +44,19 @@ documented with the ISSO.
 
   if virtualization.system.eql?('docker')
     impact 0.0
-    describe "Control not applicable within a container" do
-      skip "Control not applicable within a container"
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
+    end
+  elsif package('autofs').installed?
+    describe systemd_service('autofs.service') do
+      it { should_not be_running }
+      it { should_not be_enabled }
+      it { should_not be_installed }
     end
   else
-    if package('autofs').installed?
-      describe systemd_service('autofs.service') do
-        it { should_not be_running }
-        it { should_not be_enabled }
-        it { should_not be_installed }
-      end
-    else
-      impact 0.0
-      describe 'The autofs service is not installed' do
-        skip 'The autofs service is not installed, this control is Not Applicable.'
-      end
+    impact 0.0
+    describe 'The autofs service is not installed' do
+      skip 'The autofs service is not installed, this control is Not Applicable.'
     end
   end
 end

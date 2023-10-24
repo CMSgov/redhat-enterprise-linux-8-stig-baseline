@@ -65,15 +65,15 @@ setting the following options in \"/etc/rsyslog.conf\" or
 
   if virtualization.system.eql?('docker')
     impact 0.0
-    describe "Control not applicable within a container" do
-      skip "Control not applicable within a container"
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
     end
   else
     describe 'rsyslog configuration' do
       subject { command("grep -i '^\$DefaultNetstreamDriver' /etc/rsyslog.conf /etc/rsyslog.d/* | awk -F ':' '{ print $2 }'").stdout }
       it { should match /\$DefaultNetstreamDriver\s+gtls/ }
     end
-  
+
     describe 'rsyslog configuration' do
       subject { command("grep -i '^\$ActionSendStreamDriverMode' /etc/rsyslog.conf /etc/rsyslog.d/* | awk -F ':' '{ print $2 }'").stdout }
       it { should match /\$ActionSendStreamDriverMode\s+1/ }

@@ -47,8 +47,8 @@ list does not include \"PIV-II\", this is a finding.
 
   if virtualization.system.eql?('docker')
     impact 0.0
-    describe "Control not applicable within a container" do
-      skip "Control not applicable within a container"
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
     end
   else
     if input('smart_card_status')
@@ -57,11 +57,11 @@ list does not include \"PIV-II\", this is a finding.
         skip 'The system is not utilizing smart card authentication, this control is Not Applicable.'
       end
     end
-  
+
     describe package('opensc') do
       it { should be_installed }
     end
-  
+
     describe command('opensc-tool --list-drivers | grep -i piv') do
       its('stdout') { should match /PIV-II/ }
     end

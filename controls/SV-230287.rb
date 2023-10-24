@@ -17,7 +17,7 @@ with the following command:
     If any private host key file has a mode more permissive than \"0600\", this
 is a finding.
   "
-  desc  'fix', "
+  desc 'fix', "
     Configure the mode of SSH private host key files under \"/etc/ssh\" to
 \"0600\" with the following command:
 
@@ -40,8 +40,8 @@ the SSH daemon, run the following command:
 
   if virtualization.system.eql?('docker') && !directory('/etc/ssh').exist?
     impact 0.0
-    describe "Control not applicable - SSH is not installed within containerized RHEL" do
-      skip "Control not applicable - SSH is not installed within containerized RHEL"
+    describe 'Control not applicable - SSH is not installed within containerized RHEL' do
+      skip 'Control not applicable - SSH is not installed within containerized RHEL'
     end
   else
     key_files = command("find /etc/ssh -xdev -name '*ssh_host*key'").stdout.split("\n")

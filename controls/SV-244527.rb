@@ -24,7 +24,7 @@ number generator entropy gatherer service with the following command:
 
     If the \"rng-tools\" package is not installed, this is a finding.
   "
-  desc  'fix', "
+  desc 'fix', "
     Install the packages required to enabled the hardware random number
 generator entropy gatherer service with the following command:
 
@@ -42,8 +42,8 @@ generator entropy gatherer service with the following command:
 
   if virtualization.system.eql?('docker')
     impact 0.0
-    describe "Control not applicable within a container" do
-      skip "Control not applicable within a container"
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
     end
   else
     describe package('rng-tools') do
@@ -51,4 +51,3 @@ generator entropy gatherer service with the following command:
     end
   end
 end
-

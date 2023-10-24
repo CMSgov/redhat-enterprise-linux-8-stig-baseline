@@ -46,25 +46,23 @@ logon to the system via a graphical user interface.
 
   if virtualization.system.eql?('docker')
     impact 0.0
-    describe "Control not applicable within a container" do
-      skip "Control not applicable within a container"
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
     end
-  else
-    if package('gnome-desktop3').installed?
-      if (f = file(custom_conf)).exist?
-        describe ini(custom_conf) do
-          its('daemon.AutomaticLoginEnable') { cmp false }
-        end
-      else
-        describe f do
-          it { should exist }
-        end
+  elsif package('gnome-desktop3').installed?
+    if (f = file(custom_conf)).exist?
+      describe ini(custom_conf) do
+        its('daemon.AutomaticLoginEnable') { cmp false }
       end
     else
-      impact 0.0
-      describe 'The system does not have GDM installed' do
-        skip 'The system does not have GDM installed, this requirement is Not Applicable.'
+      describe f do
+        it { should exist }
       end
+    end
+  else
+    impact 0.0
+    describe 'The system does not have GDM installed' do
+      skip 'The system does not have GDM installed, this requirement is Not Applicable.'
     end
   end
 end

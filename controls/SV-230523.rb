@@ -39,7 +39,7 @@ not namespace aware and can cause issues when launching or running containers.
 
     If fapolicyd is not installed, this is a finding.
   "
-  desc  'fix', "
+  desc 'fix', "
     Install \"fapolicyd\" with the following command:
 
     $ sudo yum install fapolicyd.x86_64
@@ -58,8 +58,8 @@ not namespace aware and can cause issues when launching or running containers.
 
   if virtualization.system.eql?('docker')
     impact 0.0
-    describe "Control not applicable within a container" do
-      skip "Control not applicable within a container"
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
     end
   else
     describe package('fapolicyd') do

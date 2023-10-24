@@ -61,8 +61,8 @@ following rules in the \"/etc/audit/rules.d/audit.rules\" file:
 
   if virtualization.system.eql?('docker')
     impact 0.0
-    describe "Control not applicable within a container" do
-      skip "Control not applicable within a container"
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
     end
   else
     describe auditd.syscall(audit_syscall) do

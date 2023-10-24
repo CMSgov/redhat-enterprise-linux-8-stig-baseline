@@ -32,7 +32,7 @@ non-default faillock directory to ensure contents persist after reboot:
     If the \"dir\" option is not set to a non-default documented tally log
 directory, is missing or commented out, this is a finding.
   "
-  desc  'fix', "
+  desc 'fix', "
     Configure the operating system maintain the contents of the faillock
 directory after a reboot.
 

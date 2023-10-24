@@ -30,7 +30,7 @@ notebook computers, smartphones, and tablets).
 Administrator if another firewall is installed. If no firewall is installed and
 active this is a finding.
   "
-  desc  'fix', "
+  desc 'fix', "
     Configure \"firewalld\" to protect the operating system with the following
 command:
 
@@ -48,8 +48,8 @@ command:
 
   if virtualization.system.eql?('docker')
     impact 0.0
-    describe "Control not applicable within a container" do
-      skip "Control not applicable within a container"
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
     end
   else
     describe systemd_service('firewalld.service') do
@@ -58,4 +58,3 @@ command:
     end
   end
 end
-

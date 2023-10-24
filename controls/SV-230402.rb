@@ -49,8 +49,8 @@ is recommended to add this option as the last step in securing the system.
 
   if virtualization.system.eql?('docker')
     impact 0.0
-    describe "Control not applicable within a container" do
-      skip "Control not applicable within a container"
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
     end
   else
     describe command('grep "^\s*[^#]" /etc/audit/audit.rules | tail -1') do

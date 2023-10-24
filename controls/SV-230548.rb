@@ -54,19 +54,17 @@ effect. To reload the contents of the files, run the following command:
 
   if virtualization.system.eql?('docker')
     impact 0.0
-    describe "Control not applicable within a container" do
-      skip "Control not applicable within a container"
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
+    end
+  elsif container_host
+    impact 0.0
+    describe true do
+      skip 'Profile running on a container host -- User namespaces are used primarily for Linux containers.; this control is Not Applicable'
     end
   else
-    if container_host
-      impact 0.0
-      describe true do
-        skip 'Profile running on a container host -- User namespaces are used primarily for Linux containers.; this control is Not Applicable'
-      end
-    else
-      describe kernel_parameter('user.max_user_namespaces') do
-        its('value') { should eq 0 }
-      end
+    describe kernel_parameter('user.max_user_namespaces') do
+      its('value') { should eq 0 }
     end
   end
 end

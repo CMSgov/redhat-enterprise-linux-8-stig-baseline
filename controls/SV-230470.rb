@@ -50,7 +50,7 @@ is not applicable.
     If the \"AuditBackend\" entry does not equal \"LinuxAudit\", is missing, or
 the line is commented out, this is a finding.
   "
-  desc  'fix', "
+  desc 'fix', "
     Configure RHEL 8 to enable Linux audit logging of the USBGuard daemon by
 adding or modifying the following line in
 \"/etc/usbguard/usbguard-daemon.conf\":
@@ -70,8 +70,8 @@ adding or modifying the following line in
 
   if virtualization.system.eql?('docker')
     impact 0.0
-    describe "Control not applicable within a container" do
-      skip "Control not applicable within a container"
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
     end
   else
     describe parse_config_file('/etc/usbguard/usbguard-daemon.conf') do

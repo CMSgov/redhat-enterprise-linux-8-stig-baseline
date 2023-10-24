@@ -31,10 +31,10 @@ can initiate privileged actions on the target system."
 
   sudoers_files = bash('ls -d /etc/sudoers.d/*').stdout.strip.split.append('/etc/sudoers')
 
-  if virtualization.system.eql?('docker') && !command("sudo").exist?
+  if virtualization.system.eql?('docker') && !command('sudo').exist?
     impact 0.0
-    describe "Control not applicable within a container" do
-      skip "Control not applicable within a container"
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
     end
   else
     sudoers_files.each do |file|

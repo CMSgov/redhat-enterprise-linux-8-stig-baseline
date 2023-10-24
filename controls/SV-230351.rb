@@ -67,19 +67,17 @@ section of the database file and add or update the following lines:
 
   if virtualization.system.eql?('docker')
     impact 0.0
-    describe "Control not applicable within a container" do
-      skip "Control not applicable within a container"
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
+    end
+  elsif smart_card_status.eql?('disabled')
+    impact 0.0
+    describe 'The system is not smartcard enabled thus this control is Not Applicable' do
+      skip 'The system is not using Smartcards / PIVs to fulfil the MFA requirement, this control is Not Applicable.'
     end
   else
-    if smart_card_status.eql?('disabled')
-      impact 0.0
-      describe 'The system is not smartcard enabled thus this control is Not Applicable' do
-        skip 'The system is not using Smartcards / PIVs to fulfil the MFA requirement, this control is Not Applicable.'
-      end
-    else
-      describe command('grep -R removal-action /etc/dconf/db/*') do
-        its('stdout.strip') { should match /^[^#].*:[\s]*removal-action[\s]*=[\s']*lock-screen[\s']*$/ }
-      end
+    describe command('grep -R removal-action /etc/dconf/db/*') do
+      its('stdout.strip') { should match /^[^#].*:[\s]*removal-action[\s]*=[\s']*lock-screen[\s']*$/ }
     end
   end
 end

@@ -43,7 +43,7 @@ boot=UUID=8d171156-cd61-421c-ba41-1c021ac29e82
 not documented with the Information System Security Officer (ISSO) as an
 operational requirement, this is a finding.
   "
-  desc  'fix', "
+  desc 'fix', "
     Document the use of vsyscalls with the ISSO as an operational requirement
 or disable them with the following command:
 
@@ -69,14 +69,14 @@ configuration survives kernel updates:
 
   if virtualization.system.eql?('docker')
     impact 0.0
-    describe "Control not applicable within a container" do
-      skip "Control not applicable within a container"
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
     end
   else
     describe parse_config(grub_stdout) do
       its('kernelopts') { should match /vsyscall=none/ }
     end
-  
+
     describe parse_config_file('/etc/default/grub') do
       its('GRUB_CMDLINE_LINUX') { should match /vsyscall=none/ }
     end

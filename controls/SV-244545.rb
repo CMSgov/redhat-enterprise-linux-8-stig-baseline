@@ -40,7 +40,7 @@ preset: disabled)
 
     If fapolicyd is not enabled and running, this is a finding.
   "
-  desc  'fix', "
+  desc 'fix', "
     Enable \"fapolicyd\" using the following command:
 
     $ sudo systemctl enable --now fapolicyd
@@ -59,8 +59,8 @@ preset: disabled)
 
   if virtualization.system.eql?('docker')
     impact 0.0
-    describe "Control not applicable within a container" do
-      skip "Control not applicable within a container"
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
     end
   else
     describe service('fapolicyd') do
@@ -69,4 +69,3 @@ preset: disabled)
     end
   end
 end
-

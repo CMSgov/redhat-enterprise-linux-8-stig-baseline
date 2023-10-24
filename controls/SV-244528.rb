@@ -16,7 +16,7 @@ following command:
     If the value is returned as \"yes\", the returned line is commented out, no
 output is returned, or has not been documented with the ISSO, this is a finding.
   "
-  desc  'fix', "
+  desc 'fix', "
     Configure the SSH daemon to not allow GSSAPI authentication.
 
     Add the following line in \"/etc/ssh/sshd_config\", or uncomment the line
@@ -41,8 +41,8 @@ the SSH daemon, run the following command:
 
   if virtualization.system.eql?('docker') && !file('/etc/ssh/sshd_config').exist?
     impact 0.0
-    describe "Control not applicable - SSH is not installed within containerized RHEL" do
-      skip "Control not applicable - SSH is not installed within containerized RHEL"
+    describe 'Control not applicable - SSH is not installed within containerized RHEL' do
+      skip 'Control not applicable - SSH is not installed within containerized RHEL'
     end
   else
     describe sshd_config do
@@ -50,4 +50,3 @@ the SSH daemon, run the following command:
     end
   end
 end
-

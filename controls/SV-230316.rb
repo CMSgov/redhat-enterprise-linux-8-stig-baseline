@@ -70,7 +70,7 @@ performed, the \"/etc/resolv.conf\" file must be empty. An empty
   dns_in_host_line = parse_config_file('/etc/nsswitch.conf',
       comment_char: '#',
       assignment_regex: /^\s*([^:]*?)\s*:\s*(.*?)\s*$/
-                                      ).params['hosts'].include?('dns')
+  ).params['hosts'].include?('dns')
 
   describe 'If `local` resolution is being used, a `hosts` entry in /etc/nsswitch.conf having `dns`' do
     subject { dns_in_host_line }
@@ -84,7 +84,7 @@ performed, the \"/etc/resolv.conf\" file must be empty. An empty
 
   nameservers = parse_config_file('/etc/resolv.conf',
     comment_char: '#'
-                                 ).params.keys.grep(/nameserver/)
+  ).params.keys.grep(/nameserver/)
 
   describe "The system's nameservers: #{nameservers}" do
     subject { nameservers }

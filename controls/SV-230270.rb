@@ -71,14 +71,14 @@ command:
 
   if virtualization.system.eql?('docker')
     impact 0.0
-    describe "Control not applicable within a container" do
-      skip "Control not applicable within a container"
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
     end
   else
     describe kernel_parameter('kernel.perf_event_paranoid') do
       its('value') { should eq 2 }
     end
-  
+
     describe parse_config(command('grep -rh ^kernel.perf_event_paranoid /etc/sysctl.conf /etc/sysctl.d/*.conf').stdout.strip) do
       its(['kernel.perf_event_paranoid']) { should cmp 2 }
     end

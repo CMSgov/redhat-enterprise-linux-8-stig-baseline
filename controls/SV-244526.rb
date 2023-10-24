@@ -31,7 +31,7 @@ can be viewed in the /etc/crypto-policies/back-ends/ directory.
 
     If the \"crypto_policy\" is uncommented, this is a finding.
   "
-  desc  'fix', "
+  desc 'fix', "
     Configure the RHEL 8 SSH daemon to use system-wide crypto policies by
 adding the following line to /etc/sysconfig/sshd:
 
@@ -53,8 +53,8 @@ adding the following line to /etc/sysconfig/sshd:
 
   if virtualization.system.eql?('docker') && !file('/etc/sysconfig/sshd').exist?
     impact 0.0
-    describe "Control not applicable - SSH is not installed within containerized RHEL" do
-      skip "Control not applicable - SSH is not installed within containerized RHEL"
+    describe 'Control not applicable - SSH is not installed within containerized RHEL' do
+      skip 'Control not applicable - SSH is not installed within containerized RHEL'
     end
   else
     describe parse_config_file('/etc/sysconfig/sshd') do
@@ -62,4 +62,3 @@ adding the following line to /etc/sysconfig/sshd:
     end
   end
 end
-

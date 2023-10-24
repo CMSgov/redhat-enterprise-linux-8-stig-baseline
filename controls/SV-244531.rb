@@ -51,4 +51,3 @@ directory with the following command:
     it { should be_empty }
   end
 end
-
