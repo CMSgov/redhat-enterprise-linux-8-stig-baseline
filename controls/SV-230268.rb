@@ -1,8 +1,8 @@
 control 'SV-230268' do
-  title "RHEL 8 must enable kernel parameters to enforce discretionary access
-control on hardlinks."
-  desc  "Discretionary Access Control (DAC) is based on the notion that
-individual users are \"owners\" of objects and therefore have discretion over
+  title 'RHEL 8 must enable kernel parameters to enforce discretionary access
+control on hardlinks.'
+  desc 'Discretionary Access Control (DAC) is based on the notion that
+individual users are "owners" of objects and therefore have discretion over
 who should be authorized to access the object and in which mode (e.g., read or
 write). Ownership is usually acquired as a consequence of creating the object
 or via specified ownership assignment. DAC allows the owner to determine who
@@ -30,13 +30,8 @@ limitation is not required for this use of discretionary access control.
 longer create soft or hard links to files they do not own. Disallowing such
 hardlinks mitigate vulnerabilities based on insecure file system accessed by
 privileged programs, avoiding an exploitation vector exploiting unsafe use of
-open() or creat().
-
-
-  "
-  desc  'rationale', ''
-  desc  'check', "
-    Verify the operating system is configured to enable DAC on hardlinks with
+open() or creat().'
+  desc 'check', 'Verify the operating system is configured to enable DAC on hardlinks with
 the following commands:
 
     Check the status of the fs.protected_hardlinks kernel parameter.
@@ -45,7 +40,7 @@ the following commands:
 
     fs.protected_hardlinks = 1
 
-    If \"fs.protected_hardlinks\" is not set to \"1\" or is missing, this is a
+    If "fs.protected_hardlinks" is not set to "1" or is missing, this is a
 finding.
 
     Check that the configuration files are present to enable this kernel
@@ -55,27 +50,23 @@ parameter.
 
     /etc/sysctl.d/99-sysctl.conf:fs.protected_hardlinks = 1
 
-    If \"fs.protected_hardlinks\" is not set to \"1\", is missing or commented
-out, this is a finding.
-  "
-  desc 'fix', "
-    Configure the operating system to enable DAC on hardlinks.
+    If "fs.protected_hardlinks" is not set to "1", is missing or commented
+out, this is a finding.'
+  desc 'fix', 'Configure the operating system to enable DAC on hardlinks.
 
     Add or edit the following line in a system configuration file in the
-\"/etc/sysctl.d/\" directory:
+"/etc/sysctl.d/" directory:
 
     fs.protected_hardlinks = 1
 
     Load settings from all system configuration files with the following
 command:
 
-    $ sudo sysctl --system
-  "
+    $ sudo sysctl --system'
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000312-GPOS-00122'
-  tag satisfies: %w(SRG-OS-000312-GPOS-00122 SRG-OS-000312-GPOS-00123
-                    SRG-OS-000312-GPOS-00124 SRG-OS-000324-GPOS-00125)
+  tag satisfies: ['SRG-OS-000312-GPOS-00122', 'SRG-OS-000312-GPOS-00123', 'SRG-OS-000312-GPOS-00124', 'SRG-OS-000324-GPOS-00125']
   tag gid: 'V-230268'
   tag rid: 'SV-230268r627750_rule'
   tag stig_id: 'RHEL-08-010374'

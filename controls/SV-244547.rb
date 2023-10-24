@@ -1,6 +1,6 @@
 control 'SV-244547' do
   title 'RHEL 8 must have the USBGuard installed.'
-  desc  "Without authenticating devices, unidentified or unknown devices may be
+  desc 'Without authenticating devices, unidentified or unknown devices may be
 introduced, thereby facilitating malicious activity.
     Peripherals include, but are not limited to, such devices as flash drives,
 external storage, and printers.
@@ -15,11 +15,8 @@ usbguard tool.
     The System Administrator (SA) must work with the site Information System
 Security Officer (ISSO) to determine a list of authorized peripherals and
 establish rules within the USBGuard software framework to allow only authorized
-devices.
-  "
-  desc  'rationale', ''
-  desc  'check', "
-    Verify USBGuard is installed on the operating system with the following
+devices.'
+  desc 'check', 'Verify USBGuard is installed on the operating system with the following
 command:
 
     $ sudo yum list installed usbguard
@@ -30,13 +27,10 @@ command:
     If the USBGuard package is not installed, ask the SA to indicate how
 unauthorized peripherals are being blocked.
     If there is no evidence that unauthorized peripherals are being blocked
-before establishing a connection, this is a finding.
-  "
-  desc 'fix', "
-    Install the USBGuard package with the following command:
+before establishing a connection, this is a finding.'
+  desc 'fix', 'Install the USBGuard package with the following command:
 
-    $ sudo yum install usbguard.x86_64
-  "
+$ sudo yum install usbguard.x86_64'
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000378-GPOS-00163'

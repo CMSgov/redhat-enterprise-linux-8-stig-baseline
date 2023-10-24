@@ -1,21 +1,18 @@
 control 'SV-230301' do
   title 'RHEL 8 must prevent special devices on non-root local partitions.'
-  desc  "The \"nodev\" mount option causes the system to not interpret
+  desc 'The "nodev" mount option causes the system to not interpret
 character or block special devices. Executing character or block special
 devices from untrusted file systems increases the opportunity for unprivileged
 users to attain unauthorized administrative access.  The only legitimate
-location for device files is the /dev directory located on the root partition."
-  desc  'rationale', ''
-  desc  'check', "
-    Verify all non-root local partitions are mounted with the \"nodev\" option
+location for device files is the /dev directory located on the root partition.'
+  desc 'check', %q(Verify all non-root local partitions are mounted with the "nodev" option
 with the following command:
 
-    $ sudo mount | grep '^/dev\\S* on /\\S' | grep --invert-match 'nodev'
+    $ sudo mount | grep '^/dev\S* on /\S' | grep --invert-match 'nodev'
 
-    If any output is produced, this is a finding.
-  "
-  desc 'fix', "Configure the \"/etc/fstab\" to use the \"nodev\" option on all
-non-root local partitions."
+    If any output is produced, this is a finding.)
+  desc 'fix', 'Configure the "/etc/fstab" to use the "nodev" option on all
+non-root local partitions.'
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'

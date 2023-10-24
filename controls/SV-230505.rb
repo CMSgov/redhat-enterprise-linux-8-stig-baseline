@@ -1,6 +1,6 @@
 control 'SV-230505' do
   title 'A firewall must be installed on RHEL 8.'
-  desc  "\"Firewalld\" provides an easy and effective way to block/limit remote
+  desc '"Firewalld" provides an easy and effective way to block/limit remote
 access to the system via ports, services, and protocols.
 
     Remote access services, such as those providing remote access to network
@@ -17,24 +17,18 @@ action if the audit reveals unauthorized activity. Automated control of remote
 access sessions allows organizations to ensure ongoing compliance with remote
 access policies by enforcing connection rules of remote access applications on
 a variety of information system components (e.g., servers, workstations,
-notebook computers, smartphones, and tablets).
-  "
-  desc  'rationale', ''
-  desc  'check', "
-    Verify that \"firewalld\" is installed with the following commands:
+notebook computers, smartphones, and tablets).'
+  desc 'check', 'Verify that "firewalld" is installed with the following commands:
 
     $ sudo yum list installed firewalld
 
     firewalld.noarch     0.7.0-5.el8
 
-    If the \"firewalld\" package is not installed, ask the System Administrator
-if another firewall is installed. If no firewall is installed this is a finding.
-  "
-  desc 'fix', "
-    Install \"firewalld\" with the following command:
+    If the "firewalld" package is not installed, ask the System Administrator
+if another firewall is installed. If no firewall is installed this is a finding.'
+  desc 'fix', 'Install "firewalld" with the following command:
 
-    $ sudo yum install firewalld.noarch
-  "
+$ sudo yum install firewalld.noarch'
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000297-GPOS-00115'

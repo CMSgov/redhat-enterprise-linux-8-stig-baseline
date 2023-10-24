@@ -1,6 +1,6 @@
 control 'SV-230282' do
   title 'RHEL 8 must enable the SELinux targeted policy.'
-  desc  "Without verification of the security functions, security functions may
+  desc 'Without verification of the security functions, security functions may
 not operate correctly and the failure may go unnoticed. Security function is
 defined as the hardware, software, and/or firmware of the information system
 responsible for enforcing the system security policy and supporting the
@@ -11,14 +11,11 @@ events to be audited, and setting intrusion detection parameters.
 
     This requirement applies to operating systems performing security function
 verification/testing and/or systems and environments that require this
-functionality.
-  "
-  desc  'rationale', ''
-  desc  'check', "
-    Ensure the operating system verifies correct operation of all security
+functionality.'
+  desc 'check', %q(Ensure the operating system verifies correct operation of all security
 functions.
 
-    Check if \"SELinux\" is active and is enforcing the targeted policy with
+    Check if "SELinux" is active and is enforcing the targeted policy with
 the following command:
 
     $ sudo sestatus
@@ -34,29 +31,26 @@ the following command:
     Memory protection checking: actual (secure)
     Max kernel policy version: 31
 
-    If the \"Loaded policy name\" is not set to \"targeted\", this is a finding.
+    If the "Loaded policy name" is not set to "targeted", this is a finding.
 
     Verify that the /etc/selinux/config file is configured to the
-\"SELINUXTYPE\" to \"targeted\":
+"SELINUXTYPE" to "targeted":
 
-    $ sudo grep -i \"selinuxtype\" /etc/selinux/config | grep -v '^#'
+    $ sudo grep -i "selinuxtype" /etc/selinux/config | grep -v '^#'
 
     SELINUXTYPE = targeted
 
-    If no results are returned or \"SELINUXTYPE\" is not set to \"targeted\",
-this is a finding.
-  "
-  desc 'fix', "
-    Configure the operating system to verify correct operation of all security
+    If no results are returned or "SELINUXTYPE" is not set to "targeted",
+this is a finding.)
+  desc 'fix', 'Configure the operating system to verify correct operation of all security
 functions.
 
-    Set the \"SELinuxtype\" to the \"targeted\" policy by modifying the
-\"/etc/selinux/config\" file to have the following line:
+    Set the "SELinuxtype" to the "targeted" policy by modifying the
+"/etc/selinux/config" file to have the following line:
 
     SELINUXTYPE=targeted
 
-    A reboot is required for the changes to take effect.
-  "
+    A reboot is required for the changes to take effect.'
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000445-GPOS-00199'

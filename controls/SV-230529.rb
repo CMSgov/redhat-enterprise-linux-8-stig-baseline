@@ -1,14 +1,12 @@
 control 'SV-230529' do
   title 'The x86 Ctrl-Alt-Delete key sequence must be disabled on RHEL 8.'
-  desc  "A locally logged-on user, who presses Ctrl-Alt-Delete when at the
+  desc 'A locally logged-on user, who presses Ctrl-Alt-Delete when at the
 console, can reboot the system. If accidentally pressed, as could happen in the
 case of a mixed OS environment, this can create the risk of short-term loss of
 availability of systems due to unintentional reboot. In a graphical user
 environment, risk of unintentional reboot from the Ctrl-Alt-Delete sequence is
-reduced because the user will be prompted before any action is taken."
-  desc  'rationale', ''
-  desc  'check', "
-    Verify RHEL 8 is not configured to reboot the system when Ctrl-Alt-Delete
+reduced because the user will be prompted before any action is taken.'
+  desc 'check', 'Verify RHEL 8 is not configured to reboot the system when Ctrl-Alt-Delete
 is pressed with the following command:
 
     $ sudo systemctl status ctrl-alt-del.target
@@ -17,10 +15,8 @@ is pressed with the following command:
     Loaded: masked (Reason: Unit ctrl-alt-del.target is masked.)
     Active: inactive (dead)
 
-    If the \"ctrl-alt-del.target\" is loaded and not masked, this is a finding.
-  "
-  desc 'fix', "
-    Configure the system to disable the Ctrl-Alt-Delete sequence for the
+    If the "ctrl-alt-del.target" is loaded and not masked, this is a finding.'
+  desc 'fix', 'Configure the system to disable the Ctrl-Alt-Delete sequence for the
 command line with the following command:
 
     $ sudo systemctl mask ctrl-alt-del.target
@@ -29,8 +25,7 @@ command line with the following command:
 
     Reload the daemon for this change to take effect.
 
-    $ sudo systemctl daemon-reload
-  "
+    $ sudo systemctl daemon-reload'
   impact 0.7
   tag severity: 'high'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'

@@ -1,6 +1,6 @@
 control 'SV-244544' do
   title 'A firewall must be active on RHEL 8.'
-  desc  "\"Firewalld\" provides an easy and effective way to block/limit remote
+  desc '"Firewalld" provides an easy and effective way to block/limit remote
 access to the system via ports, services, and protocols.
 
     Remote access services, such as those providing remote access to network
@@ -16,26 +16,20 @@ action if the audit reveals unauthorized activity. Automated control of remote
 access sessions allows organizations to ensure ongoing compliance with remote
 access policies by enforcing connection rules of remote access applications on
 a variety of information system components (e.g., servers, workstations,
-notebook computers, smartphones, and tablets).
-  "
-  desc  'rationale', ''
-  desc  'check', "
-    Verify that \"firewalld\" is active with the following commands:
+notebook computers, smartphones, and tablets).'
+  desc 'check', 'Verify that "firewalld" is active with the following commands:
 
     $ sudo systemctl is-active firewalld
 
     active
 
-    If the \"firewalld\" package is not \"active\", ask the System
+    If the "firewalld" package is not "active", ask the System
 Administrator if another firewall is installed. If no firewall is installed and
-active this is a finding.
-  "
-  desc 'fix', "
-    Configure \"firewalld\" to protect the operating system with the following
+active this is a finding.'
+  desc 'fix', 'Configure "firewalld" to protect the operating system with the following
 command:
 
-    $ sudo systemctl enable firewalld
-  "
+    $ sudo systemctl enable firewalld'
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000297-GPOS-00115'

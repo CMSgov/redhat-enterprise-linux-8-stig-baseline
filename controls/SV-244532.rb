@@ -1,19 +1,17 @@
 control 'SV-244532' do
-  title "RHEL 8 must be configured so that all files and directories contained
+  title 'RHEL 8 must be configured so that all files and directories contained
 in local interactive user home directories are group-owned by a group of which
-the home directory owner is a member."
-  desc  "If a local interactive user's files are group-owned by a group of
+the home directory owner is a member.'
+  desc "If a local interactive user's files are group-owned by a group of
 which the user is not a member, unintended users may be able to access them."
-  desc  'rationale', ''
-  desc  'check', "
-    Verify all files and directories in a local interactive user home directory
+  desc 'check', %q(Verify all files and directories in a local interactive user home directory
 are group-owned by a group that the user is a member.
 
     Check the group owner of all files and directories in a local interactive
 user's home directory with the following command:
 
-    Note: The example will be for the user \"smithj\", who has a home directory
-of \"/home/smithj\".
+    Note: The example will be for the user "smithj", who has a home directory
+of "/home/smithj".
 
     $ sudo ls -lLR /<home directory>/<users home directory>/
     -rw-r--r-- 1 smithj smithj  18 Mar  5 17:06 file1
@@ -29,18 +27,15 @@ following command:
     smithj:x:521:smithj
 
     If any files or directories are group owned by a group that the directory
-owner is not a member of, this is a finding.
-  "
-  desc 'fix', "
-    Change the group of a local interactive user's files and directories to a
+owner is not a member of, this is a finding.)
+  desc 'fix', %q(Change the group of a local interactive user's files and directories to a
 group that the interactive user is a member. To change the group owner of a
 local interactive user's files and directories, use the following command:
 
     Note: The example will be for the user smithj, who has a home directory of
-\"/home/smithj\" and is a member of the users group.
+"/home/smithj" and is a member of the users group.
 
-    $ sudo chgrp smithj /home/smithj/<file or directory>
-  "
+    $ sudo chgrp smithj /home/smithj/<file or directory>)
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'

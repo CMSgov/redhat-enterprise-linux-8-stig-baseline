@@ -1,7 +1,7 @@
 control 'SV-230238' do
-  title "RHEL 8 must prevent system daemons from using Kerberos for
-authentication."
-  desc  "Unapproved mechanisms that are used for authentication to the
+  title 'RHEL 8 must prevent system daemons from using Kerberos for
+authentication.'
+  desc 'Unapproved mechanisms that are used for authentication to the
 cryptographic module are not verified and therefore cannot be relied upon to
 provide confidentiality or integrity, and DoD data may be compromised.
 
@@ -16,11 +16,8 @@ pairs of Kerberos principals and encrypted keys.
     FIPS 140-2 is the current standard for validating that mechanisms used to
 access cryptographic modules utilize authentication that meets DoD
 requirements. This allows for Security Levels 1, 2, 3, or 4 for use on a
-general-purpose computing system.
-  "
-  desc  'rationale', ''
-  desc  'check', "
-    Verify that RHEL 8 prevents system daemons from using Kerberos for
+general-purpose computing system.'
+  desc 'check', 'Verify that RHEL 8 prevents system daemons from using Kerberos for
 authentication.
 
     If the system is a server utilizing krb5-server-1.17-18.el8.x86_64 or
@@ -33,14 +30,11 @@ applicable.
 
     $ sudo ls -al /etc/*.keytab
 
-    If this command produces any file(s), this is a finding.
-  "
-  desc 'fix', "
-    Configure RHEL 8 to prevent system daemons from using Kerberos for
+    If this command produces any file(s), this is a finding.'
+  desc 'fix', 'Configure RHEL 8 to prevent system daemons from using Kerberos for
 authentication.
 
-    Remove any files with the .keytab extension from the operating system.
-  "
+    Remove any files with the .keytab extension from the operating system.'
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000120-GPOS-00061'

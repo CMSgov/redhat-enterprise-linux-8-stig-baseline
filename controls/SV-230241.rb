@@ -1,6 +1,6 @@
 control 'SV-230241' do
   title 'RHEL 8 must have policycoreutils package installed.'
-  desc  "Without verification of the security functions, security functions may
+  desc 'Without verification of the security functions, security functions may
 not operate correctly and the failure may go unnoticed. Security function is
 defined as the hardware, software, and/or firmware of the information system
 responsible for enforcing the system security policy and supporting the
@@ -12,11 +12,8 @@ events to be audited, and setting intrusion detection parameters.
     Policycoreutils contains the policy core utilities that are required for
 basic operation of an SELinux-enabled system. These utilities include
 load_policy to load SELinux policies, setfile to label filesystems, newrole to
-switch roles, and run_init to run /etc/init.d scripts in the proper context.
-  "
-  desc  'rationale', ''
-  desc  'check', "
-    Verify the operating system has the policycoreutils package installed with
+switch roles, and run_init to run /etc/init.d scripts in the proper context.'
+  desc 'check', 'Verify the operating system has the policycoreutils package installed with
 the following command:
 
     $ sudo yum list installed policycoreutils
@@ -24,14 +21,11 @@ the following command:
     policycoreutils.x86_64
 2.9-3.el8                                                  @anaconda
 
-    If the policycoreutils package is not installed, this is a finding.
-  "
-  desc 'fix', "
-    Configure the operating system to have the policycoreutils package
+    If the policycoreutils package is not installed, this is a finding.'
+  desc 'fix', 'Configure the operating system to have the policycoreutils package
 installed with the following command:
 
-    $ sudo yum install policycoreutils
-  "
+    $ sudo yum install policycoreutils'
   impact 0.3
   tag severity: 'low'
   tag gtitle: 'SRG-OS-000134-GPOS-00068'

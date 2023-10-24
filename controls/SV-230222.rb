@@ -1,7 +1,7 @@
 control 'SV-230222' do
-  title "RHEL 8 vendor packaged system security patches and updates must be
-installed and up to date."
-  desc  "Timely patching is critical for maintaining the operational
+  title 'RHEL 8 vendor packaged system security patches and updates must be
+installed and up to date.'
+  desc 'Timely patching is critical for maintaining the operational
 availability, confidentiality, and integrity of information technology (IT)
 systems. However, failure to keep operating system and application software
 patched is a common mistake made by IT professionals. New patches are released
@@ -10,10 +10,8 @@ keep abreast of all the new patches. When new weaknesses in an operating system
 exist, patches are usually made available by the vendor to resolve the
 problems. If the most recent security patches and updates are not installed,
 unauthorized users may take advantage of weaknesses in the unpatched software.
-The lack of prompt attention to patching could result in a system compromise."
-  desc  'rationale', ''
-  desc  'check', "
-    Verify the operating system security patches and updates are installed and
+The lack of prompt attention to patching could result in a system compromise.'
+  desc 'check', 'Verify the operating system security patches and updates are installed and
 up to date. Updates are required to be applied with a frequency determined by
 the site or Program Management Office (PMO).
 
@@ -43,10 +41,9 @@ timeframe the site/program documentation requires, this is a finding.
 Vulnerability Alert (IAVA) notifications from CYBERCOM.
 
     If the operating system is in non-compliance with the Information Assurance
-Vulnerability Management (IAVM) process, this is a finding.
-  "
-  desc 'fix', "Install the operating system patches or updated packages
-available from Red Hat within 30 days or sooner as local policy dictates."
+Vulnerability Management (IAVM) process, this is a finding.'
+  desc 'fix', 'Install the operating system patches or updated packages
+available from Red Hat within 30 days or sooner as local policy dictates.'
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'

@@ -1,8 +1,8 @@
 control 'SV-230263' do
-  title "The RHEL 8 file integrity tool must notify the system administrator
+  title 'The RHEL 8 file integrity tool must notify the system administrator
 when changes to the baseline configuration or anomalies in the operation of any
-security functions are discovered within an organizationally defined frequency."
-  desc  "Unauthorized changes to the baseline configuration could make the
+security functions are discovered within an organizationally defined frequency.'
+  desc "Unauthorized changes to the baseline configuration could make the
 system vulnerable to various attacks or allow unauthorized access to the
 operating system. Changes to operating system configurations can have
 unintended side effects, some of which may be relevant to security.
@@ -28,13 +28,8 @@ packages. This requirement assumes the use of AIDE; however, a different tool
 may be used if the requirements are met. Note that AIDE does not have a
 configuration that will send a notification, so a cron job is recommended that
 uses the mail application on the system to email the results of the file
-integrity check.
-
-
-  "
-  desc  'rationale', ''
-  desc  'check', "
-    Verify the operating system routinely checks the baseline configuration for
+integrity check."
+  desc 'check', 'Verify the operating system routinely checks the baseline configuration for
 unauthorized changes and notifies the system administrator when anomalies in
 the operation of any security functions are discovered.
 
@@ -65,16 +60,14 @@ is installed on the system, use the following commands:
     $ sudo more /etc/cron.daily/aide
 
     #!/bin/bash
-    /usr/sbin/aide --check | /bin/mail -s \"$HOSTNAME - Daily aide integrity
-check run\" root@sysname.mil
+    /usr/sbin/aide --check | /bin/mail -s "$HOSTNAME - Daily aide integrity
+check run" root@sysname.mil
 
     If the file integrity application does not exist, or a script file
 controlling the execution of the file integrity application does not exist, or
 the file integrity application does not notify designated personnel of changes,
-this is a finding.
-  "
-  desc 'fix', "
-    Configure the file integrity tool to run automatically on the system at
+this is a finding.'
+  desc 'fix', 'Configure the file integrity tool to run automatically on the system at
 least weekly and to notify designated personnel if baseline configurations are
 changed in an unauthorized manner. The AIDE tool can be configured to email
 designated personnel with the use of the cron system.
@@ -86,14 +79,12 @@ and to send email at the completion of the analysis.
 
     #!/bin/bash
 
-    /usr/sbin/aide --check | /bin/mail -s \"$HOSTNAME - Daily aide integrity
-check run\" root@sysname.mil
-  "
+    /usr/sbin/aide --check | /bin/mail -s "$HOSTNAME - Daily aide integrity
+check run" root@sysname.mil'
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000363-GPOS-00150'
-  tag satisfies: %w(SRG-OS-000363-GPOS-00150 SRG-OS-000446-GPOS-00200
-                    SRG-OS-000447-GPOS-00201)
+  tag satisfies: ['SRG-OS-000363-GPOS-00150', 'SRG-OS-000446-GPOS-00200', 'SRG-OS-000447-GPOS-00201']
   tag gid: 'V-230263'
   tag rid: 'SV-230263r627750_rule'
   tag stig_id: 'RHEL-08-010360'

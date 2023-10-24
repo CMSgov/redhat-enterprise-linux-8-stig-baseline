@@ -1,53 +1,47 @@
 control 'SV-230517' do
   title 'RHEL 8 must mount /var/log/audit with the nodev option.'
-  desc  "The organization must identify authorized software programs and permit
+  desc 'The organization must identify authorized software programs and permit
 execution of authorized software. The process used to identify software
 programs that are authorized to execute on organizational information systems
 is commonly referred to as whitelisting.
 
-    The \"noexec\" mount option causes the system to not execute binary files.
+    The "noexec" mount option causes the system to not execute binary files.
 This option must be used for mounting any file system not containing approved
 binary files, as they may be incompatible. Executing files from untrusted file
 systems increases the opportunity for unprivileged users to attain unauthorized
 administrative access.
 
-    The \"nodev\" mount option causes the system to not interpret character or
+    The "nodev" mount option causes the system to not interpret character or
 block special devices. Executing character or block special devices from
 untrusted file systems increases the opportunity for unprivileged users to
 attain unauthorized administrative access.
 
-    The \"nosuid\" mount option causes the system to not execute \"setuid\" and
-\"setgid\" files with owner privileges. This option must be used for mounting
-any file system not containing approved \"setuid\" and \"setguid\" files.
+    The "nosuid" mount option causes the system to not execute "setuid" and
+"setgid" files with owner privileges. This option must be used for mounting
+any file system not containing approved "setuid" and "setguid" files.
 Executing files from untrusted file systems increases the opportunity for
-unprivileged users to attain unauthorized administrative access.
-  "
-  desc  'rationale', ''
-  desc  'check', "
-    Verify \"/var/log/audit\" is mounted with the \"nodev\" option:
+unprivileged users to attain unauthorized administrative access.'
+  desc 'check', 'Verify "/var/log/audit" is mounted with the "nodev" option:
 
     $ sudo mount | grep /var/log/audit
 
     /dev/mapper/rhel-var-log-audit on /var/log/audit type xfs
 (rw,nodev,nosuid,noexec,seclabel)
 
-    Verify that the \"nodev\" option is configured for /var/log/audit:
+    Verify that the "nodev" option is configured for /var/log/audit:
 
     $ sudo cat /etc/fstab | grep /var/log/audit
 
     /dev/mapper/rhel-var-log-audit /var/log/audit xfs
 defaults,nodev,nosuid,noexec 0 0
 
-    If results are returned and the \"nodev\" option is missing, or if
-/var/log/audit is mounted without the \"nodev\" option, this is a finding.
-  "
-  desc 'fix', "
-    Configure the system so that /var/log/audit is mounted with the \"nodev\"
+    If results are returned and the "nodev" option is missing, or if
+/var/log/audit is mounted without the "nodev" option, this is a finding.'
+  desc 'fix', 'Configure the system so that /var/log/audit is mounted with the "nodev"
 option by adding /modifying the /etc/fstab with the following line:
 
     /dev/mapper/rhel-var-log-audit /var/log/audit xfs
-defaults,nodev,nosuid,noexec 0 0
-  "
+defaults,nodev,nosuid,noexec 0 0'
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000368-GPOS-00154'

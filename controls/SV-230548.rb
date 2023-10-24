@@ -1,6 +1,6 @@
 control 'SV-230548' do
   title 'RHEL 8 must disable the use of user namespaces.'
-  desc  "It is detrimental for operating systems to provide, or install by
+  desc 'It is detrimental for operating systems to provide, or install by
 default, functionality exceeding requirements or mission objectives. These
 unnecessary capabilities or services are often overlooked and therefore may
 remain unsecured. They increase the risk to the platform by providing
@@ -9,11 +9,8 @@ additional attack vectors.
     User namespaces are used primarily for Linux container.  The value 0
 disallows the use of user namespaces.  When containers are not in use,
 namespaces should be disallowed.  When containers are deployed on a system, the
-value should be set to a large non-zero value.  The default value is 7182.
-  "
-  desc  'rationale', ''
-  desc  'check', "
-    Verify RHEL 8 disables the use of user namespaces with the following
+value should be set to a large non-zero value.  The default value is 7182.'
+  desc 'check', 'Verify RHEL 8 disables the use of user namespaces with the following
 commands:
 
     Note: User namespaces are used primarily for Linux containers.  If
@@ -23,12 +20,10 @@ containers are in use, this requirement is not applicable.
 
     user.max_user_namespaces = 0
 
-    If the returned line does not have a value of \"0\", or a line is not
-returned, this is a finding.
-  "
-  desc 'fix', "
-    Configure RHEL 8 to disable the use of user namespaces by adding the
-following line to a file in the \"/etc/sysctl.d\" directory:
+    If the returned line does not have a value of "0", or a line is not
+returned, this is a finding.'
+  desc 'fix', 'Configure RHEL 8 to disable the use of user namespaces by adding the
+following line to a file in the "/etc/sysctl.d" directory:
 
     Note: User namespaces are used primarily for Linux containers.  If
 containers are in use, this requirement is not applicable.
@@ -38,8 +33,7 @@ containers are in use, this requirement is not applicable.
     The system configuration files need to be reloaded for the changes to take
 effect. To reload the contents of the files, run the following command:
 
-    $ sudo sysctl --system
-  "
+    $ sudo sysctl --system'
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'

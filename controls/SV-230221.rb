@@ -1,6 +1,6 @@
 control 'SV-230221' do
   title 'RHEL 8 must be a vendor-supported release.'
-  desc  "An operating system release is considered \"supported\" if the vendor
+  desc 'An operating system release is considered "supported" if the vendor
 continues to provide security patches for the product. With an unsupported
 release, it will not be possible to resolve security issues discovered in the
 system software.
@@ -12,38 +12,34 @@ minor releases eligible for EUS are 8.1, 8.2, 8.4, 8.6, and 8.8. Each RHEL 8
 EUS stream is available for 24 months from the availability of the minor
 release. RHEL 8.10 will be the final minor release overall. For more details on
 the Red Hat Enterprise Linux Life Cycle  visit
-https://access.redhat.com/support/policy/updates/errata.
-  "
-  desc  'rationale', ''
-  desc  'check', "
-    Verify the version of the operating system is vendor supported.
+https://access.redhat.com/support/policy/updates/errata.'
+  desc 'check', 'Verify the version of the operating system is vendor supported.
 
-    Check the version of the operating system with the following command:
+Check the version of the operating system with the following command:
 
-    $ sudo cat /etc/redhat-release
+$ sudo cat /etc/redhat-release
 
-    Red Hat Enterprise Linux Server release 8.4 (Ootpa)
+Red Hat Enterprise Linux Server release 8.4 (Ootpa)
 
-    Current End of Extended Update Support for RHEL 8.1 is 30 November 2021.
+Current End of Extended Update Support for RHEL 8.1 is 30 November 2021.
 
-    Current End of Extended Update Support for RHEL 8.2 is 30 April 2022.
+Current End of Extended Update Support for RHEL 8.2 is 30 April 2022.
 
-    Current End of Extended Update Support for RHEL 8.4 is 30 April 2023.
+Current End of Extended Update Support for RHEL 8.4 is 30 April 2023.
 
-    Current End of Maintenance Support for RHEL 8.5 is 30 April 2022.
+Current End of Maintenance Support for RHEL 8.5 is 30 April 2022.
 
-    Current End of Extended Update Support for RHEL 8.6 is 30 April 2024.
+Current End of Extended Update Support for RHEL 8.6 is 30 April 2024.
 
-    Current End of Maintenance Support for RHEL 8.7 is 30 April 2023.
+Current End of Maintenance Support for RHEL 8.7 is 30 April 2023.
 
-    Current End of Extended Update Support for RHEL 8.8 is 30 April 2025.
+Current End of Extended Update Support for RHEL 8.8 is 30 April 2025.
 
-    Current End of Maintenance Support for RHEL 8.9 is 30 April 2024.
+Current End of Maintenance Support for RHEL 8.9 is 30 April 2024.
 
-    Current End of Maintenance Support for RHEL 8.10 is 31 May 2029.
+Current End of Maintenance Support for RHEL 8.10 is 31 May 2029.
 
-    If the release is not supported by the vendor, this is a finding.
-  "
+If the release is not supported by the vendor, this is a finding.'
   desc 'fix', 'Upgrade to a supported version of RHEL 8.'
   impact 0.7
   tag severity: 'high'

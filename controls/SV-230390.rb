@@ -1,7 +1,7 @@
 control 'SV-230390' do
-  title "The RHEL 8 System must take appropriate action when an audit
-processing failure occurs."
-  desc  "It is critical for the appropriate personnel to be aware if a system
+  title 'The RHEL 8 System must take appropriate action when an audit
+processing failure occurs.'
+  desc 'It is critical for the appropriate personnel to be aware if a system
 is at risk of failing to process audit logs as required. Without this
 notification, the security personnel may be unaware of an impending failure of
 the audit capability, and system operation may be adversely affected.
@@ -13,11 +13,8 @@ exceeded.
     This requirement applies to each audit data storage repository (i.e.,
 distinct information system component where audit records are stored), the
 centralized audit storage capacity of organizations (i.e., all audit data
-storage repositories combined), or both.
-  "
-  desc  'rationale', ''
-  desc  'check', "
-    Verify RHEL 8 takes the appropriate action when an audit processing failure
+storage repositories combined), or both.'
+  desc 'check', 'Verify RHEL 8 takes the appropriate action when an audit processing failure
 occurs.
 
     Check that RHEL 8 takes the appropriate action when an audit processing
@@ -27,27 +24,24 @@ failure occurs with the following command:
 
     disk_error_action = HALT
 
-    If the value of the \"disk_error_action\" option is not \"SYSLOG\",
-\"SINGLE\", or \"HALT\", or the line is commented out, ask the system
+    If the value of the "disk_error_action" option is not "SYSLOG",
+"SINGLE", or "HALT", or the line is commented out, ask the system
 administrator to indicate how the system takes appropriate action when an audit
 process failure occurs.  If there is no evidence of appropriate action, this is
-a finding.
-  "
-  desc 'fix', "
-    Configure RHEL 8 to shut down by default upon audit failure (unless
+a finding.'
+  desc 'fix', 'Configure RHEL 8 to shut down by default upon audit failure (unless
 availability is an overriding concern).
 
     Add or update the following line (depending on configuration
-\"disk_error_action\" can be set to \"SYSLOG\" or \"SINGLE\" depending on
-configuration) in \"/etc/audit/auditd.conf\" file:
+"disk_error_action" can be set to "SYSLOG" or "SINGLE" depending on
+configuration) in "/etc/audit/auditd.conf" file:
 
     disk_error_action = HALT
 
     If availability has been determined to be more important, and this decision
 is documented with the ISSO, configure the operating system to notify system
 administration staff and ISSO staff in the event of an audit processing failure
-by setting the \"disk_error_action\" to \"SYSLOG\".
-  "
+by setting the "disk_error_action" to "SYSLOG".'
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000047-GPOS-00023'
