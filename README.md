@@ -100,35 +100,117 @@ The `inspec.yml` file has been written such that numerical inputs (inputs where 
 
 The profile is written this way so that programs can easily configure the ranges used by the checks, in case the program wants to check against different values than the STIG defaults (such as programs with more stringent requirements than the baseline STIG). The `expected`, `max` and `min` values are all set to the STIG defaults in `inspec.yml`. If the program wants to check only baseline STIG compliance, _these values do not need to be changed._
 
-#### See the `inspec.yml` file for full list of available inputs
+#### Example Inputs: See `inspec.yml` for their default values
 
 Example Inputs
 
 ```yaml
-inputs:
-  - name: disable_slow_controls
-    description: Controls that are known to consistently have long run times can be disabled with this attribute
-    type: Boolean
-    value: false
-
-  # V-204504
-  - name: monitor_kernel_log
-    description: Set this to false if your system availability concern is not documented or there is no monitoring of the kernel log
-    type: Boolean
-    value: true
-
-  # V-204392
-  - name: rpm_verify_perms_except
-    description: List of system files that should be allowed to change from an rpm verify point of view
-    type: Array
-    value:
-      - "/etc/issue"
-
-  # V-214799
-  - name: rpm_verify_integrity_except
-    description: List of system files that should be allowed to change from an rpm verify point of view
-    type: Array
-    value: []
+# InSpec Tests that are known to consistently have long run times can be disabled with this attribute
+# Acceptable values: false, true
+# (default: false)
+disable_slow_controls: true
+ 
+# Flag to designate if the target is a container host. (true or false)
+container_host: false
+ 
+# Number of reuse generations
+min_reuse_generations: 5
+ 
+# Minimum number of characters for a new password
+min_len: 15
+ 
+# Main grub boot config file (String) 
+grub_uefi_main_cfg:
+ 
+# Grub boot config files (Array of strings)
+grub_uefi_user_boot_files:
+ 
+# Users exempt from home directory-based controls in array format
+exempt_home_users: []
+ 
+# These shells do not allow a user to login
+non_interactive_shells: []
+ 
+# System accounts that support approved system activities. (Array) (defaults shown below)
+known_system_accounts: []
+ 
+# Accounts of known managed users (Array)
+user_accounts: []
+ 
+# Main grub boot config file (String)
+grub_main_cfg:
+ 
+# Grub boot config files (Array of Strings)
+grub_user_boot_files:
+ 
+# Set to 'true' if IPv4 is enabled on the system. (default true)
+ipv4_enabled:
+ 
+# Set to 'true' if IPv6 is enabled on the system.(default true)
+ipv6_enabled:
+ 
+# Device or system does not have a camera installed. (default true)
+camera_installed:
+ 
+# Device or operating system has a Bluetooth adapter installed. (default true)
+bluetooth_installed:
+ 
+# Smart card status (enabled or disabled) default: 'enabled'
+smart_card_status:
+ 
+# Name of tool
+file_integrity_tool: 'aide'
+ 
+# Timeserver used in /etc/chromy.conf (String)
+authoritative_timeserver:
+ 
+# File systems that don't correspond to removable media
+non_removable_media_fs: []
+ 
+# List of full paths to private key files on the system (Array)
+private_key_files:
+ 
+# Path to an accepted trust anchor certificate file (DoD) (String)
+root_ca_file:
+ 
+# number of unsuccessful attempts
+unsuccessful_attempts: 3
+ 
+# Maximum system inactivity timeout (time in seconds).
+system_inactivity_timeout:
+ 
+# maximum number of password retries
+max_retry: 3
+ 
+# Minimum number of characters that must be different from previous password
+difok: 8
+ 
+# Number of days
+days_of_inactivity: 35
+ 
+# Temporary user accounts (Array)
+temporary_accounts:
+ 
+# Banner message text for command line interface logins.
+banner_message_text_cli:
+ 
+# Banner message text for remote access logins.
+banner_message_text_ral: 
+ 
+# Banner message text for graphical user interface logins.
+banner_message_text_gui: ''
+ 
+# The maxium value that can be used for maxlogins.
+maxlogins_limit: 10
+ 
+# Interval of time in which the consecutive failed logon attempts must occur in order for the account to be locked out (time in seconds)
+fail_interval: 900
+ 
+# Minimum amount of time account must be locked out after failed logins. This attribute should never be set greater than 604800 (time in seconds).
+lockout_time: 604800
+ 
+# Documented tally log directory (String)
+log_directory:
 ```
 
 # Running the Profile
