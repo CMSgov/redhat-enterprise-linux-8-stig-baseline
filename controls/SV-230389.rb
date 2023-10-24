@@ -33,6 +33,7 @@ processing failure.
 
     postmaster: root'
   impact 0.5
+  ref 'DPMS Target Red Hat Enterprise Linux 8'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000046-GPOS-00022'
   tag gid: 'V-230389'

@@ -15,28 +15,26 @@ requirements. This allows for Security Levels 1, 2, 3, or 4 for use on a
 general-purpose computing system.'
   desc 'check', 'Verify that pam_unix.so module is configured to use sha512.
 
-    Check that pam_unix.so module is configured to use sha512 in
-/etc/pam.d/system-auth with the following command:
+Check that pam_unix.so module is configured to use sha512 in /etc/pam.d/system-auth with the following command:
 
-    $ sudo grep password /etc/pam.d/system-auth | grep pam_unix
+$ sudo grep password /etc/pam.d/system-auth | grep pam_unix
 
-    password sufficient pam_unix.so sha512 rounds=5000
+password sufficient pam_unix.so sha512
 
-    If "sha512" is missing, or is commented out, this is a finding.'
-  desc 'fix', 'Configure RHEL 8 to use a FIPS 140-2 approved cryptographic hashing
-algorithm for system authentication.
+If "sha512" is missing, or is commented out, this is a finding.'
+  desc 'fix', 'Configure RHEL 8 to use a FIPS 140-2 approved cryptographic hashing algorithm for system authentication.
 
-    Edit/modify the following line in the "/etc/pam.d/system-auth" file to
-include the sha512 option for pam_unix.so:
+Edit/modify the following line in the "/etc/pam.d/system-auth" file to include the sha512 option for pam_unix.so:
 
-    password sufficient pam_unix.so sha512 rounds=5000'
+password sufficient pam_unix.so sha512'
   impact 0.5
+  ref 'DPMS Target Red Hat Enterprise Linux 8'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000120-GPOS-00061'
   tag gid: 'V-244524'
-  tag rid: 'SV-244524r743821_rule'
+  tag rid: 'SV-244524r809331_rule'
   tag stig_id: 'RHEL-08-010159'
-  tag fix_id: 'F-47756r743820_fix'
+  tag fix_id: 'F-47756r809330_fix'
   tag cci: ['CCI-000803']
   tag nist: ['IA-7']
 

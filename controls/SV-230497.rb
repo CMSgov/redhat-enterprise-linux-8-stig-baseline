@@ -12,45 +12,39 @@ additional attack vectors.
     The Transparent Inter-Process Communication (TIPC) protocol is designed to
 provide communications between nodes in a cluster. Disabling TIPC protects the
 system against exploitation of any flaws in its implementation.'
-  desc 'check', 'Verify the operating system disables the ability to load the TIPC protocol
-kernel module.
+  desc 'check', 'Verify the operating system disables the ability to load the TIPC protocol kernel module.
 
-    $ sudo grep -ri TIPC /etc/modprobe.d/* | grep -i "/bin/true"
+$ sudo grep -r tipc /etc/modprobe.d/* | grep "/bin/true"
 
-    install TIPC /bin/true
+install tipc /bin/true
 
-    If the command does not return any output, or the line is commented out,
-and use of the TIPC protocol is not documented with the Information System
-Security Officer (ISSO) as an operational requirement, this is a finding.
+If the command does not return any output, or the line is commented out, and use of the TIPC protocol is not documented with the Information System Security Officer (ISSO) as an operational requirement, this is a finding.
 
-    Verify the operating system disables the ability to use the TIPC protocol.
+Verify the operating system disables the ability to use the TIPC protocol.
 
-    Check to see if the TIPC protocol is disabled with the following command:
+Check to see if the TIPC protocol is disabled with the following command:
 
-    $ sudo grep -ri TIPC /etc/modprobe.d/* | grep -i "blacklist"
+$ sudo grep -r tipc /etc/modprobe.d/* | grep "blacklist"
 
-    blacklist TIPC
+blacklist tipc
 
-    If the command does not return any output or the output is not "blacklist
-TIPC", and use of the TIPC protocol is not documented with the Information
-System Security Officer (ISSO) as an operational requirement, this is a finding.'
-  desc 'fix', 'Configure the operating system to disable the ability to use the TIPC
-protocol kernel module.
+If the command does not return any output or the output is not "blacklist tipc", and use of the TIPC protocol is not documented with the Information System Security Officer (ISSO) as an operational requirement, this is a finding.'
+  desc 'fix', 'Configure the operating system to disable the ability to use the TIPC protocol kernel module.
 
-    Add or update the following lines in the file
-"/etc/modprobe.d/blacklist.conf":
+Add or update the following lines in the file "/etc/modprobe.d/blacklist.conf":
 
-    install TIPC /bin/true
-    blacklist TIPC
+install tipc /bin/true
+blacklist tipc
 
-    Reboot the system for the settings to take effect.'
+Reboot the system for the settings to take effect.'
   impact 0.3
+  ref 'DPMS Target Red Hat Enterprise Linux 8'
   tag severity: 'low'
   tag gtitle: 'SRG-OS-000095-GPOS-00049'
   tag gid: 'V-230497'
-  tag rid: 'SV-230497r627750_rule'
+  tag rid: 'SV-230497r792920_rule'
   tag stig_id: 'RHEL-08-040024'
-  tag fix_id: 'F-33141r568238_fix'
+  tag fix_id: 'F-33141r792919_fix'
   tag cci: ['CCI-000381']
   tag nist: ['CM-7 a']
 

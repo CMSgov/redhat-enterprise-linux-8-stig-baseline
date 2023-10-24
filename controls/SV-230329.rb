@@ -27,11 +27,12 @@ logon to the system via a graphical user interface.
 
     [daemon]
     AutomaticLoginEnable=false'
-  impact 0.0
+  impact 0.7
+  ref 'DPMS Target Red Hat Enterprise Linux 8'
   tag severity: 'high'
   tag gtitle: 'SRG-OS-000480-GPOS-00229'
   tag gid: 'V-230329'
-  tag rid: 'SV-230329r627750_rule'
+  tag rid: 'SV-230329r877377_rule'
   tag stig_id: 'RHEL-08-010820'
   tag fix_id: 'F-32973r567734_fix'
   tag cci: ['CCI-000366']

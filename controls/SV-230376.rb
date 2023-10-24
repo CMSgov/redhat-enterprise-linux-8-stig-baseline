@@ -38,10 +38,11 @@ line "[pam]".
 
     offline_credentials_expiration = 1'
   impact 0.5
+  ref 'DPMS Target Red Hat Enterprise Linux 8'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000383-GPOS-00166'
   tag gid: 'V-230376'
-  tag rid: 'SV-230376r627750_rule'
+  tag rid: 'SV-230376r854036_rule'
   tag stig_id: 'RHEL-08-020290'
   tag fix_id: 'F-33020r567875_fix'
   tag cci: ['CCI-002007']

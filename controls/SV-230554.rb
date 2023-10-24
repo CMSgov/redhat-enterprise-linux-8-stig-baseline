@@ -24,6 +24,7 @@ by the ISSO and documented.
 
     $ sudo ip link set dev <devicename> multicast off promisc off'
   impact 0.5
+  ref 'DPMS Target Red Hat Enterprise Linux 8'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-230554'

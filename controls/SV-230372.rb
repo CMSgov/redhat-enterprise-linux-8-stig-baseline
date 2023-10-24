@@ -64,6 +64,7 @@ restart the "sssd" service, run the following command:
 
     $ sudo systemctl restart sssd.service'
   impact 0.5
+  ref 'DPMS Target Red Hat Enterprise Linux 8'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000105-GPOS-00052'
   tag satisfies: ['SRG-OS-000105-GPOS-00052', 'SRG-OS-000106-GPOS-00053', 'SRG-OS-000107-GPOS-00054', 'SRG-OS-000108-GPOS-00055']

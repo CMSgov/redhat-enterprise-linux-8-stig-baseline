@@ -35,7 +35,8 @@ after three unsuccessful logon attempts occur in 15 minutes.
 line:
 
     even_deny_root'
-  impact 0.0
+  impact 0.5
+  ref 'DPMS Target Red Hat Enterprise Linux 8'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000021-GPOS-00005'
   tag satisfies: ['SRG-OS-000021-GPOS-00005', 'SRG-OS-000329-GPOS-00128']

@@ -23,6 +23,7 @@ multiplexer with the following command:
 the tmux terminal multiplexer by editing the "/etc/shells" configuration file
 to remove any instances of tmux.'
   impact 0.3
+  ref 'DPMS Target Red Hat Enterprise Linux 8'
   tag severity: 'low'
   tag gtitle: 'SRG-OS-000028-GPOS-00009'
   tag satisfies: ['SRG-OS-000028-GPOS-00009', 'SRG-OS-000030-GPOS-00011']

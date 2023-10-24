@@ -39,10 +39,11 @@ for any usb devices currently connect to the system.
 individual system will immediately prevent any access over a usb device such as
 a keyboard or mouse'
   impact 0.5
+  ref 'DPMS Target Red Hat Enterprise Linux 8'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000378-GPOS-00163'
   tag gid: 'V-230524'
-  tag rid: 'SV-230524r744026_rule'
+  tag rid: 'SV-230524r854065_rule'
   tag stig_id: 'RHEL-08-040140'
   tag fix_id: 'F-33168r744025_fix'
   tag cci: ['CCI-001958']

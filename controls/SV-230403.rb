@@ -25,6 +25,7 @@ the following line to "/etc/audit/rules.d/audit.rules"
 
     --loginuid-immutable'
   impact 0.5
+  ref 'DPMS Target Red Hat Enterprise Linux 8'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000057-GPOS-00027'
   tag satisfies: ['SRG-OS-000057-GPOS-00027', 'SRG-OS-000058-GPOS-00028', 'SRG-OS-000059-GPOS-00029']
@@ -33,7 +34,7 @@ the following line to "/etc/audit/rules.d/audit.rules"
   tag stig_id: 'RHEL-08-030122'
   tag fix_id: 'F-33047r567956_fix'
   tag cci: ['CCI-000162']
-  tag nist: ['AU-9']
+  tag nist: ['AU-9', 'AU-9 a']
 
   if virtualization.system.eql?('docker')
     impact 0.0

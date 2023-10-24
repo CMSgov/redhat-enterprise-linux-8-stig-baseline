@@ -30,6 +30,7 @@ after the password expiration.
 "-1" will disable this feature, and "0" will disable the account
 immediately after the password expires.'
   impact 0.5
+  ref 'DPMS Target Red Hat Enterprise Linux 8'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000118-GPOS-00060'
   tag gid: 'V-230373'

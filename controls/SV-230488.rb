@@ -31,6 +31,7 @@ command:
 
     $ sudo yum remove abrt*'
   impact 0.5
+  ref 'DPMS Target Red Hat Enterprise Linux 8'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000095-GPOS-00049'
   tag gid: 'V-230488'

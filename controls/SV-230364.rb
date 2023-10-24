@@ -18,6 +18,7 @@ password lifetime:
 
     $ sudo chage -m 1 [user]'
   impact 0.5
+  ref 'DPMS Target Red Hat Enterprise Linux 8'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000075-GPOS-00043'
   tag gid: 'V-230364'

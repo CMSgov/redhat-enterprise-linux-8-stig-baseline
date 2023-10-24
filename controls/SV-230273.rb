@@ -39,10 +39,11 @@ installing the required package with the following command:
 
     $ sudo yum install openssl-pkcs11'
   impact 0.5
+  ref 'DPMS Target Red Hat Enterprise Linux 8'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000375-GPOS-00160'
   tag gid: 'V-230273'
-  tag rid: 'SV-230273r743943_rule'
+  tag rid: 'SV-230273r854028_rule'
   tag stig_id: 'RHEL-08-010390'
   tag fix_id: 'F-32917r743942_fix'
   tag cci: ['CCI-001948']

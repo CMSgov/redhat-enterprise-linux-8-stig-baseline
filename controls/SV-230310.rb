@@ -30,6 +30,7 @@ the following command:
 
     If kernel core dumps are required, document the need with the ISSO.'
   impact 0.5
+  ref 'DPMS Target Red Hat Enterprise Linux 8'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-230310'

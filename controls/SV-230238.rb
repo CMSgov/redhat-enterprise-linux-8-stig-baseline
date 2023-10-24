@@ -36,6 +36,7 @@ authentication.
 
     Remove any files with the .keytab extension from the operating system.'
   impact 0.5
+  ref 'DPMS Target Red Hat Enterprise Linux 8'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000120-GPOS-00061'
   tag gid: 'V-230238'

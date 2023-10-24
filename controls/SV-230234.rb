@@ -28,7 +28,8 @@ the following command:
     $ sudo grub2-setpassword
     Enter password:
     Confirm password:'
-  impact 0.0
+  impact 0.7
+  ref 'DPMS Target Red Hat Enterprise Linux 8'
   tag severity: 'high'
   tag gtitle: 'SRG-OS-000080-GPOS-00048'
   tag gid: 'V-230234'

@@ -20,25 +20,25 @@ specifically defined in the /etc/sysconfig/sshd file. The employed algorithms
 can be viewed in the /etc/crypto-policies/back-ends/ directory.'
   desc 'check', 'Verify that system-wide crypto policies are in effect:
 
-$ sudo grep -i crypto_policy /etc/sysconfig/sshd
+$ sudo grep CRYPTO_POLICY /etc/sysconfig/sshd
 
-# crypto_policy=
+# CRYPTO_POLICY=
 
-If the "crypto_policy" is uncommented, this is a finding.'
-  desc 'fix', 'Configure the RHEL 8 SSH daemon to use system-wide crypto policies by
-adding the following line to /etc/sysconfig/sshd:
+If the "CRYPTO_POLICY " is uncommented, this is a finding.'
+  desc 'fix', 'Configure the RHEL 8 SSH daemon to use system-wide crypto policies by adding the following line to /etc/sysconfig/sshd:
 
-    # crypto_policy=
+# CRYPTO_POLICY=
 
-    A reboot is required for the changes to take effect.'
+A reboot is required for the changes to take effect.'
   impact 0.5
+  ref 'DPMS Target Red Hat Enterprise Linux 8'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000250-GPOS-00093'
   tag satisfies: ['SRG-OS-000250-GPOS-00093', 'SRG-OS-000393-GPOS-00173', 'SRG-OS-000394-GPOS-00174', 'SRG-OS-000125-GPOS-00065']
   tag gid: 'V-244526'
-  tag rid: 'SV-244526r743827_rule'
+  tag rid: 'SV-244526r877394_rule'
   tag stig_id: 'RHEL-08-010287'
-  tag fix_id: 'F-47758r743826_fix'
+  tag fix_id: 'F-47758r809333_fix'
   tag cci: ['CCI-001453']
   tag nist: ['AC-17 (2)']
 

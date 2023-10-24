@@ -25,7 +25,8 @@ subdirectory is not assigned, this is a finding.'
 line to "/etc/xinetd.d/tftp" (or modify the line to have the required value):
 
     server_args = -s /var/lib/tftpboot'
-  impact 0.0
+  impact 0.5
+  ref 'DPMS Target Red Hat Enterprise Linux 8'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-230557'

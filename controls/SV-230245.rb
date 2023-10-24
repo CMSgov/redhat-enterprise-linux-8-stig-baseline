@@ -26,6 +26,7 @@ running the following command:
 
     $ sudo chmod 0640 /var/log/messages'
   impact 0.5
+  ref 'DPMS Target Red Hat Enterprise Linux 8'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000206-GPOS-00084'
   tag gid: 'V-230245'

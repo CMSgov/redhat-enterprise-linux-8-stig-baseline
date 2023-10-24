@@ -40,6 +40,7 @@ installing the required packages with the following command:
 
     $ sudo yum install rsyslog-gnutls'
   impact 0.5
+  ref 'DPMS Target Red Hat Enterprise Linux 8'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-230478'

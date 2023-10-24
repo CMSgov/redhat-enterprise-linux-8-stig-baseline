@@ -36,11 +36,12 @@ this is a finding.'
 
     The audit daemon must be restarted for the changes to take effect.'
   impact 0.5
+  ref 'DPMS Target Red Hat Enterprise Linux 8'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000326-GPOS-00126'
   tag satisfies: ['SRG-OS-000326-GPOS-00126', 'SRG-OS-000327-GPOS-00127']
   tag gid: 'V-230386'
-  tag rid: 'SV-230386r627750_rule'
+  tag rid: 'SV-230386r854037_rule'
   tag stig_id: 'RHEL-08-030000'
   tag fix_id: 'F-33030r567905_fix'
   tag cci: ['CCI-002233']

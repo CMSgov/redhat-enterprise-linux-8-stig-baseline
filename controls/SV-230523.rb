@@ -37,11 +37,12 @@ If fapolicyd is not installed, this is a finding.'
 
 $ sudo yum install fapolicyd.x86_64'
   impact 0.5
+  ref 'DPMS Target Red Hat Enterprise Linux 8'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000368-GPOS-00154'
   tag satisfies: ['SRG-OS-000368-GPOS-00154', 'SRG-OS-000370-GPOS-00155', 'SRG-OS-000480-GPOS-00232']
   tag gid: 'V-230523'
-  tag rid: 'SV-230523r744023_rule'
+  tag rid: 'SV-230523r854064_rule'
   tag stig_id: 'RHEL-08-040135'
   tag fix_id: 'F-33167r744022_fix'
   tag cci: ['CCI-001764']

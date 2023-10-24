@@ -12,45 +12,39 @@ additional attack vectors.
 protocol, designed to support the idea of message-oriented communication, with
 several streams of messages within one connection. Disabling SCTP protects the
 system against exploitation of any flaws in its implementation.'
-  desc 'check', 'Verify the operating system disables the ability to load the SCTP kernel
-module.
+  desc 'check', 'Verify the operating system disables the ability to load the SCTP kernel module.
 
-    $ sudo grep -ri SCTP /etc/modprobe.d/* | grep -i "/bin/true"
+$ sudo grep -r sctp /etc/modprobe.d/* | grep "/bin/true"
 
-    install SCTP /bin/true
+install sctp /bin/true
 
-    If the command does not return any output, or the line is commented out,
-and use of the SCTP is not documented with the Information System Security
-Officer (ISSO) as an operational requirement, this is a finding.
+If the command does not return any output, or the line is commented out, and use of the SCTP is not documented with the Information System Security Officer (ISSO) as an operational requirement, this is a finding.
 
-    Verify the operating system disables the ability to use the SCTP.
+Verify the operating system disables the ability to use the SCTP.
 
-    Check to see if the SCTP is disabled with the following command:
+Check to see if the SCTP is disabled with the following command:
 
-    $ sudo grep -ri SCTP /etc/modprobe.d/* | grep -i "blacklist"
+$ sudo grep -r sctp /etc/modprobe.d/* | grep "blacklist"
 
-    blacklist SCTP
+blacklist sctp
 
-    If the command does not return any output or the output is not "blacklist
-SCTP", and use of the SCTP is not documented with the Information System
-Security Officer (ISSO) as an operational requirement, this is a finding.'
-  desc 'fix', 'Configure the operating system to disable the ability to use the SCTP
-kernel module.
+If the command does not return any output or the output is not "blacklist sctp", and use of the SCTP is not documented with the Information System Security Officer (ISSO) as an operational requirement, this is a finding.'
+  desc 'fix', 'Configure the operating system to disable the ability to use the SCTP kernel module.
 
-    Add or update the following lines in the file
-"/etc/modprobe.d/blacklist.conf":
+Add or update the following lines in the file "/etc/modprobe.d/blacklist.conf":
 
-    install SCTP /bin/true
-    blacklist SCTP
+install sctp /bin/true
+blacklist sctp
 
-    Reboot the system for the settings to take effect.'
+Reboot the system for the settings to take effect.'
   impact 0.3
+  ref 'DPMS Target Red Hat Enterprise Linux 8'
   tag severity: 'low'
   tag gtitle: 'SRG-OS-000095-GPOS-00049'
   tag gid: 'V-230496'
-  tag rid: 'SV-230496r744017_rule'
+  tag rid: 'SV-230496r792917_rule'
   tag stig_id: 'RHEL-08-040023'
-  tag fix_id: 'F-33140r744016_fix'
+  tag fix_id: 'F-33140r792916_fix'
   tag cci: ['CCI-000381']
   tag nist: ['CM-7 a']
 

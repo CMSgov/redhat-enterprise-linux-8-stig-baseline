@@ -25,6 +25,7 @@ generator entropy gatherer service with the following command:
 
     $ sudo yum install rng-tools'
   impact 0.3
+  ref 'DPMS Target Red Hat Enterprise Linux 8'
   tag severity: 'low'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-244527'

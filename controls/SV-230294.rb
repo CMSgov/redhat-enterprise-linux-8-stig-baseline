@@ -19,6 +19,7 @@ system/partition on the system, then grep for that file system/partition.
 data path, this is a finding.'
   desc 'fix', 'Migrate the system audit data path onto a separate file system.'
   impact 0.3
+  ref 'DPMS Target Red Hat Enterprise Linux 8'
   tag severity: 'low'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-230294'

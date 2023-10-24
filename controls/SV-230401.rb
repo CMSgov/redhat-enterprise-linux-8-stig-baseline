@@ -31,6 +31,7 @@ access by setting the correct permissive mode with the following command:
     Replace "[audit_log_directory]" to the correct audit log directory path,
 by default this location is "/var/log/audit".'
   impact 0.5
+  ref 'DPMS Target Red Hat Enterprise Linux 8'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000057-GPOS-00027'
   tag satisfies: ['SRG-OS-000057-GPOS-00027', 'SRG-OS-000058-GPOS-00028', 'SRG-OS-000059-GPOS-00029']
@@ -39,7 +40,7 @@ by default this location is "/var/log/audit".'
   tag stig_id: 'RHEL-08-030120'
   tag fix_id: 'F-33045r567950_fix'
   tag cci: ['CCI-000162']
-  tag nist: ['AU-9']
+  tag nist: ['AU-9', 'AU-9 a']
 
   log_dir = command("dirname #{auditd_conf('/etc/audit/auditd.conf').log_file}").stdout.strip
 

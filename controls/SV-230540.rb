@@ -1,49 +1,60 @@
 control 'SV-230540' do
-  title 'RHEL 8 must not be performing packet forwarding unless the system is a
-router.'
-  desc 'Routing protocol daemons are typically used on routers to exchange
-network topology information with other routers. If this software is used when
-not required, system network information may be unnecessarily transmitted
-across the network.'
-  desc 'check', 'Verify RHEL 8 is not performing packet forwarding, unless the system is a
-router.
+  title 'RHEL 8 must not enable IPv6 packet forwarding unless the system is a router.'
+  desc 'Routing protocol daemons are typically used on routers to exchange network topology information with other routers. If this software is used when not required, system network information may be unnecessarily transmitted across the network.
 
-    Note: If either IPv4 or IPv6 is disabled on the system, this requirement
-only applies to the active internet protocol version.
+The sysctl --system command will load settings from all system configuration files. All configuration files are sorted by their filename in lexicographic order, regardless of which of the directories they reside in. If multiple files specify the same option, the entry in the file with the lexicographically latest name will take precedence. Files are read from directories in the following list from top to bottom. Once a file of a given filename is loaded, any file of the same name in subsequent directories is ignored.
+/etc/sysctl.d/*.conf
+/run/sysctl.d/*.conf
+/usr/local/lib/sysctl.d/*.conf
+/usr/lib/sysctl.d/*.conf
+/lib/sysctl.d/*.conf
+/etc/sysctl.conf'
+  desc 'check', 'Verify RHEL 8 is not performing IPv6 packet forwarding, unless the system is a router.
 
-    Check to see if IP forwarding is enabled using the following commands:
+Note: If IPv6 is disabled on the system, this requirement is Not Applicable.
 
-    $ sudo sysctl  net.ipv4.ip_forward
+Check that IPv6 forwarding is disabled using the following commands:
 
-    net.ipv4.ip_forward = 0
+$ sudo sysctl net.ipv6.conf.all.forwarding
 
-    $ sudo sysctl net.ipv6.conf.all.forwarding
+net.ipv6.conf.all.forwarding = 0
 
-    net.ipv6.conf.all.forwarding = 0
+If the IPv6 forwarding value is not "0" and is not documented with the Information System Security Officer (ISSO) as an operational requirement, this is a finding.
 
-    If IP forwarding value is not "0" and is not documented with the
-Information System Security Officer (ISSO) as an operational requirement, this
-is a finding.'
-  desc 'fix', %q(Configure RHEL 8 to not allow packet forwarding, unless the system is a
-router with the following commands:
+Check that the configuration files are present to enable this network parameter.
 
-    $ sudo sysctl -w net.ipv4.ip_forward=0
+$ sudo grep -r net.ipv6.conf.all.forwarding /run/sysctl.d/*.conf /usr/local/lib/sysctl.d/*.conf /usr/lib/sysctl.d/*.conf /lib/sysctl.d/*.conf /etc/sysctl.conf /etc/sysctl.d/*.conf
 
-    $ sudo sysctl -w net.ipv6.conf.all.forwarding=0
+/etc/sysctl.d/99-sysctl.conf: net.ipv6.conf.all.forwarding = 0
 
-    If "0" is not the system's default value then add or update the following
-lines in the appropriate file under "/etc/sysctl.d":
+If "net.ipv6.conf.all.forwarding" is not set to "0", is missing or commented out, this is a finding.
 
-    net.ipv4.ip_forward=0
+If conflicting results are returned, this is a finding.'
+  desc 'fix', 'Configure RHEL 8 to not allow IPv6 packet forwarding, unless the system is a router.
 
-    net.ipv6.conf.all.forwarding=0)
+Add or edit the following line in a system configuration file, in the "/etc/sysctl.d/" directory:
+
+net.ipv6.conf.all.forwarding=0
+
+Remove any configurations that conflict with the above from the following locations: 
+/run/sysctl.d/*.conf
+/usr/local/lib/sysctl.d/*.conf
+/usr/lib/sysctl.d/*.conf
+/lib/sysctl.d/*.conf
+/etc/sysctl.conf
+/etc/sysctl.d/*.conf
+
+Load settings from all system configuration files with the following command:
+
+$ sudo sysctl --system'
   impact 0.5
+  ref 'DPMS Target Red Hat Enterprise Linux 8'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-230540'
-  tag rid: 'SV-230540r627750_rule'
+  tag rid: 'SV-230540r858810_rule'
   tag stig_id: 'RHEL-08-040260'
-  tag fix_id: 'F-33184r568367_fix'
+  tag fix_id: 'F-33184r858809_fix'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
 

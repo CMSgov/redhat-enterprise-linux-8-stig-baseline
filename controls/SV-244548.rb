@@ -43,10 +43,11 @@ peripherals with the following commands:
 individual system will immediately prevent any access over a usb device such as
 a keyboard or mouse'
   impact 0.5
+  ref 'DPMS Target Red Hat Enterprise Linux 8'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000378-GPOS-00163'
   tag gid: 'V-244548'
-  tag rid: 'SV-244548r743893_rule'
+  tag rid: 'SV-244548r854077_rule'
   tag stig_id: 'RHEL-08-040141'
   tag fix_id: 'F-47780r743892_fix'
   tag cci: ['CCI-001958']

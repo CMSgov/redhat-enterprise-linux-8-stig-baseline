@@ -1,6 +1,5 @@
 control 'SV-230365' do
-  title 'RHEL 8 passwords for new users or password changes must have a 24
-hours/1 day minimum password lifetime restriction in /etc/logins.def.'
+  title 'RHEL 8 passwords for new users or password changes must have a 24 hours/1 day minimum password lifetime restriction in /etc/login.defs.'
   desc "Enforcing a minimum password lifetime helps to prevent repeated
 password changes to defeat the password reuse or history enforcement
 requirement. If users are allowed to immediately and continually change their
@@ -25,10 +24,11 @@ the required value):
 
     PASS_MIN_DAYS 1'
   impact 0.5
+  ref 'DPMS Target Red Hat Enterprise Linux 8'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000075-GPOS-00043'
   tag gid: 'V-230365'
-  tag rid: 'SV-230365r627750_rule'
+  tag rid: 'SV-230365r858727_rule'
   tag stig_id: 'RHEL-08-020190'
   tag fix_id: 'F-33009r567842_fix'
   tag cci: ['CCI-000198']

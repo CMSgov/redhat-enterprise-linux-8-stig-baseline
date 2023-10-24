@@ -20,32 +20,31 @@ components be required, they will not count towards the total "score" of
 "minlen". This will enable "minlen" to require a 15-character minimum.
 
     The DoD minimum password requirement is 15 characters.'
-  desc 'check', 'Verify the operating system enforces a minimum 15-character password
-length. The "minlen" option sets the minimum number of characters in a new
-password.
+  desc 'check', 'Verify the operating system enforces a minimum 15-character password length. The "minlen" option sets the minimum number of characters in a new password.
 
-    Check for the value of the "minlen" option in
-"/etc/security/pwquality.conf" with the following command:
+Check for the value of the "minlen" option with the following command:
 
-    $ sudo grep minlen /etc/security/pwquality.conf
-    minlen = 15
+$ sudo grep -r minlen /etc/security/pwquality.conf*
 
-    If the command does not return a "minlen" value of 15 or greater, this is
-a finding.'
-  desc 'fix', 'Configure operating system to enforce a minimum 15-character password
-length.
+/etc/security/pwquality.conf:minlen = 15
 
-    Add the following line to "/etc/security/pwquality.conf" (or modify the
-line to have the required value):
+If the command does not return a "minlen" value of 15 or greater, this is a finding.
+If conflicting results are returned, this is a finding.'
+  desc 'fix', 'Configure operating system to enforce a minimum 15-character password length.
 
-    minlen = 15'
+Add the following line to "/etc/security/pwquality.conf" (or modify the line to have the required value):
+
+minlen = 15
+
+Remove any configurations that conflict with the above value.'
   impact 0.5
+  ref 'DPMS Target Red Hat Enterprise Linux 8'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000078-GPOS-00046'
   tag gid: 'V-230369'
-  tag rid: 'SV-230369r627750_rule'
+  tag rid: 'SV-230369r858785_rule'
   tag stig_id: 'RHEL-08-020230'
-  tag fix_id: 'F-33013r567854_fix'
+  tag fix_id: 'F-33013r858784_fix'
   tag cci: ['CCI-000205']
   tag nist: ['IA-5 (1) (a)']
 

@@ -37,6 +37,7 @@ removing the telnet-server package from the system with the following command:
 
     $ sudo yum remove telnet-server'
   impact 0.7
+  ref 'DPMS Target Red Hat Enterprise Linux 8'
   tag severity: 'high'
   tag gtitle: 'SRG-OS-000095-GPOS-00049'
   tag gid: 'V-230487'

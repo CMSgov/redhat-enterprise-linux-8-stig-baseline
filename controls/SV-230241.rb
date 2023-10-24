@@ -27,6 +27,7 @@ installed with the following command:
 
     $ sudo yum install policycoreutils'
   impact 0.3
+  ref 'DPMS Target Red Hat Enterprise Linux 8'
   tag severity: 'low'
   tag gtitle: 'SRG-OS-000134-GPOS-00068'
   tag gid: 'V-230241'

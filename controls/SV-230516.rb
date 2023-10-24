@@ -41,10 +41,11 @@ by adding /modifying the /etc/fstab with the following line:
 
     /dev/mapper/rhel-var-log /var/log xfs defaults,nodev,nosuid,noexec 0 0'
   impact 0.5
+  ref 'DPMS Target Red Hat Enterprise Linux 8'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000368-GPOS-00154'
   tag gid: 'V-230516'
-  tag rid: 'SV-230516r627750_rule'
+  tag rid: 'SV-230516r854057_rule'
   tag stig_id: 'RHEL-08-040128'
   tag fix_id: 'F-33160r568295_fix'
   tag cci: ['CCI-001764']

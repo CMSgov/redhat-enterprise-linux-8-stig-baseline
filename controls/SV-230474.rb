@@ -38,6 +38,7 @@ following command:
 
     Replace "[audit_tool]" with each audit tool not group-owned by "root".'
   impact 0.5
+  ref 'DPMS Target Red Hat Enterprise Linux 8'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000256-GPOS-00097'
   tag satisfies: ['SRG-OS-000256-GPOS-00097', 'SRG-OS-000257-GPOS-00098', 'SRG-OS-000258-GPOS-00099']
@@ -46,7 +47,7 @@ following command:
   tag stig_id: 'RHEL-08-030640'
   tag fix_id: 'F-33118r568169_fix'
   tag cci: ['CCI-001493']
-  tag nist: ['AU-9']
+  tag nist: ['AU-9', 'AU-9 a']
 
   if virtualization.system.eql?('docker')
     impact 0.0

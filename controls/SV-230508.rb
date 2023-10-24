@@ -40,10 +40,11 @@ by adding /modifying the /etc/fstab with the following line:
 
     tmpfs /dev/shm tmpfs defaults,nodev,nosuid,noexec 0 0'
   impact 0.5
+  ref 'DPMS Target Red Hat Enterprise Linux 8'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000368-GPOS-00154'
   tag gid: 'V-230508'
-  tag rid: 'SV-230508r627750_rule'
+  tag rid: 'SV-230508r854049_rule'
   tag stig_id: 'RHEL-08-040120'
   tag fix_id: 'F-33152r568271_fix'
   tag cci: ['CCI-001764']

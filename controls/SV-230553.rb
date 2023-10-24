@@ -5,43 +5,28 @@ approved.'
 processes must not be active to decrease the attack surface of the system.
 Graphical display managers have a long history of security vulnerabilities and
 must not be used, unless approved and documented.'
-  desc 'check', 'Verify that the system is configured to boot to the command line:
+  desc 'check', 'Verify that a graphical user interface is not installed:
 
-    $ systemctl get-default
-    multi-user.target
+$ rpm -qa | grep xorg | grep server
 
-    If the system default target is not set to "multi-user.target" and the
-Information System Security Officer (ISSO) lacks a documented requirement for a
-graphical user interface, this is a finding.
+Ask the System Administrator if use of a graphical user interface is an operational requirement.
 
-    Verify that a graphical user interface is not installed:
+If the use of a graphical user interface on the system is not documented with the ISSO, this is a finding.'
+  desc 'fix', 'Document the requirement for a graphical user interface with the ISSO or reinstall the operating system without the graphical user interface. If reinstallation is not feasible, then continue with the following procedure:
 
-    $ rpm -qa | grep xorg | grep server
+Open an SSH session and enter the following commands:
 
-    Ask the System Administrator if use of a graphical user interface is an
-operational requirement.
+$ sudo yum remove xorg-x11-server-Xorg xorg-x11-server-common xorg-x11-server-utils xorg-x11-server-Xwayland
 
-    If the use of a graphical user interface on the system is not documented
-with the ISSO, this is a finding.'
-  desc 'fix', 'Document the requirement for a graphical user interface with the ISSO or
-reinstall the operating system without the graphical user interface. If
-reinstallation is not feasible, then continue with the following procedure:
-
-    Open an SSH session and enter the following commands:
-
-    $ sudo systemctl set-default multi-user.target
-
-    $ sudo yum remove xorg-x11-server-Xorg xorg-x11-server-common
-xorg-x11-server-utils xorg-x11-server-Xwayland
-
-    A reboot is required for the changes to take effect.'
+A reboot is required for the changes to take effect.'
   impact 0.5
+  ref 'DPMS Target Red Hat Enterprise Linux 8'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-230553'
-  tag rid: 'SV-230553r646886_rule'
+  tag rid: 'SV-230553r809324_rule'
   tag stig_id: 'RHEL-08-040320'
-  tag fix_id: 'F-33197r646885_fix'
+  tag fix_id: 'F-33197r809323_fix'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
 

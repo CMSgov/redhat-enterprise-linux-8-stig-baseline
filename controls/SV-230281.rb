@@ -26,10 +26,11 @@ updated versions have been installed.
 
     clean_requirements_on_remove=True'
   impact 0.3
+  ref 'DPMS Target Red Hat Enterprise Linux 8'
   tag severity: 'low'
   tag gtitle: 'SRG-OS-000437-GPOS-00194'
   tag gid: 'V-230281'
-  tag rid: 'SV-230281r627750_rule'
+  tag rid: 'SV-230281r854034_rule'
   tag stig_id: 'RHEL-08-010440'
   tag fix_id: 'F-32925r567590_fix'
   tag cci: ['CCI-002617']

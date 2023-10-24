@@ -2,21 +2,18 @@ control 'SV-244521' do
   title 'RHEL 8 operating systems booted with United Extensible Firmware
 Interface (UEFI) must require a unique superusers name upon booting into
 single-user mode and maintenance.'
-  desc 'If the system does not require valid authentication before it boots
-into single-user or maintenance mode, anyone who invokes single-user or
-maintenance mode is granted privileged access to all files on the system. GRUB
-2 is the default boot loader for RHEL 8 and is designed to require a password
-to boot into single-user mode or make modifications to the boot menu.'
+  desc 'If the system does not require valid authentication before it boots into single-user or maintenance mode, anyone who invokes single-user or maintenance mode is granted privileged access to all files on the system. GRUB 2 is the default boot loader for RHEL 8 and is designed to require a password to boot into single-user mode or make modifications to the boot menu.
+
+The GRUB 2 superuser account is an account of last resort. Establishing a unique username for this account hardens the boot loader against brute force attacks. Due to the nature of the superuser account database being distinct from the OS account database, this allows the use of a username that is not among those within the OS account database. Examples of non-unique superusers names are root, superuser, unlock, etc.'
   desc 'check', 'For systems that use BIOS, this is Not Applicable.
 
-    Verify that a unique name is set as the "superusers" account:
+Verify that a unique name is set as the "superusers" account:
 
-    $ sudo grep -iw "superusers" /boot/efi/EFI/redhat/grub.cfg
-    set superusers="[someuniquestringhere]"
-    export superusers
+$ sudo grep -iw "superusers" /boot/efi/EFI/redhat/grub.cfg
+set superusers="[someuniquestringhere]"
+export superusers
 
-    If "superusers" is not set to a unique name or is missing a name, this is
-a finding.'
+If "superusers" is identical to any OS account name or is missing a name, this is a finding.'
   desc 'fix', 'Configure the system to have a unique name for the grub superusers account.
 
 Edit the /etc/grub.d/01_users file and add or modify the following lines:
@@ -28,11 +25,12 @@ password_pbkdf2 [someuniquestringhere] ${GRUB2_PASSWORD}
 Generate a new grub.cfg file with the following command:
 
 $ sudo grub2-mkconfig -o /boot/efi/EFI/redhat/grub.cfg'
-  impact 0.0
+  impact 0.5
+  ref 'DPMS Target Red Hat Enterprise Linux 8'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000080-GPOS-00048'
   tag gid: 'V-244521'
-  tag rid: 'SV-244521r743812_rule'
+  tag rid: 'SV-244521r792982_rule'
   tag stig_id: 'RHEL-08-010141'
   tag fix_id: 'F-47753r743811_fix'
   tag cci: ['CCI-000213']

@@ -25,6 +25,7 @@ file not owned by "root".
 
     $ sudo chown root [FILE]'
   impact 0.5
+  ref 'DPMS Target Red Hat Enterprise Linux 8'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000259-GPOS-00100'
   tag gid: 'V-230258'

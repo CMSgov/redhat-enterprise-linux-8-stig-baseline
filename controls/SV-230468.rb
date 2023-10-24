@@ -33,27 +33,21 @@ all direct access to the information system;
     3) All account creations, modifications, disabling, and terminations; and
 
     4) All kernel module load, unload, and restart actions.'
-  desc 'check', 'Verify RHEL 8 enables auditing of processes that start prior to the audit
-daemon with the following commands:
+  desc 'check', 'Verify RHEL 8 enables auditing of processes that start prior to the audit daemon with the following commands:
 
-    $ sudo grub2-editenv - list | grep audit
+$ sudo grub2-editenv list | grep audit
 
-    kernelopts=root=/dev/mapper/rhel-root ro crashkernel=auto
-resume=/dev/mapper/rhel-swap rd.lvm.lv=rhel/root rd.lvm.lv=rhel/swap rhgb quiet
-fips=1 audit=1 audit_backlog_limit=8192
-boot=UUID=8d171156-cd61-421c-ba41-1c021ac29e82
+kernelopts=root=/dev/mapper/rhel-root ro crashkernel=auto resume=/dev/mapper/rhel-swap rd.lvm.lv=rhel/root rd.lvm.lv=rhel/swap rhgb quiet fips=1 audit=1 audit_backlog_limit=8192 boot=UUID=8d171156-cd61-421c-ba41-1c021ac29e82
 
-    If the "audit" entry does not equal "1", is missing, or the line is
-commented out, this is a finding.
+If the "audit" entry does not equal "1", is missing, or the line is commented out, this is a finding.
 
-    Check that auditing is enabled by default to persist in kernel updates:
+Check that auditing is enabled by default to persist in kernel updates: 
 
-    $ sudo grep audit /etc/default/grub
+$ sudo grep audit /etc/default/grub
 
-    GRUB_CMDLINE_LINUX="audit=1"
+GRUB_CMDLINE_LINUX="audit=1"
 
-    If "audit" is not set to "1", is missing or commented out, this is a
-finding.'
+If "audit" is not set to "1", is missing or commented out, this is a finding.'
   desc 'fix', 'Configure RHEL 8 to audit processes that start prior to the audit daemon
 with the following command:
 
@@ -64,11 +58,12 @@ configuration survives kernel updates:
 
     GRUB_CMDLINE_LINUX="audit=1"'
   impact 0.3
+  ref 'DPMS Target Red Hat Enterprise Linux 8'
   tag severity: 'low'
   tag gtitle: 'SRG-OS-000062-GPOS-00031'
   tag satisfies: ['SRG-OS-000062-GPOS-00031', 'SRG-OS-000037-GPOS-00015', 'SRG-OS-000042-GPOS-00020', 'SRG-OS-000062-GPOS-00031', 'SRG-OS-000392-GPOS-00172', 'SRG-OS-000462-GPOS-00206', 'SRG-OS-000471-GPOS-00215', 'SRG-OS-000473-GPOS-00218']
   tag gid: 'V-230468'
-  tag rid: 'SV-230468r627750_rule'
+  tag rid: 'SV-230468r792904_rule'
   tag stig_id: 'RHEL-08-030601'
   tag fix_id: 'F-33112r568151_fix'
   tag cci: ['CCI-000169']

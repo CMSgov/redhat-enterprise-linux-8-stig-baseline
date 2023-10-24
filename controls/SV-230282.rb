@@ -52,10 +52,11 @@ functions.
 
     A reboot is required for the changes to take effect.'
   impact 0.5
+  ref 'DPMS Target Red Hat Enterprise Linux 8'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000445-GPOS-00199'
   tag gid: 'V-230282'
-  tag rid: 'SV-230282r627750_rule'
+  tag rid: 'SV-230282r854035_rule'
   tag stig_id: 'RHEL-08-010450'
   tag fix_id: 'F-32926r567593_fix'
   tag cci: ['CCI-002696']

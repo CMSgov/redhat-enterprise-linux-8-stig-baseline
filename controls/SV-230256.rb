@@ -22,17 +22,13 @@ maintaining the confidentiality of the secret key used to generate the hash.
  SSLv2 is not available in the GnuTLS library.  The RHEL 8 system-wide crypto
 policy defines employed algorithms in the
 /etc/crypto-policies/back-ends/gnutls.config file.'
-  desc 'check', 'Verify the GnuTLS library is configured to only allow DoD-approved SSL/TLS
-Versions:
+  desc 'check', 'Verify the GnuTLS library is configured to only allow DoD-approved SSL/TLS Versions:
 
-    $ sudo grep -io +vers.*  /etc/crypto-policies/back-ends/gnutls.config
-
+$ sudo grep -io +vers.*  /etc/crypto-policies/back-ends/gnutls.config
 
 +VERS-ALL:-VERS-DTLS0.9:-VERS-SSL3.0:-VERS-TLS1.0:-VERS-TLS1.1:-VERS-DTLS1.0:+COMP-NULL:%PROFILE_MEDIUM
 
-    If the "gnutls.config" does not list
-"-VERS-DTLS0.9:-VERS-SSL3.0:-VERS-TLS1.0:-VERS-TLS1.1:VERS-DTLS1.0" to
-disable unapproved SSL/TLS versions, this is a finding.'
+If the "gnutls.config" does not list "-VERS-DTLS0.9:-VERS-SSL3.0:-VERS-TLS1.0:-VERS-TLS1.1:-VERS-DTLS1.0" to disable unapproved SSL/TLS versions, this is a finding.'
   desc 'fix', 'Configure the RHEL 8 GnuTLS library to use only DoD-approved encryption by
 adding the following line to "/etc/crypto-policies/back-ends/gnutls.config":
 
@@ -40,11 +36,12 @@ adding the following line to "/etc/crypto-policies/back-ends/gnutls.config":
 
     A reboot is required for the changes to take effect.'
   impact 0.5
+  ref 'DPMS Target Red Hat Enterprise Linux 8'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000250-GPOS-00093'
   tag satisfies: ['SRG-OS-000250-GPOS-00093', 'SRG-OS-000423-GPOS-00187']
   tag gid: 'V-230256'
-  tag rid: 'SV-230256r627750_rule'
+  tag rid: 'SV-230256r877394_rule'
   tag stig_id: 'RHEL-08-010295'
   tag fix_id: 'F-32900r567515_fix'
   tag cci: ['CCI-001453']

@@ -40,10 +40,11 @@ adding /modifying the /etc/fstab with the following line:
 
     /dev/mapper/rhel-tmp /tmp xfs defaults,nodev,nosuid,noexec 0 0'
   impact 0.5
+  ref 'DPMS Target Red Hat Enterprise Linux 8'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000368-GPOS-00154'
   tag gid: 'V-230511'
-  tag rid: 'SV-230511r627750_rule'
+  tag rid: 'SV-230511r854052_rule'
   tag stig_id: 'RHEL-08-040123'
   tag fix_id: 'F-33155r568280_fix'
   tag cci: ['CCI-001764']
