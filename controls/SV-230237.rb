@@ -27,7 +27,7 @@ general-purpose computing system.
 
     If \"sha512\" is missing, or is commented out, this is a finding.
   "
-  desc  'fix', "
+  desc 'fix', "
     Configure RHEL 8 to use a FIPS 140-2 approved cryptographic hashing
 algorithm for system authentication.
 

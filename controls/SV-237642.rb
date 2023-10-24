@@ -43,10 +43,10 @@ configuration file in the /etc/sudoers.d/ directory:
   tag cci: ['CCI-002227']
   tag nist: ['AC-6 (5)']
 
-  if virtualization.system.eql?('docker') && !command("sudo").exist?
+  if virtualization.system.eql?('docker') && !command('sudo').exist?
     impact 0.0
-    describe "Control not applicable within a container" do
-      skip "Control not applicable within a container"
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
     end
   else
     describe bash("egrep -i '(!rootpw|!targetpw|!runaspw)' /etc/sudoers /etc/sudoers.d/* | grep -v '#' |  awk -F ':' '{ print $2 }'") do

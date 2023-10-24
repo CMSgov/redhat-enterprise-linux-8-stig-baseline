@@ -21,7 +21,7 @@ enables JIT hardening for all users.
     If the returned line does not have a value of \"2\", or a line is not
 returned, this is a finding.
   "
-  desc  'fix', "
+  desc 'fix', "
     Configure RHEL 8 to enable hardening for the BPF JIT compiler by adding the
 following line to a file in the \"/etc/sysctl.d\" directory:
 
@@ -44,8 +44,8 @@ effect. To reload the contents of the files, run the following command:
 
   if virtualization.system.eql?('docker')
     impact 0.0
-    describe "Control not applicable within a container" do
-      skip "Control not applicable within a container"
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
     end
   else
     describe kernel_parameter('net.core.bpf_jit_harden') do
@@ -53,4 +53,3 @@ effect. To reload the contents of the files, run the following command:
     end
   end
 end
-

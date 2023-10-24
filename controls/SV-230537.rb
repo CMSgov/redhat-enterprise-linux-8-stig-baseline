@@ -25,7 +25,7 @@ following command:
     If the returned line does not have a value of \"1\", a line is not
 returned, or the retuned line is commented out, this is a finding.
   "
-  desc  'fix', "
+  desc 'fix', "
     Configure RHEL 8 to not respond to IPv4 ICMP echoes sent to a broadcast
 address with the following command:
 
@@ -46,22 +46,19 @@ line in the appropriate file under \"/etc/sysctl.d\":
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
 
-
   if virtualization.system.eql?('docker')
     impact 0.0
-    describe "Control not applicable within a container" do
-      skip "Control not applicable within a container"
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
+    end
+  elsif input('ipv4_enabled')
+    describe kernel_parameter('net.ipv4.icmp_echo_ignore_broadcasts') do
+      its('value') { should eq 1 }
     end
   else
-    if input('ipv4_enabled')
-      describe kernel_parameter('net.ipv4.icmp_echo_ignore_broadcasts') do
-        its('value') { should eq 1 }
-      end
-    else
-      impact 0.0
-      describe 'IPv4 is disabled on the system, this requirement is Not Applicable.' do
-        skip 'IPv4 is disabled on the system, this requirement is Not Applicable.'
-      end
+    impact 0.0
+    describe 'IPv4 is disabled on the system, this requirement is Not Applicable.' do
+      skip 'IPv4 is disabled on the system, this requirement is Not Applicable.'
     end
   end
 end

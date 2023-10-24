@@ -34,7 +34,7 @@ the system with the following command:
     If the \"nftables\" is not set as the \"firewallbackend\" default, this is
 a finding.
   "
-  desc  'fix', "
+  desc 'fix', "
     Configure \"nftables\" to be the default \"firewallbackend\" for
 \"firewalld\" by adding or editing the following line in
 \"etc/firewalld/firewalld.conf\":
@@ -56,8 +56,8 @@ attacks on impacted network interfaces.
 
   if virtualization.system.eql?('docker')
     impact 0.0
-    describe "Control not applicable within a container" do
-      skip "Control not applicable within a container"
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
     end
   else
     describe parse_config_file('/etc/firewalld/firewalld.conf') do

@@ -51,18 +51,16 @@ option:
 
   if virtualization.system.eql?('docker')
     impact 0.0
-    describe "Control not applicable within a container" do
-      skip "Control not applicable within a container"
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
+    end
+  elsif file('/etc/audit/auditd.conf').exist?
+    describe parse_config_file('/etc/audit/auditd.conf') do
+      its('name_format') { should match /^hostname$|^fqd$|^numeric$/i }
     end
   else
-    if file('/etc/audit/auditd.conf').exist?
-      describe parse_config_file('/etc/audit/auditd.conf') do
-        its('name_format') { should match /^hostname$|^fqd$|^numeric$/i }
-      end
-    else
-      describe "File '/etc/audit/auditd.conf' cannot be found. This test cannot be checked in a automated fashion and you must check it manually" do
-        skip "File '/etc/audit/auditd.conf' cannot be found. This check must be performed manually"
-      end
+    describe "File '/etc/audit/auditd.conf' cannot be found. This test cannot be checked in a automated fashion and you must check it manually" do
+      skip "File '/etc/audit/auditd.conf' cannot be found. This check must be performed manually"
     end
   end
 end

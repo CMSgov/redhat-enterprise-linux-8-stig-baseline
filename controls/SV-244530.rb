@@ -21,7 +21,7 @@ the following command:
     If the /boot/efi file system does not have the \"nosuid\" option set, this
 is a finding.
   "
-  desc  'fix', "Configure the \"/etc/fstab\" to use the \"nosuid\" option on
+  desc 'fix', "Configure the \"/etc/fstab\" to use the \"nosuid\" option on
 the /boot/efi directory."
   impact 0.5
   tag severity: 'medium'
@@ -35,21 +35,18 @@ the /boot/efi directory."
 
   if virtualization.system.eql?('docker')
     impact 0.0
-    describe "Control not applicable within a container" do
-      skip "Control not applicable within a container"
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
+    end
+  elsif file('/sys/firmware/efi').exist?
+    describe mount('/boot/efi') do
+      it { should be_mounted }
+      its('options') { should include 'nosuid' }
     end
   else
-    if file('/sys/firmware/efi').exist?
-      describe mount('/boot/efi') do
-        it { should be_mounted }
-        its('options') { should include 'nosuid' }
-      end
-    else
-      impact 0.0
-      describe 'System running BIOS' do
-        skip 'The System is running BIOS, this control is Not Applicable.'
-      end
+    impact 0.0
+    describe 'System running BIOS' do
+      skip 'The System is running BIOS, this control is Not Applicable.'
     end
   end
 end
-

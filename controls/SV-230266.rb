@@ -59,14 +59,14 @@ command:
 
   if virtualization.system.eql?('docker')
     impact 0.0
-    describe "Control not applicable within a container" do
-      skip "Control not applicable within a container"
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
     end
   else
     describe kernel_parameter('kernel.kexec_load_disabled') do
       its('value') { should eq 1 }
     end
-  
+
     describe command('grep -r ^kernel.kexec_load_disabled /etc/sysctl.conf /etc/sysctl.d/*.conf') do
       its('stdout') { should match /kernel.kexec_load_disabled=1$/ }
     end

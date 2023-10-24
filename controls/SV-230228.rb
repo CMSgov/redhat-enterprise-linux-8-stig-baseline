@@ -57,8 +57,8 @@ To restart the \"rsyslog\" service, run the following command:
 
   if virtualization.system.eql?('docker') && !file('/etc/ssh/sshd_config').exist?
     impact 0.0
-    describe "Control not applicable; remote access not configured within containerized RHEL" do
-      skip "Control not applicable; remote access not configured within containerized RHEL"
+    describe 'Control not applicable; remote access not configured within containerized RHEL' do
+      skip 'Control not applicable; remote access not configured within containerized RHEL'
     end
   else
     describe command('grep -E \'(auth.*|authpriv.*|daemon.*)\' /etc/rsyslog.conf') do

@@ -33,7 +33,7 @@ account after three unsuccessful logon attempts within 15 minutes:
     If the \"fail_interval\" option is not set to \"900\" or more, is missing
 or commented out, this is a finding.
   "
-  desc  'fix', "
+  desc 'fix', "
     Configure the operating system to lock an account when three unsuccessful
 logon attempts occur in 15 minutes.
 

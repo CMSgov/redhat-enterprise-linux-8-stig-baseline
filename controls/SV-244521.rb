@@ -20,7 +20,7 @@ to boot into single-user mode or make modifications to the boot menu."
     If \"superusers\" is not set to a unique name or is missing a name, this is
 a finding.
   "
-  desc  'fix', "
+  desc 'fix', "
     Configure the system to have a unique name for the grub superusers account.
 
     Edit the /etc/grub.d/01_users file and add or modify the following lines:
@@ -45,20 +45,17 @@ a finding.
 
   if virtualization.system.eql?('docker')
     impact 0.0
-    describe "Control not applicable within a container" do
-      skip "Control not applicable within a container"
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
+    end
+  elsif file('/sys/firmware/efi').exist?
+    describe parse_config_file(input('grub_uefi_main_cfg')) do
+      its('set superusers') { should cmp '"root"' }
     end
   else
-    if file('/sys/firmware/efi').exist?
-      describe parse_config_file(input('grub_uefi_main_cfg')) do
-        its('set superusers') { should cmp '"root"' }
-      end
-    else
-      impact 0.0
-      describe 'System running BIOS' do
-        skip 'The System is running BIOS, this control is Not Applicable.'
-      end
+    impact 0.0
+    describe 'System running BIOS' do
+      skip 'The System is running BIOS, this control is Not Applicable.'
     end
   end
 end
-

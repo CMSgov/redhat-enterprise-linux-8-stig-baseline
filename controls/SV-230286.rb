@@ -43,8 +43,8 @@ the SSH daemon, run the following command:
 
   if virtualization.system.eql?('docker') && !directory('/etc/ssh').exist?
     impact 0.0
-    describe "Control not applicable - SSH is not installed within containerized RHEL" do
-      skip "Control not applicable - SSH is not installed within containerized RHEL"
+    describe 'Control not applicable - SSH is not installed within containerized RHEL' do
+      skip 'Control not applicable - SSH is not installed within containerized RHEL'
     end
   else
     pub_files = command("find /etc/ssh -xdev -name '*.pub' -perm /133").stdout.split("\n")

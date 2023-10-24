@@ -88,20 +88,20 @@ following command:
   tag nist: ['AC-17 (2)']
 
   if virtualization.system.eql?('docker')
-    describe "Control not applicable within a container" do
+    describe 'Control not applicable within a container' do
       skip "Enforcement of Federal Government approved encryption algorithms should be enabled on the container as well.  Both Container OS and Host OS should be set to FIPS mode, which will require a set of FIPS-compliant cryptographic algorithms to be used on the system. Since checking the host's FIPS compliance can't be done within the container this check should be performed manually."
     end
   else
     describe command('fipscheck') do
       its('stdout.strip') { should match /fips mode is on/ }
     end
-  
+
     grub_config = command('grub2-editenv - list').stdout
-  
+
     describe parse_config(grub_config) do
       its('kernelopts') { should match /fips=1/ }
     end
-  
+
     describe file('/proc/sys/crypto/fips_enabled') do
       its('content.strip') { should cmp '1' }
     end

@@ -79,30 +79,28 @@ integrity of the audit tools.
 
   if virtualization.system.eql?('docker')
     impact 0.0
-    describe "Control not applicable within a container" do
-      skip "Control not applicable within a container"
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
+    end
+  elsif package('aide').installed?
+    audit_tools.each do |tool|
+      describe "selection_line: #{tool}" do
+        subject { aide_conf.where { selection_line.eql?(tool) } }
+        its('rules.flatten') { should include 'p' }
+        its('rules.flatten') { should include 'i' }
+        its('rules.flatten') { should include 'n' }
+        its('rules.flatten') { should include 'u' }
+        its('rules.flatten') { should include 'g' }
+        its('rules.flatten') { should include 's' }
+        its('rules.flatten') { should include 'b' }
+        its('rules.flatten') { should include 'acl' }
+        its('rules.flatten') { should include 'xattrs' }
+        its('rules.flatten') { should include 'sha512' }
+      end
     end
   else
-    if package('aide').installed?
-      audit_tools.each do |tool|
-        describe "selection_line: #{tool}" do
-          subject{ aide_conf.where { selection_line.eql?(tool) } }
-          its('rules.flatten') { should include 'p' }
-          its('rules.flatten') { should include 'i' }
-          its('rules.flatten') { should include 'n' }
-          its('rules.flatten') { should include 'u' }
-          its('rules.flatten') { should include 'g' }
-          its('rules.flatten') { should include 's' }
-          its('rules.flatten') { should include 'b' }
-          its('rules.flatten') { should include 'acl' }
-          its('rules.flatten') { should include 'xattrs' }
-          its('rules.flatten') { should include 'sha512' }
-        end
-      end
-    else
-      describe 'The system is not utilizing Advanced Intrusion Detection Environment (AIDE)' do
-        skip 'The system is not utilizing Advanced Intrusion Detection Environment (AIDE), manual review is required.'
-      end
+    describe 'The system is not utilizing Advanced Intrusion Detection Environment (AIDE)' do
+      skip 'The system is not utilizing Advanced Intrusion Detection Environment (AIDE), manual review is required.'
     end
   end
 end

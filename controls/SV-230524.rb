@@ -32,7 +32,7 @@ to indicate how unauthorized peripherals are being blocked.
     If there is no evidence that unauthorized peripherals are being blocked
 before establishing a connection, this is a finding.
   "
-  desc  'fix', "
+  desc 'fix', "
     Configure the operating system to enable the blocking of unauthorized
 peripherals with the following command:
     This command must be run from a root shell and will create an allow list
@@ -56,8 +56,8 @@ a keyboard or mouse
 
   if virtualization.system.eql?('docker')
     impact 0.0
-    describe "Control not applicable within a container" do
-      skip "Control not applicable within a container"
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
     end
   else
     describe command('usbguard list-rules') do

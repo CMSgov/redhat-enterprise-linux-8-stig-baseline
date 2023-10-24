@@ -21,7 +21,7 @@ following command:
     If the returned line does not have a value of \"0\", a line is not
 returned, or the line is commented out, this is a finding.
   "
-  desc  'fix', "
+  desc 'fix', "
     Configure RHEL 8 to prevent IPv6 ICMP redirect messages from being accepted
 with the following command:
 
@@ -44,19 +44,17 @@ line in the appropriate file under \"/etc/sysctl.d\":
 
   if virtualization.system.eql?('docker')
     impact 0.0
-    describe "Control not applicable within a container" do
-      skip "Control not applicable within a container"
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
+    end
+  elsif input('ipv6_enabled')
+    describe kernel_parameter('net.ipv6.conf.default.accept_redirects') do
+      its('value') { should eq 0 }
     end
   else
-    if input('ipv6_enabled')
-      describe kernel_parameter('net.ipv6.conf.default.accept_redirects') do
-        its('value') { should eq 0 }
-      end
-    else
-      impact 0.0
-      describe 'IPv6 is disabled on the system, this requirement is Not Applicable.' do
-        skip 'IPv6 is disabled on the system, this requirement is Not Applicable.'
-      end
+    impact 0.0
+    describe 'IPv6 is disabled on the system, this requirement is Not Applicable.' do
+      skip 'IPv6 is disabled on the system, this requirement is Not Applicable.'
     end
   end
 end

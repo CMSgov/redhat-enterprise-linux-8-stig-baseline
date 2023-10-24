@@ -38,7 +38,7 @@ ago
     If \"sshd\" does not show a status of \"active\" and \"running\", this is a
 finding.
   "
-  desc  'fix', "
+  desc 'fix', "
     Configure the SSH service to automatically start after reboot with the
 following command:
 
@@ -58,8 +58,8 @@ following command:
 
   if virtualization.system.eql?('docker')
     impact 0.0
-    describe "Control not applicable within a container" do
-      skip "Control not applicable within a container"
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
     end
   else
     describe systemd_service('sshd.service') do

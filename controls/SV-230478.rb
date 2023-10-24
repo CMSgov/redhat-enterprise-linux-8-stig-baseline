@@ -39,7 +39,7 @@ to indicate how audit logs are being encrypted during offloading and what
 packages are installed to support it.  If there is no evidence of audit logs
 being encrypted during offloading, this is a finding.
   "
-  desc  'fix', "
+  desc 'fix', "
     Configure the operating system to encrypt offloaded audit logs by
 installing the required packages with the following command:
 
@@ -57,8 +57,8 @@ installing the required packages with the following command:
 
   if virtualization.system.eql?('docker')
     impact 0.0
-    describe "Control not applicable within a container" do
-      skip "Control not applicable within a container"
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
     end
   else
     describe package('rsyslog-gnutls') do

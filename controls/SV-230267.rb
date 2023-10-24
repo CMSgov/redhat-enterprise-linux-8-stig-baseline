@@ -86,14 +86,14 @@ command:
 
   if virtualization.system.eql?('docker')
     impact 0.0
-    describe "Control not applicable within a container" do
-      skip "Control not applicable within a container"
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
     end
   else
     describe kernel_parameter('fs.protected_symlinks') do
       its('value') { should cmp 1 }
     end
-  
+
     describe command('grep -r ^fs.protected_symlinks /etc/sysctl.conf /etc/sysctl.d/*.conf') do
       its('stdout') { should match /fs.protected_symlinks=1$/ }
     end

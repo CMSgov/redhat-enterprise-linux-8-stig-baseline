@@ -50,7 +50,7 @@ other than \"local\" is being used.
     If the command does not return at least the example result, this is a
 finding.
   "
-  desc  'fix', "
+  desc 'fix', "
     Configure the operating system to prevent a user from overriding settings
 for graphical user interfaces.
 
@@ -81,19 +81,17 @@ file should be created under the appropriate subdirectory.
 
   if virtualization.system.eql?('docker')
     impact 0.0
-    describe "Control not applicable within a container" do
-      skip "Control not applicable within a container"
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
+    end
+  elsif package('gnome-desktop3').installed?
+    describe command('grep -i lock-delay /etc/dconf/db/local.d/locks/*') do
+      its('stdout.split') { should include '/org/gnome/desktop/screensaver/lock-delay' }
     end
   else
-    if package('gnome-desktop3').installed?
-      describe command("grep -i lock-delay /etc/dconf/db/local.d/locks/*") do
-        its('stdout.split') { should include '/org/gnome/desktop/screensaver/lock-delay' }
-      end
-    else
-      impact 0.0
-      describe 'The GNOME desktop is not installed' do
-        skip 'The GNOME desktop is not installed, this control is Not Applicable.'
-      end
+    impact 0.0
+    describe 'The GNOME desktop is not installed' do
+      skip 'The GNOME desktop is not installed, this control is Not Applicable.'
     end
   end
 end

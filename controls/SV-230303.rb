@@ -53,5 +53,4 @@ file systems that are associated with removable media."
       it { should eq true }
     end
   end
-
 end

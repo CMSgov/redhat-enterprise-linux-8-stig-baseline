@@ -30,7 +30,7 @@ notebook computers, smartphones, and tablets).
     If the \"firewalld\" package is not installed, ask the System Administrator
 if another firewall is installed. If no firewall is installed this is a finding.
   "
-  desc  'fix', "
+  desc 'fix', "
     Install \"firewalld\" with the following command:
 
     $ sudo yum install firewalld.noarch
@@ -47,8 +47,8 @@ if another firewall is installed. If no firewall is installed this is a finding.
 
   if virtualization.system.eql?('docker')
     impact 0.0
-    describe "Control not applicable within a container" do
-      skip "Control not applicable within a container"
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
     end
   else
     describe package('firewalld') do

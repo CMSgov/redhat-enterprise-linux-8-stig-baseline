@@ -65,8 +65,8 @@ restart the \"sssd\" service, run the following command:
 
   if virtualization.system.eql?('docker') && !file('/etc/sssd/sssd.conf').exist?
     impact 0.0
-    describe "Control not applicable within a container" do
-      skip "Control not applicable within a container"
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
     end
   else
     describe file('/etc/sssd/sssd.conf') do

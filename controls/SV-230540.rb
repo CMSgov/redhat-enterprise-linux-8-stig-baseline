@@ -54,8 +54,8 @@ lines in the appropriate file under \"/etc/sysctl.d\":
 
   if virtualization.system.eql?('docker')
     impact 0.0
-    describe "Control not applicable within a container" do
-      skip "Control not applicable within a container"
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
     end
   else
     describe kernel_parameter('net.ipv4.ip_forward') do

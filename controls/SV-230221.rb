@@ -44,7 +44,7 @@ https://access.redhat.com/support/policy/updates/errata.
 
     If the release is not supported by the vendor, this is a finding.
   "
-  desc  'fix', 'Upgrade to a supported version of RHEL 8.'
+  desc 'fix', 'Upgrade to a supported version of RHEL 8.'
   impact 0.7
   tag severity: 'high'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'

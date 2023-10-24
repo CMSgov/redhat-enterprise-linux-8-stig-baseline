@@ -64,14 +64,14 @@ this is a finding.
   tag nist: ['AC-17 (2)']
 
   if virtualization.system.eql?('docker') && !file('/etc/pki/tls/openssl.cnf').exist?
-    describe "Manual review is required within a container" do
+    describe 'Manual review is required within a container' do
       skip "Checking the host's FIPS compliance can't be done within the container and should be reveiwed manually."
     end
   else
     describe bash('grep -i opensslcnf.config /etc/pki/tls/openssl.cnf') do
       its('stdout.strip') { should match %r{^.include /etc/crypto-policies/back-ends/opensslcnf.config} }
     end
-  
+
     describe bash('update-crypto-policies --show') do
       its('stdout.strip') { should eq 'FIPS' }
     end

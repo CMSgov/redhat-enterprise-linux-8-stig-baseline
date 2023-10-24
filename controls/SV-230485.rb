@@ -49,8 +49,8 @@ a server by adding/modifying the following line in the /etc/chrony.conf file.
 
   if virtualization.system.eql?('docker') && !file('/etc/chrony.conf').exist?
     impact 0.0
-    describe "Control not applicable within a container" do
-      skip "Control not applicable within a container"
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
     end
   else
     describe chrony_conf do

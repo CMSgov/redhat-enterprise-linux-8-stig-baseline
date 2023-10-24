@@ -75,14 +75,14 @@ configuration survives kernel updates:
 
   if virtualization.system.eql?('docker')
     impact 0.0
-    describe "Control not applicable within a container" do
-      skip "Control not applicable within a container"
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
     end
   else
     describe parse_config(grub_stdout) do
       its('kernelopts') { should match /pti=on/ }
     end
-  
+
     describe parse_config_file('/etc/default/grub') do
       its('GRUB_CMDLINE_LINUX') { should match  /pti=on/ }
     end

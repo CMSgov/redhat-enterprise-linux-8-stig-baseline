@@ -67,20 +67,18 @@ following line:
 
   if virtualization.system.eql?('docker')
     impact 0.0
-    describe "Control not applicable within a container" do
-      skip "Control not applicable within a container"
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
+    end
+  elsif input('bluetooth_installed')
+    describe kernel_module('bluetooth') do
+      it { should be_disabled }
+      it { should be_blacklisted }
     end
   else
-    if input('bluetooth_installed')
-      describe kernel_module('bluetooth') do
-        it { should be_disabled }
-        it { should be_blacklisted }
-      end
-    else
-      impact 0.0
-      describe 'Device or operating system does not have a Bluetooth adapter installed' do
-        skip 'If the device or operating system does not have a Bluetooth adapter installed, this requirement is not applicable.'
-      end
+    impact 0.0
+    describe 'Device or operating system does not have a Bluetooth adapter installed' do
+      skip 'If the device or operating system does not have a Bluetooth adapter installed, this requirement is not applicable.'
     end
   end
 end

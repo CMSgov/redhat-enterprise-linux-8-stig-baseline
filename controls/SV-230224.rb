@@ -62,8 +62,8 @@ entire partition, dedicate a partition for encryption in the partition layout.
 
   if virtualization.system.eql?('docker')
     impact 0.0
-    describe "Control not applicable within a container" do
-      skip "Control not applicable within a container"
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
     end
   else
     if all_args.empty?
@@ -71,7 +71,7 @@ entire partition, dedicate a partition for encryption in the partition layout.
         skip
       end
     end
-  
+
     all_args.each do |args|
       describe args do
         it { should match /\bcrypto_LUKS\b/ }

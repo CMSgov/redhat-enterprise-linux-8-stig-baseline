@@ -17,7 +17,7 @@ the following command:
 \"/usr/lib/systemd/systemd-sulogin-shell emergency\", commented out, or
 missing, this is a finding.
   "
-  desc  'fix', "
+  desc 'fix', "
     Configure the system to require authentication upon booting into emergency
 mode by adding the following line to the
 \"/usr/lib/systemd/system/emergency.service\" file.
@@ -36,8 +36,8 @@ mode by adding the following line to the
 
   if virtualization.system.eql?('docker')
     impact 0.0
-    describe "Control not applicable within a container" do
-      skip "Control not applicable within a container"
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
     end
   else
     describe service('emergency') do
@@ -45,4 +45,3 @@ mode by adding the following line to the
     end
   end
 end
-

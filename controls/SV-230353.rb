@@ -53,8 +53,8 @@ global configuration file:
 
   if virtualization.system.eql?('docker')
     impact 0.0
-    describe "Control not applicable within a container" do
-      skip "Control not applicable within a container"
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
     end
   else
     describe command("grep -i lock-after-time /etc/tmux.conf | cut -d ' ' -f4") do

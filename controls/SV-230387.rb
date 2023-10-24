@@ -30,7 +30,7 @@ facilities with the following command.
     If \"rsyslog\" is not logging messages for the cron facility or all
 facilities, this is a finding.
   "
-  desc  'fix', "
+  desc 'fix', "
     Configure \"rsyslog\" to log all cron messages by adding or updating the
 following line to \"/etc/rsyslog.conf\" or a configuration file in the
 /etc/rsyslog.d/ directory:
@@ -52,16 +52,16 @@ following line to \"/etc/rsyslog.conf\" or a configuration file in the
 
   if virtualization.system.eql?('docker')
     impact 0.0
-    describe "Control not applicable within a container" do
-      skip "Control not applicable within a container"
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
     end
   else
     describe.one do
-      describe command("grep  -hsv \"^#\" /etc/rsyslog.conf /etc/rsyslog.d/*.conf| grep ^cron") do
-        its('stdout') { should match /cron\.\*[\s]*\/var\/log\/cron/ }
+      describe command('grep  -hsv "^#" /etc/rsyslog.conf /etc/rsyslog.d/*.conf| grep ^cron') do
+        its('stdout') { should match %r{cron\.\*[\s]*/var/log/cron} }
       end
-      describe command("grep  -hsv \"^#\" /etc/rsyslog.conf /etc/rsyslog.d/*.conf| grep /var/log/messages") do
-        its('stdout') { should match /\*.info;mail.none;authpriv.none;cron.none[\s]*\/var\/log\/messages/ }
+      describe command('grep  -hsv "^#" /etc/rsyslog.conf /etc/rsyslog.d/*.conf| grep /var/log/messages') do
+        its('stdout') { should match %r{\*.info;mail.none;authpriv.none;cron.none[\s]*/var/log/messages} }
       end
     end
   end

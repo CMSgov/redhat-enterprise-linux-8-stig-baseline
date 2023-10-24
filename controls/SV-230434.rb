@@ -32,7 +32,7 @@ auid>=1000 -F auid!=unset -k privileged-ssh
     If the command does not return a line, or the line is commented out, this
 is a finding.
   "
-  desc  'fix', "
+  desc 'fix', "
     Configure the audit system to generate an audit event for any
 successful/unsuccessful use of the \"ssh-keysign\" by adding or updating the
 following rule in the \"/etc/audit/rules.d/audit.rules\" file:
@@ -60,8 +60,8 @@ auid>=1000 -F auid!=unset -k privileged-ssh
 
   if virtualization.system.eql?('docker')
     impact 0.0
-    describe "Control not applicable within a container" do
-      skip "Control not applicable within a container"
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
     end
   else
     describe auditd.file(audit_file) do

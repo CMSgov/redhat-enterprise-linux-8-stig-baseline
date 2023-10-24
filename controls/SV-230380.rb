@@ -14,7 +14,7 @@ should never be used in operational environments."
 
     If \"PermitEmptyPasswords\" is set to \"yes\", this is a finding.
   "
-  desc  'fix', "
+  desc 'fix', "
     Edit the following line in \"etc/ssh/sshd_config\" to prevent logons with
 empty passwords.
 
@@ -35,11 +35,10 @@ the SSH daemon, run the following command:
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
 
-
   if virtualization.system.eql?('docker') && !file('/etc/ssh/sshd_config').exist?
     impact 0.0
-    describe "Control not applicable - SSH is not installed within containerized RHEL" do
-      skip "Control not applicable - SSH is not installed within containerized RHEL"
+    describe 'Control not applicable - SSH is not installed within containerized RHEL' do
+      skip 'Control not applicable - SSH is not installed within containerized RHEL'
     end
   else
     describe sshd_config do

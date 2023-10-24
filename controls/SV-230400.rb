@@ -52,11 +52,10 @@ path, by default this location is usually \"/var/log/audit\".
   tag cci: ['CCI-000162']
   tag nist: ['AU-9']
 
-
   if virtualization.system.eql?('docker')
     impact 0.0
-    describe "Control not applicable within a container" do
-      skip "Control not applicable within a container"
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
     end
   else
     log_dir = auditd_conf('/etc/audit/auditd.conf').log_file.split('/')[0..-2].join('/')

@@ -38,7 +38,7 @@ file or files in the \"/etc/sudoers.d\" directory."
   tag cci: ['CCI-002038']
   tag nist: ['IA-11']
 
-  if virtualization.system.eql?('docker') && !command("sudo").exist?
+  if virtualization.system.eql?('docker') && !command('sudo').exist?
     impact 0.0
     describe "Control not applicable within a container & sudo doesn't exist" do
       skip "Control not applicable within a container & sudo doesn't exist"

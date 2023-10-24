@@ -76,14 +76,13 @@ the following line in the /etc/chrony.conf file.
   tag cci: ['CCI-001891']
   tag nist: ['AU-8 (1) (a)']
 
-
   if virtualization.system.eql?('docker')
     impact 0.0
-    describe "Control not applicable within a container" do
-      skip "Control not applicable within a container"
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
     end
   else
-  
+
     time_sources = ntp_conf('/etc/chrony.conf').server
     # Cover case when a single server is defined and resource returns a string and not an array
     time_sources = [ time_sources ] if time_sources.is_a? String
@@ -106,7 +105,7 @@ the following line in the /etc/chrony.conf file.
       describe ntp_conf('/etc/chrony.conf') do
         its('server.join') { should match time_server }
       end if ntp_conf('/etc/chrony.conf').server.is_a? Array
-    end  
+    end
     # All time sources must contain valid maxpoll entries
     describe 'chronyd maxpoll values (99=maxpoll absent)' do
       subject { max_poll_values }

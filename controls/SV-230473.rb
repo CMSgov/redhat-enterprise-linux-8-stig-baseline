@@ -36,7 +36,7 @@ access, deletion, or modification.
 
     If any of the audit tools are not owned by \"root\", this is a finding.
   "
-  desc  'fix', "
+  desc 'fix', "
     Configure the audit tools to be owned by \"root\", by running the following
 command:
 
@@ -58,8 +58,8 @@ command:
 
   if virtualization.system.eql?('docker')
     impact 0.0
-    describe "Control not applicable within a container" do
-      skip "Control not applicable within a container"
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
     end
   else
     describe file('/sbin/auditctl') do

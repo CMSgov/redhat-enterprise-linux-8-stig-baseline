@@ -40,7 +40,7 @@ authfail
 \"/etc/pam.d/password-auth\" file with the \"preauth\" line listed before
 pam_unix.so, this is a finding.
   "
-  desc  'fix', "
+  desc 'fix', "
     Configure the operating system to include the use of the pam_faillock.so
 module in the /etc/pam.d/password-auth file.
 
@@ -76,4 +76,3 @@ file to match the following lines:
     end
   end
 end
-

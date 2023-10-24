@@ -41,13 +41,13 @@ BIOS."
   tag nist: ['SI-16']
 
   options = {
-    assignment_regex: /^\s*([^:]*?)\s*:\s*(.*?)\s*$/,
+    assignment_regex: /^\s*([^:]*?)\s*:\s*(.*?)\s*$/
   }
 
   if virtualization.system.eql?('docker')
     impact 0.0
-    describe "Control not applicable within a container" do
-      skip "Control not applicable within a container"
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
     end
   else
     describe.one do

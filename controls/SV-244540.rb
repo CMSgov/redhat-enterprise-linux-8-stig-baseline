@@ -11,7 +11,7 @@ should never be used in operational environments."
 
     If output is produced, this is a finding.
   "
-  desc  'fix', "
+  desc 'fix', "
     Remove any instances of the \"nullok\" option in the
 \"/etc/pam.d/system-auth\" file to prevent logons with empty passwords.
 
@@ -32,4 +32,3 @@ should never be used in operational environments."
     its('stdout.strip') { should be_empty }
   end
 end
-

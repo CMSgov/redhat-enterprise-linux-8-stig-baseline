@@ -16,7 +16,7 @@ the following command:
 
     If a separate entry for \"/var/tmp\" is not in use, this is a finding.
   "
-  desc  'fix', 'Migrate the "/var/tmp" path onto a separate file system.'
+  desc 'fix', 'Migrate the "/var/tmp" path onto a separate file system.'
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
@@ -29,8 +29,8 @@ the following command:
 
   if virtualization.system.eql?('docker')
     impact 0.0
-    describe "Control not applicable within a container" do
-      skip "Control not applicable within a container"
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
     end
   else
     describe etc_fstab.where { mount_point == '/var/tmp' } do
@@ -38,4 +38,3 @@ the following command:
     end
   end
 end
-

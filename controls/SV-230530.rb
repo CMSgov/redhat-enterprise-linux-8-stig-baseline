@@ -52,20 +52,18 @@ user interface:
 
   if virtualization.system.eql?('docker')
     impact 0.0
-    describe "Control not applicable within a container" do
-      skip "Control not applicable within a container"
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
+    end
+  elsif package('gnome-desktop3').installed?
+    describe command('grep logout /etc/dconf/db/local.d/*') do
+      its('stdout.strip') { should cmp "logout=''" }
     end
   else
-    if package('gnome-desktop3').installed?
-      describe command('grep logout /etc/dconf/db/local.d/*') do
-        its('stdout.strip') { should cmp "logout=''" }
-      end
-    else
-      impact 0.0
-      describe 'The system does not have GNOME installed' do
-        skip "The system does not have GNOME installed, this requirement is Not
+    impact 0.0
+    describe 'The system does not have GNOME installed' do
+      skip "The system does not have GNOME installed, this requirement is Not
         Applicable."
-      end
     end
   end
 end

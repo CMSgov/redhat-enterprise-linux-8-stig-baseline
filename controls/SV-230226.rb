@@ -86,7 +86,7 @@ graphical interface.
     If the banner does not match the Standard Mandatory DoD Notice and Consent
 Banner exactly, this is a finding.
   "
-  desc  'fix', "
+  desc 'fix', "
     Configure the operating system to display the Standard Mandatory DoD Notice
 and Consent Banner before granting access to the system.
 
@@ -140,20 +140,18 @@ graphical interface.
 
   if virtualization.system.eql?('docker')
     impact 0.0
-    describe "Control not applicable within a container" do
-      skip "Control not applicable within a container"
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
+    end
+  elsif package('gnome-desktop3').installed?
+    describe command('grep ^banner-message-text /etc/dconf/db/local.d/*') do
+      its('stdout.strip') { should cmp banner_message_text_gui }
     end
   else
-    if package('gnome-desktop3').installed?
-      describe command('grep ^banner-message-text /etc/dconf/db/local.d/*') do
-        its('stdout.strip') { should cmp banner_message_text_gui }
-      end
-    else
-      impact 0.0
-      describe 'The system does not have GNOME installed' do
-        skip "The system does not have GNOME installed, this requirement is Not
+    impact 0.0
+    describe 'The system does not have GNOME installed' do
+      skip "The system does not have GNOME installed, this requirement is Not
         Applicable."
-      end
     end
   end
 end

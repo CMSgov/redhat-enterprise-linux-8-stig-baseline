@@ -24,7 +24,7 @@ Security for Linux (ENSL) in conjunction with SELinux.
 
     If the daemon is not running, this is a finding.
   "
-  desc  'fix', 'Install and enable the latest McAfee ENSLTP package.'
+  desc 'fix', 'Install and enable the latest McAfee ENSLTP package.'
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000191-GPOS-00080'
@@ -37,8 +37,8 @@ Security for Linux (ENSL) in conjunction with SELinux.
 
   if virtualization.system.eql?('docker')
     impact 0.0
-    describe "Control not applicable within a container" do
-      skip "Control not applicable within a container"
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
     end
   else
     describe package('mcafeetp') do
@@ -50,4 +50,3 @@ Security for Linux (ENSL) in conjunction with SELinux.
     end
   end
 end
-

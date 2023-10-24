@@ -37,7 +37,7 @@ multifactor authentication is being utilized and how the system implements
 certificate status checking.  If there is no evidence of certificate status
 checking being used, this is a finding.
   "
-  desc  'fix', "
+  desc 'fix', "
     Configure the operating system to implement certificate status checking for
 multifactor authentication.
 
@@ -66,18 +66,18 @@ restart the \"sssd\" service, run the following command:
 
   if virtualization.system.eql?('docker')
     impact 0.0
-    describe "Control not applicable within a container" do
-      skip "Control not applicable within a container"
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
     end
   else
     describe file('/etc/sssd/sssd.conf') do
       it { should exist }
     end
 
-    sssd_conf_file_contents = command("cat /etc/sssd/sssd.conf /etc/sssd/conf.d/*.conf").stdout.strip
+    sssd_conf_file_contents = command('cat /etc/sssd/sssd.conf /etc/sssd/conf.d/*.conf').stdout.strip
 
     unless sssd_conf_file_contents.empty?
-      describe ini({ command: 'cat /etc/sssd/sssd.conf /etc/sssd/conf.d/*.conf'}) do
+      describe ini({ command: 'cat /etc/sssd/sssd.conf /etc/sssd/conf.d/*.conf' }) do
         its('sssd.certificate_verification') { should cmp 'ocsp_dgst=sha1' }
       end
     end

@@ -26,7 +26,7 @@ command:
 
     If \"tmux\" is not installed, this is a finding.
   "
-  desc  'fix', "
+  desc 'fix', "
     Configure the operating system to enable a user to initiate a session lock
 via tmux.
 
@@ -48,8 +48,8 @@ the following command:
 
   if virtualization.system.eql?('docker')
     impact 0.0
-    describe "Control not applicable within a container" do
-      skip "Control not applicable within a container"
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
     end
   else
     describe package('tmux') do
@@ -57,4 +57,3 @@ the following command:
     end
   end
 end
-

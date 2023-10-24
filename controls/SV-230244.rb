@@ -46,7 +46,7 @@ following command:
     If \"ClientAliveCountMax\" do not exist, is not set to a value of \"0\" in
 \"/etc/ssh/sshd_config\", or is commented out, this is a finding.
   "
-  desc  'fix', "
+  desc 'fix', "
     Configure RHEL 8 to automatically terminate all network connections
 associated with SSH traffic at the end of a session or after 10 minutes of
 inactivity.
@@ -73,8 +73,8 @@ inactivity.
 
   if virtualization.system.eql?('docker') && !file('/etc/ssh/sshd_config').exist?
     impact 0.0
-    describe "Control not applicable - SSH is not installed within containerized RHEL" do
-      skip "Control not applicable - SSH is not installed within containerized RHEL"
+    describe 'Control not applicable - SSH is not installed within containerized RHEL' do
+      skip 'Control not applicable - SSH is not installed within containerized RHEL'
     end
   else
     describe sshd_config do

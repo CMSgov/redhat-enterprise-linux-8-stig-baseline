@@ -33,7 +33,7 @@ account after three unsuccessful logon attempts:
     If the \"deny\" option is not set to \"3\" or less (but not \"0\"), is
 missing or commented out, this is a finding.
   "
-  desc  'fix', "
+  desc 'fix', "
     Configure the operating system to lock an account when three unsuccessful
 logon attempts occur.
 

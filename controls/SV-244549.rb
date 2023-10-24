@@ -29,7 +29,7 @@ not have to be employed, and vice versa.
 
     If the \"SSH server\" package is not installed, this is a finding.
   "
-  desc  'fix', "
+  desc 'fix', "
     Install SSH packages onto the host with the following command:
 
     $ sudo yum install openssh-server.x86_64
@@ -48,8 +48,8 @@ not have to be employed, and vice versa.
 
   if virtualization.system.eql?('docker')
     impact 0.0
-    describe "Control not applicable within a container" do
-      skip "Control not applicable within a container"
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
     end
   else
     describe package('openssh-server') do
@@ -57,4 +57,3 @@ not have to be employed, and vice versa.
     end
   end
 end
-

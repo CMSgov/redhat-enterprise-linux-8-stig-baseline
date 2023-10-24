@@ -66,20 +66,18 @@ program and the PPSM CAL."
 
   if virtualization.system.eql?('docker')
     impact 0.0
-    describe "Control not applicable within a container" do
-      skip "Control not applicable within a container"
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
+    end
+  elsif firewalld.running?
+    all_zones = command('firewall-cmd --list-all-zones').stdout
+
+    describe "Manually validate  Ports, Protocols, and Services Management Component Local Service Assessment (PPSM CLSA). Verify the services allowed by the firewall match the PPSM CLSA.\n firewall-cmd --list-all-zones \n #{all_zones}" do
+      skip
     end
   else
-    if firewalld.running?
-      all_zones = command('firewall-cmd --list-all-zones').stdout
-  
-      describe "Manually validate  Ports, Protocols, and Services Management Component Local Service Assessment (PPSM CLSA). Verify the services allowed by the firewall match the PPSM CLSA.\n firewall-cmd --list-all-zones \n #{all_zones}" do
-        skip
-      end
-    else
-      describe firewalld do
-        it { should be_running }
-      end
+    describe firewalld do
+      it { should be_running }
     end
   end
 end
