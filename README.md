@@ -98,11 +98,9 @@ The `inspec.yml` file has been written such that numerical inputs (inputs where 
 1. _exactly equal to_ the `expected` value
 2. _greater than_ or _less than_ the `min` or `max` value, respectively
 
-The profile is written this way so that programs can easily configure the ranges used by the checks, in case the program wants to check against different values than the STIG defaults (such as programs with more stringent requirements than the baseline STIG). The `expected`, `max` and `min` values are all set to the STIG defaults in `inspec.yml`. If the program wants to check only baseline STIG compliance, _these values do not need to be changed._
+The profile is written this way so that programs can easily configure the ranges used by the checks, in case the program wants to check against different values than the STIG defaults (such as programs with more stringent requirements than the baseline STIG). The `expected`, `max` and `min` values are all set to the STIG defaults in `inspec.yml`. If the organization wants to be directly compliant with the baseline STIG, _these values should not be changed!_
 
-#### Example Inputs: See `inspec.yml` for their default values
-
-Example Inputs
+#### The following inputs may be configured in an inputs ".yml" file for the profile to run correctly for your specific environment. 
 
 ```yaml
 # InSpec Tests that are known to consistently have long run times can be disabled with this attribute
@@ -112,12 +110,6 @@ disable_slow_controls: true
  
 # Flag to designate if the target is a container host. (true or false)
 container_host: false
- 
-# Number of reuse generations
-min_reuse_generations: 5
- 
-# Minimum number of characters for a new password
-min_len: 15
  
 # Main grub boot config file (String) 
 grub_uefi_main_cfg:
@@ -173,41 +165,8 @@ private_key_files:
 # Path to an accepted trust anchor certificate file (DoD) (String)
 root_ca_file:
  
-# number of unsuccessful attempts
-unsuccessful_attempts: 3
- 
-# Maximum system inactivity timeout (time in seconds).
-system_inactivity_timeout:
- 
-# maximum number of password retries
-max_retry: 3
- 
-# Minimum number of characters that must be different from previous password
-difok: 8
- 
-# Number of days
-days_of_inactivity: 35
- 
 # Temporary user accounts (Array)
 temporary_accounts:
- 
-# Banner message text for command line interface logins.
-banner_message_text_cli:
- 
-# Banner message text for remote access logins.
-banner_message_text_ral: 
- 
-# Banner message text for graphical user interface logins.
-banner_message_text_gui: ''
- 
-# The maxium value that can be used for maxlogins.
-maxlogins_limit: 10
- 
-# Interval of time in which the consecutive failed logon attempts must occur in order for the account to be locked out (time in seconds)
-fail_interval: 900
- 
-# Minimum amount of time account must be locked out after failed logins. This attribute should never be set greater than 604800 (time in seconds).
-lockout_time: 604800
  
 # Documented tally log directory (String)
 log_directory:
