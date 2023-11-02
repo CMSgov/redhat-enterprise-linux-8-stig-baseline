@@ -59,42 +59,10 @@ inputs:
       - "/bin/sync"
       - "/bin/true"
 
-  # SV-230379
-  - name: known_system_accounts
-    description: System accounts that support approved system activities.
-    type: Array
-    value:
-      - "root"
-      - "bin"
-      - "daemon"
-      - "adm"
-      - "lp"
-      - "sync"
-      - "shutdown"
-      - "halt"
-      - "mail"
-      - "operator"
-      - "nobody"
-      - "systemd-bus-proxy"
-      - "dbus"
-      - "polkitd"
-      - "postfix"
-      - "sssd"
-      - "chrony"
-      - "systemd-network"
-      - "sshd"
-      - "ntp"
-
   - name: user_accounts
     description: Accounts of known managed users
     type: Array
     value: ["vagrant"]
-
-  # SV-230379
-  - name: log_pkg_path
-    description: The path to the logging package
-    type: String
-    value: "/etc/rsyslog.conf"
 
   # SV-230235
   - name: grub_main_cfg
@@ -132,7 +100,7 @@ inputs:
     type: Boolean
     value: true
 
-  # SV-230242
+  # SV-230379, SV-230242
   - name: known_system_accounts
     description: System accounts that support approved system activities.
     type: Array
@@ -296,8 +264,8 @@ inputs:
 
   - name: maxlogins_limit
     description: Amount of max logins allowed
-    type: String
-    value: '10'
+    type: Numeric
+    value: 10
 
   - name: fail_interval
     description: Interval of time in which the consecutive failed logon attempts must occur in order for the account to be locked out (time in seconds)
