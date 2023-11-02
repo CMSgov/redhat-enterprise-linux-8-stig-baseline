@@ -174,12 +174,20 @@ log_directory:
 
 # Running the Profile
 
-## (connected) Running the Profile Directly
-
+## (connected) Running the Profile Directly from Github
+Against a remote target using ssh with escalated privileges (i.e., inspec installed on a separate runner host)
+```bash
+inspec exec https://github.com/mitre/redhat-enterprise-linux-8-stig-baseline/archive/main.tar.gz -t ssh://TARGET_USERNAME:TARGET_PASSWORD@TARGET_IP:TARGET_PORT --sudo --sudo-password=<SUDO_PASSWORD_IF_REQUIRED> --input-file <path_to_your_input_file/name_of_your_input_file.yml> --reporter json:<path_to_your_output_file/name_of_your_output_file.json>
 ```
-inspec exec https://github.com/mitre/redhat-enterprise-linux-8-stig-baseline/archive/main.tar.gz --input-file=<your_inputs_file.yml> -t ssh://<hostname>:<port> --sudo --reporter=cli json:<your_results_file.json>
+Against a remote target using a pem key with escalated privileges (i.e., inspec installed on a separate runner host)
+```bash
+inspec exec https://github.com/mitre/redhat-enterprise-linux-8-stig-baseline/archive/main.tar.gz -t ssh://TARGET_USERNAME@TARGET_IP:TARGET_PORT --sudo -i <your_PEM_KEY> --input-file <path_to_your_input_file/name_of_your_input_file.yml> --reporter json:<path_to_your_output_file/name_of_your_output_file.json>  
 ```
 
+Against a local Red Hat host with escalated privileges (i.e., inspec installed on the target)
+```bash
+sudo inspec exec https://github.com/mitre/redhat-enterprise-linux-8-stig-baseline/archive/main.tar.gz --input-file <path_to_your_input_file/name_of_your_input_file.yml> --reporter json:<path_to_your_output_file/name_of_your_output_file.json> 
+```
 ## (disconnected) Running the profile from a local archive copy
 
 If your runner is not always expected to have direct access to the profile's hosted location, use the following steps to create an archive bundle of this overlay and all of its dependent tests:
@@ -194,12 +202,12 @@ cd profiles
 git clone https://github.com/mitre/redhat-enterprise-linux-8-stig-baseline.git
 inspec archive redhat-enterprise-linux-78-stig-baseline
 <sneakerNet your archive>
-inspec exec <name of generated archive> --input-file=<your_inputs_file.yml> -t ssh://<hostname>:<port> --sudo --reporter=cli json:<your_results_file.json>
+inspec exec <name of generated archive> --input-file=<your_inputs_file.yml> -t ssh://<hostname>:<port> --sudo --reporter json:<your_results_file.json>
 ```
 
 For every successive run, follow these steps to always have the latest version of this overlay and dependent profiles:
 
-1. Delete and recreate your archive as shown above
+1. Delete and recreate your archive as shown above, or:
 2. Update your archive with the following steps
 
 ```
