@@ -74,11 +74,9 @@ restart the \"sssd\" service, run the following command:
       it { should exist }
     end
 
-    sssd_conf_file_contents = command('cat /etc/sssd/sssd.conf /etc/sssd/conf.d/*.conf').stdout.strip
-
-    unless sssd_conf_file_contents.empty?
-      describe ini({ command: 'cat /etc/sssd/sssd.conf /etc/sssd/conf.d/*.conf' }) do
-        its('sssd.certificate_verification') { should cmp 'ocsp_dgst=sha1' }
+    unless command('cat /etc/sssd/sssd.conf /etc/sssd/conf.d/*.conf').stdout.strip.empty?
+      describe parse_config_file('/etc/sssd/sssd.conf') do
+        its('sssd') { should include('certificate_verification' => input('sssd_certificate_verification')) }
       end
     end
   end

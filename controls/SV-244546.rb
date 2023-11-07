@@ -106,7 +106,7 @@ to enforcing mode by editing the \"permissive\" line in the
     end
   else
     describe parse_config_file('/etc/fapolicyd/fapolicyd.conf') do
-      its('permissive') { should eq 0 }
+      its('permissive') { should cmp 0 }
     end
 
     describe file('/etc/fapolicyd/fapolicyd.rules') do

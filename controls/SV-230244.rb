@@ -78,7 +78,7 @@ inactivity.
     end
   else
     describe sshd_config do
-      its('ClientAliveCountMax') { should cmp '0' }
+      its('ClientAliveCountMax') { should cmp input('sshd_client_alive_count_max') }
     end
   end
 end

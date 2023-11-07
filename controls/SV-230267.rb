@@ -95,7 +95,7 @@ command:
     end
 
     describe command('grep -r ^fs.protected_symlinks /etc/sysctl.conf /etc/sysctl.d/*.conf') do
-      its('stdout') { should match /fs.protected_symlinks=1$/ }
+      its('stdout') { should match /fs.protected_symlinks(\s+)=(\s+)1$/ }
     end
   end
 end

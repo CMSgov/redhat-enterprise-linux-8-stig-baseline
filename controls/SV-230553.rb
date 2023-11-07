@@ -53,16 +53,10 @@ xorg-x11-server-utils xorg-x11-server-Xwayland
   describe command('systemctl get-default') do
     its('stdout.strip') { should eq 'multi-user.target' }
   end
-  describe package('xorg-x11-server-common') do
-    it { should_not be_installed }
-  end
-  describe package('xorg-x11-server-Xorg') do
-    it { should_not be_installed }
-  end
-  describe package('xorg-x11-server-utils') do
-    it { should_not be_installed }
-  end
-  describe package('xorg-x11-server-Xwayland') do
-    it { should_not be_installed }
+
+  input('remove_xorg_x11_server_packages').each do |p|
+    describe package(p) do
+      it { should_not be_installed }
+    end
   end
 end

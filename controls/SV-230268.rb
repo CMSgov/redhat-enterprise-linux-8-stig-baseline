@@ -94,7 +94,7 @@ command:
     end
 
     describe command('grep -r ^fs.protected_hardlinks /etc/sysctl.conf /etc/sysctl.d/*.conf') do
-      its('stdout') { should match /fs.protected_hardlinks=1$/ }
+      its('stdout') { should match /fs.protected_hardlinks(\s+)=(\s+)1$/ }
     end
   end
 end

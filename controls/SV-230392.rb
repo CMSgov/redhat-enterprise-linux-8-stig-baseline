@@ -71,16 +71,8 @@ by setting the \"disk_full_action\" to \"SYSLOG\".
       skip 'Control not applicable within a container'
     end
   else
-    describe.one do
-      describe auditd_conf do
-        its('disk_full_action') { should cmp 'SYSLOG' }
-      end
-      describe auditd_conf do
-        its('disk_full_action') { should cmp 'SINGLE' }
-      end
-      describe auditd_conf do
-        its('disk_full_action') { should cmp 'HALT' }
-      end
+    describe auditd_conf do
+      its('disk_full_action') { should be_in input('disk_full_action') }
     end
   end
 end

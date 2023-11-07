@@ -100,76 +100,103 @@ The `inspec.yml` file has been written such that numerical inputs (inputs where 
 
 The profile is written this way so that programs can easily configure the ranges used by the checks, in case the program wants to check against different values than the STIG defaults (such as programs with more stringent requirements than the baseline STIG). The `expected`, `max` and `min` values are all set to the STIG defaults in `inspec.yml`. If the organization wants to be directly compliant with the baseline STIG, _these values should not be changed!_
 
-#### The following inputs may be configured in an inputs ".yml" file for the profile to run correctly for your specific environment. 
+#### The following inputs may be configured in an inputs ".yml" file for the profile to run correctly for your specific environment.
 
 ```yaml
 # InSpec Tests that are known to consistently have long run times can be disabled with this attribute
 # Acceptable values: false, true
 # (default: false)
 disable_slow_controls: true
- 
+
 # Flag to designate if the target is a container host. (true or false)
 container_host: false
- 
-# Main grub boot config file (String) 
+
+# Main grub boot config file (String)
 grub_uefi_main_cfg:
- 
+
 # Grub boot config files (Array of strings)
 grub_uefi_user_boot_files:
- 
+
 # Users exempt from home directory-based controls in array format
 exempt_home_users: []
- 
+
 # These shells do not allow a user to login
 non_interactive_shells: []
- 
+
 # System accounts that support approved system activities. (Array) (defaults shown below)
 known_system_accounts: []
- 
+
 # Accounts of known managed users (Array)
 user_accounts: []
- 
+
 # Main grub boot config file (String)
 grub_main_cfg:
- 
+
 # Grub boot config files (Array of Strings)
 grub_user_boot_files:
- 
+
 # Set to 'true' if IPv4 is enabled on the system. (default true)
 ipv4_enabled:
- 
+
 # Set to 'true' if IPv6 is enabled on the system.(default true)
 ipv6_enabled:
- 
+
 # Device or system does not have a camera installed. (default true)
 camera_installed:
- 
+
 # Device or operating system has a Bluetooth adapter installed. (default true)
 bluetooth_installed:
- 
+
 # Smart card status (enabled or disabled) default: 'enabled'
 smart_card_status:
- 
+
 # Name of tool
 file_integrity_tool: 'aide'
- 
+
 # Timeserver used in /etc/chromy.conf (String)
 authoritative_timeserver:
- 
+
 # File systems that don't correspond to removable media
 non_removable_media_fs: []
- 
+
 # List of full paths to private key files on the system (Array)
 private_key_files:
- 
+
 # Path to an accepted trust anchor certificate file (DoD) (String)
 root_ca_file:
- 
+
 # Temporary user accounts (Array)
 temporary_accounts:
- 
+
 # Documented tally log directory (String)
 log_directory:
+
+# All network connections associated with SSH traffic are terminated at the end of the session or after 10 minutes of inactivity (Numeric)
+sshd_client_alive_count_max:
+
+# Endpoint Security Linux Threat Prevention Tool (Hash - package,process)
+linux_threat_prevention_tool:
+
+# Graphical Display Manager must not be installed (Array)
+remove_xorg_x11_server_packages:
+
+# Must take appropriate action when an audit processing failure occurs. (Array)
+disk_error_action:
+
+# Must be alerted when the audit storage volume is full. (String)
+max_log_file_action:
+
+# Audit system must take appropriate action when the audit storage volume is full. (Array)
+disk_full_action:
+
+# Whether to permit direct logons to the root account using remote access via SSH (String)
+permit_root_login:
+
+# Define default permissions for logon and non-logon shells. (Hash - bashrc_umask, cshrc_umask)
+permissions_for_shells:
+
+#  Certificate status checking for multifactor authentication. (String)
+sssd_certificate_verification:
 ```
 
 # Running the Profile
@@ -181,12 +208,12 @@ inspec exec https://github.com/mitre/redhat-enterprise-linux-8-stig-baseline/arc
 ```
 Against a remote target using a pem key with escalated privileges (i.e., inspec installed on a separate runner host)
 ```bash
-inspec exec https://github.com/mitre/redhat-enterprise-linux-8-stig-baseline/archive/main.tar.gz -t ssh://TARGET_USERNAME@TARGET_IP:TARGET_PORT --sudo -i <your_PEM_KEY> --input-file <path_to_your_input_file/name_of_your_input_file.yml> --reporter json:<path_to_your_output_file/name_of_your_output_file.json>  
+inspec exec https://github.com/mitre/redhat-enterprise-linux-8-stig-baseline/archive/main.tar.gz -t ssh://TARGET_USERNAME@TARGET_IP:TARGET_PORT --sudo -i <your_PEM_KEY> --input-file <path_to_your_input_file/name_of_your_input_file.yml> --reporter json:<path_to_your_output_file/name_of_your_output_file.json>
 ```
 
 Against a local Red Hat host with escalated privileges (i.e., inspec installed on the target)
 ```bash
-sudo inspec exec https://github.com/mitre/redhat-enterprise-linux-8-stig-baseline/archive/main.tar.gz --input-file <path_to_your_input_file/name_of_your_input_file.yml> --reporter json:<path_to_your_output_file/name_of_your_output_file.json> 
+sudo inspec exec https://github.com/mitre/redhat-enterprise-linux-8-stig-baseline/archive/main.tar.gz --input-file <path_to_your_input_file/name_of_your_input_file.yml> --reporter json:<path_to_your_output_file/name_of_your_output_file.json>
 ```
 ## (disconnected) Running the profile from a local archive copy
 

@@ -89,8 +89,11 @@ restart the \"sssd\" service, run the following command:
       skip 'Control not applicable within a container'
     end
   else
-    describe ini('/etc/sssd/sssd.conf') do
-      its('pam_cert_auth') { should cmp 'True' }
+
+    unless command('cat /etc/sssd/sssd.conf /etc/sssd/conf.d/*.conf').stdout.strip.empty?
+      describe parse_config_file('/etc/sssd/sssd.conf') do
+        its('pam') { should include('pam_cert_auth' => 'True') }
+      end
     end
   end
 end

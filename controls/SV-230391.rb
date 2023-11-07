@@ -66,7 +66,7 @@ configuring the \"max_log_file_action\" parameter in the
     end
   else
     describe auditd_conf do
-      its('max_log_file_action') { should cmp 'syslog' }
+      its('max_log_file_action') { should cmp input('max_log_file_action') }
     end
   end
 end

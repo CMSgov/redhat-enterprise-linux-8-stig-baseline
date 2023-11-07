@@ -51,7 +51,7 @@ the SSH daemon, run the following command:
     end
   else
     describe sshd_config('/etc/ssh/sshd_config') do
-      its('PermitRootLogin') { should eq 'no' }
+      its('PermitRootLogin') { should eq input('permit_root_login') }
     end
   end
 end
