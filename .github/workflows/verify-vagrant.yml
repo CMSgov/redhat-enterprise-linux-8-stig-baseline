@@ -37,7 +37,7 @@ jobs:
       - name: Lint the Inspec profile
         run: bundle exec inspec check .
       - name: Run kitchen test
-        run: bundle exec kitchen test --destroy=always ${{ matrix.suite }}-rhel-8 || true
+        run: bundle exec kitchen test --destroy=always ${{ matrix.suite }} || true
       - name: Save Test Result JSON
         uses: actions/upload-artifact@v2
         with:

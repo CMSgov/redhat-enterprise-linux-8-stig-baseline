@@ -8,7 +8,7 @@ on:
 
 jobs:
   my-job:
-    name: Validate my profileß
+    name: Validate my profile
     runs-on: ubuntu-latest
     env:
       CHEF_LICENSE: accept-silent
