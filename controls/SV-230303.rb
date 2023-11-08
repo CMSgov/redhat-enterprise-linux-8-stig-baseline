@@ -30,19 +30,18 @@ file systems that are associated with removable media."
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
 
-  non_removable_media_fs = input('non_removable_media_fs')
-
   file_systems = etc_fstab.params
+
   if !file_systems.nil? && !file_systems.empty?
     file_systems.each do |file_sys_line|
-      if !non_removable_media_fs.include?(file_sys_line['mount_point'])
+      if !input('non_removable_media_fs').include?(file_sys_line['mount_point'])
         describe "The mount point #{file_sys_line['mount_point']}" do
           subject { file_sys_line['mount_options'] }
           it { should include 'nodev' }
         end
       else
         describe "File system \"#{file_sys_line['mount_point']}\" does not correspond to removable media." do
-          subject { non_removable_media_fs.include?(file_sys_line['mount_point']) }
+          subject { input('non_removable_media_fs').include?(file_sys_line['mount_point']) }
           it { should eq true }
         end
       end

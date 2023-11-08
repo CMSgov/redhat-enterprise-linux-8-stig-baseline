@@ -49,8 +49,6 @@ global configuration file:
   tag cci: ['CCI-000057']
   tag nist: ['AC-11 a']
 
-  system_inactivity_timeout = input('system_inactivity_timeout')
-
   if virtualization.system.eql?('docker')
     impact 0.0
     describe 'Control not applicable within a container' do
@@ -58,7 +56,7 @@ global configuration file:
     end
   else
     describe command("grep -i lock-after-time /etc/tmux.conf | cut -d ' ' -f4") do
-      its('stdout.strip') { should cmp <= system_inactivity_timeout }
+      its('stdout.strip') { should cmp <= input('system_inactivity_timeout') }
     end
   end
 end

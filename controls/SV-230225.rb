@@ -159,8 +159,6 @@ Agreement for details.\"
       skip 'Control not applicable - SSH is not installed within containerized RHEL'
     end
   else
-    banner_message_text_ral = input('banner_message_text_ral')
-
     # When Banner is commented, not found, disabled, or the specified file does not exist, this is a finding.
     banner_files = [sshd_config.banner].flatten
 
@@ -191,7 +189,7 @@ Agreement for details.\"
       # Banner property provides a path to a file and it exists.
       describe.one do
         banner = file(banner_file).content.gsub(/[\r\n\s]/, '')
-        clean_banner = banner_message_text_ral.gsub(/[\r\n\s]/, '')
+        clean_banner = input('banner_message_text_ral').gsub(/[\r\n\s]/, '')
 
         describe 'The SSHD Banner is set to the standard banner and has the correct text' do
           subject { banner }

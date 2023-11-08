@@ -47,9 +47,7 @@ line to have the required value):
   tag cci: ['CCI-000195']
   tag nist: ['IA-5 (1) (b)']
 
-  difok = input('difok')
-
   describe parse_config_file('/etc/security/pwquality.conf') do
-    its('difok') { should cmp >= difok }
+    its('difok') { should cmp >= input('difok') }
   end
 end

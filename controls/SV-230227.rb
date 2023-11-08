@@ -130,9 +130,7 @@ Agreement for details.\"
   tag cci: ['CCI-000048']
   tag nist: ['AC-8 a']
 
-  banner_message_text_cli = input('banner_message_text_cli')
-
-  clean_banner = banner_message_text_cli.gsub(/[\r\n\s]/, '')
+  clean_banner = input('banner_message_text_cli').gsub(/[\r\n\s]/, '')
   banner_file = file('/etc/issue')
   banner_missing = !banner_file.exist?
 

@@ -53,16 +53,14 @@ line:
   tag cci: ['CCI-000044']
   tag nist: ['AC-7 a']
 
-  unsuccessful_attempts = input('unsuccessful_attempts')
-
   if os.release.to_f <= 8.2
     impact 0.0
     describe "The release is #{os.release}" do
-      skip 'The release is lower than 8.2; this control is Not Applicable.'
+      skip "The release is lower than 8.2; Currently on release #{os.release}, this control is Not Applicable."
     end
   else
     describe parse_config_file('/etc/security/faillock.conf') do
-      its('deny') { should cmp <= unsuccessful_attempts }
+      its('deny') { should cmp <= input('unsuccessful_attempts') }
       its('deny') { should_not cmp 0 }
     end
   end

@@ -50,14 +50,12 @@ effect. To reload the contents of the files, run the following command:
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
 
-  container_host = input('container_host')
-
   if virtualization.system.eql?('docker')
     impact 0.0
     describe 'Control not applicable within a container' do
       skip 'Control not applicable within a container'
     end
-  elsif container_host
+  elsif input('container_host')
     impact 0.0
     describe true do
       skip 'Profile running on a container host -- User namespaces are used primarily for Linux containers.; this control is Not Applicable'

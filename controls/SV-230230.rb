@@ -30,14 +30,12 @@ following command:
   tag cci: ['CCI-000186']
   tag nist: ['IA-5 (2) (b)']
 
-  private_key_files = input('private_key_files')
-
-  if private_key_files.empty?
+  if input('private_key_files').empty?
     describe 'No private key files specified' do
       skip 'No private key files were given in the input, this control is Not Applicable'
     end
   else
-    private_key_files.each do |kf|
+    input('private_key_files').each do |kf|
       describe "Private key file #{kf} should have a passphrase" do
         subject { inspec.command("ssh-keygen -y -P '' -f #{kf}").stderr }
         it { should match 'incorrect passphrase supplied to decrypt private key' }

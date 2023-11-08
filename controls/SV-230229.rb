@@ -77,9 +77,7 @@ bundle from cyber.mil and copy the DoD_PKE_CA_chain.pem into the following file:
   tag cci: ['CCI-000185']
   tag nist: ['IA-5 (2) (a)']
 
-  ca_file = input('root_ca_file')
-
-  describe x509_certificate(ca_file) do
+  describe x509_certificate(input('root_ca_file')) do
     its('issuer_cn') { should match 'CN=DoD' }
   end
 end

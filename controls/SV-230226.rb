@@ -136,8 +136,6 @@ graphical interface.
   tag cci: ['CCI-000048']
   tag nist: ['AC-8 a']
 
-  banner_message_text_gui = input('banner_message_text_gui')
-
   if virtualization.system.eql?('docker')
     impact 0.0
     describe 'Control not applicable within a container' do
@@ -145,7 +143,7 @@ graphical interface.
     end
   elsif package('gnome-desktop3').installed?
     describe command('grep ^banner-message-text /etc/dconf/db/local.d/*') do
-      its('stdout.strip') { should cmp banner_message_text_gui }
+      its('stdout.strip') { should cmp input('banner_message_text_gui') }
     end
   else
     impact 0.0

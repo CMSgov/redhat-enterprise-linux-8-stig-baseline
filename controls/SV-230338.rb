@@ -81,19 +81,17 @@ restart the \"sssd\" service, run the following command:
   tag cci: ['CCI-000044']
   tag nist: ['AC-7 a']
 
-  log_directory = input('log_directory')
-
   if os.release.to_f >= 8.2
     impact 0.0
     describe "The release is #{os.release}" do
-      skip 'The release is 8.2 or newer; this control is Not Applicable.'
+      skip "The release is 8.2 or newer; Currently on release #{os.release}, this control is Not Applicable."
     end
   else
     describe pam('/etc/pam.d/password-auth') do
-      its('lines') { should match_pam_rule('auth [default=die]|required pam_faillock.so').all_with_args("dir=#{log_directory}") }
+      its('lines') { should match_pam_rule('auth [default=die]|required pam_faillock.so').all_with_args("dir=#{input('log_directory')}") }
     end
     describe pam('/etc/pam.d/system-auth') do
-      its('lines') { should match_pam_rule('auth [default=die]|required pam_faillock.so').all_with_args("dir=#{log_directory}") }
+      its('lines') { should match_pam_rule('auth [default=die]|required pam_faillock.so').all_with_args("dir=#{input('log_directory')}") }
     end
   end
 end

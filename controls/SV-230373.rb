@@ -45,11 +45,9 @@ immediately after the password expires.
   tag cci: ['CCI-000795']
   tag nist: ['IA-4 e']
 
-  days_of_inactivity = input('days_of_inactivity')
-
   describe parse_config_file('/etc/default/useradd') do
     its('INACTIVE') { should cmp >= 0 }
-    its('INACTIVE') { should cmp <= days_of_inactivity }
+    its('INACTIVE') { should cmp <= input('days_of_inactivity') }
     its('INACTIVE') { should_not cmp == -1 }
   end
 end

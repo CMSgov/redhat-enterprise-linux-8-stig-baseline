@@ -50,15 +50,13 @@ be created.
   tag cci: ['CCI-000016']
   tag nist: ['AC-2 (2)']
 
-  temporary_accounts = input('temporary_accounts')
-
   if temporary_accounts.empty?
     describe 'Temporary accounts' do
-      subject { temporary_accounts }
+      subject { input('temporary_accounts') }
       it { should be_empty }
     end
   else
-    temporary_accounts.each do |acct|
+    input('temporary_accounts').each do |acct|
       describe user(acct.to_s) do
         its('maxdays') { should cmp <= 3 }
         its('maxdays') { should cmp > 0 }

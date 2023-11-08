@@ -48,11 +48,6 @@ system/partition."
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
 
-  exempt_home_users = input('exempt_home_users')
-  non_interactive_shells = input('non_interactive_shells')
-
-  ignore_shells = non_interactive_shells.join('|')
-
   uid_min = login_defs.read_params['UID_MIN'].to_i
   uid_min = 1000 if uid_min.nil?
 
@@ -63,8 +58,8 @@ system/partition."
     end
   else
     # excluding root because its home directory is usually "/root" (mountpoint "/")
-    users.where { !shell.match(ignore_shells) && (uid >= uid_min) }.entries.each do |user_info|
-      next if exempt_home_users.include?(user_info.username.to_s)
+    users.where { !shell.match(input('non_interactive_shells').join('|')) && (uid >= uid_min) }.entries.each do |user_info|
+      next if input('exempt_home_users').include?(user_info.username.to_s)
 
       home_mount = command(%(df #{user_info.home} --output=target | tail -1)).stdout.strip
       describe user_info.username do

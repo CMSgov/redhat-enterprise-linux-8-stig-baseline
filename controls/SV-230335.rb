@@ -56,13 +56,11 @@ line:
   if os.release.to_f <= 8.2
     impact 0.0
     describe "The release is #{os.release}" do
-      skip 'The release is lower than 8.2; this control is Not Applicable.'
+      skip "The release is lower than 8.2; Currently on release #{os.release}, this control is Not Applicable."
     end
   else
-    fail_interval = input('fail_interval')
-
     describe parse_config_file('/etc/security/faillock.conf') do
-      its('fail_interval') { should cmp >= fail_interval }
+      its('fail_interval') { should cmp >= input('fail_interval') }
       its('fail_interval') { should_not cmp 0 }
     end
   end

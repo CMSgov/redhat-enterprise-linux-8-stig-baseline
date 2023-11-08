@@ -55,12 +55,10 @@ line:
   tag cci: ['CCI-000044']
   tag nist: ['AC-7 a']
 
-  lockout_time = input('lockout_time')
-
   if os.release.to_f <= 8.2
     impact 0.0
     describe "The release is #{os.release}" do
-      skip 'The release is lower than 8.2; this control is Not Applicable.'
+      skip "The release is lower than 8.2; Currently on release #{os.release}, this control is Not Applicable."
     end
   else
     describe.one do
@@ -68,7 +66,7 @@ line:
         its('unlock_time') { should cmp 0 }
       end
       describe parse_config_file('/etc/security/faillock.conf') do
-        its('unlock_time') { should cmp >= lockout_time }
+        its('unlock_time') { should cmp >= input('lockout_time') }
         its('unlock_time') { should cmp <= 604800 }
       end
     end

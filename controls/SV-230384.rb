@@ -47,11 +47,6 @@ environment variables.
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
 
-  non_interactive_shells = input('non_interactive_shells')
-
-  # Get all interactive users
-  ignore_shells = non_interactive_shells.join('|')
-
   # Get home directory for users with UID >= 1000 or UID == 0 and support interactive logins.
   findings = Set[]
   dotfiles = Set[]
@@ -60,7 +55,7 @@ environment variables.
 
   uid_min = login_defs.UID_MIN.to_i
 
-  interactive_users = users.where { !shell.match(ignore_shells) && (uid >= uid_min || uid == 0) }.entries
+  interactive_users = users.where { !shell.match(input('non_interactive_shells').join('|')) && (uid >= uid_min || uid == 0) }.entries
 
   # For each user, build and execute a find command that identifies initialization files
   # in a user's home directory.

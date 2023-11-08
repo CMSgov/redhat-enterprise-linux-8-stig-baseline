@@ -85,20 +85,18 @@ restart the \"sssd\" service, run the following command:
   tag cci: ['CCI-000044']
   tag nist: ['AC-7 a']
 
-  unsuccessful_attempts = input('unsuccessful_attempts')
-
   if os.release.to_f >= 8.2
     impact 0.0
     describe "The release is #{os.release}" do
-      skip 'The release is 8.2 or newer; this control is Not Applicable.'
+      skip "The release is 8.2 or newer; Currently on release #{os.release}, this control is Not Applicable."
     end
   else
     describe pam('/etc/pam.d/password-auth') do
-      its('lines') { should match_pam_rule('auth [default=die]|required pam_faillock.so preauth').all_with_integer_arg('deny', '<=', unsuccessful_attempts) }
+      its('lines') { should match_pam_rule('auth [default=die]|required pam_faillock.so preauth').all_with_integer_arg('deny', '<=', input('unsuccessful_attempts')) }
       its('lines') { should match_pam_rule('auth [default=die]|required pam_faillock.so preauth').all_with_integer_arg('deny', '>=', 0) }
     end
     describe pam('/etc/pam.d/system-auth') do
-      its('lines') { should match_pam_rule('auth [default=die]|required pam_faillock.so preauth').all_with_integer_arg('deny', '<=', unsuccessful_attempts) }
+      its('lines') { should match_pam_rule('auth [default=die]|required pam_faillock.so preauth').all_with_integer_arg('deny', '<=', input('unsuccessful_attempts')) }
       its('lines') { should match_pam_rule('auth [default=die]|required pam_faillock.so preauth').all_with_integer_arg('deny', '>=', 0) }
     end
   end

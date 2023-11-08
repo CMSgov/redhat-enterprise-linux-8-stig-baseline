@@ -91,19 +91,17 @@ the following line in the /etc/chrony.conf file.
 
     # Verify the "chrony.conf" file is configured to an authoritative DoD time source by running the following command:
 
-    time_server = input('authoritative_timeserver')
-
     describe ntp_conf('/etc/chrony.conf') do
       its('server') { should_not be_nil }
     end
 
     unless ntp_conf('/etc/chrony.conf').server.nil?
       describe ntp_conf('/etc/chrony.conf') do
-        its('server') { should match time_server }
+        its('server') { should match  input('authoritative_timeserver') }
       end if ntp_conf('/etc/chrony.conf').server.is_a? String
 
       describe ntp_conf('/etc/chrony.conf') do
-        its('server.join') { should match time_server }
+        its('server.join') { should match  input('authoritative_timeserver') }
       end if ntp_conf('/etc/chrony.conf').server.is_a? Array
     end
     # All time sources must contain valid maxpoll entries

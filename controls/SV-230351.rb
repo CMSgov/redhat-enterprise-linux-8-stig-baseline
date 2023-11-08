@@ -63,14 +63,12 @@ section of the database file and add or update the following lines:
   tag cci: ['CCI-000056']
   tag nist: ['AC-11 b']
 
-  smart_card_status = input('smart_card_status')
-
   if virtualization.system.eql?('docker')
     impact 0.0
     describe 'Control not applicable within a container' do
       skip 'Control not applicable within a container'
     end
-  elsif smart_card_status.eql?('disabled')
+  elsif input('smart_card_status').eql?('disabled')
     impact 0.0
     describe 'The system is not smartcard enabled thus this control is Not Applicable' do
       skip 'The system is not using Smartcards / PIVs to fulfil the MFA requirement, this control is Not Applicable.'

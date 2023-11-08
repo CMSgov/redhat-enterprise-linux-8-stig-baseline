@@ -42,9 +42,7 @@ length for new user accounts.
   tag cci: ['CCI-000205']
   tag nist: ['IA-5 (1) (a)']
 
-  min_len = input('min_len')
-
   describe login_defs do
-    its('PASS_MIN_LEN.to_i') { should be >= min_len }
+    its('PASS_MIN_LEN.to_i') { should be >= input('min_len') }
   end
 end

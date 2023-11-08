@@ -57,13 +57,12 @@ and \"etc/csh.cshrc\" files to \"077\":
     tag severity: 'high'
   end
 
-  perm = input('permissions_for_shells')
   describe 'umask value defined in /etc/bashrc' do
     subject { bashrc_umask }
-    it { should cmp perm['bashrc_umask'] }
+    it { should cmp input('permissions_for_shells')['bashrc_umask'] }
   end
   describe 'umask value defined in /etc/csh.cshrc' do
     subject { cshrc_umask }
-    it { should cmp perm['cshrc_umask'] }
+    it { should cmp input('permissions_for_shells')['cshrc_umask'] }
   end
 end
