@@ -64,11 +64,9 @@ restart the \"sssd\" service, run the following command:
   tag cci: ['CCI-001948']
   tag nist: ['IA-2 (11)']
 
-  sssd_conf_path = input('sssd_conf_path')
-
-  unless file(sssd_conf_path).exist?
-    describe "The sssd.conf file was not found at: #{sssd_conf_path}" do
-      skip "The sssd.conf file was not found at: #{sssd_conf_path}"
+  unless file(input('sssd_conf_path')).exist?
+    describe "The sssd.conf file was not found at: #{input('sssd_conf_path')}" do
+      skip "The sssd.conf file was not found at: #{input('sssd_conf_path')}"
     end
   else
     if virtualization.system.eql?("docker")
@@ -77,7 +75,7 @@ restart the \"sssd\" service, run the following command:
         skip "Control not applicable within a container"
       end
     else
-      describe parse_config_file(sssd_conf_path) do
+      describe parse_config_file(input('sssd_conf_path')) do
         its('sssd') { should include('certificate_verification' => input('sssd_certificate_verification')) }
       end
     end
