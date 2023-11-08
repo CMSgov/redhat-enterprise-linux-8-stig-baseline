@@ -57,13 +57,13 @@ updated versions have been installed.
   tag nist: ['CM-5 (3)']
 
   describe.one do
-    describe ini('/etc/dnf/dnf.conf') do
+    describe parse_config_file('/etc/dnf/dnf.conf') do
       its('main.localpkg_gpgcheck') { should cmp 'True' }
     end
-    describe ini('/etc/dnf/dnf.conf') do
+    describe parse_config_file('/etc/dnf/dnf.conf') do
       its('main.localpkg_gpgcheck') { should cmp 1 }
     end
-    describe ini('/etc/dnf/dnf.conf') do
+    describe parse_config_file('/etc/dnf/dnf.conf') do
       its('main.localpkg_gpgcheck') { should cmp 'yes' }
     end
   end
