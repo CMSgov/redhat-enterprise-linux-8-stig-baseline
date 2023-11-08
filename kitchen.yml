@@ -1,48 +1,24 @@
-provisioner:
-  name: dummy
-
-platforms:
-  - name: rhel8-ec2
-    driver:
-      name: ec2
-      aws_ssh_key_id: <%= ENV['AWS_SSH_KEY_ID'] %>
-      user_data: ./user_data.sh
-      tags: 
-        POC: <%= ENV['POC_TAG'] %>
-      security_group_ids: <%= ENV['SECURITY_GROUP_IDS'] %>
-      region: <%= ENV['AWS_REGION'] %>
-      subnet_id: <%= ENV['SUBNET_ID'] %>
-      instance_type: t2.large
-      associate_public_ip: true
-    transport:
-      username: ec2-user
-      ssh_key: ./ssh_key
-      connection_timeout: 10
-      connection_retries: 5
-  - name: rhel8-ubi
-    driver:
-      name: dokken
-      pull_platform_image: false
-    transport:
-      name: dokken
-
+---
 verifier:
   name: inspec
   sudo: true
   reporter:
     - cli
-    - json:reports/raw/%{suite}/%{platform}.json
+    - json:spec/results/%{platform}_%{suite}.json
   inspec_tests:
-    - name: RedHat Enterprise Linux 8 STIG
+    - name: Red Hat 8 STIG
       path: .
+  input_files:
+    - kitchen.inputs.yml
   load_plugins: true
+
+platforms:
+  - name: rhel-8
 
 suites:
   - name: vanilla
-    driver:
-      image_id: <%= ENV['VANILLA_AMI_ID'] %>
-      image: <%= ENV['VANILLA_CONTAINER_IMAGE'] %>
+    provisioner:
+      playbook: spec/ansible/roles/ansible-role-rhel-vanilla.yml
   - name: hardened
-    driver:
-      image_id: <%= ENV['HARDENED_AMI_ID'] %>
-      image: <%= ENV['HARDENED_CONTAINER_IMAGE'] %>
+    provisioner:
+      playbook: spec/ansible/roles/ansible-role-rhel-hardened.yml
