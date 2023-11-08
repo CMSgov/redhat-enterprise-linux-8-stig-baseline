@@ -57,7 +57,7 @@ complexity rules.
 
   max_retry = input('max_retry')
 
-  describe pam('/etc/pam.d/passwd') do
+  describe pam('/etc/pam.d/system-auth') do
     its('lines') { should match_pam_rule('password (required|requisite) pam_pwquality.so') }
     its('lines') { should match_pam_rule('password (required|requisite) pam_pwquality.so').all_with_integer_arg('retry', '>=', 1) }
     its('lines') { should match_pam_rule('password (required|requisite) pam_pwquality.so').all_with_integer_arg('retry', '<=', max_retry) }

@@ -364,3 +364,9 @@ inputs:
     description: Certificate status checking for multifactor authentication.
     type: String
     value: 'ocsp_dgst=sha1'
+
+  # SV-230372
+  - name: sssd_conf_path
+    description: Path of the sssd_conf file
+    type: String
+    value: /etc/sssd/sssd.conf
