@@ -8,8 +8,7 @@ on:
 
 jobs:
   my-job:
-    name: Validate my profile
-    if: contains(github.event.head_commit.message, 'ec2')
+    name: Validate my profileß
     runs-on: ubuntu-latest
     env:
       CHEF_LICENSE: accept-silent
