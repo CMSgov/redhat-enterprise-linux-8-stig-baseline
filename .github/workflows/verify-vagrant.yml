@@ -2,21 +2,21 @@ name: Vagrant Testing Matrix
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
 
 jobs:
   my-job:
     name: Validate my profile
     # macos-latest no longer has Vagrant. Must use the specified version per documentation.
-     if: ${{ contains(github.event.head_commit.message, '[Vagrant]') }}
+    if: ${{ contains(github.event.head_commit.message, '[Vagrant]') }}
     runs-on: macos-12
     env:
       CHEF_LICENSE: accept-silent
       KITCHEN_LOCAL_YAML: kitchen.vagrant.yml
     strategy:
       matrix:
-        suite: ['vanilla', 'hardened']
+        suite: ["vanilla", "hardened"]
       fail-fast: false
     steps:
       - name: Add jq for output formatting
@@ -28,7 +28,7 @@ jobs:
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: '2.7'
+          ruby-version: "2.7"
       - name: Disable ri and rdoc
         run: 'echo "gem: --no-ri --no-rdoc" >> ~/.gemrc'
       - run: bundle install
@@ -52,4 +52,3 @@ jobs:
       - name: Ensure the scan meets our ${{ matrix.suite }} results threshold
         run: |
           saf validate threshold -i spec/results/rhel-8_${{ matrix.suite }}.json -F ${{ matrix.suite }}.threshold.yml
-
