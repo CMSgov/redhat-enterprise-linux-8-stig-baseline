@@ -104,6 +104,12 @@ The profile is written this way so that programs can easily configure the ranges
 
 ```yaml
 # InSpec Tests that are known to consistently have long run times can be disabled with this attribute
+
+# OS versions for min and max bounds
+os_versions:
+   min:
+   max:
+
 # Acceptable values: false, true
 # (default: false)
 disable_slow_controls: true
