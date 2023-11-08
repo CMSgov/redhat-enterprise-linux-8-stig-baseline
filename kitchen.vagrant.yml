@@ -32,10 +32,10 @@ provisioner:
   ansible_extra_flags: <%= ENV['ANSIBLE_EXTRA_FLAGS'] %>
 
 platforms:
-  - name: rhel-8
-  
+  - name: almalinux-8
     driver:
-      box: bento/rockylinux-8.5
+      box: bento/almalinux-8
+      box_download_insecure: true
 
 lifecycle:
   pre_converge:

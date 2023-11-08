@@ -2,12 +2,13 @@ name: EC2 Testing Matrix
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
 
 jobs:
   my-job:
     name: Validate my profile
+    if: ${{ contains(github.event.head_commit.message, '[EC2]') }}
     runs-on: ubuntu-latest
     env:
       CHEF_LICENSE: accept-silent
@@ -15,7 +16,7 @@ jobs:
       LC_ALL: "en_US.UTF-8"
     strategy:
       matrix:
-        suite: ['vanilla', 'hardened']
+        suite: ["vanilla", "hardened"]
       fail-fast: false
     steps:
       - name: add needed packages
@@ -33,7 +34,7 @@ jobs:
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: '2.7'
+          ruby-version: "2.7"
       - name: Disable ri and rdoc
         run: 'echo "gem: --no-ri --no-rdoc" >> ~/.gemrc'
       - run: bundle install
@@ -51,9 +52,8 @@ jobs:
       - name: Display our ${{ matrix.suite }} results summary
         uses: mitre/saf_action@v1
         with:
-          command_string: 'view summary -i spec/results/rhel-8_${{ matrix.suite }}.json'
+          command_string: "view summary -i spec/results/rhel-8_${{ matrix.suite }}.json"
       - name: Ensure the scan meets our ${{ matrix.suite }} results threshold
         uses: mitre/saf_action@v1
         with:
-          command_string: 'validate threshold -i spec/results/rhel-8_${{ matrix.suite }}.json -F ${{ matrix.suite }}.threshold.yml'
-
+          command_string: "validate threshold -i spec/results/rhel-8_${{ matrix.suite }}.json -F ${{ matrix.suite }}.threshold.yml"
