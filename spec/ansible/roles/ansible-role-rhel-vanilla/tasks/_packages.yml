@@ -1,0 +1,21 @@
+---
+- name: Upgrade all packages
+  yum:
+    name: '*'
+    state: latest
+- name: Install required packages
+  yum:
+    name:
+      - jq
+      - vim
+      - bc 
+      #- python3-libsemanage
+    state: latest
+- name: Install required packages via pip
+  pip:
+    name:
+      - jmespath
+      #- selinux
+    state: latest
+  tags:
+    - pip-task

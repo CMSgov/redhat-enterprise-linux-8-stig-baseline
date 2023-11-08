@@ -9,6 +9,12 @@
 /test/tmp/
 /test/version_tmp/
 /tmp/
+spec/results/**
+.kitchen
+.kitchen.local.yml
+Gemfile.lock
+inspec.lock
+.kitchen
 
 # Used by dotenv library to load environment variables.
 # .env
