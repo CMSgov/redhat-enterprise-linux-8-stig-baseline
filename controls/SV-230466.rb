@@ -89,7 +89,9 @@ updating the following rules in the \"/etc/audit/rules.d/audit.rules\" file:
   tag cci: ['CCI-000169']
   tag nist: ['AU-12 a']
 
-  if os.release < '8.2'
+  os_version_max = input('os_versions')['max']
+
+  if os.release < os_version_max
     m = /dir=(?<dir>\S*)/
     s = command('grep -i pam_faillock.so /etc/pam.d/system-auth').stdout
     dir_match = m.match(s)

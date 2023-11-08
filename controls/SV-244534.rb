@@ -63,10 +63,12 @@ file to match the following lines:
   tag cci: ['CCI-000044']
   tag nist: ['AC-7 a']
 
-  if os.release.to_f <= 8.2
+  os_version_max = input('os_versions')['max']
+
+  if os.release.to_f <= os_version_max
     impact 0.0
     describe "The release is #{os.release}" do
-      skip "The release is lower than 8.2; Currently on release #{os.release}, this control is Not Applicable."
+      skip "The release is lower than #{os_version_max}; Currently on release #{os.release}, this control is Not Applicable."
     end
   else
     describe pam('/etc/pam.d/password-auth') do

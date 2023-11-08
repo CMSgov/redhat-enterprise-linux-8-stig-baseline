@@ -79,10 +79,12 @@ restart the \"sssd\" service, run the following command:
   tag cci: ['CCI-000044']
   tag nist: ['AC-7 a']
 
-  if os.release.to_f >= 8.2
+  os_version_min = input('os_versions')['min']
+
+  if os.release.to_f >= os_version_min
     impact 0.0
     describe "The release is #{os.release}" do
-      skip "The release is higher than 8.2; Currently on release #{os.release}, this control is Not Applicable."
+      skip "The release is #{os_version_min} or newer; Currently on release #{os.release}, this control is Not Applicable."
     end
   else
     describe pam('/etc/pam.d/password-auth') do

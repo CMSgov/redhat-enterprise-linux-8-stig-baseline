@@ -9,6 +9,13 @@ version: 1.6.4
 inspec_version: ">= 4.0"
 
 inputs:
+  - name: os_versions
+    description: List the constaints of the correct OS
+    type: Hash
+    value:
+      min: 8.2
+      max: 8.2
+
   # SV-230309
   - name: disable_slow_controls
     description: Controls that are known to consistently have long run times can be disabled with this attribute
