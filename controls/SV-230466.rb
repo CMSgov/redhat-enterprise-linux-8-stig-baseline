@@ -91,7 +91,7 @@ updating the following rules in the \"/etc/audit/rules.d/audit.rules\" file:
 
   os_version_max = input('os_versions')['max']
 
-  if os.release < os_version_max
+  if os.release.to_f < os_version_max
     m = /dir=(?<dir>\S*)/
     s = command('grep -i pam_faillock.so /etc/pam.d/system-auth').stdout
     dir_match = m.match(s)
