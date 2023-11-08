@@ -51,10 +51,10 @@ list does not include \"PIV-II\", this is a finding.
       skip 'Control not applicable within a container'
     end
   elsif input('smart_card_status')
-      impact 0.0
-      describe 'The system is not utilizing smart card authentication' do
-        skip 'The system is not utilizing smart card authentication, this control is Not Applicable.'
-      end
+    impact 0.0
+    describe 'The system is not utilizing smart card authentication' do
+      skip 'The system is not utilizing smart card authentication, this control is Not Applicable.'
+    end
   else
 
     describe package('opensc') do

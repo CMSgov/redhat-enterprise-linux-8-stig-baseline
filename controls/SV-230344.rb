@@ -87,7 +87,7 @@ restart the \"sssd\" service, run the following command:
   if os.release.to_f >= 8.2
     impact 0.0
     describe "The release is #{os.release}" do
-      skip 'The release is 8.2 or newer; this control is Not Applicable.'
+      skip "The release is 8.2 or newer; Currently on release #{os.release}, this control is Not Applicable."
     end
   else
     describe pam('/etc/pam.d/password-auth') do

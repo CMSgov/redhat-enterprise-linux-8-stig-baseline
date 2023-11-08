@@ -46,16 +46,16 @@ the following command:
   tag nist: ['CM-6 b']
 
   if input('disable_slow_controls')
-    describe "This control consistently takes a long to run and has been disabled
-  using the disable_slow_controls attribute." do
-    skip "This control consistently takes a long to run and has been disabled
-  using the disable_slow_controls attribute. You must enable this control for a
-  full accredidation for production."
-  end
+    describe 'This control consistently takes a long to run and has been disabled using the disable_slow_controls attribute.' do
+      skip 'This control consistently takes a long to run and has been disabled using the disable_slow_controls attribute. You must enable this control for a full accredidation for production.'
+    end
   else
+
+    ignore_shells = input('non_interactive_shells').join('|')
+
     # Get home directory for users with UID >= 1000 or UID == 0 and support interactive logins.
     dotfiles = Set[]
-    u = users.where { !shell.match(input('non_interactive_shells').join('|')) && (uid >= 1000 || uid == 0) }.entries
+    u = users.where { !shell.match(ignore_shells) && (uid >= 1000 || uid == 0) }.entries
     # For each user, build and execute a find command that identifies initialization files
     # in a user's home directory.
     u.each do |user|

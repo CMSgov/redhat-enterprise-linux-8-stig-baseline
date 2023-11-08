@@ -97,11 +97,11 @@ the following line in the /etc/chrony.conf file.
 
     unless ntp_conf('/etc/chrony.conf').server.nil?
       describe ntp_conf('/etc/chrony.conf') do
-        its('server') { should match  input('authoritative_timeserver') }
+        its('server') { should match input('authoritative_timeserver') }
       end if ntp_conf('/etc/chrony.conf').server.is_a? String
 
       describe ntp_conf('/etc/chrony.conf') do
-        its('server.join') { should match  input('authoritative_timeserver') }
+        its('server.join') { should match input('authoritative_timeserver') }
       end if ntp_conf('/etc/chrony.conf').server.is_a? Array
     end
     # All time sources must contain valid maxpoll entries

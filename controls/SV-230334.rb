@@ -90,7 +90,7 @@ restart the \"sssd\" service, run the following command:
     end
 
     describe pam('/etc/pam.d/system-auth') do
-      its('lines') { should match_pam_rule('auth [default=die]|required pam_faillock.so preauth').all_with_integer_arg('fail_interval', '<=',  input('fail_interval')) }
+      its('lines') { should match_pam_rule('auth [default=die]|required pam_faillock.so preauth').all_with_integer_arg('fail_interval', '<=', input('fail_interval')) }
     end
   end
 end

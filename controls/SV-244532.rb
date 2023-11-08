@@ -51,8 +51,10 @@ local interactive user's files and directories, use the following command:
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
 
+  ignore_shells = input('non_interactive_shells').join('|')
+
   findings = Set[]
-  users.where { !shell.match(input('non_interactive_shells').join('|')) && (uid >= 1000 || uid == 0) }.entries.each do |user_info|
+  users.where { !shell.match(ignore_shells) && (uid >= 1000 || uid == 0) }.entries.each do |user_info|
     findings += command("find #{user_info.home} -xdev -not -gid #{user_info.gid}").stdout.split("\n")
   end
   describe findings do

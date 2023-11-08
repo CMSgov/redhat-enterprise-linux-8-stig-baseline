@@ -45,8 +45,10 @@ directory owned by the application, it must be documented with the ISSO.
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
 
+  ignore_shells = input('non_interactive_shells').join('|')
+
   findings = Set[]
-  users.where { !shell.match(input('non_interactive_shells').join('|')) && (uid >= 1000 || uid == 0) }.entries.each do |user_info|
+  users.where { !shell.match(ignore_shells) && (uid >= 1000 || uid == 0) }.entries.each do |user_info|
     next if input('exempt_home_users').include?(user_info.username.to_s)
     grep_results = command("grep -i path --exclude=\".bash_history\" #{user_info.home}/.*").stdout.split('\\n')
     grep_results.each do |result|

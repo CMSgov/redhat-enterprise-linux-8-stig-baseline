@@ -52,8 +52,6 @@ line:
   tag cci: ['CCI-000044']
   tag nist: ['AC-7 a']
 
-  log_directory =
-
   if os.release.to_f <= 8.2
     impact 0.0
     describe "The release is #{os.release}" do

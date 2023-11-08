@@ -41,7 +41,7 @@ Security for Linux (ENSL) in conjunction with SELinux.
       skip 'Control not applicable within a container'
     end
   else
-    tool =  input('linux_threat_prevention_tool')
+    tool = input('linux_threat_prevention_tool')
     describe package(tool['package']) do
       it { should be_installed }
     end
