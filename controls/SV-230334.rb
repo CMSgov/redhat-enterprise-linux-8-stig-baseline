@@ -79,13 +79,20 @@ restart the \"sssd\" service, run the following command:
   tag cci: ['CCI-000044']
   tag nist: ['AC-7 a']
 
-  fail_interval = input('fail_interval')
+  if os.release.to_f >= 8.2
+    impact 0.0
+    describe "The release is #{os.release}" do
+      skip 'The release is higher than 8.2; this control is Not Applicable.'
+    end
+  else
+    fail_interval = input('fail_interval')
 
-  describe pam('/etc/pam.d/password-auth') do
-    its('lines') { should match_pam_rule('auth [default=die]|required pam_faillock.so preauth').all_with_integer_arg('fail_interval', '<=', fail_interval) }
-  end
+    describe pam('/etc/pam.d/password-auth') do
+      its('lines') { should match_pam_rule('auth [default=die]|required pam_faillock.so preauth').all_with_integer_arg('fail_interval', '<=', fail_interval) }
+    end
 
-  describe pam('/etc/pam.d/system-auth') do
-    its('lines') { should match_pam_rule('auth [default=die]|required pam_faillock.so preauth').all_with_integer_arg('fail_interval', '<=', fail_interval) }
+    describe pam('/etc/pam.d/system-auth') do
+      its('lines') { should match_pam_rule('auth [default=die]|required pam_faillock.so preauth').all_with_integer_arg('fail_interval', '<=', fail_interval) }
+    end
   end
 end
