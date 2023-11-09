@@ -39,10 +39,11 @@ command:
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
 
+  exempt_home_users = input('exempt_home_users')
   uid_min = login_defs.read_params['UID_MIN'].to_i
   uid_min = 1000 if uid_min.nil?
 
-  iuser_entries = passwd.where { uid.to_i >= uid_min && shell !~ /nologin/ && !input('exempt_home_users').include?(user) }
+  iuser_entries = passwd.where { uid.to_i >= uid_min && shell !~ /nologin/ && !exempt_home_users.include?(user) }
 
   if !iuser_entries.users.nil? && !iuser_entries.users.empty?
     iuser_entries.homes.each do |home_dir|
