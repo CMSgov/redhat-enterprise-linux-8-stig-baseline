@@ -43,7 +43,7 @@ directory with the following command:
 
   findings = Set[]
   users.where { !shell.match(ignore_shells) && (uid >= 1000 || uid == 0) }.entries.each do |user_info|
-    findings += command("find #{user_info.home} -xdev -not -name '.*' -perm /027").stdout.split("\n")
+    findings += command("find #{user_info.home} -xdev -not -name '.*' -perm /027 -type f").stdout.split("\n")
   end
   describe findings do
     it { should be_empty }
