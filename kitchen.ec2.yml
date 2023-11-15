@@ -33,9 +33,10 @@ lifecycle:
   pre_converge:
     - remote: |
         echo "NOTICE - Installing needed packages"
-        sudo yum install -y --nogpgcheck bc bind-utils redhat-lsb-core vim
+        sudo dnf -y clean all
+        sudo dnf -y install --nogpgcheck bc bind-utils redhat-lsb-core vim
         echo "updating system packages"
-        sudo yum update -y --nogpgcheck
+        sudo dnf -y update --nogpgcheck --nobest
         echo "NOTICE - Updating the ec2-user to keep sudo working"
         sudo chage -d $(( $( date +%s ) / 86400 )) ec2-user
         echo "NOTICE - updating ec2-user sudo config"
