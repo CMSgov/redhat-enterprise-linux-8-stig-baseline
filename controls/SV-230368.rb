@@ -56,7 +56,7 @@ five generations.
     password-auth
   ).each do |path|
     describe pam("/etc/pam.d/#{path}") do
-      its('lines') { should match_pam_rule('password (required|requisite|sufficient) pam_(unix|pwhistory).so').any_with_integer_arg('remember', '>=', input('min_reuse_generations')) }
+      its('lines') { should match_pam_rule('password (required|requisite|sufficient) pam_pwhistory.so').any_with_integer_arg('remember', '>=', input('min_reuse_generations')) }
     end
   end
 end
