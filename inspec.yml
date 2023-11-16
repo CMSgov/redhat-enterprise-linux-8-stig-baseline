@@ -302,7 +302,7 @@ inputs:
   - name: log_directory
     description: Documented tally log directory
     type: String
-    value: '/var/log/faillock'
+    value: /var/log/faillock
 
   # SV-230244
   - name: sshd_client_alive_count_max
@@ -363,14 +363,15 @@ inputs:
     description: Define default permissions for logon and non-logon shells.
     type: Hash
     value:
-      bashrc_umask: "077"
-      cshrc_umask: "077"
+      bashrc_umask: '077'
+      cshrc_umask: '077'
 
   # SV-230247
   - name: var_log_messages_group
     description: Group owner of /var/log/messages file
     type: Array
-    value: ['root']
+    value:
+    - root
 
   # SV-230274
   - name: sssd_certificate_verification
@@ -388,7 +389,8 @@ inputs:
   - name: var_log_audit_group
     description: Group owner of /var/log/audit/audit.log
     type: Array
-    value: ['root']
+    value:
+    - root
 
   # SV-230523, SV-244545, SV-244546
   - name: use_fapolicyd
