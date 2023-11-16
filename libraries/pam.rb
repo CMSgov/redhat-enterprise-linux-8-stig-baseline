@@ -163,11 +163,11 @@ class Pam < Inspec.resource(1)
     end
 
     def services
-      collect &.service.sort.uniq
+      collect { |l| l.service }.sort.uniq
     end
 
     def service
-      svcs = collect &.service.sort.uniq
+      svcs = collect { |l| l.service }.sort.uniq
       if svcs.length > 1
         raise PamError, %(More than one service found: '[#{svcs.join("', '")}]')
       end
@@ -190,9 +190,9 @@ class Pam < Inspec.resource(1)
 
       service_name = get_service_name(opts[:service_name])
 
-      rule = Pam::Rule.new(rule, { service_name: service_name })
+      _rule = Pam::Rule.new(rule, { service_name: service_name })
 
-      rules_of_type(rule.type, opts).last == rule
+      rules_of_type(_rule.type, opts).last == _rule
     end
 
     def rules_of_type(rule_type, opts = { service_name: nil })
@@ -258,7 +258,7 @@ class Pam < Inspec.resource(1)
     #
     # @return [Array[String]]
     def to_a
-      sort_by &.type.map &.to_s
+      sort_by { |l| l.type }.map { |l| l.to_s }
     end
 
     # Convert the data structure to a String
