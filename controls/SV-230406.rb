@@ -56,7 +56,7 @@ modifications, disabling, and termination events that affect \"/etc/passwd\".
   tag cci: ['CCI-000169']
   tag nist: ['AU-12 a']
 
-  audit_file = auditd.file('/etc/passwd').permissions
+  audit_file = auditd.file('/etc/passwd')
 
   if virtualization.system.eql?('docker')
     impact 0.0
