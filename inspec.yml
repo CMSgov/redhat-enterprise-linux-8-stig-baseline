@@ -366,6 +366,12 @@ inputs:
       bashrc_umask: "077"
       cshrc_umask: "077"
 
+  # SV-230247
+  - name: var_log_messages_group
+    description: Group owner of /var/log/messages file
+    type: Array
+    value: ['root']
+
   # SV-230274
   - name: sssd_certificate_verification
     description: Certificate status checking for multifactor authentication.
@@ -377,3 +383,9 @@ inputs:
     description: Path of the sssd_conf file
     type: String
     value: /etc/sssd/sssd.conf
+
+  # SV-230398
+  - name: var_log_audit_group
+    description: Group owner of /var/log/audit/audit.log
+    type: Array
+    value: ['root']

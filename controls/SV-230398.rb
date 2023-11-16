@@ -45,16 +45,14 @@ the /etc/audit/auditd.conf file:
   tag cci: ['CCI-000162']
   tag nist: ['AU-9']
 
-  log_file = auditd_conf('/etc/audit/auditd.conf').log_file
-
   if virtualization.system.eql?('docker')
     impact 0.0
     describe 'Control not applicable within a container' do
       skip 'Control not applicable within a container'
     end
   else
-    describe file(log_file) do
-      its('group') { should eq 'root' }
+    describe file(auditd_conf('/etc/audit/auditd.conf').log_file) do
+      its('group') { should be_in input('var_log_audit_group') }
     end
   end
 end

@@ -40,6 +40,6 @@ the following command:
   tag nist: ['SI-11 b']
 
   describe file('/var/log/messages') do
-    its('group') { should eq 'root' }
+    its('group') { should be_in input('var_log_messages_group') }
   end
 end
