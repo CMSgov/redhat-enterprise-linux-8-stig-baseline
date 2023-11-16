@@ -8,12 +8,12 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-require "json"
-require "rexml/document"
+require 'json'
+require 'rexml/document'
 
 class LinuxUpdateManager < Inspec.resource(1)
-  name "linux_update"
-  desc "Use the linux_update InSpec audit resource to test for available or installed updates"
+  name 'linux_update'
+  desc 'Use the linux_update InSpec audit resource to test for available or installed updates'
 
   # def initialize
   #   if inspec.os.redhat?
@@ -28,15 +28,15 @@ class LinuxUpdateManager < Inspec.resource(1)
   def initialize
     super
     case inspec.os[:family]
-    when "redhat", "amazon"
+    when 'redhat', 'amazon'
       @update_mgmt = RHELUpdateFetcher.new(inspec)
-    when "debian"
+    when 'debian'
       @update_mgmt = DebianUpdateFetcher.new(inspec)
-    when "suse"
+    when 'suse'
       @update_mgmt = SuseUpdateFetcher.new(inspec)
     end
     if @update_mgmt.nil?
-      skip_resource "The `linux_update` resource is not supported on your OS."
+      skip_resource 'The `linux_update` resource is not supported on your OS.'
     end
   end
 
@@ -46,14 +46,14 @@ class LinuxUpdateManager < Inspec.resource(1)
     u = @update_mgmt.updates
     return [] if u.nil? || u.empty?
 
-    u["available"]
+    u['available']
   end
 
   def uptodate?
     return if @update_mgmt.nil?
 
     u = @update_mgmt.updates
-    return false if u.nil? || !u["available"].empty?
+    return false if u.nil? || !u['available'].empty?
 
     l = @update_mgmt.patches
     return false if l.nil? || !l.empty?
@@ -67,7 +67,7 @@ class LinuxUpdateManager < Inspec.resource(1)
     p = @update_mgmt.packages
     return [] if p.nil? || p.empty?
 
-    p["installed"]
+    p['installed']
   end
 
   def patches
@@ -77,7 +77,7 @@ class LinuxUpdateManager < Inspec.resource(1)
   end
 
   def to_s
-    "Linux Update"
+    'Linux Update'
   end
 end
 
@@ -120,22 +120,22 @@ PatchEntry =
 
 class SuseUpdateFetcher < UpdateFetcher
   def patches
-    out = zypper_xml("list-updates -t patch")
+    out = zypper_xml('list-updates -t patch')
     xml = REXML::Document.new(out)
 
-    extract_xml_updates(REXML::XPath.first(xml, "//update-list")) +
-      extract_xml_updates(REXML::XPath.first(xml, "//blocked-update-list"))
+    extract_xml_updates(REXML::XPath.first(xml, '//update-list')) +
+      extract_xml_updates(REXML::XPath.first(xml, '//blocked-update-list'))
   end
 
   def updates
-    out = zypper_xml("list-updates")
+    out = zypper_xml('list-updates')
     xml = REXML::Document.new(out)
 
     res =
-      extract_xml_updates(REXML::XPath.first(xml, "//update-list")) +
-        extract_xml_updates(REXML::XPath.first(xml, "//blocked-update-list"))
+      extract_xml_updates(REXML::XPath.first(xml, '//update-list')) +
+      extract_xml_updates(REXML::XPath.first(xml, '//blocked-update-list'))
 
-    { "available" => res }
+    { 'available' => res }
   end
 
   private
@@ -147,22 +147,22 @@ class SuseUpdateFetcher < UpdateFetcher
         "Cannot retrieve package updates from the OS: #{out.stderr}"
       )
     end
-    out.stdout.force_encoding("UTF-8")
+    out.stdout.force_encoding('UTF-8')
   end
 
   def extract_xml_updates(updates_el)
     res = []
     return res if updates_el.nil?
 
-    REXML::XPath.each(updates_el, "update") do |el|
+    REXML::XPath.each(updates_el, 'update') do |el|
       a = el.attributes
       res.push(
         PatchEntry.new(
-          a["name"],
-          a["edition"],
-          a["arch"],
-          a["category"],
-          a["severity"]
+          a['name'],
+          a['edition'],
+          a['arch'],
+          a['category'],
+          a['severity']
         )
       )
     end
@@ -237,11 +237,11 @@ class RHELUpdateFetcher < UpdateFetcher
     cmd = @inspec.bash(rhel_updates)
     unless cmd.exit_status.zero?
       # essentially we want https://github.com/chef/inspec/issues/1205
-      warn "Could not determine patch status."
+      warn 'Could not determine patch status.'
       return
     end
 
-    first = cmd.stdout.index("{")
+    first = cmd.stdout.index('{')
     res = cmd.stdout.slice(first, cmd.stdout.size - first)
     begin
       JSON.parse(res)

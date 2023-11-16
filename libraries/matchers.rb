@@ -1,9 +1,7 @@
-# -*- encoding : utf-8 -*-
-
-# TODO explain somewhere that :all_with_args, :all_without_args, :all_with_integer_arg
+# TODO: explain somewhere that :all_with_args, :all_without_args, :all_with_integer_arg
 # will cause match_pam_rule to return true when there are no potential matches
 RSpec::Matchers.define :match_pam_rule do |expected|
-  def matching_integer_arg? (line)
+  def matching_integer_arg?(line)
     line.module_arguments.any? do |arg|
       key, value = arg.split('=')
 
@@ -22,7 +20,7 @@ RSpec::Matchers.define :match_pam_rule do |expected|
 
     if [:all_with_integer_arg, :any_with_integer_arg].include? @args_type
       unless Numeric.method_defined?(@args[:operator])
-        fail("Error: Operator '#{@args[:operator]}' is an invalid numeric comparison operator.")
+        raise("Error: Operator '#{@args[:operator]}' is an invalid numeric comparison operator.")
       end
     end
 
@@ -33,60 +31,59 @@ RSpec::Matchers.define :match_pam_rule do |expected|
     if @args_type
       catch :stop_searching do
         actual.services.each do |service|
-          expected_line = Pam::Rule.new(expected, {:service_name => service})
+          expected_line = Pam::Rule.new(expected, { service_name: service })
 
           potentials = actual.find_all do |line|
             line.match?(expected_line)
           end
 
-          if potentials && !potentials.empty?
-            actual_munge[service] ||= []
-            actual_munge[service] += potentials.map(&:to_s)
+          next unless potentials && !potentials.empty?
+          actual_munge[service] ||= []
+          actual_munge[service] += potentials.map(&:to_s)
 
-            potentials.each do |potential|
-              case @args_type
-              when :all_without_args
-                retval = !potential.module_arguments.join(' ').match?(@args)
-                throw :stop_searching unless retval
-              when :all_with_args
-                retval = potential.module_arguments.join(' ').match?(@args)
-                throw :stop_searching unless retval
-              when :all_with_integer_arg
-                retval = matching_integer_arg? potential
-                throw :stop_searching unless retval
-              when :any_with_integer_arg
-                retval = matching_integer_arg? potential
-                throw :stop_searching if retval
-              when :any_with_args
-                retval = potential.module_arguments.join(' ').match?(@args)
-                throw :stop_searching if retval
-              end
+          potentials.each do |potential|
+            case @args_type
+            when :all_without_args
+              retval = !potential.module_arguments.join(' ').match?(@args)
+              throw :stop_searching unless retval
+            when :all_with_args
+              retval = potential.module_arguments.join(' ').match?(@args)
+              throw :stop_searching unless retval
+            when :all_with_integer_arg
+              retval = matching_integer_arg? potential
+              throw :stop_searching unless retval
+            when :any_with_integer_arg
+              retval = matching_integer_arg? potential
+              throw :stop_searching if retval
+            when :any_with_args
+              retval = potential.module_arguments.join(' ').match?(@args)
+              throw :stop_searching if retval
             end
           end
         end
       end
     else
-      retval = actual.include?(expected, {:service_name => actual.service})
+      retval = actual.include?(expected, { service_name: actual.service })
     end
 
-    if actual_munge.empty?
-      @actual = actual.to_s
-    elsif actual_munge.keys.length == 1
-      @actual = actual_munge.values.flatten.join("\n")
-    else
-      @actual = actual_munge.map do |service, lines|
-        lines.map do |line|
-          service + ' ' + line
-        end
-      end.flatten.join("\n")
-    end
+    @actual = if actual_munge.empty?
+                actual.to_s
+              elsif actual_munge.keys.length == 1
+                actual_munge.values.flatten.join("\n")
+              else
+                actual_munge.map do |service, lines|
+                  lines.map do |line|
+                    service + ' ' + line
+                  end
+                end.flatten.join("\n")
+              end
 
     retval
   end
 
   diffable
 
-  # TODO make these an array of args so that we can actually chain them together
+  # TODO: make these an array of args so that we can actually chain them together
   chain :any_with_args do |args|
     @args_type = :any_with_args
     @args = args
@@ -104,12 +101,12 @@ RSpec::Matchers.define :match_pam_rule do |expected|
 
   chain :all_with_integer_arg do |key, op, value|
     @args_type = :all_with_integer_arg
-    @args = {:key => key, :operator => op, :value => value}
+    @args = { key: key, operator: op, value: value }
   end
 
   chain :any_with_integer_arg do |key, op, value|
     @args_type = :any_with_integer_arg
-    @args = {:key => key, :operator => op, :value => value}
+    @args = { key: key, operator: op, value: value }
   end
 
   description do

@@ -395,3 +395,15 @@ inputs:
     description: Whether to use fapolicyd, similar to SELinux whitelisting
     type: Boolean
     value: true
+
+  # SV-230406
+  - name: audit_passwd_key
+    description: The key of the /etc/passwd file in /etc/audit/rules.d.*
+    type: String
+    value: identity
+
+  # SV-230408
+  - name: audit_group_key
+    description: The key of the /etc/group file in /etc/audit/rules.d.*
+    type: String
+    value: identity

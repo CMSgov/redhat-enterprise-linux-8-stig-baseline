@@ -56,7 +56,7 @@ modifications, disabling, and termination events that affect \"/etc/group\".
   tag cci: ['CCI-000169']
   tag nist: ['AU-12 a']
 
-  audit_file = '/etc/group'
+  audit_file = auditd.file('/etc/group')
 
   if virtualization.system.eql?('docker')
     impact 0.0
@@ -64,16 +64,14 @@ modifications, disabling, and termination events that affect \"/etc/group\".
       skip 'Control not applicable within a container'
     end
   else
-    describe auditd.file(audit_file) do
+    describe audit_file do
       its('permissions') { should_not cmp [] }
       its('action') { should_not include 'never' }
-      its('key') { should cmp 'identity' }
+      its('key') { should cmp input('audit_group_key') }
     end
 
     # Resource creates data structure including all usages of file
-    perms = auditd.file(audit_file).permissions
-
-    perms.each do |perm|
+    audit_file.permissions.each do |perm|
       describe perm do
         it { should include 'w' }
         it { should include 'a' }
