@@ -389,3 +389,9 @@ inputs:
     description: Group owner of /var/log/audit/audit.log
     type: Array
     value: ['root']
+
+  # SV-230523, SV-244545, SV-244546
+  - name: use_fapolicyd
+    description: Whether to use fapolicyd, similar to SELinux whitelisting
+    type: Boolean
+    value: true

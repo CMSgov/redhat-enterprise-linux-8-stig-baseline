@@ -57,7 +57,12 @@ preset: disabled)
   tag cci: ['CCI-001764']
   tag nist: ['CM-7 (2)']
 
-  if virtualization.system.eql?('docker')
+  if !input('use_fapolicyd')
+    impact 0.0
+    describe 'Input override use of fapolicyd' do
+      skip 'Input override use of fapolicyd'
+    end
+  elsif virtualization.system.eql?('docker')
     impact 0.0
     describe 'Control not applicable within a container' do
       skip 'Control not applicable within a container'
