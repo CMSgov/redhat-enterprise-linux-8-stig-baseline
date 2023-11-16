@@ -59,7 +59,7 @@ path, by default this location is usually \"/var/log/audit\".
     end
   else
     describe directory(auditd_conf('/etc/audit/auditd.conf').log_file.split('/')[0..-2].join('/')) do
-      its('group') { should eq input('var_log_audit_group') }
+      its('group') { should be_in input('var_log_audit_group') }
     end
   end
 end
