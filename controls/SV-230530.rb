@@ -35,7 +35,7 @@ user interface:
     Then update the dconf settings:
 
     $ sudo dconf update"
-  impact 0.0
+  impact 0.7
   tag severity: 'high'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-230530'

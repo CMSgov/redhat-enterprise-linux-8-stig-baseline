@@ -29,7 +29,7 @@ list does not include "PIV-II", this is a finding.'
 Install the "opensc" package using the following command:
 
 $ sudo yum install opensc'
-  impact 0.0
+  impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000376-GPOS-00161'
   tag gid: 'V-230275'

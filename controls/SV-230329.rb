@@ -27,7 +27,7 @@ logon to the system via a graphical user interface.
 
     [daemon]
     AutomaticLoginEnable=false'
-  impact 0.0
+  impact 0.7
   tag severity: 'high'
   tag gtitle: 'SRG-OS-000480-GPOS-00229'
   tag gid: 'V-230329'
