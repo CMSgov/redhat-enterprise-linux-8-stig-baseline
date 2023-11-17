@@ -1,0 +1,50 @@
+---
+driver:
+  name: vagrant
+  driver_config:
+    ssl_verify_mode: ":verify_none"
+  customize:
+    cpus: 4
+    memory: 8192
+    accelerate3d: "off"
+    accelerate2dvideo: "off"
+    audio: "none"
+    usbcardreader: "off"
+    vrde: "off"
+    usb: "off"
+    nictype1: "82540EM"
+    clipboard: "disabled"
+    #nestedpaging: "off
+
+provisioner:
+  name: ansible_playbook
+  hosts: all
+  # require_ansible_repo: false
+  # require_ansible_omnibus: false
+  require_chef_for_busser: false
+  require_ruby_for_busser: false
+  ansible_binary_path: /usr/local/bin
+  require_pip3: true
+  ansible_verbose: true
+  roles_path: spec/ansible/roles
+  galaxy_ignore_certs: true
+  requirements_path: spec/ansible/roles/requirements.yml
+  ansible_extra_flags: <%= ENV['ANSIBLE_EXTRA_FLAGS'] %>
+
+platforms:
+  - name: almalinux-8
+    driver:
+      box: bento/almalinux-8
+      box_download_insecure: true
+
+lifecycle:
+  pre_converge:
+    - remote: |
+        echo "NOTICE - Installing needed packages"
+        sudo yum install -y bc bind-utils redhat-lsb-core vim
+        echo "NOTICE - Updating the vagrant user to keep sudo working"
+        sudo chage -d $(( $( date +%s ) / 86400 )) vagrant
+        echo "NOTICE - Updating root passwd"
+        echo 'password' | sudo passwd --stdin root
+        echo "NOTICE - updating vagrant sudo config"
+        sudo chmod 600 /etc/sudoers && sudo sed -i'' "/vagrant/d" /etc/sudoers && sudo chmod 400 /etc/sudoers

@@ -60,7 +60,7 @@ to "10" for all accounts and/or account types.
       # For each result check if it is a 'hard' limit for 'maxlogins'
       if temp_limit.include?('hard') && temp_limit.include?('maxlogins')
         # If the limit is in range, push to compliant files
-        if temp_limit[-1].to_i <= maxlogins_limit.to_i
+        if temp_limit[-1].to_i <= maxlogins_limit
           compliant_files.push(limits_file)
         # Otherwise add to noncompliant files
         else

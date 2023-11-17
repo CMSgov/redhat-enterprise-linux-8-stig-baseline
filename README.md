@@ -1,9 +1,9 @@
 # RedHat Enterprise Linux 8.x Security Technical Implementation Guide InSpec Profile
 
-The Redhat Enterprise Linux 8.X Security Technical Implementation Guide (RHEL8.x STIG) InSpec Profile can help programs automate their compliance checks of RedHat Enterprise Linux 7.x System to Department of Defense (DoD) requirements.
+The Redhat Enterprise Linux 8.X Security Technical Implementation Guide (RHEL8.x STIG) InSpec Profile can help programs automate their compliance checks of RedHat Enterprise Linux 8.x System to Department of Defense (DoD) requirements.
 
 - Profile Version: `1.3.1`
-- RedHat Enterprise Linux 7 Security Technical Implementation Guide v1r3
+- RedHat Enterprise Linux 8 Security Technical Implementation Guide v1r3
 
 This profile was developed to reduce the time it takes to perform a security checks based upon the STIG Guidance from the Defense Information Systems Agency (DISA) in partnership between the DISA Services Directorate (SD) and the DISA Risk Management Executive (RME) office.
 
@@ -30,11 +30,11 @@ Table of Contents
 
 The DISA RME and DISA SD Office, along with their vendor partners, create and maintain a set of Security Technical Implementation Guides for applications, computer systems and networks connected to the Department of Defense (DoD). These guidelines are the primary security standards used by the DoD agencies. In addition to defining security guidelines, the STIGs also stipulate how security training should proceed and when security checks should occur. Organizations must stay compliant with these guidelines or they risk having their access to the DoD terminated.
 
-The RHEL8 STIG (see public.cyber.mil/stigs/) offers a comprehensive compliance guide for the configuration and operation your RedHat Enterprise Linux 7.x system.
+The RHEL8 STIG (see public.cyber.mil/stigs/) offers a comprehensive compliance guide for the configuration and operation your RedHat Enterprise Linux 8.x system.
 
-The requirements associated with the RHEL7 STIG are derived from the [Security Requirements Guides](https://csrc.nist.gov/glossary/term/security_requirements_guide) and align to the [National Institute of Standards and Technology](https://www.nist.gov/) (NIST) [Special Publication (SP) 800-53](https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/800-53) Security Controls, [DoD Control Correlation Identifier](https://public.cyber.mil/stigs/cci/) and related standards.
+The requirements associated with the RHEL8 STIG are derived from the [Security Requirements Guides](https://csrc.nist.gov/glossary/term/security_requirements_guide) and align to the [National Institute of Standards and Technology](https://www.nist.gov/) (NIST) [Special Publication (SP) 800-53](https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/800-53) Security Controls, [DoD Control Correlation Identifier](https://public.cyber.mil/stigs/cci/) and related standards.
 
-The RHEL7.x STIG profile checks were developed to provide technical implementation validation to the defined DoD requirements, the guidance can provide insight for any organizations wishing to enhance their security posture and can be tailored easily for use in your organization.
+The RHEL8.x STIG profile checks were developed to provide technical implementation validation to the defined DoD requirements, the guidance can provide insight for any organizations wishing to enhance their security posture and can be tailored easily for use in your organization.
 
 ### Source Guidance
 
@@ -42,7 +42,7 @@ The RHEL7.x STIG profile checks were developed to provide technical implementati
 
 ### Current Profile Statistics
 
-The profile is tested on every commit and every release against both `vanilla` and `hardened` ubi7 and ec2 images using a CI/CD pipeline. The `vanilla` images are unmodified base images sourced from Red Hat itself. The `hardened` images have had their settings configured for security according to STIG guidance. Testing both vanilla and hardened configurations of both containerized and virtual machine implementations of RHEL8 is necessary to ensure the profile works in multiple environments.
+The profile is tested on every commit and every release against both `vanilla` and `hardened` ubi8 and ec2 images using a CI/CD pipeline. The `vanilla` images are unmodified base images sourced from Red Hat itself. The `hardened` images have had their settings configured for security according to STIG guidance. Testing both vanilla and hardened configurations of both containerized and virtual machine implementations of RHEL8 is necessary to ensure the profile works in multiple environments.
 
 # Getting Started and Intended Usage
 
@@ -98,47 +98,96 @@ The `inspec.yml` file has been written such that numerical inputs (inputs where 
 1. _exactly equal to_ the `expected` value
 2. _greater than_ or _less than_ the `min` or `max` value, respectively
 
-The profile is written this way so that programs can easily configure the ranges used by the checks, in case the program wants to check against different values than the STIG defaults (such as programs with more stringent requirements than the baseline STIG). The `expected`, `max` and `min` values are all set to the STIG defaults in `inspec.yml`. If the program wants to check only baseline STIG compliance, _these values do not need to be changed._
+The profile is written this way so that programs can easily configure the ranges used by the checks, in case the program wants to check against different values than the STIG defaults (such as programs with more stringent requirements than the baseline STIG). The `expected`, `max` and `min` values are all set to the STIG defaults in `inspec.yml`. If the organization wants to be directly compliant with the baseline STIG, _these values should not be changed!_
 
-#### See the `inspec.yml` file for full list of available inputs
-
-Example Inputs
+#### The following inputs may be configured in an inputs ".yml" file for the profile to run correctly for your specific environment. 
 
 ```yaml
-inputs:
-  - name: disable_slow_controls
-    description: Controls that are known to consistently have long run times can be disabled with this attribute
-    type: Boolean
-    value: false
-
-  # V-204504
-  - name: monitor_kernel_log
-    description: Set this to false if your system availability concern is not documented or there is no monitoring of the kernel log
-    type: Boolean
-    value: true
-
-  # V-204392
-  - name: rpm_verify_perms_except
-    description: List of system files that should be allowed to change from an rpm verify point of view
-    type: Array
-    value:
-      - "/etc/issue"
-
-  # V-214799
-  - name: rpm_verify_integrity_except
-    description: List of system files that should be allowed to change from an rpm verify point of view
-    type: Array
-    value: []
+# InSpec Tests that are known to consistently have long run times can be disabled with this attribute
+# Acceptable values: false, true
+# (default: false)
+disable_slow_controls: true
+ 
+# Flag to designate if the target is a container host. (true or false)
+container_host: false
+ 
+# Main grub boot config file (String) 
+grub_uefi_main_cfg:
+ 
+# Grub boot config files (Array of strings)
+grub_uefi_user_boot_files:
+ 
+# Users exempt from home directory-based controls in array format
+exempt_home_users: []
+ 
+# These shells do not allow a user to login
+non_interactive_shells: []
+ 
+# System accounts that support approved system activities. (Array) (defaults shown below)
+known_system_accounts: []
+ 
+# Accounts of known managed users (Array)
+user_accounts: []
+ 
+# Main grub boot config file (String)
+grub_main_cfg:
+ 
+# Grub boot config files (Array of Strings)
+grub_user_boot_files:
+ 
+# Set to 'true' if IPv4 is enabled on the system. (default true)
+ipv4_enabled:
+ 
+# Set to 'true' if IPv6 is enabled on the system.(default true)
+ipv6_enabled:
+ 
+# Device or system does not have a camera installed. (default true)
+camera_installed:
+ 
+# Device or operating system has a Bluetooth adapter installed. (default true)
+bluetooth_installed:
+ 
+# Smart card status (enabled or disabled) default: 'enabled'
+smart_card_status:
+ 
+# Name of tool
+file_integrity_tool: 'aide'
+ 
+# Timeserver used in /etc/chromy.conf (String)
+authoritative_timeserver:
+ 
+# File systems that don't correspond to removable media
+non_removable_media_fs: []
+ 
+# List of full paths to private key files on the system (Array)
+private_key_files:
+ 
+# Path to an accepted trust anchor certificate file (DoD) (String)
+root_ca_file:
+ 
+# Temporary user accounts (Array)
+temporary_accounts:
+ 
+# Documented tally log directory (String)
+log_directory:
 ```
 
 # Running the Profile
 
-## (connected) Running the Profile Directly
-
+## (connected) Running the Profile Directly from Github
+Against a remote target using ssh with escalated privileges (i.e., inspec installed on a separate runner host)
+```bash
+inspec exec https://github.com/mitre/redhat-enterprise-linux-8-stig-baseline/archive/main.tar.gz -t ssh://TARGET_USERNAME:TARGET_PASSWORD@TARGET_IP:TARGET_PORT --sudo --sudo-password=<SUDO_PASSWORD_IF_REQUIRED> --input-file <path_to_your_input_file/name_of_your_input_file.yml> --reporter json:<path_to_your_output_file/name_of_your_output_file.json>
 ```
-inspec exec https://github.com/mitre/redhat-enterprise-linux-8-stig-baseline/archive/main.tar.gz --input-file=<your_inputs_file.yml> -t ssh://<hostname>:<port> --sudo --reporter=cli json:<your_results_file.json>
+Against a remote target using a pem key with escalated privileges (i.e., inspec installed on a separate runner host)
+```bash
+inspec exec https://github.com/mitre/redhat-enterprise-linux-8-stig-baseline/archive/main.tar.gz -t ssh://TARGET_USERNAME@TARGET_IP:TARGET_PORT --sudo -i <your_PEM_KEY> --input-file <path_to_your_input_file/name_of_your_input_file.yml> --reporter json:<path_to_your_output_file/name_of_your_output_file.json>  
 ```
 
+Against a local Red Hat host with escalated privileges (i.e., inspec installed on the target)
+```bash
+sudo inspec exec https://github.com/mitre/redhat-enterprise-linux-8-stig-baseline/archive/main.tar.gz --input-file <path_to_your_input_file/name_of_your_input_file.yml> --reporter json:<path_to_your_output_file/name_of_your_output_file.json> 
+```
 ## (disconnected) Running the profile from a local archive copy
 
 If your runner is not always expected to have direct access to the profile's hosted location, use the following steps to create an archive bundle of this overlay and all of its dependent tests:
@@ -151,14 +200,14 @@ When the **"runner"** host uses this profile overlay for the first time, follow 
 mkdir profiles
 cd profiles
 git clone https://github.com/mitre/redhat-enterprise-linux-8-stig-baseline.git
-inspec archive redhat-enterprise-linux-78-stig-baseline
+inspec archive redhat-enterprise-linux-8-stig-baseline
 <sneakerNet your archive>
-inspec exec <name of generated archive> --input-file=<your_inputs_file.yml> -t ssh://<hostname>:<port> --sudo --reporter=cli json:<your_results_file.json>
+inspec exec <name of generated archive> --input-file=<your_inputs_file.yml> -t ssh://<hostname>:<port> --sudo --reporter json:<your_results_file.json>
 ```
 
 For every successive run, follow these steps to always have the latest version of this overlay and dependent profiles:
 
-1. Delete and recreate your archive as shown above
+1. Delete and recreate your archive as shown above, or:
 2. Update your archive with the following steps
 
 ```
