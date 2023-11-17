@@ -28,7 +28,7 @@ password_pbkdf2 [someuniquestringhere] ${GRUB2_PASSWORD}
 Generate a new grub.cfg file with the following command:
 
 $ sudo grub2-mkconfig -o /boot/efi/EFI/redhat/grub.cfg'
-  impact 0.0
+  impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000080-GPOS-00048'
   tag gid: 'V-244521'

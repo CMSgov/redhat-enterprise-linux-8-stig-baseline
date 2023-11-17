@@ -20,7 +20,7 @@ the following command:
 is a finding.)
   desc 'fix', 'Configure the "/etc/fstab" to use the "nosuid" option on
 the /boot/efi directory.'
-  impact 0.0
+  impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-244530'

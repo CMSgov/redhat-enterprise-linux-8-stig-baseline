@@ -46,7 +46,7 @@ line:
   tag nist: ['AC-7 a']
 
   if os.release.to_f <= 8.2
-    impact 0.0
+    impact 0.5
     describe "The release is #{os.release}" do
       skip 'The release is lower than 8.2; this control is Not Applicable.'
     end
