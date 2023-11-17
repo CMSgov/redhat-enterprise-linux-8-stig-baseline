@@ -47,7 +47,7 @@ jobs:
       - name: Run kitchen test
         run: bundle exec kitchen test --destroy=always ${{ matrix.suite }}-rhel-8 || true
       - name: Save Test Result JSON
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           path: spec/results/
       - name: Display our ${{ matrix.suite }} results summary
