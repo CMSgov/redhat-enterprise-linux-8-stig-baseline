@@ -30,7 +30,12 @@ following command:
   tag cci: ['CCI-000186']
   tag nist: ['IA-5 (2) (b)']
 
-  if input('private_key_files').empty?
+  if virtualization.system.eql?('docker')
+    impact 0.0
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
+    end
+  elsif input('private_key_files').empty?
     impact 0.0
     describe 'No private key files were given in the input, this control is Not Applicable' do
       skip 'No private key files were given in the input, this control is Not Applicable'
