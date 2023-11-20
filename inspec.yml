@@ -426,6 +426,7 @@ inputs:
     value: /etc/security/faillock.conf
 
   # SV-230494, SV-230495, SV-230496, SV-230497
+  # NOTE: Redhat should use 'lowercase' over 'UPPERCASE'
   - name: kernel_modules
     description: The kernel modules protocols
     type: Hash
