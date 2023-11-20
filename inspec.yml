@@ -419,6 +419,7 @@ inputs:
       password-auth: /etc/pam.d/password-auth
       smartcard-auth: /etc/pam.d/smartcard-auth
 
+  # SV-230335
   - name: security_faillock_conf
     description: The security faillock configuration file
     type: String

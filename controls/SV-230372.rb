@@ -86,6 +86,11 @@ restart the "sssd" service, run the following command:
       describe parse_config_file(input('sssd_conf_path')) do
         its('pam') { should include('pam_cert_auth' => 'True') }
       end
+      describe service('sssd') do
+        it { should be_installed }
+        it { should be_enabled }
+        it { should be_running }
+      end
     else
       describe "The sssd.conf file was not found at: #{input('sssd_conf_path')}" do
         skip "The sssd.conf file was not found at: #{input('sssd_conf_path')}"
