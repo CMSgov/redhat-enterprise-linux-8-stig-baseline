@@ -61,13 +61,15 @@ restart the "sssd" service, run the following command:
     describe 'Control not applicable within a container' do
       skip 'Control not applicable within a container'
     end
-  elsif file(input('sssd_conf_path')).exist?
-    describe "The sssd.conf file was not found at: #{input('sssd_conf_path')}" do
-      skip "The sssd.conf file was not found at: #{input('sssd_conf_path')}"
-    end
   else
-    describe parse_config_file(input('sssd_conf_path')) do
-      its('sssd') { should include('certificate_verification' => input('sssd_certificate_verification')) }
+    if file(input('sssd_conf_path')).exist?
+      describe parse_config_file(input('sssd_conf_path')) do
+        its('sssd') { should include('certificate_verification' => input('sssd_certificate_verification')) }
+      end
+    else
+      describe "The sssd.conf file was not found at: #{input('sssd_conf_path')}" do
+        skip "The sssd.conf file was not found at: #{input('sssd_conf_path')}"
+      end
     end
   end
 end
