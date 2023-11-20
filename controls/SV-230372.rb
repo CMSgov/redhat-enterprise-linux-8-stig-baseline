@@ -83,18 +83,20 @@ restart the \"sssd\" service, run the following command:
   tag cci: ['CCI-000765']
   tag nist: ['IA-2 (1)']
 
-  if !file(input('sssd_conf_path')).exist?
-    describe "The sssd.conf file was not found at: #{input('sssd_conf_path')}" do
-      skip "The sssd.conf file was not found at: #{input('sssd_conf_path')}"
-    end
-  elsif virtualization.system.eql?('docker')
+  if virtualization.system.eql?('docker')
     impact 0.0
     describe 'Control not applicable within a container' do
       skip 'Control not applicable within a container'
     end
   else
-    describe parse_config_file(input('sssd_conf_path')) do
-      its('pam') { should include('pam_cert_auth' => 'True') }
+    if file(input('sssd_conf_path')).exist?
+      describe parse_config_file(input('sssd_conf_path')) do
+        its('pam') { should include('pam_cert_auth' => 'True') }
+      end
+    else
+      describe "The sssd.conf file was not found at: #{input('sssd_conf_path')}" do
+        skip "The sssd.conf file was not found at: #{input('sssd_conf_path')}"
+      end
     end
     describe pam('/etc/pam.d/system-auth') do
       its('lines') { should match_pam_rule('auth   [success=done authinfo_unavail=ignore ignore=ignore default=die]   pam_sss.so try_cert_auth') }
