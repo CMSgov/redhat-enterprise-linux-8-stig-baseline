@@ -61,7 +61,7 @@ line:
       skip "The release is lower than #{os_version_max}; Currently on release #{os.release}, this control is Not Applicable."
     end
   else
-    describe parse_config_file('/etc/security/faillock.conf') do
+    describe parse_config_file(input('security_faillock_conf')) do
       its('fail_interval') { should cmp >= input('fail_interval') }
       its('fail_interval') { should_not cmp 0 }
     end

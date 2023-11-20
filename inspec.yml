@@ -409,3 +409,16 @@ inputs:
     description: The key of the /etc/group file in /etc/audit/rules.d.*
     type: String
     value: identity
+
+  # SV-230334
+  - name: pam_auth_files
+    description: THe pam.d auth paths
+    type: Hash
+    value:
+      system-auth: /etc/pam.d/system-auth
+      password-auth: /etc/pam.d/password-auth
+
+  - name: security_faillock_conf
+    description: The security faillock configuration file
+    type: String
+    value: /etc/security/faillock.conf
