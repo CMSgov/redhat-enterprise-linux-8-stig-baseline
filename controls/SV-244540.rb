@@ -23,7 +23,9 @@ If output is produced, this is a finding.'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
 
-  describe command('grep -i nullok /etc/pam.d/system-auth') do
+  pam_auth_files = input('pam_auth_files')
+
+  describe command("grep -i nullok #{pam_auth_files['system-auth']}") do
     its('stdout.strip') { should be_empty }
   end
 end

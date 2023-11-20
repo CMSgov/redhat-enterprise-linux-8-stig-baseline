@@ -75,6 +75,7 @@ restart the "sssd" service, run the following command:
   tag nist: ['AC-7 a']
 
   os_version_min = input('os_versions')['min']
+  pam_auth_files = input('pam_auth_files')
 
   if os.release.to_f >= os_version_min
     impact 0.0
@@ -82,10 +83,10 @@ restart the "sssd" service, run the following command:
       skip "The release is #{os_version_min} or newer; Currently on release #{os.release}, this control is Not Applicable."
     end
   else
-    describe pam('/etc/pam.d/password-auth') do
+    describe pam(pam_auth_files['password-auth']) do
       its('lines') { should match_pam_rule('auth [default=die]|required pam_faillock.so preauth').all_with_args('audit') }
     end
-    describe pam('/etc/pam.d/system-auth') do
+    describe pam(pam_auth_files['system-auth']) do
       its('lines') { should match_pam_rule('auth [default=die]|required pam_faillock.so preauth').all_with_args('audit') }
     end
   end

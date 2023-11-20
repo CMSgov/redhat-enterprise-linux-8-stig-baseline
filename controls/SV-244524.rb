@@ -40,7 +40,9 @@ include the sha512 option for pam_unix.so:
   tag cci: ['CCI-000803']
   tag nist: ['IA-7']
 
-  describe pam('/etc/pam.d/system-auth') do
+  pam_auth_files = input('pam_auth_files')
+
+  describe pam(pam_auth_files['system-auth']) do
     its('lines') { should match_pam_rule('password sufficient pam_unix.so sha512') }
   end
 end

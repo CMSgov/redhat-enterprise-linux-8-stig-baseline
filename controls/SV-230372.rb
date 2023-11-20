@@ -74,6 +74,8 @@ restart the "sssd" service, run the following command:
   tag cci: ['CCI-000765']
   tag nist: ['IA-2 (1)']
 
+  pam_auth_files = input('pam_auth_files')
+
   if virtualization.system.eql?('docker')
     impact 0.0
     describe 'Control not applicable within a container' do
@@ -89,10 +91,10 @@ restart the "sssd" service, run the following command:
         skip "The sssd.conf file was not found at: #{input('sssd_conf_path')}"
       end
     end
-    describe pam('/etc/pam.d/system-auth') do
+    describe pam(pam_auth_files['system-auth']) do
       its('lines') { should match_pam_rule('auth   [success=done authinfo_unavail=ignore ignore=ignore default=die]   pam_sss.so try_cert_auth') }
     end
-    describe pam('/etc/pam.d/smartcard-auth') do
+    describe pam(pam_auth_files['smartcard-auth']) do
       its('lines') { should match_pam_rule('auth   sufficient   pam_sss.so try_cert_auth') }
     end
   end

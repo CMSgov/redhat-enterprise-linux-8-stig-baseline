@@ -40,7 +40,9 @@ set \"rounds\" to a value no lower than \"5000\":
   tag cci: ['CCI-000196']
   tag nist: ['IA-5 (1) (c)']
 
-  describe pam('/etc/pam.d/system-auth') do
+  pam_auth_files = input('pam_auth_files')
+
+  describe pam(pam_auth_files['system-auth']) do
     its('lines') { should match_pam_rule('password sufficient pam_unix.so').all_with_integer_arg('rounds', '>=', 5000) }
   end
 end

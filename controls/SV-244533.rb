@@ -55,6 +55,7 @@ to match the following lines:
   tag nist: ['AC-7 a']
 
   os_version_max = input('os_versions')['max']
+  pam_auth_files = input('pam_auth_files')
 
   if os.release.to_f <= os_version_max
     impact 0.5
@@ -62,7 +63,7 @@ to match the following lines:
       skip "The release is lower than #{os_version_max}; Currently on release #{os.release}, this control is Not Applicable."
     end
   else
-    describe pam('/etc/pam.d/system-auth') do
+    describe pam(pam_auth_files['system-auth']) do
       its('lines') { should match_pam_rule('auth required pam_faillock.so preauth') }
       its('lines') { should match_pam_rule('auth required pam_faillock.so authfail') }
       its('lines') { should match_pam_rule('account required pam_faillock.so') }
