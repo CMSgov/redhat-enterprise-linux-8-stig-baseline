@@ -41,6 +41,7 @@ the following command:
   tag nist: ['CM-6 b']
 
   if input('disable_slow_controls')
+    impact 0.0
     describe 'This control consistently takes a long to run and has been disabled using the disable_slow_controls attribute.' do
       skip 'This control consistently takes a long to run and has been disabled using the disable_slow_controls attribute. You must enable this control for a full accredidation for production.'
     end
