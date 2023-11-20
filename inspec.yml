@@ -424,3 +424,13 @@ inputs:
     description: The security faillock configuration file
     type: String
     value: /etc/security/faillock.conf
+
+  # SV-230494, SV-230495, SV-230496, SV-230497
+  - name: kernel_modules
+    description: The kernel modules protocols
+    type: Hash
+    value:
+      asynchronous_transfer_mode: ATM
+      controller_area_network: CAN
+      stream_control_transmission_protocol: SCTP
+      transparent_inter_process_communication: TIPC

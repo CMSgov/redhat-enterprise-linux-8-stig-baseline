@@ -1,4 +1,4 @@
 Go through Not Reviewed and Make not applicable against hardened
 
-Modprobe ATM -> atm all lower, TODO list to submit to REDHAT to update STIG
-Etc.
+Sysctl related, kernel_parameter AND file check?
+SV-230266.rb

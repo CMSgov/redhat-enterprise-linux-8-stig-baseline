@@ -60,7 +60,7 @@ protocol kernel module.
       skip 'Control not applicable within a container'
     end
   else
-    describe kernel_module('TIPC') do
+    describe kernel_module(input('kernel_modules')['transparent_inter_process_communication']) do
       it { should be_disabled }
       it { should be_blacklisted }
     end

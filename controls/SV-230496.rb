@@ -60,7 +60,7 @@ kernel module.
       skip 'Control not applicable within a container'
     end
   else
-    describe kernel_module('SCTP') do
+    describe kernel_module(input('kernel_modules')['stream_control_transmission_protocol']) do
       it { should be_disabled }
       it { should be_blacklisted }
     end
