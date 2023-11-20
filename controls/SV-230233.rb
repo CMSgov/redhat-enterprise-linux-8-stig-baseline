@@ -1,35 +1,29 @@
 control 'SV-230233' do
-  title "The RHEL 8 password-auth file must be configured to use a sufficient
-number of hashing rounds."
-  desc  "The system must use a strong hashing algorithm to store the password.
+  title 'The RHEL 8 password-auth file must be configured to use a sufficient
+number of hashing rounds.'
+  desc 'The system must use a strong hashing algorithm to store the password.
 The system must use a sufficient number of hashing rounds to ensure the
 required level of entropy.
 
     Passwords need to be protected at all times, and encryption is the standard
 method for protecting passwords. If passwords are not encrypted, they can be
-plainly read (i.e., clear text) and easily compromised.
-  "
-  desc  'rationale', ''
-  desc  'check', "
-    Check that a minimum number of hash rounds is configured by running the
+plainly read (i.e., clear text) and easily compromised.'
+  desc 'check', 'Check that a minimum number of hash rounds is configured by running the
 following command:
 
     $ sudo grep rounds /etc/pam.d/password-auth
 
     password sufficient pam_unix.so sha512 rounds=5000
 
-    If \"rounds\" has a value below \"5000\", or is commented out, this is a
-finding.
-  "
-  desc 'fix', "
-    Configure RHEL 8 to encrypt all stored passwords with a strong
+    If "rounds" has a value below "5000", or is commented out, this is a
+finding.'
+  desc 'fix', 'Configure RHEL 8 to encrypt all stored passwords with a strong
 cryptographic hash.
 
-    Edit/modify the following line in the \"/etc/pam.d/password-auth\" file and
-set \"rounds\" to a value no lower than \"5000\":
+    Edit/modify the following line in the "/etc/pam.d/password-auth" file and
+set "rounds" to a value no lower than "5000":
 
-    password sufficient pam_unix.so sha512 rounds=5000
-  "
+    password sufficient pam_unix.so sha512 rounds=5000'
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000073-GPOS-00041'

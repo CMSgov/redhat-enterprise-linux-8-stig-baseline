@@ -1,16 +1,16 @@
 control 'SV-230477' do
-  title "RHEL 8 must have the packages required for offloading audit logs
-installed."
-  desc  "Information stored in one location is vulnerable to accidental or
+  title 'RHEL 8 must have the packages required for offloading audit logs
+installed.'
+  desc 'Information stored in one location is vulnerable to accidental or
 incidental deletion or alteration.
 
     Off-loading is a common process in information systems with limited audit
 storage capacity.
 
-    RHEL 8 installation media provides \"rsyslogd\".  \"rsyslogd\" is a system
+    RHEL 8 installation media provides "rsyslogd".  "rsyslogd" is a system
 utility providing support for message logging.  Support for both internet and
 UNIX domain sockets enables this utility to support both local and remote
-logging.  Couple this utility with \"gnutls\" (which is a secure communications
+logging.  Couple this utility with "gnutls" (which is a secure communications
 library implementing the SSL, TLS and DTLS protocols), and you have a method to
 securely encrypt and off-load auditing.
 
@@ -23,28 +23,22 @@ currently available only as part of the rsyslogd 3.15.0 and above.
     UDP *.* @remotesystemname
     TCP *.* @@remotesystemname
     RELP *.* :omrelp:remotesystemname:2514
-    Note that a port number was given as there is no standard port for RELP.
-  "
-  desc  'rationale', ''
-  desc  'check', "
-    Verify the operating system has the packages required for offloading audit
+    Note that a port number was given as there is no standard port for RELP.'
+  desc 'check', 'Verify the operating system has the packages required for offloading audit
 logs installed with the following commands:
 
     $ sudo yum list installed rsyslog
 
     rsyslog.x86_64          8.1911.0-3.el8          @AppStream
 
-    If the \"rsyslog\" package is not installed, ask the administrator to
+    If the "rsyslog" package is not installed, ask the administrator to
 indicate how audit logs are being offloaded and what packages are installed to
 support it.  If there is no evidence of audit logs being offloaded, this is a
-finding.
-  "
-  desc 'fix', "
-    Configure the operating system to offload audit logs by installing the
+finding.'
+  desc 'fix', 'Configure the operating system to offload audit logs by installing the
 required packages with the following command:
 
-    $ sudo yum install rsyslog
-  "
+    $ sudo yum install rsyslog'
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'

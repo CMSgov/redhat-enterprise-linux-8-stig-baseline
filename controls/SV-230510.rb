@@ -1,50 +1,44 @@
 control 'SV-230510' do
   title 'RHEL 8 must mount /dev/shm with the noexec option.'
-  desc  "The organization must identify authorized software programs and permit
+  desc 'The organization must identify authorized software programs and permit
 execution of authorized software. The process used to identify software
 programs that are authorized to execute on organizational information systems
 is commonly referred to as whitelisting.
 
-    The \"noexec\" mount option causes the system to not execute binary files.
+    The "noexec" mount option causes the system to not execute binary files.
 This option must be used for mounting any file system not containing approved
 binary files, as they may be incompatible. Executing files from untrusted file
 systems increases the opportunity for unprivileged users to attain unauthorized
 administrative access.
 
-    The \"nodev\" mount option causes the system to not interpret character or
+    The "nodev" mount option causes the system to not interpret character or
 block special devices. Executing character or block special devices from
 untrusted file systems increases the opportunity for unprivileged users to
 attain unauthorized administrative access.
 
-    The \"nosuid\" mount option causes the system to not execute \"setuid\" and
-\"setgid\" files with owner privileges. This option must be used for mounting
-any file system not containing approved \"setuid\" and \"setguid\" files.
+    The "nosuid" mount option causes the system to not execute "setuid" and
+"setgid" files with owner privileges. This option must be used for mounting
+any file system not containing approved "setuid" and "setguid" files.
 Executing files from untrusted file systems increases the opportunity for
-unprivileged users to attain unauthorized administrative access.
-  "
-  desc  'rationale', ''
-  desc  'check', "
-    Verify \"/dev/shm\" is mounted with the \"noexec\" option:
+unprivileged users to attain unauthorized administrative access.'
+  desc 'check', 'Verify "/dev/shm" is mounted with the "noexec" option:
 
     $ sudo mount | grep /dev/shm
 
     tmpfs on /dev/shm type tmpfs (rw,nodev,nosuid,noexec,seclabel)
 
-    Verify that the \"noexec\" options is configured for /dev/shm:
+    Verify that the "noexec" options is configured for /dev/shm:
 
     $ sudo cat /etc/fstab | grep /dev/shm
 
     tmpfs /dev/shm tmpfs defaults,nodev,nosuid,noexec 0 0
 
-    If results are returned and the \"noexec\" option is missing, or if
-/dev/shm is mounted without the \"noexec\" option, this is a finding.
-  "
-  desc 'fix', "
-    Configure the system so that /dev/shm is mounted with the \"noexec\" option
+    If results are returned and the "noexec" option is missing, or if
+/dev/shm is mounted without the "noexec" option, this is a finding.'
+  desc 'fix', 'Configure the system so that /dev/shm is mounted with the "noexec" option
 by adding /modifying the /etc/fstab with the following line:
 
-    tmpfs /dev/shm tmpfs defaults,nodev,nosuid,noexec 0 0
-  "
+    tmpfs /dev/shm tmpfs defaults,nodev,nosuid,noexec 0 0'
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000368-GPOS-00154'

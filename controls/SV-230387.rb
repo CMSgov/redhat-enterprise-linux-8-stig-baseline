@@ -1,15 +1,13 @@
 control 'SV-230387' do
   title 'Cron logging must be implemented in RHEL 8.'
-  desc  "Cron logging can be used to trace the successful or unsuccessful
+  desc 'Cron logging can be used to trace the successful or unsuccessful
 execution of cron jobs. It can also be used to spot intrusions into the use of
-the cron facility by unauthorized and malicious users."
-  desc  'rationale', ''
-  desc  'check', "
-    Verify that \"rsyslog\" is configured to log cron events with the following
+the cron facility by unauthorized and malicious users.'
+  desc 'check', 'Verify that "rsyslog" is configured to log cron events with the following
 command:
 
     Note: If another logging package is used, substitute the utility
-configuration file for \"/etc/rsyslog.conf\" or \"/etc/rsyslog.d/*.conf\" files.
+configuration file for "/etc/rsyslog.conf" or "/etc/rsyslog.d/*.conf" files.
 
     $ sudo grep -s cron /etc/rsyslog.conf /etc/rsyslog.d/*.conf
 
@@ -27,19 +25,16 @@ facilities with the following command.
     /etc/rsyslog.conf:*.info;mail.none;authpriv.none;cron.none
         /var/log/messages
 
-    If \"rsyslog\" is not logging messages for the cron facility or all
-facilities, this is a finding.
-  "
-  desc 'fix', "
-    Configure \"rsyslog\" to log all cron messages by adding or updating the
-following line to \"/etc/rsyslog.conf\" or a configuration file in the
+    If "rsyslog" is not logging messages for the cron facility or all
+facilities, this is a finding.'
+  desc 'fix', 'Configure "rsyslog" to log all cron messages by adding or updating the
+following line to "/etc/rsyslog.conf" or a configuration file in the
 /etc/rsyslog.d/ directory:
 
     cron.* /var/log/cron
 
     The rsyslog daemon must be restarted for the changes to take effect:
-    $ sudo systemctl restart rsyslog.service
-  "
+    $ sudo systemctl restart rsyslog.service'
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'

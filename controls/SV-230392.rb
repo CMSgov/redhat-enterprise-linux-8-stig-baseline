@@ -1,7 +1,7 @@
 control 'SV-230392' do
-  title "The RHEL 8 audit system must take appropriate action when the audit
-storage volume is full."
-  desc  "It is critical that when RHEL 8 is at risk of failing to process audit
+  title 'The RHEL 8 audit system must take appropriate action when the audit
+storage volume is full.'
+  desc 'It is critical that when RHEL 8 is at risk of failing to process audit
 logs as required, it takes action to mitigate the failure. Audit processing
 failures include software/hardware errors; failures in the audit capturing
 mechanisms; and audit storage capacity being reached or exceeded. Responses to
@@ -20,11 +20,8 @@ communication with this server is lost or the server fails, RHEL 8 must queue
 audit records locally until communication is restored or until the audit
 records are retrieved manually. Upon restoration of the connection to the
 centralized collection server, action should be taken to synchronize the local
-audit data with the collection server.
-  "
-  desc  'rationale', ''
-  desc  'check', "
-    Verify RHEL 8 takes the appropriate action when the audit storage volume is
+audit data with the collection server.'
+  desc 'check', 'Verify RHEL 8 takes the appropriate action when the audit storage volume is
 full.
 
     Check that RHEL 8 takes the appropriate action when the audit storage
@@ -34,27 +31,24 @@ volume is full with the following command:
 
     disk_full_action = HALT
 
-    If the value of the \"disk_full_action\" option is not \"SYSLOG\",
-\"SINGLE\", or \"HALT\", or the line is commented out, ask the system
+    If the value of the "disk_full_action" option is not "SYSLOG",
+"SINGLE", or "HALT", or the line is commented out, ask the system
 administrator to indicate how the system takes appropriate action when an audit
 storage volume is full.  If there is no evidence of appropriate action, this is
-a finding.
-  "
-  desc 'fix', "
-    Configure RHEL 8 to shut down by default upon audit failure (unless
+a finding.'
+  desc 'fix', 'Configure RHEL 8 to shut down by default upon audit failure (unless
 availability is an overriding concern).
 
     Add or update the following line (depending on configuration
-\"disk_full_action\" can be set to \"SYSLOG\" or \"SINGLE\" depending on
-configuration) in \"/etc/audit/auditd.conf\" file:
+"disk_full_action" can be set to "SYSLOG" or "SINGLE" depending on
+configuration) in "/etc/audit/auditd.conf" file:
 
     disk_full_action = HALT
 
     If availability has been determined to be more important, and this decision
 is documented with the ISSO, configure the operating system to notify system
 administration staff and ISSO staff in the event of an audit processing failure
-by setting the \"disk_full_action\" to \"SYSLOG\".
-  "
+by setting the "disk_full_action" to "SYSLOG".'
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000047-GPOS-00023'

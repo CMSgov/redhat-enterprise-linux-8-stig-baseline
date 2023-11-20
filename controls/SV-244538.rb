@@ -1,7 +1,7 @@
 control 'SV-244538' do
-  title "RHEL 8 must prevent a user from overriding the session idle-delay
-setting for the graphical user interface."
-  desc  "A session time-out lock is a temporary action taken when a user stops
+  title 'RHEL 8 must prevent a user from overriding the session idle-delay
+setting for the graphical user interface.'
+  desc "A session time-out lock is a temporary action taken when a user stops
 work and moves away from the immediate physical vicinity of the information
 system but does not log out because of the temporary nature of the absence.
 Rather than relying on the user to manually lock their operating system session
@@ -16,13 +16,8 @@ manipulate these settings from the defaults prescribed in the other
 requirements of this implementation guide.
 
     Locking these settings from non-privileged users is crucial to maintaining
-a protected baseline.
-
-
-  "
-  desc  'rationale', ''
-  desc  'check', "
-    Verify the operating system prevents a user from overriding settings for
+a protected baseline."
+  desc 'check', 'Verify the operating system prevents a user from overriding settings for
 graphical user interfaces.
 
     Note: This requirement assumes the use of the RHEL 8 default graphical user
@@ -39,39 +34,35 @@ command:
     Check that graphical settings are locked from non-privileged user
 modification with the following command:
 
-    Note: The example below is using the database \"local\" for the system, so
-the path is \"/etc/dconf/db/local.d\". This path must be modified if a database
-other than \"local\" is being used.
+    Note: The example below is using the database "local" for the system, so
+the path is "/etc/dconf/db/local.d". This path must be modified if a database
+other than "local" is being used.
 
     $ sudo grep -i idle /etc/dconf/db/local.d/locks/*
 
     /org/gnome/desktop/session/idle-delay
 
     If the command does not return at least the example result, this is a
-finding.
-  "
-  desc 'fix', "
-    Configure the operating system to prevent a user from overriding settings
+finding.'
+  desc 'fix', 'Configure the operating system to prevent a user from overriding settings
 for graphical user interfaces.
 
     Create a database to contain the system-wide screensaver settings (if it
 does not already exist) with the following command:
 
-    Note: The example below is using the database \"local\" for the system, so
-if the system is using another database in \"/etc/dconf/profile/user\", the
+    Note: The example below is using the database "local" for the system, so
+if the system is using another database in "/etc/dconf/profile/user", the
 file should be created under the appropriate subdirectory.
 
     $ sudo touch /etc/dconf/db/local.d/locks/session
 
     Add the following setting to prevent non-privileged users from modifying it:
 
-    /org/gnome/desktop/session/idle-delay
-  "
+    /org/gnome/desktop/session/idle-delay'
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000029-GPOS-00010'
-  tag satisfies: ['SRG-OS-000029-GPOS-00010', 'SRG-OS-000031-GPOS-00012',
-'SRG-OS-000480-GPOS-00227']
+  tag satisfies: ['SRG-OS-000029-GPOS-00010', 'SRG-OS-000031-GPOS-00012', 'SRG-OS-000480-GPOS-00227']
   tag gid: 'V-244538'
   tag rid: 'SV-244538r743863_rule'
   tag stig_id: 'RHEL-08-020081'

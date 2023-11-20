@@ -1,8 +1,8 @@
 control 'SV-230227' do
-  title "RHEL 8 must display the Standard Mandatory DoD Notice and Consent
+  title 'RHEL 8 must display the Standard Mandatory DoD Notice and Consent
 Banner before granting local or remote access to the system via a command line
-user logon."
-  desc  "Display of a standardized and approved use notification before
+user logon.'
+  desc 'Display of a standardized and approved use notification before
 granting access to the operating system ensures privacy and security
 notification verbiage used is consistent with applicable federal laws,
 Executive Orders, directives, policies, regulations, standards, and guidance.
@@ -14,7 +14,7 @@ with human users and are not required when such human interfaces do not exist.
 the following verbiage for operating systems that can accommodate banners of
 1300 characters:
 
-    \"You are accessing a U.S. Government (USG) Information System (IS) that is
+    "You are accessing a U.S. Government (USG) Information System (IS) that is
 provided for USG-authorized use only.
 
     By using this IS (which includes any device attached to this IS), you
@@ -39,13 +39,8 @@ PM, LE or CI investigative searching or monitoring of the content of privileged
 communications, or work product, related to personal representation or services
 by attorneys, psychotherapists, or clergy, and their assistants. Such
 communications and work product are private and confidential. See User
-Agreement for details.\"
-
-
-  "
-  desc  'rationale', ''
-  desc  'check', "
-    Verify RHEL 8 displays the Standard Mandatory DoD Notice and Consent Banner
+Agreement for details."'
+  desc 'check', 'Verify RHEL 8 displays the Standard Mandatory DoD Notice and Consent Banner
 before granting access to the operating system via a command line user logon.
 
     Check that RHEL 8 displays a banner at the command line login screen with
@@ -83,16 +78,14 @@ communications and work product are private and confidential. See User
 Agreement for details.”
 
     If the banner text does not match the Standard Mandatory DoD Notice and
-Consent Banner exactly, this is a finding.
-  "
-  desc 'fix', "
-    Configure RHEL 8 to display the Standard Mandatory DoD Notice and Consent
+Consent Banner exactly, this is a finding.'
+  desc 'fix', 'Configure RHEL 8 to display the Standard Mandatory DoD Notice and Consent
 Banner before granting access to the system via command line logon.
 
-    Edit the \"/etc/issue\" file to replace the default text with the Standard
+    Edit the "/etc/issue" file to replace the default text with the Standard
 Mandatory DoD Notice and Consent Banner. The DoD-required text is:
 
-    \"You are accessing a U.S. Government (USG) Information System (IS) that is
+    "You are accessing a U.S. Government (USG) Information System (IS) that is
 provided for USG-authorized use only.
 
     By using this IS (which includes any device attached to this IS), you
@@ -117,12 +110,11 @@ PM, LE or CI investigative searching or monitoring of the content of privileged
 communications, or work product, related to personal representation or services
 by attorneys, psychotherapists, or clergy, and their assistants. Such
 communications and work product are private and confidential. See User
-Agreement for details.\"
-  "
+Agreement for details."'
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000023-GPOS-00006'
-  tag satisfies: %w(SRG-OS-000023-GPOS-00006 SRG-OS-000228-GPOS-00088)
+  tag satisfies: ['SRG-OS-000023-GPOS-00006', 'SRG-OS-000228-GPOS-00088']
   tag gid: 'V-230227'
   tag rid: 'SV-230227r627750_rule'
   tag stig_id: 'RHEL-08-010060'

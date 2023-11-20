@@ -1,13 +1,11 @@
 control 'SV-230550' do
   title 'RHEL 8 must be configured to prevent unrestricted mail relaying.'
-  desc  "If unrestricted mail relaying is permitted, unauthorized senders could
+  desc 'If unrestricted mail relaying is permitted, unauthorized senders could
 use this host as a mail relay for the purpose of sending spam or other
-unauthorized activity."
-  desc  'rationale', ''
-  desc  'check', "
-    Verify the system is configured to prevent unrestricted mail relaying.
+unauthorized activity.'
+  desc 'check', 'Verify the system is configured to prevent unrestricted mail relaying.
 
-    Determine if \"postfix\" is installed with the following commands:
+    Determine if "postfix" is installed with the following commands:
 
     $ sudo yum list installed postfix
 
@@ -22,15 +20,12 @@ connections from unknown or untrusted networks with the following command:
 
     smtpd_client_restrictions = permit_mynetworks, reject
 
-    If the \"smtpd_client_restrictions\" parameter contains any entries other
-than \"permit_mynetworks\" and \"reject\", this is a finding.
-  "
-  desc 'fix', "
-    If \"postfix\" is installed, modify the \"/etc/postfix/main.cf\" file to
+    If the "smtpd_client_restrictions" parameter contains any entries other
+than "permit_mynetworks" and "reject", this is a finding.'
+  desc 'fix', %q(If "postfix" is installed, modify the "/etc/postfix/main.cf" file to
 restrict client connections to the local network with the following command:
 
-    $ sudo postconf -e 'smtpd_client_restrictions = permit_mynetworks,reject'
-  "
+    $ sudo postconf -e 'smtpd_client_restrictions = permit_mynetworks,reject')
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'

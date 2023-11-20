@@ -1,16 +1,14 @@
 control 'SV-230325' do
-  title "All RHEL 8 local initialization files must have mode 0740 or less
-permissive."
-  desc  "Local initialization files are used to configure the user's shell
+  title 'All RHEL 8 local initialization files must have mode 0740 or less
+permissive.'
+  desc "Local initialization files are used to configure the user's shell
 environment upon logon. Malicious modification of these files could compromise
 accounts upon logon."
-  desc  'rationale', ''
-  desc  'check', "
-    Verify that all local initialization files have a mode of \"0740\" or less
+  desc 'check', 'Verify that all local initialization files have a mode of "0740" or less
 permissive with the following command:
 
-    Note: The example will be for the \"smithj\" user, who has a home directory
-of \"/home/smithj\".
+    Note: The example will be for the "smithj" user, who has a home directory
+of "/home/smithj".
 
     $ sudo ls -al /home/smithj/.[^.]* | more
 
@@ -19,17 +17,14 @@ of \"/home/smithj\".
     -rwxr-xr-x 1 smithj users 886 Jan 6 2007 .something
 
     If any local initialization files have a mode more permissive than
-\"0740\", this is a finding.
-  "
-  desc  'fix', "
-    Set the mode of the local initialization files to \"0740\" with the
+"0740", this is a finding.'
+  desc 'fix', 'Set the mode of the local initialization files to "0740" with the
 following command:
 
     Note: The example will be for the smithj user, who has a home directory of
-\"/home/smithj\".
+"/home/smithj".
 
-    $ sudo chmod 0740 /home/smithj/.<INIT_FILE>
-  "
+    $ sudo chmod 0740 /home/smithj/.<INIT_FILE>'
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'

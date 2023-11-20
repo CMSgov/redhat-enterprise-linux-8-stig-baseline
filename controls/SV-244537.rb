@@ -1,6 +1,6 @@
 control 'SV-244537' do
   title 'RHEL 8 must have the tmux package installed.'
-  desc  "A session lock is a temporary action taken when a user stops work and
+  desc 'A session lock is a temporary action taken when a user stops work and
 moves away from the immediate physical vicinity of the information system but
 does not want to log out because of the temporary nature of the absence.
     The session lock is implemented at the point where session activity can be
@@ -10,13 +10,8 @@ to manually invoke a session lock so users can secure their session if it is
 necessary to temporarily vacate the immediate physical vicinity.
     Tmux is a terminal multiplexer that enables a number of terminals to be
 created, accessed, and controlled from a single screen.  Red Hat endorses tmux
-as the recommended session controlling package.
-
-
-  "
-  desc  'rationale', ''
-  desc  'check', "
-    Verify RHEL 8 has the \"tmux\" package installed, by running the following
+as the recommended session controlling package.'
+  desc 'check', 'Verify RHEL 8 has the "tmux" package installed, by running the following
 command:
 
     $ sudo yum list installed tmux
@@ -24,17 +19,14 @@ command:
     tmux.x86.64                     2.7-1.el8
 @repository
 
-    If \"tmux\" is not installed, this is a finding.
-  "
-  desc 'fix', "
-    Configure the operating system to enable a user to initiate a session lock
+    If "tmux" is not installed, this is a finding.'
+  desc 'fix', 'Configure the operating system to enable a user to initiate a session lock
 via tmux.
 
-    Install the \"tmux\" package, if it is not already installed, by running
+    Install the "tmux" package, if it is not already installed, by running
 the following command:
 
-    $ sudo yum install tmux
-  "
+    $ sudo yum install tmux'
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000028-GPOS-00009'

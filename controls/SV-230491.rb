@@ -1,7 +1,7 @@
 control 'SV-230491' do
-  title "RHEL 8 must enable mitigations against processor-based
-vulnerabilities."
-  desc  "It is detrimental for operating systems to provide, or install by
+  title 'RHEL 8 must enable mitigations against processor-based
+vulnerabilities.'
+  desc 'It is detrimental for operating systems to provide, or install by
 default, functionality exceeding requirements or mission objectives. These
 unnecessary capabilities or services are often overlooked and therefore may
 remain unsecured. They increase the risk to the platform by providing
@@ -23,11 +23,8 @@ disabled is to not have the capability installed.
 
     Kernel page-table isolation is a kernel feature that mitigates the Meltdown
 security vulnerability and hardens the kernel against attempts to bypass kernel
-address space layout randomization (KASLR).
-  "
-  desc  'rationale', ''
-  desc  'check', "
-    Verify RHEL 8 enables kernel page-table isolation with the following
+address space layout randomization (KASLR).'
+  desc 'check', 'Verify RHEL 8 enables kernel page-table isolation with the following
 commands:
 
     $ sudo grub2-editenv - list | grep pti
@@ -37,7 +34,7 @@ resume=/dev/mapper/rhel-swap rd.lvm.lv=rhel/root rd.lvm.lv=rhel/swap rhgb quiet
 fips=1 audit=1 audit_backlog_limit=8192 pti=on
 boot=UUID=8d171156-cd61-421c-ba41-1c021ac29e82
 
-    If the \"pti\" entry does not equal \"on\", is missing, or the line is
+    If the "pti" entry does not equal "on", is missing, or the line is
 commented out, this is a finding.
 
     Check that kernel page-table isolation is enabled by default to persist in
@@ -45,22 +42,19 @@ kernel updates:
 
     $ sudo grep audit /etc/default/grub
 
-    GRUB_CMDLINE_LINUX=\"pti=on\"
+    GRUB_CMDLINE_LINUX="pti=on"
 
-    If \"pti\" is not set to \"on\", is missing or commented out, this is a
-finding.
-  "
-  desc 'fix', "
-    Configure RHEL 8 to enable kernel page-table isolation with the following
+    If "pti" is not set to "on", is missing or commented out, this is a
+finding.'
+  desc 'fix', 'Configure RHEL 8 to enable kernel page-table isolation with the following
 command:
 
-    $ sudo grubby --update-kernel=ALL --args=\"pti=on\"
+    $ sudo grubby --update-kernel=ALL --args="pti=on"
 
-    Add or modify the following line in \"/etc/default/grub\" to ensure the
+    Add or modify the following line in "/etc/default/grub" to ensure the
 configuration survives kernel updates:
 
-    GRUB_CMDLINE_LINUX=\"pti=on\"
-  "
+    GRUB_CMDLINE_LINUX="pti=on"'
   impact 0.3
   tag severity: 'low'
   tag gtitle: 'SRG-OS-000095-GPOS-00049'

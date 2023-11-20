@@ -1,7 +1,7 @@
 control 'SV-230561' do
-  title "The tuned package must not be installed unless mission essential on
-RHEL 8."
-  desc  "It is detrimental for operating systems to provide, or install by
+  title 'The tuned package must not be installed unless mission essential on
+RHEL 8.'
+  desc 'It is detrimental for operating systems to provide, or install by
 default, functionality exceeding requirements or mission objectives. These
 unnecessary capabilities or services are often overlooked and therefore may
 remain unsecured. They increase the risk to the platform by providing
@@ -16,11 +16,8 @@ functions).
 dynamically. It does so by monitoring the usage of several system components
 periodically. Based on that information, components will then be put into lower
 or higher power savings modes to adapt to the current usage. The tuned package
-is not needed for normal OS operations.
-  "
-  desc  'rationale', ''
-  desc  'check', "
-    Verify the tuned package has not been installed on the system with the
+is not needed for normal OS operations.'
+  desc 'check', 'Verify the tuned package has not been installed on the system with the
 following commands:
 
     $ sudo yum list installed tuned
@@ -30,14 +27,11 @@ following commands:
 
     If the tuned package is installed and is not documented with the
 Information System Security Officer (ISSO) as an operational requirement, this
-is a finding.
-  "
-  desc 'fix', "
-    Document the tuned package with the ISSO as an operational requirement or
+is a finding.'
+  desc 'fix', 'Document the tuned package with the ISSO as an operational requirement or
 remove it from the system with the following command:
 
-    $ sudo yum remove tuned
-  "
+    $ sudo yum remove tuned'
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'

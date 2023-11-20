@@ -1,13 +1,11 @@
 control 'SV-230540' do
-  title "RHEL 8 must not be performing packet forwarding unless the system is a
-router."
-  desc  "Routing protocol daemons are typically used on routers to exchange
+  title 'RHEL 8 must not be performing packet forwarding unless the system is a
+router.'
+  desc 'Routing protocol daemons are typically used on routers to exchange
 network topology information with other routers. If this software is used when
 not required, system network information may be unnecessarily transmitted
-across the network."
-  desc  'rationale', ''
-  desc  'check', "
-    Verify RHEL 8 is not performing packet forwarding, unless the system is a
+across the network.'
+  desc 'check', 'Verify RHEL 8 is not performing packet forwarding, unless the system is a
 router.
 
     Note: If either IPv4 or IPv6 is disabled on the system, this requirement
@@ -23,25 +21,22 @@ only applies to the active internet protocol version.
 
     net.ipv6.conf.all.forwarding = 0
 
-    If IP forwarding value is not \"0\" and is not documented with the
+    If IP forwarding value is not "0" and is not documented with the
 Information System Security Officer (ISSO) as an operational requirement, this
-is a finding.
-  "
-  desc 'fix', "
-    Configure RHEL 8 to not allow packet forwarding, unless the system is a
+is a finding.'
+  desc 'fix', %q(Configure RHEL 8 to not allow packet forwarding, unless the system is a
 router with the following commands:
 
     $ sudo sysctl -w net.ipv4.ip_forward=0
 
     $ sudo sysctl -w net.ipv6.conf.all.forwarding=0
 
-    If \"0\" is not the system's default value then add or update the following
-lines in the appropriate file under \"/etc/sysctl.d\":
+    If "0" is not the system's default value then add or update the following
+lines in the appropriate file under "/etc/sysctl.d":
 
     net.ipv4.ip_forward=0
 
-    net.ipv6.conf.all.forwarding=0
-  "
+    net.ipv6.conf.all.forwarding=0)
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'

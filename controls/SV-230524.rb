@@ -1,7 +1,7 @@
 control 'SV-230524' do
-  title "RHEL 8 must block unauthorized peripherals before establishing a
-connection."
-  desc  "Without authenticating devices, unidentified or unknown devices may be
+  title 'RHEL 8 must block unauthorized peripherals before establishing a
+connection.'
+  desc 'Without authenticating devices, unidentified or unknown devices may be
 introduced, thereby facilitating malicious activity.
 
     Peripherals include, but are not limited to, such devices as flash drives,
@@ -18,11 +18,8 @@ usbguard tool.
     The System Administrator (SA) must work with the site Information System
 Security Officer (ISSO) to determine a list of authorized peripherals and
 establish rules within the USBGuard software framework to allow only authorized
-devices.
-  "
-  desc  'rationale', ''
-  desc  'check', "
-    Verify the USBGuard has a policy configured with the following command:
+devices.'
+  desc 'check', 'Verify the USBGuard has a policy configured with the following command:
 
     $ sudo usbguard list-rules
 
@@ -30,10 +27,8 @@ devices.
 to indicate how unauthorized peripherals are being blocked.
 
     If there is no evidence that unauthorized peripherals are being blocked
-before establishing a connection, this is a finding.
-  "
-  desc 'fix', "
-    Configure the operating system to enable the blocking of unauthorized
+before establishing a connection, this is a finding.'
+  desc 'fix', 'Configure the operating system to enable the blocking of unauthorized
 peripherals with the following command:
     This command must be run from a root shell and will create an allow list
 for any usb devices currently connect to the system.
@@ -42,8 +37,7 @@ for any usb devices currently connect to the system.
 
     Note: Enabling and starting usbguard without properly configuring it for an
 individual system will immediately prevent any access over a usb device such as
-a keyboard or mouse
-  "
+a keyboard or mouse'
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000378-GPOS-00163'

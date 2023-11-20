@@ -1,18 +1,16 @@
 control 'SV-230553' do
-  title "The graphical display manager must not be installed on RHEL 8 unless
-approved."
-  desc  "Internet services that are not required for system or application
+  title 'The graphical display manager must not be installed on RHEL 8 unless
+approved.'
+  desc 'Internet services that are not required for system or application
 processes must not be active to decrease the attack surface of the system.
 Graphical display managers have a long history of security vulnerabilities and
-must not be used, unless approved and documented."
-  desc  'rationale', ''
-  desc  'check', "
-    Verify that the system is configured to boot to the command line:
+must not be used, unless approved and documented.'
+  desc 'check', 'Verify that the system is configured to boot to the command line:
 
     $ systemctl get-default
     multi-user.target
 
-    If the system default target is not set to \"multi-user.target\" and the
+    If the system default target is not set to "multi-user.target" and the
 Information System Security Officer (ISSO) lacks a documented requirement for a
 graphical user interface, this is a finding.
 
@@ -24,10 +22,8 @@ graphical user interface, this is a finding.
 operational requirement.
 
     If the use of a graphical user interface on the system is not documented
-with the ISSO, this is a finding.
-  "
-  desc 'fix', "
-    Document the requirement for a graphical user interface with the ISSO or
+with the ISSO, this is a finding.'
+  desc 'fix', 'Document the requirement for a graphical user interface with the ISSO or
 reinstall the operating system without the graphical user interface. If
 reinstallation is not feasible, then continue with the following procedure:
 
@@ -38,8 +34,7 @@ reinstallation is not feasible, then continue with the following procedure:
     $ sudo yum remove xorg-x11-server-Xorg xorg-x11-server-common
 xorg-x11-server-utils xorg-x11-server-Xwayland
 
-    A reboot is required for the changes to take effect.
-  "
+    A reboot is required for the changes to take effect.'
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'

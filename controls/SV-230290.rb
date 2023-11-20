@@ -1,35 +1,30 @@
 control 'SV-230290' do
-  title "The RHEL 8 SSH daemon must not allow authentication using known host’s
-authentication."
-  desc  "Configuring this setting for the SSH daemon provides additional
+  title 'The RHEL 8 SSH daemon must not allow authentication using known host’s
+authentication.'
+  desc 'Configuring this setting for the SSH daemon provides additional
 assurance that remote logon via SSH will require a password, even in the event
-of misconfiguration elsewhere."
-  desc  'rationale', ''
-  desc  'check', "
-    Verify the SSH daemon does not allow authentication using known host’s
+of misconfiguration elsewhere.'
+  desc 'check', 'Verify the SSH daemon does not allow authentication using known host’s
 authentication with the following command:
 
     $ sudo grep -i IgnoreUserKnownHosts /etc/ssh/sshd_config
 
     IgnoreUserKnownHosts yes
 
-    If the value is returned as \"no\", the returned line is commented out, or
-no output is returned, this is a finding.
-  "
-  desc 'fix', "
-    Configure the SSH daemon to not allow authentication using known host’s
+    If the value is returned as "no", the returned line is commented out, or
+no output is returned, this is a finding.'
+  desc 'fix', 'Configure the SSH daemon to not allow authentication using known host’s
 authentication.
 
-    Add the following line in \"/etc/ssh/sshd_config\", or uncomment the line
-and set the value to \"yes\":
+    Add the following line in "/etc/ssh/sshd_config", or uncomment the line
+and set the value to "yes":
 
     IgnoreUserKnownHosts yes
 
     The SSH daemon must be restarted for the changes to take effect. To restart
 the SSH daemon, run the following command:
 
-    $ sudo systemctl restart sshd.service
-  "
+    $ sudo systemctl restart sshd.service'
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'

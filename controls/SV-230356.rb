@@ -1,26 +1,23 @@
 control 'SV-230356' do
   title 'RHEL 8 must ensure a password complexity module is enabled.'
-  desc  "Use of a complex password helps to increase the time and resources
+  desc 'Use of a complex password helps to increase the time and resources
 required to compromise the password. Password complexity, or strength, is a
 measure of the effectiveness of a password in resisting attempts at guessing
-and brute-force attacks. \"pwquality\" enforces complex password construction
+and brute-force attacks. "pwquality" enforces complex password construction
 configuration and has the ability to limit brute-force attacks on the system.
 
-    RHEL 8 utilizes \"pwquality\" as a mechanism to enforce password
+    RHEL 8 utilizes "pwquality" as a mechanism to enforce password
 complexity. This is set in both:
     /etc/pam.d/password-auth
     /etc/pam.d/system-auth
 
-    Note the value of \"retry\" set in these configuration files should be
-between \"1\" and \"3\". Manual changes to the listed files may be overwritten
-by the \"authselect\" program.
-  "
-  desc  'rationale', ''
-  desc  'check', "
-    Verify the operating system uses \"pwquality\" to enforce the password
+    Note the value of "retry" set in these configuration files should be
+between "1" and "3". Manual changes to the listed files may be overwritten
+by the "authselect" program.'
+  desc 'check', 'Verify the operating system uses "pwquality" to enforce the password
 complexity rules.
 
-    Check for the use of \"pwquality\" with the following commands:
+    Check for the use of "pwquality" with the following commands:
 
     $ sudo cat /etc/pam.d/password-auth | grep pam_pwquality
 
@@ -31,20 +28,17 @@ complexity rules.
     password required pam_pwquality.so retry=3
 
     If both commands do not return a line containing the value
-\"pam_pwquality.so\", or the line is commented out, this is a finding.
+"pam_pwquality.so", or the line is commented out, this is a finding.
 
-    If the value of \"retry\" is set to \"0\" or greater than \"3\", this is a
-finding.
-  "
-  desc 'fix', "
-    Configure the operating system to use \"pwquality\" to enforce password
+    If the value of "retry" is set to "0" or greater than "3", this is a
+finding.'
+  desc 'fix', 'Configure the operating system to use "pwquality" to enforce password
 complexity rules.
 
-    Add the following line to both \"/etc/pam.d/password-auth\" and
-\"/etc/pam.d/system-auth\" (or modify the line to have the required value):
+    Add the following line to both "/etc/pam.d/password-auth" and
+"/etc/pam.d/system-auth" (or modify the line to have the required value):
 
-    password required pam_pwquality.so retry=3
-  "
+    password required pam_pwquality.so retry=3'
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000069-GPOS-00037'

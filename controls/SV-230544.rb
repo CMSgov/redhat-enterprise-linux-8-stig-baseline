@@ -1,37 +1,32 @@
 control 'SV-230544' do
-  title "RHEL 8 must ignore IPv6 Internet Control Message Protocol (ICMP)
-redirect messages."
-  desc  "ICMP redirect messages are used by routers to inform hosts that a more
+  title 'RHEL 8 must ignore IPv6 Internet Control Message Protocol (ICMP)
+redirect messages.'
+  desc "ICMP redirect messages are used by routers to inform hosts that a more
 direct route exists for a particular destination. These messages modify the
 host's route table and are unauthenticated. An illicit ICMP redirect message
 could result in a man-in-the-middle attack."
-  desc  'rationale', ''
-  desc  'check', "
-    Verify RHEL 8 ignores IPv6 ICMP redirect messages.
+  desc 'check', 'Verify RHEL 8 ignores IPv6 ICMP redirect messages.
 
     Note: If IPv6 is disabled on the system, this requirement is Not Applicable.
 
-    Check the value of the \"accept_redirects\" variables with the following
+    Check the value of the "accept_redirects" variables with the following
 command:
 
     $ sudo sysctl net.ipv6.conf.all.accept_redirects
 
     net.ipv6.conf.all.accept_redirects = 0
 
-    If the returned line does not have a value of \"0\", a line is not
-returned, or the line is commented out, this is a finding.
-  "
-  desc 'fix', "
-    Configure RHEL 8 to ignore IPv6 ICMP redirect messages with the following
+    If the returned line does not have a value of "0", a line is not
+returned, or the line is commented out, this is a finding.'
+  desc 'fix', %q(Configure RHEL 8 to ignore IPv6 ICMP redirect messages with the following
 command:
 
     $ sudo sysctl -w net.ipv6.conf.all.accept_redirects=0
 
-    If \"0\" is not the system's default value then add or update the following
-line in the appropriate file under \"/etc/sysctl.d\":
+    If "0" is not the system's default value then add or update the following
+line in the appropriate file under "/etc/sysctl.d":
 
-    net.ipv6.conf.all.accept_redirects = 0
-  "
+    net.ipv6.conf.all.accept_redirects = 0)
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'

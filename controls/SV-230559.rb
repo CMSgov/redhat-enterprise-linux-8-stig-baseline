@@ -1,7 +1,7 @@
 control 'SV-230559' do
-  title "The gssproxy package must not be installed unless mission essential on
-RHEL 8."
-  desc  "It is detrimental for operating systems to provide, or install by
+  title 'The gssproxy package must not be installed unless mission essential on
+RHEL 8.'
+  desc 'It is detrimental for operating systems to provide, or install by
 default, functionality exceeding requirements or mission objectives. These
 unnecessary capabilities or services are often overlooked and therefore may
 remain unsecured. They increase the risk to the platform by providing
@@ -13,11 +13,8 @@ necessary to support essential organizational operations (e.g., key missions,
 functions).
 
     The gssproxy package is a proxy for GSS API credential handling and could
-expose secrets on some networks. It is not needed for normal function of the OS.
-  "
-  desc  'rationale', ''
-  desc  'check', "
-    Verify the gssproxy package has not been installed on the system with the
+expose secrets on some networks. It is not needed for normal function of the OS.'
+  desc 'check', 'Verify the gssproxy package has not been installed on the system with the
 following commands:
 
     $ sudo yum list installed gssproxy
@@ -27,14 +24,11 @@ following commands:
 
     If the gssproxy package is installed and is not documented with the
 Information System Security Officer (ISSO) as an operational requirement, this
-is a finding.
-  "
-  desc 'fix', "
-    Document the gssproxy package with the ISSO as an operational requirement
+is a finding.'
+  desc 'fix', 'Document the gssproxy package with the ISSO as an operational requirement
 or remove it from the system with the following command:
 
-    $ sudo yum remove gssproxy
-  "
+    $ sudo yum remove gssproxy'
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'

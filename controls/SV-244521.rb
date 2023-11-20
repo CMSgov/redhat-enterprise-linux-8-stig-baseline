@@ -1,38 +1,33 @@
 control 'SV-244521' do
-  title "RHEL 8 operating systems booted with United Extensible Firmware
+  title 'RHEL 8 operating systems booted with United Extensible Firmware
 Interface (UEFI) must require a unique superusers name upon booting into
-single-user mode and maintenance."
-  desc  "If the system does not require valid authentication before it boots
+single-user mode and maintenance.'
+  desc 'If the system does not require valid authentication before it boots
 into single-user or maintenance mode, anyone who invokes single-user or
 maintenance mode is granted privileged access to all files on the system. GRUB
 2 is the default boot loader for RHEL 8 and is designed to require a password
-to boot into single-user mode or make modifications to the boot menu."
-  desc  'rationale', ''
-  desc  'check', "
-    For systems that use BIOS, this is Not Applicable.
+to boot into single-user mode or make modifications to the boot menu.'
+  desc 'check', 'For systems that use BIOS, this is Not Applicable.
 
-    Verify that a unique name is set as the \"superusers\" account:
+    Verify that a unique name is set as the "superusers" account:
 
-    $ sudo grep -iw \"superusers\" /boot/efi/EFI/redhat/grub.cfg
-    set superusers=\"[someuniquestringhere]\"
+    $ sudo grep -iw "superusers" /boot/efi/EFI/redhat/grub.cfg
+    set superusers="[someuniquestringhere]"
     export superusers
 
-    If \"superusers\" is not set to a unique name or is missing a name, this is
-a finding.
-  "
-  desc 'fix', "
-    Configure the system to have a unique name for the grub superusers account.
+    If "superusers" is not set to a unique name or is missing a name, this is
+a finding.'
+  desc 'fix', 'Configure the system to have a unique name for the grub superusers account.
 
-    Edit the /etc/grub.d/01_users file and add or modify the following lines:
+Edit the /etc/grub.d/01_users file and add or modify the following lines:
 
-    set superusers=\"[someuniquestringhere]\"
-    export superusers
-    password_pbkdf2 [someuniquestringhere] ${GRUB2_PASSWORD}
+set superusers="[someuniquestringhere]"
+export superusers
+password_pbkdf2 [someuniquestringhere] ${GRUB2_PASSWORD}
 
-    Generate a new grub.cfg file with the following command:
+Generate a new grub.cfg file with the following command:
 
-    $ sudo grub2-mkconfig -o /boot/efi/EFI/redhat/grub.cfg
-  "
+$ sudo grub2-mkconfig -o /boot/efi/EFI/redhat/grub.cfg'
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000080-GPOS-00048'

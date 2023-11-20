@@ -1,15 +1,13 @@
 control 'SV-230532' do
   title 'The debug-shell systemd service must be disabled on RHEL 8.'
-  desc  "The debug-shell requires no authentication and provides root
+  desc 'The debug-shell requires no authentication and provides root
 privileges to anyone who has physical access to the machine.  While this
 feature is disabled by default, masking it adds an additional layer of
 assurance that it will not be enabled via a dependency in systemd.  This also
 prevents attackers with physical access from trivially bypassing security on
 the machine through valid troubleshooting configurations and gaining root
-access when the system is rebooted."
-  desc  'rationale', ''
-  desc  'check', "
-    Verify RHEL 8 is configured to mask the debug-shell systemd service with
+access when the system is rebooted.'
+  desc 'check', 'Verify RHEL 8 is configured to mask the debug-shell systemd service with
 the following command:
 
     $ sudo systemctl status debug-shell.service
@@ -18,10 +16,8 @@ the following command:
     Loaded: masked (Reason: Unit debug-shell.service is masked.)
     Active: inactive (dead)
 
-    If the \"debug-shell.service\" is loaded and not masked, this is a finding.
-  "
-  desc 'fix', "
-    Configure the system to mask the debug-shell systemd service with the
+    If the "debug-shell.service" is loaded and not masked, this is a finding.'
+  desc 'fix', 'Configure the system to mask the debug-shell systemd service with the
 following command:
 
     $ sudo systemctl mask debug-shell.service
@@ -30,8 +26,7 @@ following command:
 
     Reload the daemon to take effect.
 
-    $ sudo systemctl daemon-reload
-  "
+    $ sudo systemctl daemon-reload'
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'

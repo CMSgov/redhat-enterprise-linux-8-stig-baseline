@@ -1,15 +1,13 @@
 control 'SV-230234' do
-  title "RHEL 8 operating systems booted with United Extensible Firmware
+  title 'RHEL 8 operating systems booted with United Extensible Firmware
 Interface (UEFI) must require authentication upon booting into single-user mode
-and maintenance."
-  desc  "If the system does not require valid authentication before it boots
+and maintenance.'
+  desc 'If the system does not require valid authentication before it boots
 into single-user or maintenance mode, anyone who invokes single-user or
 maintenance mode is granted privileged access to all files on the system. GRUB
 2 is the default boot loader for RHEL 8 and is designed to require a password
-to boot into single-user mode or make modifications to the boot menu."
-  desc  'rationale', ''
-  desc  'check', "
-    For systems that use BIOS, this is Not Applicable.
+to boot into single-user mode or make modifications to the boot menu.'
+  desc 'check', 'For systems that use BIOS, this is Not Applicable.
 
     Check to see if an encrypted grub superusers password is set. On systems
 that use UEFI, use the following command:
@@ -18,11 +16,9 @@ that use UEFI, use the following command:
 
     GRUB2_PASSWORD=grub.pbkdf2.sha512.[password_hash]
 
-    If the grub superusers password does not begin with \"grub.pbkdf2.sha512\",
-this is a finding.
-  "
-  desc 'fix', "
-    Configure the system to require a grub bootloader password for the grub
+    If the grub superusers password does not begin with "grub.pbkdf2.sha512",
+this is a finding.'
+  desc 'fix', 'Configure the system to require a grub bootloader password for the grub
 superusers account with the grub2-setpassword command, which creates/overwrites
 the /boot/efi/EFI/redhat/user.cfg file.
 
@@ -31,8 +27,7 @@ the following command:
 
     $ sudo grub2-setpassword
     Enter password:
-    Confirm password:
-  "
+    Confirm password:'
   impact 0.7
   tag severity: 'high'
   tag gtitle: 'SRG-OS-000080-GPOS-00048'

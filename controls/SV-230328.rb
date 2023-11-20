@@ -1,11 +1,9 @@
 control 'SV-230328' do
-  title "A separate RHEL 8 filesystem must be used for user home directories
-(such as /home or an equivalent)."
-  desc  "The use of separate file systems for different paths can protect the
-system from failures resulting from a file system becoming full or failing."
-  desc  'rationale', ''
-  desc  'check', "
-    Verify that a separate file system/partition has been created for
+  title 'A separate RHEL 8 filesystem must be used for user home directories
+(such as /home or an equivalent).'
+  desc 'The use of separate file systems for different paths can protect the
+system from failures resulting from a file system becoming full or failing.'
+  desc 'check', %q(Verify that a separate file system/partition has been created for
 non-privileged local interactive user home directories.
 
     Check the home directory assignment for all non-privileged users, users
@@ -20,13 +18,13 @@ following command:
 
     The output of the command will give the directory/partition that contains
 the home directories for the non-privileged users on the system (in this
-example, \"/home\") and users’ shell. All accounts with a valid shell (such as
+example, "/home") and users’ shell. All accounts with a valid shell (such as
 /bin/bash) are considered interactive users.
 
     Check that a file system/partition has been created for the non-privileged
 interactive users with the following command:
 
-    Note: The partition of \"/home\" is used in the example.
+    Note: The partition of "/home" is used in the example.
 
     $ sudo grep /home /etc/fstab
 
@@ -34,10 +32,9 @@ interactive users with the following command:
 
     If a separate entry for the file system/partition containing the
 non-privileged interactive user home directories does not exist, this is a
-finding.
-  "
-  desc 'fix', "Migrate the \"/home\" directory onto a separate file
-system/partition."
+finding.)
+  desc 'fix', 'Migrate the "/home" directory onto a separate file
+system/partition.'
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'

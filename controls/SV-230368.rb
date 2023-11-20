@@ -1,46 +1,40 @@
 control 'SV-230368' do
-  title "RHEL 8 passwords must be prohibited from reuse for a minimum of five
-generations."
-  desc  "Password complexity, or strength, is a measure of the effectiveness of
+  title 'RHEL 8 passwords must be prohibited from reuse for a minimum of five
+generations.'
+  desc 'Password complexity, or strength, is a measure of the effectiveness of
 a password in resisting attempts at guessing and brute-force attacks. If the
 information system or application allows the user to reuse their password
 consecutively when that password has exceeded its defined lifetime, the end
 result is a password that is not changed per policy requirements.
 
-    RHEL 8 utilizes \"pwquality\" consecutively as a mechanism to enforce
+    RHEL 8 utilizes "pwquality" consecutively as a mechanism to enforce
 password complexity. This is set in both:
     /etc/pam.d/password-auth
     /etc/pam.d/system-auth.
 
     Note that manual changes to the listed files may be overwritten by the
-\"authselect\" program.
-  "
-  desc  'rationale', ''
-  desc  'check', "
-    Verify the operating system prohibits password reuse for a minimum of five
+"authselect" program.'
+  desc 'check', 'Verify the operating system prohibits password reuse for a minimum of five
 generations.
 
-    Check for the value of the \"remember\" argument in
-\"/etc/pam.d/system-auth\" and \"/etc/pam.d/password-auth\" with the following
+    Check for the value of the "remember" argument in
+"/etc/pam.d/system-auth" and "/etc/pam.d/password-auth" with the following
 command:
 
     $ sudo grep -i remember /etc/pam.d/system-auth /etc/pam.d/password-auth
 
     password required pam_pwhistory.so use_authtok remember=5 retry=3
 
-    If the line containing \"pam_pwhistory.so\" does not have the \"remember\"
-module argument set, is commented out, or the value of the \"remember\" module
-argument is set to less than \"5\", this is a finding.
-  "
-  desc 'fix', "
-    Configure the operating system to prohibit password reuse for a minimum of
+    If the line containing "pam_pwhistory.so" does not have the "remember"
+module argument set, is commented out, or the value of the "remember" module
+argument is set to less than "5", this is a finding.'
+  desc 'fix', 'Configure the operating system to prohibit password reuse for a minimum of
 five generations.
 
-    Add the following line in \"/etc/pam.d/system-auth\" and
-\"/etc/pam.d/password-auth\" (or modify the line to have the required value):
+    Add the following line in "/etc/pam.d/system-auth" and
+"/etc/pam.d/password-auth" (or modify the line to have the required value):
 
-    password required pam_pwhistory.so use_authtok remember=5 retry=3
-  "
+    password required pam_pwhistory.so use_authtok remember=5 retry=3'
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000077-GPOS-00045'

@@ -1,6 +1,6 @@
 control 'SV-230470' do
   title 'RHEL 8 must enable Linux audit logging for the USBGuard daemon.'
-  desc  "Without the capability to generate audit records, it would be
+  desc 'Without the capability to generate audit records, it would be
 difficult to establish, correlate, and investigate the events relating to an
 incident or identify those responsible for one.
 
@@ -31,13 +31,8 @@ all direct access to the information system;
 
     3) All account creations, modifications, disabling, and terminations; and
 
-    4) All kernel module load, unload, and restart actions.
-
-
-  "
-  desc  'rationale', ''
-  desc  'check', "
-    Verify RHEL 8 enables Linux audit logging of the USBGuard daemon with the
+    4) All kernel module load, unload, and restart actions.'
+  desc 'check', 'Verify RHEL 8 enables Linux audit logging of the USBGuard daemon with the
 following commands:
 
     Note: If the USBGuard daemon is not installed and enabled, this requirement
@@ -47,16 +42,13 @@ is not applicable.
 
     AuditBackend=LinuxAudit
 
-    If the \"AuditBackend\" entry does not equal \"LinuxAudit\", is missing, or
-the line is commented out, this is a finding.
-  "
-  desc 'fix', "
-    Configure RHEL 8 to enable Linux audit logging of the USBGuard daemon by
+    If the "AuditBackend" entry does not equal "LinuxAudit", is missing, or
+the line is commented out, this is a finding.'
+  desc 'fix', 'Configure RHEL 8 to enable Linux audit logging of the USBGuard daemon by
 adding or modifying the following line in
-\"/etc/usbguard/usbguard-daemon.conf\":
+"/etc/usbguard/usbguard-daemon.conf":
 
-    AuditBackend=LinuxAudit
-  "
+    AuditBackend=LinuxAudit'
   impact 0.3
   tag severity: 'low'
   tag gtitle: 'SRG-OS-000062-GPOS-00031'

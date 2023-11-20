@@ -1,17 +1,14 @@
 control 'SV-230542' do
-  title "RHEL 8 must not accept router advertisements on all IPv6 interfaces by
-default."
-  desc  "Routing protocol daemons are typically used on routers to exchange
+  title 'RHEL 8 must not accept router advertisements on all IPv6 interfaces by
+default.'
+  desc 'Routing protocol daemons are typically used on routers to exchange
 network topology information with other routers. If this software is used when
 not required, system network information may be unnecessarily transmitted
 across the network.
 
     An illicit router advertisement message could result in a man-in-the-middle
-attack.
-  "
-  desc  'rationale', ''
-  desc  'check', "
-    Verify RHEL 8 does not accept router advertisements on all IPv6 interfaces
+attack.'
+  desc 'check', 'Verify RHEL 8 does not accept router advertisements on all IPv6 interfaces
 by default, unless the system is a router.
 
     Note: If IPv6 is disabled on the system, this requirement is not applicable.
@@ -23,21 +20,18 @@ the following command:
 
     net.ipv6.conf.default.accept_ra = 0
 
-    If the \"accept_ra\" value is not \"0\" and is not documented with the
+    If the "accept_ra" value is not "0" and is not documented with the
 Information System Security Officer (ISSO) as an operational requirement, this
-is a finding.
-  "
-  desc 'fix', "
-    Configure RHEL 8 to not accept router advertisements on all IPv6 interfaces
+is a finding.'
+  desc 'fix', %q(Configure RHEL 8 to not accept router advertisements on all IPv6 interfaces
 by default unless the system is a router with the following commands:
 
     $ sudo sysctl -w net.ipv6.conf.default.accept_ra=0
 
-    If \"0\" is not the system's default value then add or update the following
-lines in the appropriate file under \"/etc/sysctl.d\":
+    If "0" is not the system's default value then add or update the following
+lines in the appropriate file under "/etc/sysctl.d":
 
-    net.ipv6.conf.default.accept_ra=0
-  "
+    net.ipv6.conf.default.accept_ra=0)
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'

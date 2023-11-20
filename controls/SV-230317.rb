@@ -1,8 +1,8 @@
 control 'SV-230317' do
-  title "Executable search paths within the initialization files of all local
+  title 'Executable search paths within the initialization files of all local
 interactive RHEL 8 users must only contain paths that resolve to the system
-default or the users home directory."
-  desc  "The executable search path (typically the PATH environment variable)
+default or the users home directory.'
+  desc "The executable search path (typically the PATH environment variable)
 contains a list of directories for the shell to search to find executables. If
 this path includes the current working directory (other than the user's home
 directory), executables in these directories may be executed instead of system
@@ -12,9 +12,7 @@ consecutive colons, this is interpreted as the current working directory. If
 deviations from the default system search path for the local interactive user
 are required, they must be documented with the Information System Security
 Officer (ISSO)."
-  desc  'rationale', ''
-  desc  'check', "
-    Verify that all local interactive user initialization file executable
+  desc 'check', 'Verify that all local interactive user initialization file executable
 search path statements do not contain statements that will reference a working
 directory other than user home directories with the following commands:
 
@@ -26,15 +24,12 @@ directory other than user home directories with the following commands:
 
     If any local interactive user initialization files have executable search
 path statements that include directories outside of their home directory and is
-not documented with the ISSO as an operational requirement, this is a finding.
-  "
-  desc 'fix', "
-    Edit the local interactive user initialization files to change any PATH
+not documented with the ISSO as an operational requirement, this is a finding.'
+  desc 'fix', 'Edit the local interactive user initialization files to change any PATH
 variable statements that reference directories other than their home directory.
 
     If a local interactive user requires path variables to reference a
-directory owned by the application, it must be documented with the ISSO.
-  "
+directory owned by the application, it must be documented with the ISSO.'
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
@@ -44,6 +39,7 @@ directory owned by the application, it must be documented with the ISSO.
   tag fix_id: 'F-32961r567698_fix'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+
   exempt_home_users = input('exempt_home_users')
   non_interactive_shells = input('non_interactive_shells')
 

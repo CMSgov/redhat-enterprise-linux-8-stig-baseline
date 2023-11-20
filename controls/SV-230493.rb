@@ -1,7 +1,7 @@
 control 'SV-230493' do
-  title "RHEL 8 must cover or disable the built-in or attached camera when not
-in use."
-  desc  "It is detrimental for operating systems to provide, or install by
+  title 'RHEL 8 must cover or disable the built-in or attached camera when not
+in use.'
+  desc 'It is detrimental for operating systems to provide, or install by
 default, functionality exceeding requirements or mission objectives. These
 unnecessary capabilities or services are often overlooked and therefore may
 remain unsecured. They increase the risk to the platform by providing
@@ -11,13 +11,8 @@ additional attack vectors.
 can result in subsequent compromises of organizational information. Providing
 easy methods to physically disconnect from such devices after a collaborative
 computing session helps to ensure participants actually carry out the
-disconnect activity without having to go through complex and tedious procedures.
-
-
-  "
-  desc  'rationale', ''
-  desc  'check', "
-    If the device or operating system does not have a camera installed, this
+disconnect activity without having to go through complex and tedious procedures.'
+  desc 'check', 'If the device or operating system does not have a camera installed, this
 requirement is not applicable.
 
     This requirement is not applicable to mobile devices (smartphones and
@@ -59,10 +54,8 @@ command:
 
     If the camera driver blacklist is missing, a camera driver is determined to
 be in use, and the collaborative computing device has not been authorized for
-use, this is a finding.
-  "
-  desc 'fix', "
-    Configure the operating system to disable the built-in or attached camera
+use, this is a finding.'
+  desc 'fix', 'Configure the operating system to disable the built-in or attached camera
 when not in use.
 
     First determine the driver being used by the camera with the following
@@ -78,18 +71,17 @@ command:
     [ 47.235752] usbcore: registered new interface driver uvcvideo
     [ 47.235756] USB Video Class driver (1.1.1)
 
-    Next, build or modify the \"/etc/modprobe.d/blacklist.conf\" file by using
+    Next, build or modify the "/etc/modprobe.d/blacklist.conf" file by using
 the following example:
 
     ##Disable WebCam
     blacklist uvcvideo
 
-    Reboot the system for the settings to take effect.
-  "
+    Reboot the system for the settings to take effect.'
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000095-GPOS-00049'
-  tag satisfies: %w(SRG-OS-000095-GPOS-00049 SRG-OS-000370-GPOS-00155)
+  tag satisfies: ['SRG-OS-000095-GPOS-00049', 'SRG-OS-000370-GPOS-00155']
   tag gid: 'V-230493'
   tag rid: 'SV-230493r627750_rule'
   tag stig_id: 'RHEL-08-040020'
