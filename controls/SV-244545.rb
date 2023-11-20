@@ -59,8 +59,8 @@ preset: disabled)
 
   if !input('use_fapolicyd')
     impact 0.0
-    describe 'Input override use of fapolicyd' do
-      skip 'Input override use of fapolicyd'
+    describe 'The organization is using the Fapolicyd service to manage firewall servies, this control is Not Applicable' do
+      skip 'The organization is using the Fapolicyd service to manage firewall servies, this control is Not Applicable'
     end
   elsif virtualization.system.eql?('docker')
     impact 0.0
