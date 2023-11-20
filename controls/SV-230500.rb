@@ -71,7 +71,7 @@ program and the PPSM CAL."
     end
   elsif firewalld.running?
     all_zones = command('firewall-cmd --list-all-zones').stdout
-    describe "Firewalld is not running. Manually validate  Ports, Protocols, and Services Management Component Local Service Assessment (PPSM CLSA). Verify the services allowed by the firewall match the PPSM CLSA" do
+    describe 'Firewalld is not running. Manually validate  Ports, Protocols, and Services Management Component Local Service Assessment (PPSM CLSA). Verify the services allowed by the firewall match the PPSM CLSA' do
       skip "firewall-cmd --list-all-zones \n #{all_zones}"
     end
   else

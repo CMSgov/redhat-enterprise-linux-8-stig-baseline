@@ -31,7 +31,8 @@ following command:
   tag nist: ['IA-5 (2) (b)']
 
   if input('private_key_files').empty?
-    describe 'No private key files specified' do
+    impact 0.0
+    describe 'No private key files were given in the input, this control is Not Applicable' do
       skip 'No private key files were given in the input, this control is Not Applicable'
     end
   else
