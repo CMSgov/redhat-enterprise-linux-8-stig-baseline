@@ -55,12 +55,14 @@ complexity rules.
   tag cci: ['CCI-000192']
   tag nist: ['IA-5 (1) (a)']
 
-  describe pam('/etc/pam.d/system-auth') do
+  pam_auth_files = input('pam_auth_files')
+
+  describe pam(pam_auth_files['password-auth']) do
     its('lines') { should match_pam_rule('password (required|requisite) pam_pwquality.so') }
     its('lines') { should match_pam_rule('password (required|requisite) pam_pwquality.so').all_with_integer_arg('retry', '>=', 1) }
     its('lines') { should match_pam_rule('password (required|requisite) pam_pwquality.so').all_with_integer_arg('retry', '<=', input('max_retry')) }
   end
-  describe pam('/etc/pam.d/password-auth') do
+  describe pam(pam_auth_files['system-auth']) do
     its('lines') { should match_pam_rule('password (required|requisite) pam_pwquality.so') }
     its('lines') { should match_pam_rule('password (required|requisite) pam_pwquality.so').all_with_integer_arg('retry', '>=', 1) }
     its('lines') { should match_pam_rule('password (required|requisite) pam_pwquality.so').all_with_integer_arg('retry', '<=', input('max_retry')) }

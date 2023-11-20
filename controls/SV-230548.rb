@@ -62,7 +62,7 @@ effect. To reload the contents of the files, run the following command:
     end
   else
     describe kernel_parameter('user.max_user_namespaces') do
-      its('value') { should eq 0 }
+      its('value') { should be_zero }
     end
   end
 end
