@@ -1,8 +1,8 @@
 control 'SV-230389' do
-  title "The RHEL 8 Information System Security Officer (ISSO) and System
+  title 'The RHEL 8 Information System Security Officer (ISSO) and System
 Administrator (SA) (at a minimum) must have mail aliases to be notified of an
-audit processing failure."
-  desc  "It is critical for the appropriate personnel to be aware if a system
+audit processing failure.'
+  desc 'It is critical for the appropriate personnel to be aware if a system
 is at risk of failing to process audit logs as required. Without this
 notification, the security personnel may be unaware of an impending failure of
 the audit capability, and system operation may be adversely affected.
@@ -14,30 +14,24 @@ exceeded.
     This requirement applies to each audit data storage repository (i.e.,
 distinct information system component where audit records are stored), the
 centralized audit storage capacity of organizations (i.e., all audit data
-storage repositories combined), or both.
-  "
-  desc  'rationale', ''
-  desc  'check', "
-    Verify that the administrators are notified in the event of an audit
+storage repositories combined), or both.'
+  desc 'check', 'Verify that the administrators are notified in the event of an audit
 processing failure.
 
-    Check that the \"/etc/aliases\" file has a defined value for \"root\".
+    Check that the "/etc/aliases" file has a defined value for "root".
 
-    $ sudo grep \"postmaster:\\s*root$\" /etc/aliases
+    $ sudo grep "postmaster:\\s*root$" /etc/aliases
 
     If the command does not return a line, or the line is commented out, ask
 the system administrator to indicate how they and the ISSO are notified of an
 audit process failure.  If there is no evidence of the proper personnel being
-notified of an audit processing failure, this is a finding.
-  "
-  desc 'fix', "
-    Configure RHEL 8 to notify administrators in the event of an audit
+notified of an audit processing failure, this is a finding.'
+  desc 'fix', 'Configure RHEL 8 to notify administrators in the event of an audit
 processing failure.
 
-    Add/update the following line in \"/etc/aliases\":
+    Add/update the following line in "/etc/aliases":
 
-    postmaster: root
-  "
+    postmaster: root'
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000046-GPOS-00022'

@@ -1,11 +1,9 @@
 control 'SV-230557' do
-  title "If the Trivial File Transfer Protocol (TFTP) server is required, the
-RHEL 8 TFTP daemon must be configured to operate in secure mode."
-  desc  "Restricting TFTP to a specific directory prevents remote users from
-copying, transferring, or overwriting system files."
-  desc  'rationale', ''
-  desc  'check', "
-    Verify the TFTP daemon is configured to operate in secure mode with the
+  title 'If the Trivial File Transfer Protocol (TFTP) server is required, the
+RHEL 8 TFTP daemon must be configured to operate in secure mode.'
+  desc 'Restricting TFTP to a specific directory prevents remote users from
+copying, transferring, or overwriting system files.'
+  desc 'check', 'Verify the TFTP daemon is configured to operate in secure mode with the
 following commands:
 
     $ sudo yum list installed tftp-server
@@ -21,15 +19,12 @@ following command:
 
     server_args = -s /var/lib/tftpboot
 
-    If the \"server_args\" line does not have a \"-s\" option, and a
-subdirectory is not assigned, this is a finding.
-  "
-  desc 'fix', "
-    Configure the TFTP daemon to operate in secure mode by adding the following
-line to \"/etc/xinetd.d/tftp\" (or modify the line to have the required value):
+    If the "server_args" line does not have a "-s" option, and a
+subdirectory is not assigned, this is a finding.'
+  desc 'fix', 'Configure the TFTP daemon to operate in secure mode by adding the following
+line to "/etc/xinetd.d/tftp" (or modify the line to have the required value):
 
-    server_args = -s /var/lib/tftpboot
-  "
+    server_args = -s /var/lib/tftpboot'
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'

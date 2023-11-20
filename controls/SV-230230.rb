@@ -1,25 +1,20 @@
 control 'SV-230230' do
-  title "RHEL 8, for certificate-based authentication, must enforce authorized
-access to the corresponding private key."
-  desc  "If an unauthorized user obtains access to a private key without a
+  title 'RHEL 8, for certificate-based authentication, must enforce authorized
+access to the corresponding private key.'
+  desc 'If an unauthorized user obtains access to a private key without a
 passcode, that user would have unauthorized access to any system where the
-associated public key has been installed."
-  desc  'rationale', ''
-  desc  'check', "
-    Verify the SSH private key files have a passcode.
+associated public key has been installed.'
+  desc 'check', 'Verify the SSH private key files have a passcode.
 
-    For each private key stored on the system, use the following command:
+For each private key stored on the system, use the following command:
 
-    $ sudo ssh-keygen -y -f /path/to/file
+$ sudo ssh-keygen -y -f /path/to/file
 
-    If the contents of the key are displayed, this is a finding.
-  "
-  desc 'fix', "
-    Create a new private and public key pair that utilizes a passcode with the
+If the contents of the key are displayed, this is a finding.'
+  desc 'fix', 'Create a new private and public key pair that utilizes a passcode with the
 following command:
 
-    $ sudo ssh-keygen -n [passphrase]
-  "
+    $ sudo ssh-keygen -n [passphrase]'
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000067-GPOS-00035'

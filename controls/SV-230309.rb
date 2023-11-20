@@ -1,14 +1,12 @@
 control 'SV-230309' do
-  title "Local RHEL 8 initialization files must not execute world-writable
-programs."
-  desc  "If user start-up files execute world-writable programs, especially in
+  title 'Local RHEL 8 initialization files must not execute world-writable
+programs.'
+  desc 'If user start-up files execute world-writable programs, especially in
 unprotected directories, they could be maliciously modified to destroy user
 files or otherwise compromise the system at the user level. If the system is
 compromised at the user level, it is easier to elevate privileges to eventually
-compromise the system at the root and network level."
-  desc  'rationale', ''
-  desc  'check', "
-    Verify that local initialization files do not execute world-writable
+compromise the system at the root and network level.'
+  desc 'check', 'Verify that local initialization files do not execute world-writable
 programs.
 
     Check the system for world-writable files.
@@ -22,19 +20,16 @@ once for each local partition [PART]:
 files with the following commands:
 
     Note: The example will be for a system that is configured to create user
-home directories in the \"/home\" directory.
+home directories in the "/home" directory.
 
     $ sudo grep <file> /home/*/.*
 
     If any local initialization files are found to reference world-writable
-files, this is a finding.
-  "
-  desc  'fix', "
-    Set the mode on files being executed by the local initialization files with
+files, this is a finding.'
+  desc 'fix', 'Set the mode on files being executed by the local initialization files with
 the following command:
 
-    $ sudo chmod 0755 <file>
-  "
+    $ sudo chmod 0755 <file>'
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'

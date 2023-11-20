@@ -1,24 +1,19 @@
 control 'SV-244541' do
-  title "RHEL 8 must not allow blank or null passwords in the password-auth
-file."
-  desc  "If an account has an empty password, anyone could log on and run
+  title 'RHEL 8 must not allow blank or null passwords in the password-auth
+file.'
+  desc 'If an account has an empty password, anyone could log on and run
 commands with the privileges of that account. Accounts with empty passwords
-should never be used in operational environments."
-  desc  'rationale', ''
-  desc  'check', "
-    To verify that null passwords cannot be used, run the following command:
+should never be used in operational environments.'
+  desc 'check', 'To verify that null passwords cannot be used, run the following command:
 
-    $ sudo grep -i nullok /etc/pam.d/password-auth
+$ sudo grep -i nullok /etc/pam.d/password-auth
 
-    If output is produced, this is a finding.
-  "
-  desc 'fix', "
-    Remove any instances of the \"nullok\" option in the
-\"/etc/pam.d/password-auth\" file to prevent logons with empty passwords.
+If output is produced, this is a finding.'
+  desc 'fix', 'Remove any instances of the "nullok" option in the
+"/etc/pam.d/password-auth" file to prevent logons with empty passwords.
 
     Note: Manual changes to the listed file may be overwritten by the
-\"authselect\" program.
-  "
+"authselect" program.'
   impact 0.7
   tag severity: 'high'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'

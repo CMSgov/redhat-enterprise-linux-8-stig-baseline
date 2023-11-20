@@ -1,6 +1,6 @@
 control 'SV-230507' do
   title 'RHEL 8 Bluetooth must be disabled.'
-  desc  "Without protection of communications with wireless peripherals,
+  desc 'Without protection of communications with wireless peripherals,
 confidentiality and integrity may be compromised because unprotected
 communications can be intercepted and either read, altered, or used to
 compromise the RHEL 8 operating system.
@@ -24,11 +24,8 @@ physical barriers to wireless radio frequencies) or by logical means (e.g.,
 employing cryptographic techniques). If physical means of protection are
 employed, then logical means (cryptography) do not have to be employed, and
 vice versa. If the wireless peripheral is only passing telemetry data,
-encryption of the data may not be required.
-  "
-  desc  'rationale', ''
-  desc  'check', "
-    If the device or operating system does not have a Bluetooth adapter
+encryption of the data may not be required.'
+  desc 'check', 'If the device or operating system does not have a Bluetooth adapter
 installed, this requirement is not applicable.
 
     This requirement is not applicable to mobile devices (smartphones and
@@ -42,19 +39,16 @@ tablets), where the use of Bluetooth is a local AO decision.
 
     If the Bluetooth driver blacklist entry is missing, a Bluetooth driver is
 determined to be in use, and the collaborative computing device has not been
-authorized for use, this is a finding.
-  "
-  desc 'fix', "
-    Configure the operating system to disable the Bluetooth adapter when not in
+authorized for use, this is a finding.'
+  desc 'fix', 'Configure the operating system to disable the Bluetooth adapter when not in
 use.
 
-    Build or modify the \"/etc/modprobe.d/bluetooth.conf\" file with the
+    Build or modify the "/etc/modprobe.d/bluetooth.conf" file with the
 following line:
 
     install bluetooth /bin/true
 
-    Reboot the system for the settings to take effect.
-  "
+    Reboot the system for the settings to take effect.'
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000300-GPOS-00118'

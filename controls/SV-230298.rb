@@ -1,6 +1,6 @@
 control 'SV-230298' do
   title 'The rsyslog service must be running in RHEL 8.'
-  desc  "Configuring RHEL 8 to implement organization-wide security
+  desc 'Configuring RHEL 8 to implement organization-wide security
 implementation guides and security checklists ensures compliance with federal
 standards and establishes a common security baseline across the DoD that
 reflects the most restrictive security posture consistent with operational
@@ -13,11 +13,8 @@ parameters are those parameters impacting the security state of the system,
 including the parameters required to satisfy other security control
 requirements. Security-related parameters include, for example: registry
 settings; account, file, directory permission settings; and settings for
-functions, ports, protocols, services, and remote connections.
-  "
-  desc  'rationale', ''
-  desc  'check', "
-    Verify the rsyslog service is enabled and active with the following
+functions, ports, protocols, services, and remote connections.'
+  desc 'check', 'Verify the rsyslog service is enabled and active with the following
 commands:
 
     $ sudo systemctl is-enabled rsyslog
@@ -28,16 +25,13 @@ commands:
 
     active
 
-    If the service is not \"enabled\" and \"active\" this is a finding.
-  "
-  desc 'fix', "
-    Start the auditd service, and enable the rsyslog service with the following
+    If the service is not "enabled" and "active" this is a finding.'
+  desc 'fix', 'Start the auditd service, and enable the rsyslog service with the following
 commands:
 
     $ sudo systemctl start rsyslog.service
 
-    $ sudo systemctl enable rsyslog.service
-  "
+    $ sudo systemctl enable rsyslog.service'
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'

@@ -1,6 +1,6 @@
 control 'SV-230488' do
   title 'RHEL 8 must not have any automated bug reporting tools installed.'
-  desc  "It is detrimental for operating systems to provide, or install by
+  desc 'It is detrimental for operating systems to provide, or install by
 default, functionality exceeding requirements or mission objectives. These
 unnecessary capabilities or services are often overlooked and therefore may
 remain unsecured. They increase the risk to the platform by providing
@@ -18,24 +18,18 @@ mission, but which cannot be disabled.
 
     Verify the operating system is configured to disable non-essential
 capabilities. The most secure way of ensuring a non-essential capability is
-disabled is to not have the capability installed.
-  "
-  desc  'rationale', ''
-  desc  'check', "
-    Check to see if any automated bug reporting packages are installed with the
+disabled is to not have the capability installed.'
+  desc 'check', 'Check to see if any automated bug reporting packages are installed with the
 following command:
 
     $ sudo yum list installed abrt*
 
-    If any automated bug reporting package is installed, this is a finding.
-  "
-  desc 'fix', "
-    Configure the operating system to disable non-essential capabilities by
+    If any automated bug reporting package is installed, this is a finding.'
+  desc 'fix', 'Configure the operating system to disable non-essential capabilities by
 removing automated bug reporting packages from the system with the following
 command:
 
-    $ sudo yum remove abrt*
-  "
+    $ sudo yum remove abrt*'
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000095-GPOS-00049'

@@ -1,9 +1,9 @@
 # RedHat Enterprise Linux 8.x Security Technical Implementation Guide InSpec Profile
 
-The Redhat Enterprise Linux 8.X Security Technical Implementation Guide (RHEL8.x STIG) InSpec Profile can help programs automate their compliance checks of RedHat Enterprise Linux 7.x System to Department of Defense (DoD) requirements.
+The Redhat Enterprise Linux 8.X Security Technical Implementation Guide (RHEL8.x STIG) InSpec Profile can help programs automate their compliance checks of RedHat Enterprise Linux 8.x System to Department of Defense (DoD) requirements.
 
 - Profile Version: `1.3.1`
-- RedHat Enterprise Linux 7 Security Technical Implementation Guide v1r3
+- RedHat Enterprise Linux 8 Security Technical Implementation Guide v1r3
 
 This profile was developed to reduce the time it takes to perform a security checks based upon the STIG Guidance from the Defense Information Systems Agency (DISA) in partnership between the DISA Services Directorate (SD) and the DISA Risk Management Executive (RME) office.
 
@@ -30,11 +30,11 @@ Table of Contents
 
 The DISA RME and DISA SD Office, along with their vendor partners, create and maintain a set of Security Technical Implementation Guides for applications, computer systems and networks connected to the Department of Defense (DoD). These guidelines are the primary security standards used by the DoD agencies. In addition to defining security guidelines, the STIGs also stipulate how security training should proceed and when security checks should occur. Organizations must stay compliant with these guidelines or they risk having their access to the DoD terminated.
 
-The RHEL8 STIG (see public.cyber.mil/stigs/) offers a comprehensive compliance guide for the configuration and operation your RedHat Enterprise Linux 7.x system.
+The RHEL8 STIG (see public.cyber.mil/stigs/) offers a comprehensive compliance guide for the configuration and operation your RedHat Enterprise Linux 8.x system.
 
-The requirements associated with the RHEL7 STIG are derived from the [Security Requirements Guides](https://csrc.nist.gov/glossary/term/security_requirements_guide) and align to the [National Institute of Standards and Technology](https://www.nist.gov/) (NIST) [Special Publication (SP) 800-53](https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/800-53) Security Controls, [DoD Control Correlation Identifier](https://public.cyber.mil/stigs/cci/) and related standards.
+The requirements associated with the RHEL8 STIG are derived from the [Security Requirements Guides](https://csrc.nist.gov/glossary/term/security_requirements_guide) and align to the [National Institute of Standards and Technology](https://www.nist.gov/) (NIST) [Special Publication (SP) 800-53](https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/800-53) Security Controls, [DoD Control Correlation Identifier](https://public.cyber.mil/stigs/cci/) and related standards.
 
-The RHEL7.x STIG profile checks were developed to provide technical implementation validation to the defined DoD requirements, the guidance can provide insight for any organizations wishing to enhance their security posture and can be tailored easily for use in your organization.
+The RHEL8.x STIG profile checks were developed to provide technical implementation validation to the defined DoD requirements, the guidance can provide insight for any organizations wishing to enhance their security posture and can be tailored easily for use in your organization.
 
 ### Source Guidance
 
@@ -42,7 +42,7 @@ The RHEL7.x STIG profile checks were developed to provide technical implementati
 
 ### Current Profile Statistics
 
-The profile is tested on every commit and every release against both `vanilla` and `hardened` ubi7 and ec2 images using a CI/CD pipeline. The `vanilla` images are unmodified base images sourced from Red Hat itself. The `hardened` images have had their settings configured for security according to STIG guidance. Testing both vanilla and hardened configurations of both containerized and virtual machine implementations of RHEL8 is necessary to ensure the profile works in multiple environments.
+The profile is tested on every commit and every release against both `vanilla` and `hardened` ubi8 and ec2 images using a CI/CD pipeline. The `vanilla` images are unmodified base images sourced from Red Hat itself. The `hardened` images have had their settings configured for security according to STIG guidance. Testing both vanilla and hardened configurations of both containerized and virtual machine implementations of RHEL8 is necessary to ensure the profile works in multiple environments.
 
 # Getting Started and Intended Usage
 
@@ -233,7 +233,7 @@ When the **"runner"** host uses this profile overlay for the first time, follow 
 mkdir profiles
 cd profiles
 git clone https://github.com/mitre/redhat-enterprise-linux-8-stig-baseline.git
-inspec archive redhat-enterprise-linux-78-stig-baseline
+inspec archive redhat-enterprise-linux-8-stig-baseline
 <sneakerNet your archive>
 inspec exec <name of generated archive> --input-file=<your_inputs_file.yml> -t ssh://<hostname>:<port> --sudo --reporter json:<your_results_file.json>
 ```

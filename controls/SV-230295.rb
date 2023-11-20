@@ -1,21 +1,18 @@
 control 'SV-230295' do
   title 'A separate RHEL 8 filesystem must be used for the /tmp directory.'
-  desc  "The use of separate file systems for different paths can protect the
-system from failures resulting from a file system becoming full or failing."
-  desc  'rationale', ''
-  desc  'check', "
-    Verify that a separate file system/partition has been created for
+  desc 'The use of separate file systems for different paths can protect the
+system from failures resulting from a file system becoming full or failing.'
+  desc 'check', 'Verify that a separate file system/partition has been created for
 non-privileged local interactive user home directories.
 
     $ sudo grep /tmp /etc/fstab
 
     /dev/mapper/rhel-tmp  /tmp  xfs   defaults,nodev,nosuid,noexec 0 0
 
-    If a separate entry for the file system/partition \"/tmp\" does not exist,
-this is a finding.
-  "
-  desc 'fix', "Migrate the \"/tmp\" directory onto a separate file
-system/partition."
+    If a separate entry for the file system/partition "/tmp" does not exist,
+this is a finding.'
+  desc 'fix', 'Migrate the "/tmp" directory onto a separate file
+system/partition.'
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'

@@ -1,7 +1,7 @@
 control 'SV-230475' do
-  title "RHEL 8 must use cryptographic mechanisms to protect the integrity of
-audit tools."
-  desc  "Protecting the integrity of the tools used for auditing purposes is a
+  title 'RHEL 8 must use cryptographic mechanisms to protect the integrity of
+audit tools.'
+  desc 'Protecting the integrity of the tools used for auditing purposes is a
 critical step toward ensuring the integrity of audit information. Audit
 information includes all information (e.g., audit records, audit settings, and
 audit reports) needed to successfully audit information system activity.
@@ -17,11 +17,8 @@ erase system activity from the audit logs.
 
     To address this risk, audit tools must be cryptographically signed to
 provide the capability to identify when the audit tools have been modified,
-manipulated, or replaced. An example is a checksum hash of the file or files.
-  "
-  desc  'rationale', ''
-  desc  'check', "
-    Verify that Advanced Intrusion Detection Environment (AIDE) is properly
+manipulated, or replaced. An example is a checksum hash of the file or files.'
+  desc 'check', "Verify that Advanced Intrusion Detection Environment (AIDE) is properly
 configured to use cryptographic mechanisms to protect the integrity of audit
 tools.
 
@@ -44,10 +41,8 @@ the following command:
     If any of the audit tools listed above do not have an appropriate selection
 line, ask the system administrator to indicate what cryptographic mechanisms
 are being used to protect the integrity of the audit tools.  If there is no
-evidence of integrity protection, this is a finding.
-  "
-  desc  'fix', "
-    Add or update the following lines to \"/etc/aide.conf\", to protect the
+evidence of integrity protection, this is a finding."
+  desc 'fix', 'Add or update the following lines to "/etc/aide.conf", to protect the
 integrity of the audit tools.
 
     # Audit Tools
@@ -57,8 +52,7 @@ integrity of the audit tools.
     /usr/sbin/aureport p+i+n+u+g+s+b+acl+xattrs+sha512
     /usr/sbin/autrace p+i+n+u+g+s+b+acl+xattrs+sha512
     /usr/sbin/rsyslogd p+i+n+u+g+s+b+acl+xattrs+sha512
-    /usr/sbin/augenrules p+i+n+u+g+s+b+acl+xattrs+sha512
-  "
+    /usr/sbin/augenrules p+i+n+u+g+s+b+acl+xattrs+sha512'
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000278-GPOS-00108'

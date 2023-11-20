@@ -1,11 +1,9 @@
 control 'SV-230320' do
-  title "All RHEL 8 local interactive users must have a home directory assigned
-in the /etc/passwd file."
-  desc  "If local interactive users are not assigned a valid home directory,
-there is no place for the storage and control of files they should own."
-  desc  'rationale', ''
-  desc  'check', "
-    Verify local interactive users on RHEL 8 have a home directory assigned
+  title 'All RHEL 8 local interactive users must have a home directory assigned
+in the /etc/passwd file.'
+  desc 'If local interactive users are not assigned a valid home directory,
+there is no place for the storage and control of files they should own.'
+  desc 'check', "Verify local interactive users on RHEL 8 have a home directory assigned
 with the following command:
 
     $ sudo pwck -r
@@ -23,10 +21,9 @@ the following command:
     $ sudo awk -F: '($3>=1000)&&($7 !~ /nologin/){print $1, $3, $6}' /etc/passwd
 
     If any interactive users do not have a home directory assigned, this is a
-finding.
-  "
-  desc 'fix', "Assign home directories to all local interactive users on RHEL
-8 that currently do not have a home directory assigned."
+finding."
+  desc 'fix', 'Assign home directories to all local interactive users on RHEL
+8 that currently do not have a home directory assigned.'
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'

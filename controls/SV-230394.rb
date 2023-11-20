@@ -1,7 +1,7 @@
 control 'SV-230394' do
-  title "RHEL 8 must label all off-loaded audit logs before sending them to the
-central log server."
-  desc  "Without establishing what type of events occurred, the source of
+  title 'RHEL 8 must label all off-loaded audit logs before sending them to the
+central log server.'
+  desc 'Without establishing what type of events occurred, the source of
 events, where events occurred, and the outcome of events, it would be difficult
 to establish, correlate, and investigate the events leading up to an outage or
 attack.
@@ -17,28 +17,22 @@ difficult.
 
     When audit logs are not labeled before they are sent to a central log
 server, the audit data will not be able to be analyzed and tied back to the
-correct system.
-  "
-  desc  'rationale', ''
-  desc  'check', "
-    Verify the RHEL 8 Audit Daemon is configured to label all off-loaded audit
+correct system.'
+  desc 'check', 'Verify the RHEL 8 Audit Daemon is configured to label all off-loaded audit
 logs, with the following command:
 
-    $ sudo grep \"name_format\" /etc/audit/auditd.conf
+    $ sudo grep "name_format" /etc/audit/auditd.conf
 
     name_format = hostname
 
-    If the \"name_format\" option is not \"hostname\", \"fqd\", or \"numeric\",
-or the line is commented out, this is a finding.
-  "
-  desc 'fix', "
-    Edit the /etc/audit/auditd.conf file and add or update the \"name_format\"
+    If the "name_format" option is not "hostname", "fqd", or "numeric",
+or the line is commented out, this is a finding.'
+  desc 'fix', 'Edit the /etc/audit/auditd.conf file and add or update the "name_format"
 option:
 
     name_format = hostname
 
-    The audit daemon must be restarted for changes to take effect.
-  "
+    The audit daemon must be restarted for changes to take effect.'
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000342-GPOS-00133'

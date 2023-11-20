@@ -1,6 +1,6 @@
 control 'SV-230487' do
   title 'RHEL 8 must not have the telnet-server package installed.'
-  desc  "It is detrimental for operating systems to provide, or install by
+  desc 'It is detrimental for operating systems to provide, or install by
 default, functionality exceeding requirements or mission objectives. These
 unnecessary capabilities or services are often overlooked and therefore may
 remain unsecured. They increase the risk to the platform by providing
@@ -25,23 +25,17 @@ not provide for the confidentiality and integrity of user passwords or the
 remote session.
 
     If a privileged user were to log on using this service, the privileged user
-password could be compromised.
-  "
-  desc  'rationale', ''
-  desc  'check', "
-    Check to see if the telnet-server package is installed with the following
+password could be compromised.'
+  desc 'check', 'Check to see if the telnet-server package is installed with the following
 command:
 
     $ sudo yum list installed telnet-server
 
-    If the telnet-server package is installed, this is a finding.
-  "
-  desc 'fix', "
-    Configure the operating system to disable non-essential capabilities by
+    If the telnet-server package is installed, this is a finding.'
+  desc 'fix', 'Configure the operating system to disable non-essential capabilities by
 removing the telnet-server package from the system with the following command:
 
-    $ sudo yum remove telnet-server
-  "
+    $ sudo yum remove telnet-server'
   impact 0.7
   tag severity: 'high'
   tag gtitle: 'SRG-OS-000095-GPOS-00049'

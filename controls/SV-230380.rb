@@ -1,21 +1,17 @@
 control 'SV-230380' do
-  title "RHEL 8 must not allow accounts configured with blank or null
-passwords."
-  desc  "If an account has an empty password, anyone could log on and run
+  title 'RHEL 8 must not allow accounts configured with blank or null
+passwords.'
+  desc 'If an account has an empty password, anyone could log on and run
 commands with the privileges of that account. Accounts with empty passwords
-should never be used in operational environments."
-  desc  'rationale', ''
-  desc  'check', "
-    To verify that null passwords cannot be used, run the following command:
+should never be used in operational environments.'
+  desc 'check', 'To verify that null passwords cannot be used, run the following command:
 
-    $ sudo grep -i permitemptypasswords /etc/ssh/sshd_config
+$ sudo grep -i permitemptypasswords /etc/ssh/sshd_config
 
-    PermitEmptyPasswords no
+PermitEmptyPasswords no
 
-    If \"PermitEmptyPasswords\" is set to \"yes\", this is a finding.
-  "
-  desc 'fix', "
-    Edit the following line in \"etc/ssh/sshd_config\" to prevent logons with
+If "PermitEmptyPasswords" is set to "yes", this is a finding.'
+  desc 'fix', 'Edit the following line in "etc/ssh/sshd_config" to prevent logons with
 empty passwords.
 
     PermitEmptyPasswords no
@@ -23,8 +19,7 @@ empty passwords.
     The SSH daemon must be restarted for the changes to take effect. To restart
 the SSH daemon, run the following command:
 
-    $ sudo systemctl restart sshd.service
-  "
+    $ sudo systemctl restart sshd.service'
   impact 0.7
   tag severity: 'high'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'

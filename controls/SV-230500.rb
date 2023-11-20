@@ -1,9 +1,9 @@
 control 'SV-230500' do
-  title "RHEL 8 must be configured to prohibit or restrict the use of
+  title 'RHEL 8 must be configured to prohibit or restrict the use of
 functions, ports, protocols, and/or services, as defined in the Ports,
 Protocols, and Services Management (PPSM) Category Assignments List (CAL) and
-vulnerability assessments."
-  desc  "To prevent unauthorized connection of devices, unauthorized transfer
+vulnerability assessments.'
+  desc 'To prevent unauthorized connection of devices, unauthorized transfer
 of information, or unauthorized tunneling (i.e., embedding of data types within
 data types), organizations must disable or restrict unused or unnecessary
 physical and logical ports/protocols on information systems.
@@ -19,11 +19,8 @@ services provided by any one component.
 operating system must support the organizational requirements, providing only
 essential capabilities and limiting the use of ports, protocols, and/or
 services to only those required, authorized, and approved to conduct official
-business or to address authorized quality-of-life issues.
-  "
-  desc  'rationale', ''
-  desc  'check', "
-    Inspect the firewall configuration and running services to verify it is
+business or to address authorized quality-of-life issues.'
+  desc 'check', 'Inspect the firewall configuration and running services to verify it is
 configured to prohibit or restrict the use of functions, ports, protocols,
 and/or services that are unnecessary or prohibited.
 
@@ -49,8 +46,7 @@ services allowed by the firewall match the PPSM CLSA.
 
     If there are additional ports, protocols, or services that are not in the
 PPSM CLSA, or there are ports, protocols, or services that are prohibited by
-the PPSM Category Assurance List (CAL), this is a finding.
-  "
+the PPSM Category Assurance List (CAL), this is a finding.'
   desc 'fix', "Update the host's firewall settings and/or running services to
 comply with the PPSM Component Local Service Assessment (CLSA) for the site or
 program and the PPSM CAL."

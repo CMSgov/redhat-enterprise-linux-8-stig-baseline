@@ -1,16 +1,14 @@
 control 'SV-244531' do
-  title "All RHEL 8 local interactive user home directory files must have mode
-0750 or less permissive."
-  desc  "Excessive permissions on local interactive user home directories may
-allow unauthorized access to user files by other users."
-  desc  'rationale', ''
-  desc  'check', "
-    Verify all files and directories contained in a local interactive user home
-directory, excluding local initialization files, have a mode of \"0750\".
-    Files that begin with a \".\" are excluded from this requirement.
+  title 'All RHEL 8 local interactive user home directory files must have mode
+0750 or less permissive.'
+  desc 'Excessive permissions on local interactive user home directories may
+allow unauthorized access to user files by other users.'
+  desc 'check', 'Verify all files and directories contained in a local interactive user home
+directory, excluding local initialization files, have a mode of "0750".
+    Files that begin with a "." are excluded from this requirement.
 
-    Note: The example will be for the user \"smithj\", who has a home directory
-of \"/home/smithj\".
+    Note: The example will be for the user "smithj", who has a home directory
+of "/home/smithj".
 
     $ sudo ls -lLR /home/smithj
     -rwxr-x--- 1 smithj smithj 18 Mar 5 17:06 file1
@@ -18,17 +16,14 @@ of \"/home/smithj\".
     -rw-r-x--- 1 smithj smithj 231 Mar 5 17:06 file3
 
     If any files or directories are found with a mode more permissive than
-\"0750\", this is a finding.
-  "
-  desc  'fix', "
-    Set the mode on files and directories in the local interactive user home
+"0750", this is a finding.'
+  desc 'fix', 'Set the mode on files and directories in the local interactive user home
 directory with the following command:
 
     Note: The example will be for the user smithj, who has a home directory of
-\"/home/smithj\" and is a member of the users group.
+"/home/smithj" and is a member of the users group.
 
-    $ sudo chmod 0750 /home/smithj/<file or directory>
-  "
+    $ sudo chmod 0750 /home/smithj/<file or directory>'
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'

@@ -1,10 +1,10 @@
 control 'SV-230265' do
-  title "RHEL 8 must prevent the installation of software, patches, service
+  title 'RHEL 8 must prevent the installation of software, patches, service
 packs, device drivers, or operating system components of local packages without
 verification they have been digitally signed using a certificate that is issued
 by a Certificate Authority (CA) that is recognized and approved by the
-organization."
-  desc  "Changes to any software components can have significant effects on the
+organization.'
+  desc 'Changes to any software components can have significant effects on the
 overall security of the operating system. This requirement ensures the software
 has not been tampered with and that it has been provided by a trusted vendor.
 
@@ -18,11 +18,8 @@ software has not been tampered with and that it has been provided by a trusted
 vendor. Self-signed certificates are disallowed by this requirement. The
 operating system should not have to verify the software again. This requirement
 does not mandate DoD certificates for this purpose; however, the certificate
-used to verify the software must be from an approved CA.
-  "
-  desc  'rationale', ''
-  desc  'check', "
-    Verify the operating system prevents the installation of patches, service
+used to verify the software must be from an approved CA.'
+  desc 'check', 'Verify the operating system prevents the installation of patches, service
 packs, device drivers, or operating system components from a repository without
 verification that they have been digitally signed using a certificate that is
 recognized and approved by the organization.
@@ -34,18 +31,15 @@ with the following command:
 
     localpkg_gpgcheck =True
 
-    If \"localpkg_gpgcheck\" is not set to either \"1\", \"True\", or \"yes\",
-commented out, or is missing from \"/etc/dnf/dnf.conf\", this is a finding.
-  "
-  desc 'fix', "
-    Configure the operating system to remove all software components after
+    If "localpkg_gpgcheck" is not set to either "1", "True", or "yes",
+commented out, or is missing from "/etc/dnf/dnf.conf", this is a finding.'
+  desc 'fix', 'Configure the operating system to remove all software components after
 updated versions have been installed.
 
-    Set the \"localpkg_gpgcheck\" option to \"True\" in the
-\"/etc/dnf/dnf.conf\" file:
+    Set the "localpkg_gpgcheck" option to "True" in the
+"/etc/dnf/dnf.conf" file:
 
-    localpkg_gpgcheck=True
-  "
+    localpkg_gpgcheck=True'
   impact 0.7
   tag severity: 'high'
   tag gtitle: 'SRG-OS-000366-GPOS-00153'

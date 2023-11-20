@@ -1,19 +1,14 @@
 control 'SV-244519' do
-  title "RHEL 8 must display a banner before granting local or remote access to
-the system via a graphical user logon."
-  desc  "Display of a standardized and approved use notification before
+  title 'RHEL 8 must display a banner before granting local or remote access to
+the system via a graphical user logon.'
+  desc 'Display of a standardized and approved use notification before
 granting access to the operating system ensures privacy and security
 notification verbiage used is consistent with applicable federal laws,
 Executive Orders, directives, policies, regulations, standards, and guidance.
 
     System use notifications are required only for access via logon interfaces
-with human users and are not required when such human interfaces do not exist.
-
-
-  "
-  desc  'rationale', ''
-  desc  'check', "
-    Verify RHEL 8 displays a banner before granting access to the operating
+with human users and are not required when such human interfaces do not exist.'
+  desc 'check', 'Verify RHEL 8 displays a banner before granting access to the operating
 system via a graphical user logon.
 
     Note: This requirement assumes the use of the RHEL 8 default graphical user
@@ -27,11 +22,9 @@ with the following command:
 
     banner-message-enable=true
 
-    If \"banner-message-enable\" is set to \"false\" or is missing, this is a
-finding.
-  "
-  desc 'fix', "
-    Configure the operating system to display a banner before granting access
+    If "banner-message-enable" is set to "false" or is missing, this is a
+finding.'
+  desc 'fix', 'Configure the operating system to display a banner before granting access
 to the system.
 
     Note: If the system does not have a graphical user interface installed,
@@ -43,7 +36,7 @@ this requirement is Not Applicable.
     $ sudo touch /etc/dconf/db/local.d/01-banner-message
 
     Add the following lines to the [org/gnome/login-screen] section of the
-\"/etc/dconf/db/local.d/01-banner-message\":
+"/etc/dconf/db/local.d/01-banner-message":
 
     [org/gnome/login-screen]
 
@@ -51,8 +44,7 @@ this requirement is Not Applicable.
 
     Run the following command to update the database:
 
-    $ sudo dconf update
-  "
+    $ sudo dconf update'
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000023-GPOS-00006'

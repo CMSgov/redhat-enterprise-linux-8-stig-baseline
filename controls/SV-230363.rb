@@ -1,7 +1,7 @@
 control 'SV-230363' do
-  title "RHEL 8 must require the change of at least 8 characters when passwords
-are changed."
-  desc  "Use of a complex password helps to increase the time and resources
+  title 'RHEL 8 must require the change of at least 8 characters when passwords
+are changed.'
+  desc 'Use of a complex password helps to increase the time and resources
 required to compromise the password. Password complexity, or strength, is a
 measure of the effectiveness of a password in resisting attempts at guessing
 and brute-force attacks.
@@ -11,32 +11,26 @@ takes to crack a password. The more complex the password, the greater the
 number of possible combinations that need to be tested before the password is
 compromised.
 
-    RHEL 8 utilizes \"pwquality\" as a mechanism to enforce password
-complexity. The \"difok\" option sets the number of characters in a password
-that must not be present in the old password.
-  "
-  desc  'rationale', ''
-  desc  'check', "
-    Verify the value of the \"difok\" option in
-\"/etc/security/pwquality.conf\" with the following command:
+    RHEL 8 utilizes "pwquality" as a mechanism to enforce password
+complexity. The "difok" option sets the number of characters in a password
+that must not be present in the old password.'
+  desc 'check', 'Verify the value of the "difok" option in
+"/etc/security/pwquality.conf" with the following command:
 
     $ sudo grep difok /etc/security/pwquality.conf
 
     difok = 8
 
-    If the value of \"difok\" is set to less than \"8\" or is commented out,
-this is a finding.
-  "
-  desc 'fix', "
-    Configure the operating system to require the change of at least eight of
+    If the value of "difok" is set to less than "8" or is commented out,
+this is a finding.'
+  desc 'fix', 'Configure the operating system to require the change of at least eight of
 the total number of characters when passwords are changed by setting the
-\"difok\" option.
+"difok" option.
 
-    Add the following line to \"/etc/security/pwquality.conf\" (or modify the
+    Add the following line to "/etc/security/pwquality.conf" (or modify the
 line to have the required value):
 
-    difok = 8
-  "
+    difok = 8'
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000072-GPOS-00040'

@@ -1,8 +1,8 @@
 control 'SV-230229' do
-  title "RHEL 8, for PKI-based authentication, must validate certificates by
+  title 'RHEL 8, for PKI-based authentication, must validate certificates by
 constructing a certification path (which includes status information) to an
-accepted trust anchor."
-  desc  "Without path validation, an informed trust decision by the relying
+accepted trust anchor.'
+  desc 'Without path validation, an informed trust decision by the relying
 party cannot be made when presented with any certificate not already explicitly
 trusted.
 
@@ -23,13 +23,8 @@ informed trust decision when presented with any certificate not already
 explicitly trusted. Status information for certification paths includes
 certificate revocation lists or online certificate status protocol responses.
 Validation of the certificate status information is out of scope for this
-requirement.
-
-
-  "
-  desc  'rationale', ''
-  desc  'check', "
-    Verify RHEL 8 for PKI-based authentication has valid certificates by
+requirement.'
+  desc 'check', 'Verify RHEL 8 for PKI-based authentication has valid certificates by
 constructing a certification path (which includes status information) to an
 accepted trust anchor.
 
@@ -54,22 +49,19 @@ Root CA 3
              Public Key Algorithm: rsaEncryption
 
     If the root ca file is not a DoD-issued certificate with a valid date and
-installed in the /etc/sssd/pki/sssd_auth_ca_db.pem location, this is a finding.
-  "
-  desc 'fix', "
-    Configure RHEL 8, for PKI-based authentication, to validate certificates by
+installed in the /etc/sssd/pki/sssd_auth_ca_db.pem location, this is a finding.'
+  desc 'fix', 'Configure RHEL 8, for PKI-based authentication, to validate certificates by
 constructing a certification path (which includes status information) to an
 accepted trust anchor.
 
     Obtain a valid copy of the DoD root CA file from the PKI CA certificate
 bundle from cyber.mil and copy the DoD_PKE_CA_chain.pem into the following file:
 
-    /etc/sssd/pki/sssd_auth_ca_db.pem
-  "
+    /etc/sssd/pki/sssd_auth_ca_db.pem'
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000066-GPOS-00034'
-  tag satisfies: %w(SRG-OS-000066-GPOS-00034 SRG-OS-000384-GPOS-00167)
+  tag satisfies: ['SRG-OS-000066-GPOS-00034', 'SRG-OS-000384-GPOS-00167']
   tag gid: 'V-230229'
   tag rid: 'SV-230229r627750_rule'
   tag stig_id: 'RHEL-08-010090'

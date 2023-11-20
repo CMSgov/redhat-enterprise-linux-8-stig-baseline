@@ -1,29 +1,24 @@
 control 'SV-244523' do
-  title "RHEL 8 operating systems must require authentication upon booting into
-emergency mode."
-  desc  "If the system does not require valid root authentication before it
+  title 'RHEL 8 operating systems must require authentication upon booting into
+emergency mode.'
+  desc 'If the system does not require valid root authentication before it
 boots into emergency or rescue mode, anyone who invokes emergency or rescue
-mode is granted privileged access to all files on the system."
-  desc  'rationale', ''
-  desc  'check', "
-    Check to see if the system requires authentication for emergency mode with
+mode is granted privileged access to all files on the system.'
+  desc 'check', 'Check to see if the system requires authentication for emergency mode with
 the following command:
 
     $ sudo grep sulogin-shell /usr/lib/systemd/system/emergency.service
 
     ExecStart=-/usr/lib/systemd/systemd-sulogin-shell emergency
 
-    If the \"ExecStart\" line is configured for anything other than
-\"/usr/lib/systemd/systemd-sulogin-shell emergency\", commented out, or
-missing, this is a finding.
-  "
-  desc 'fix', "
-    Configure the system to require authentication upon booting into emergency
+    If the "ExecStart" line is configured for anything other than
+"/usr/lib/systemd/systemd-sulogin-shell emergency", commented out, or
+missing, this is a finding.'
+  desc 'fix', 'Configure the system to require authentication upon booting into emergency
 mode by adding the following line to the
-\"/usr/lib/systemd/system/emergency.service\" file.
+"/usr/lib/systemd/system/emergency.service" file.
 
-    ExecStart=-/usr/lib/systemd/systemd-sulogin-shell emergency
-  "
+    ExecStart=-/usr/lib/systemd/systemd-sulogin-shell emergency'
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000080-GPOS-00048'

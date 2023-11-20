@@ -1,6 +1,6 @@
 control 'SV-230249' do
   title 'The RHEL 8 /var/log directory must be owned by root.'
-  desc  "Only authorized personnel should be aware of errors and the details of
+  desc "Only authorized personnel should be aware of errors and the details of
 the errors. Error messages are an indicator of an organization's operational
 state or can identify the RHEL 8 system or platform. Additionally, Personally
 Identifiable Information (PII) and operational information must not be revealed
@@ -10,24 +10,18 @@ representatives.
     The structure and content of error messages must be carefully considered by
 the organization and development team. The extent to which the information
 system is able to identify and handle error conditions is guided by
-organizational policy and operational requirements.
-  "
-  desc  'rationale', ''
-  desc  'check', "
-    Verify the /var/log directory is owned by root with the following command:
+organizational policy and operational requirements."
+  desc 'check', 'Verify the /var/log directory is owned by root with the following command:
 
-    $ sudo stat -c \"%U\" /var/log
+$ sudo stat -c "%U" /var/log
 
-    root
+root
 
-    If \"root\" is not returned as a result, this is a finding.
-  "
-  desc 'fix', "
-    Change the owner of the directory /var/log to root by running the following
+If "root" is not returned as a result, this is a finding.'
+  desc 'fix', 'Change the owner of the directory /var/log to root by running the following
 command:
 
-    $ sudo chown root /var/log
-  "
+    $ sudo chown root /var/log'
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000206-GPOS-00084'

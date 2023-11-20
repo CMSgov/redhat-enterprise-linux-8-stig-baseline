@@ -1,6 +1,6 @@
 control 'SV-230498' do
   title 'RHEL 8 must disable mounting of cramfs.'
-  desc  "It is detrimental for operating systems to provide, or install by
+  desc 'It is detrimental for operating systems to provide, or install by
 default, functionality exceeding requirements or mission objectives. These
 unnecessary capabilities or services are often overlooked and therefore may
 remain unsecured. They increase the risk to the platform by providing
@@ -11,14 +11,11 @@ surface of the server.
 
     Compressed ROM/RAM file system (or cramfs) is a read-only file system
 designed for simplicity and space-efficiency.  It is mainly used in embedded
-and small-footprint systems.
-  "
-  desc  'rationale', ''
-  desc  'check', "
-    Verify the operating system disables the ability to load the cramfs kernel
+and small-footprint systems.'
+  desc 'check', 'Verify the operating system disables the ability to load the cramfs kernel
 module.
 
-    $ sudo grep -ri cramfs /etc/modprobe.d/* | grep -i \"/bin/true\"
+    $ sudo grep -ri cramfs /etc/modprobe.d/* | grep -i "/bin/true"
 
     install cramfs /bin/true
 
@@ -32,27 +29,24 @@ module.
     Check to see if the cramfs kernel module is disabled with the following
 command:
 
-    $ sudo grep -ri cramfs /etc/modprobe.d/* | grep -i \"blacklist\"
+    $ sudo grep -ri cramfs /etc/modprobe.d/* | grep -i "blacklist"
 
     blacklist cramfs
 
-    If the command does not return any output or the output is not \"blacklist
-cramfs\", and use of the cramfs kernel module is not documented with the
+    If the command does not return any output or the output is not "blacklist
+cramfs", and use of the cramfs kernel module is not documented with the
 Information System Security Officer (ISSO) as an operational requirement, this
-is a finding.
-  "
-  desc 'fix', "
-    Configure the operating system to disable the ability to use the cramfs
+is a finding.'
+  desc 'fix', 'Configure the operating system to disable the ability to use the cramfs
 kernel module.
 
     Add or update the following lines in the file
-\"/etc/modprobe.d/blacklist.conf\":
+"/etc/modprobe.d/blacklist.conf":
 
     install cramfs /bin/true
     blacklist cramfs
 
-    Reboot the system for the settings to take effect.
-  "
+    Reboot the system for the settings to take effect.'
   impact 0.3
   tag severity: 'low'
   tag gtitle: 'SRG-OS-000095-GPOS-00049'

@@ -1,7 +1,7 @@
 control 'SV-230527' do
-  title "RHEL 8 must force a frequent session key renegotiation for SSH
-connections to the server."
-  desc  "Without protection of the transmitted information, confidentiality and
+  title 'RHEL 8 must force a frequent session key renegotiation for SSH
+connections to the server.'
+  desc 'Without protection of the transmitted information, confidentiality and
 integrity may be compromised because unprotected communications can be
 intercepted and either read or altered.
 
@@ -19,38 +19,29 @@ physical means of protection are employed, then logical means (cryptography) do
 not have to be employed, and vice versa.
 
     Session key regeneration limits the chances of a session key becoming
-compromised.
-
-
-  "
-  desc  'rationale', ''
-  desc  'check', "
-    Verify the SSH server is configured to force frequent session key
+compromised.'
+  desc 'check', 'Verify the SSH server is configured to force frequent session key
 renegotiation with the following command:
 
     $ sudo grep -i RekeyLimit /etc/ssh/sshd_config
 
     RekeyLimit 1G 1h
 
-    If \"RekeyLimit\" does not have a maximum data amount and maximum time
-defined, is missing or commented out, this is a finding.
-  "
-  desc 'fix', "
-    Configure the system to force a frequent session key renegotiation for SSH
+    If "RekeyLimit" does not have a maximum data amount and maximum time
+defined, is missing or commented out, this is a finding.'
+  desc 'fix', 'Configure the system to force a frequent session key renegotiation for SSH
 connections to the server by add or modifying the following line in the
-\"/etc/ssh/sshd_config\" file:
+"/etc/ssh/sshd_config" file:
 
     RekeyLimit 1G 1h
 
     Restart the SSH daemon for the settings to take effect.
 
-    $ sudo systemctl restart sshd.service
-  "
+    $ sudo systemctl restart sshd.service'
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000033-GPOS-00014'
-  tag satisfies: %w(SRG-OS-000033-GPOS-00014 SRG-OS-000420-GPOS-00186
-                    SRG-OS-000424-GPOS-00188)
+  tag satisfies: ['SRG-OS-000033-GPOS-00014', 'SRG-OS-000420-GPOS-00186', 'SRG-OS-000424-GPOS-00188']
   tag gid: 'V-230527'
   tag rid: 'SV-230527r627750_rule'
   tag stig_id: 'RHEL-08-040161'

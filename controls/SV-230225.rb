@@ -1,7 +1,7 @@
 control 'SV-230225' do
-  title "RHEL 8 must display the Standard Mandatory DoD Notice and Consent
-Banner before granting local or remote access to the system via a ssh logon."
-  desc  "Display of a standardized and approved use notification before
+  title 'RHEL 8 must display the Standard Mandatory DoD Notice and Consent
+Banner before granting local or remote access to the system via a ssh logon.'
+  desc %q(Display of a standardized and approved use notification before
 granting access to the operating system ensures privacy and security
 notification verbiage used is consistent with applicable federal laws,
 Executive Orders, directives, policies, regulations, standards, and guidance.
@@ -13,7 +13,7 @@ with human users and are not required when such human interfaces do not exist.
 the following verbiage for operating systems that can accommodate banners of
 1300 characters:
 
-    \"You are accessing a U.S. Government (USG) Information System (IS) that is
+    "You are accessing a U.S. Government (USG) Information System (IS) that is
 provided for USG-authorized use only.
 
     By using this IS (which includes any device attached to this IS), you
@@ -38,18 +38,13 @@ PM, LE or CI investigative searching or monitoring of the content of privileged
 communications, or work product, related to personal representation or services
 by attorneys, psychotherapists, or clergy, and their assistants. Such
 communications and work product are private and confidential. See User
-Agreement for details.\"
+Agreement for details."
 
     Use the following verbiage for operating systems that have severe
 limitations on the number of characters that can be displayed in the banner:
 
-    \"I've read and consent to terms in IS user agreem't.\"
-
-
-  "
-  desc  'rationale', ''
-  desc  'check', "
-    Verify any publicly accessible connection to the operating system displays
+    "I've read and consent to terms in IS user agreem't.")
+  desc 'check', 'Verify any publicly accessible connection to the operating system displays
 the Standard Mandatory DoD Notice and Consent Banner before granting access to
 the system.
 
@@ -61,14 +56,14 @@ command:
     banner /etc/issue
 
     This command will return the banner keyword and the name of the file that
-contains the ssh banner (in this case \"/etc/issue\").
+contains the ssh banner (in this case "/etc/issue").
 
     If the line is commented out, this is a finding.
 
     View the file specified by the banner keyword to check that it matches the
 text of the Standard Mandatory DoD Notice and Consent Banner:
 
-    \"You are accessing a U.S. Government (USG) Information System (IS) that is
+    "You are accessing a U.S. Government (USG) Information System (IS) that is
 provided for USG-authorized use only. By using this IS (which includes any
 device attached to this IS), you consent to the following conditions:
 
@@ -91,20 +86,18 @@ PM, LE or CI investigative searching or monitoring of the content of privileged
 communications, or work product, related to personal representation or services
 by attorneys, psychotherapists, or clergy, and their assistants. Such
 communications and work product are private and confidential. See User
-Agreement for details.\"
+Agreement for details."
 
     If the system does not display a graphical logon banner or the banner does
 not match the Standard Mandatory DoD Notice and Consent Banner, this is a
 finding.
 
     If the text in the file does not match the Standard Mandatory DoD Notice
-and Consent Banner, this is a finding.
-  "
-  desc 'fix', "
-    Configure the operating system to display the Standard Mandatory DoD Notice
+and Consent Banner, this is a finding.'
+  desc 'fix', 'Configure the operating system to display the Standard Mandatory DoD Notice
 and Consent Banner before granting access to the system via the ssh.
 
-    Edit the \"/etc/ssh/sshd_config\" file to uncomment the banner keyword and
+    Edit the "/etc/ssh/sshd_config" file to uncomment the banner keyword and
 configure it to point to a file that will contain the logon banner (this file
 may be named differently or be in a different location if using a version of
 SSH that is provided by a third-party vendor). An example configuration line is:
@@ -115,7 +108,7 @@ SSH that is provided by a third-party vendor). An example configuration line is:
 file with the Standard Mandatory DoD Notice and Consent Banner. The
 DoD-required text is:
 
-    \"You are accessing a U.S. Government (USG) Information System (IS) that is
+    "You are accessing a U.S. Government (USG) Information System (IS) that is
 provided for USG-authorized use only. By using this IS (which includes any
 device attached to this IS), you consent to the following conditions:
 
@@ -138,14 +131,13 @@ PM, LE or CI investigative searching or monitoring of the content of privileged
 communications, or work product, related to personal representation or services
 by attorneys, psychotherapists, or clergy, and their assistants. Such
 communications and work product are private and confidential. See User
-Agreement for details.\"
+Agreement for details."
 
-    The SSH service must be restarted for changes to take effect.
-  "
+    The SSH service must be restarted for changes to take effect.'
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000023-GPOS-00006'
-  tag satisfies: %w(SRG-OS-000023-GPOS-00006 SRG-OS-000228-GPOS-00088)
+  tag satisfies: ['SRG-OS-000023-GPOS-00006', 'SRG-OS-000228-GPOS-00088']
   tag gid: 'V-230225'
   tag rid: 'SV-230225r627750_rule'
   tag stig_id: 'RHEL-08-010040'

@@ -1,18 +1,18 @@
 control 'SV-230223' do
-  title "RHEL 8 must implement NIST FIPS-validated cryptography for the
+  title 'RHEL 8 must implement NIST FIPS-validated cryptography for the
 following: to provision digital signatures, to generate cryptographic hashes,
 and to protect data requiring data-at-rest protections in accordance with
 applicable federal laws, Executive Orders, directives, policies, regulations,
-and standards."
-  desc  "Use of weak or untested encryption algorithms undermines the purposes
+and standards.'
+  desc 'Use of weak or untested encryption algorithms undermines the purposes
 of using encryption to protect data. The operating system must implement
 cryptographic modules adhering to the higher standards approved by the Federal
 Government since this provides assurance they have been tested and validated.
 
     RHEL 8 utilizes GRUB 2 as the default bootloader. Note that GRUB 2
-command-line parameters are defined in the \"kernelopts\" variable of the
+command-line parameters are defined in the "kernelopts" variable of the
 /boot/grub2/grubenv file for all kernel boot entries.  The command
-\"fips-mode-setup\" modifies the \"kernelopts\" variable, which in turn updates
+"fips-mode-setup" modifies the "kernelopts" variable, which in turn updates
 all kernel boot entries.
 
     The fips=1 kernel option needs to be added to the kernel command line
@@ -21,13 +21,8 @@ algorithms and continuous monitoring tests in place. Users must also ensure the
 system has plenty of entropy during the installation process by moving the
 mouse around, or if no mouse is available, ensuring that many keystrokes are
 typed. The recommended amount of keystrokes is 256 and more. Less than 256
-keystrokes may generate a non-unique key.
-
-
-  "
-  desc  'rationale', ''
-  desc  'check', "
-    Verify the operating system implements DoD-approved encryption to protect
+keystrokes may generate a non-unique key.'
+  desc 'check', 'Verify the operating system implements DoD-approved encryption to protect
 the confidentiality of remote access sessions.
 
     Check to see if FIPS mode is enabled with the following command:
@@ -38,7 +33,7 @@ the confidentiality of remote access sessions.
 
     fips mode is on
 
-    If FIPS mode is \"on\", check to see if the kernel boot parameter is
+    If FIPS mode is "on", check to see if the kernel boot parameter is
 configured for FIPS mode with the following command:
 
     $ sudo grub2-editenv - list | grep fips
@@ -54,12 +49,10 @@ if the system is in FIPS mode with the following command:
 
     1
 
-    If FIPS mode is not \"on\", the kernel boot parameter is not configured for
-FIPS mode, or the system does not have a value of \"1\" for \"fips_enabled\" in
-\"/proc/sys/crypto\", this is a finding.
-  "
-  desc 'fix', "
-    Configure the operating system to implement DoD-approved encryption by
+    If FIPS mode is not "on", the kernel boot parameter is not configured for
+FIPS mode, or the system does not have a value of "1" for "fips_enabled" in
+"/proc/sys/crypto", this is a finding.'
+  desc 'fix', 'Configure the operating system to implement DoD-approved encryption by
 following the steps below:
 
     To enable strict FIPS compliance, the fips=1 kernel option needs to be
@@ -72,14 +65,11 @@ following command:
 
     $ sudo fips-mode-setup --enable
 
-    Reboot the system for the changes to take effect.
-  "
+    Reboot the system for the changes to take effect.'
   impact 0.7
   tag severity: 'high'
   tag gtitle: 'SRG-OS-000033-GPOS-00014'
-  tag satisfies: %w(SRG-OS-000033-GPOS-00014 SRG-OS-000125-GPOS-00065
-                    SRG-OS-000396-GPOS-00176 SRG-OS-000423-GPOS-00187
-                    SRG-OS-000478-GPOS-00223)
+  tag satisfies: ['SRG-OS-000033-GPOS-00014', 'SRG-OS-000125-GPOS-00065', 'SRG-OS-000396-GPOS-00176', 'SRG-OS-000423-GPOS-00187', 'SRG-OS-000478-GPOS-00223']
   tag gid: 'V-230223'
   tag rid: 'SV-230223r627750_rule'
   tag stig_id: 'RHEL-08-010020'
