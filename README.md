@@ -201,8 +201,29 @@ permit_root_login:
 # Define default permissions for logon and non-logon shells. (Hash - bashrc_umask, cshrc_umask)
 permissions_for_shells:
 
-#  Certificate status checking for multifactor authentication. (String)
+# Certificate status checking for multifactor authentication. (String)
 sssd_certificate_verification:
+
+# Path of sssd_conf file (String)
+sssd_conf_path:
+
+# Group owner of /var/log/audit/audit.log (Array)
+var_log_audit_group:
+
+# Whether to use fapolicyd, similar to SELinux whitelisting (Boolean)
+use_fapolicyd:
+
+# The key of the /etc/passwd file in /etc/audit/rules.d.* (String)
+audit_passwd_key:
+
+# The key of the /etc/group file in /etc/audit/rules.d.* (String)
+audit_group_key:
+
+# The pam.d auth paths (Hash - system-auth, password-auth)
+pam_auth_files:
+
+# The security faillock configuration file
+security_faillock_conf:
 ```
 
 # Running the Profile
