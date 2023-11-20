@@ -12,4 +12,3 @@
     rhel_08_040124: false
     rhel_08_040125: false
     rhel_08_010380: false
-  #  - deployment_task: configure_apps.yml
