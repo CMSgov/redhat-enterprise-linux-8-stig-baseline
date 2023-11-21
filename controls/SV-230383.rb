@@ -37,12 +37,14 @@ file to "077":
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
 
+  permissions_for_shells = input('permissions_for_shells')
+
   if login_defs.read_params['UMASK'].eql?('000')
     impact 0.7
   else
     impact 0.5
   end
   describe login_defs do
-    its('UMASK') { should eq input('permissions_for_shells')['default_umask'] }
+    its('UMASK') { should cmp permissions_for_shells['default_umask'] }
   end
 end
