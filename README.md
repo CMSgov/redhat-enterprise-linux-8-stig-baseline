@@ -227,6 +227,9 @@ security_faillock_conf:
 
 # The kernel modules protocols (Hash - asynchronous_transfer_mode, controller_area_network,stream_control_transmission_protocol, transparent_inter_process_communication)
 kernel_modules:
+
+# Firewall properties to check (Hash - default_zone, ports, protocols, services)
+firewalld_properties:
 ```
 
 # Running the Profile

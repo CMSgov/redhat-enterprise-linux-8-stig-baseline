@@ -442,10 +442,8 @@ inputs:
     type: Hash
     value:
       default_zone: public
-      ports:
-      -
-      protocols:
-      -
+      ports: []
+      protocols: []
       services:
       - cockpit
       - dhcpv6-client
