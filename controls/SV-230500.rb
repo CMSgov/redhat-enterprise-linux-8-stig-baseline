@@ -73,9 +73,9 @@ program and the PPSM CAL."
       its('default_zone') { should eq firewalld_properties['default_zone'] }
     end
     describe firewalld.where { zone == firewalld_properties['default_zone'] } do
-      its('ports') { should cmp ','.join(firewalld_properties['ports']) }
-      its('protocols') { should cmp ','.join(firewalld_properties['protocols']) }
-      its('services') { should cmp ','.join(firewalld_properties['services']) }
+      its('ports') { should cmp firewalld_properties['ports'].join(',') }
+      its('protocols') { should cmp firewalld_properties['protocols'].join(',') }
+      its('services') { should cmp firewalld_properties['services'].join(',') }
     end
   end
 end
