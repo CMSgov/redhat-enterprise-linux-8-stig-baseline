@@ -86,13 +86,14 @@ restart the "sssd" service, run the following command:
       skip "The release is #{os_version_min} or newer; Currently on release #{os.release}, this control is Not Applicable."
     end
   else
-    describe pam(pam_auth_files['password-auth']) do
-      its('lines') { should match_pam_rule('auth [default=die]|required pam_faillock.so preauth').all_with_integer_arg('deny', '<=', input('unsuccessful_attempts')) }
-      its('lines') { should match_pam_rule('auth [default=die]|required pam_faillock.so preauth').all_with_integer_arg('deny', '>=', 0) }
-    end
-    describe pam(pam_auth_files['system-auth']) do
-      its('lines') { should match_pam_rule('auth [default=die]|required pam_faillock.so preauth').all_with_integer_arg('deny', '<=', input('unsuccessful_attempts')) }
-      its('lines') { should match_pam_rule('auth [default=die]|required pam_faillock.so preauth').all_with_integer_arg('deny', '>=', 0) }
+    [
+      pam_auth_files['password-auth'],
+      pam_auth_files['system-auth']
+    ].each do |path|
+      describe pam(path) do
+        its('lines') { should match_pam_rule('auth [default=die]|required pam_faillock.so preauth').all_with_integer_arg('deny', '<=', input('unsuccessful_attempts')) }
+        its('lines') { should match_pam_rule('auth [default=die]|required pam_faillock.so preauth').all_with_integer_arg('deny', '>=', 0) }
+      end
     end
   end
 end
