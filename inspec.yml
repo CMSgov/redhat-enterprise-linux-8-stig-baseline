@@ -308,7 +308,7 @@ inputs:
   - name: sshd_client_alive_count_max
     description: all network connections associated with SSH traffic are terminated at the end of the session or after 10 minutes of inactivity
     type: Numeric
-    value: 0
+    value: 1
 
   # SV-245540
   - name: linux_threat_prevention_tool
