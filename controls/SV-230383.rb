@@ -43,6 +43,6 @@ file to "077":
     impact 0.5
   end
   describe login_defs do
-    its('UMASK') { should eq '077' }
+    its('UMASK') { should eq input('permissions_for_shells')['default_umask'] }
   end
 end

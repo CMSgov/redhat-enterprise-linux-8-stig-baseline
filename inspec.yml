@@ -361,11 +361,12 @@ inputs:
     type: String
     value: 'no'
 
-  # SV-230385
+  # SV-230385, SV-230383
   - name: permissions_for_shells
     description: Define default permissions for logon and non-logon shells.
     type: Hash
     value:
+      default_umask: '077'
       bashrc_umask: '077'
       cshrc_umask: '077'
 
