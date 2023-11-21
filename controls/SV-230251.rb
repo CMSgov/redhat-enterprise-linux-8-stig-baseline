@@ -61,7 +61,7 @@ A reboot is required for the changes to take effect.'
 
     unless crypto_policy.nil?
       describe parse_config(crypto_policy.gsub(/\s|'/, "\n")) do
-        its('-oMACS') { should cmp 'hmac-sha2-512,hmac-sha2-256' }
+        its('-oMACS') { should cmp 'hmac-sha2-512,hmac-sha2-256,hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com' }
       end
     end
   end
