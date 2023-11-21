@@ -435,3 +435,16 @@ inputs:
       controller_area_network: CAN
       stream_control_transmission_protocol: SCTP
       transparent_inter_process_communication: TIPC
+
+  # SV-230500
+  - name: firewalld_properties
+    description: Ports, Protocols and Services Rules
+    type: Hash
+    value:
+      default_zone: public
+      ports:
+      - 22/tcp
+      services:
+      - cockpit
+      - dhcpv6-client
+      - ssh

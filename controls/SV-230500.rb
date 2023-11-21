@@ -66,9 +66,12 @@ program and the PPSM CAL."
       skip 'Control not applicable within a container'
     end
   else
-    # describe "Firewalld is not running. Manually validate  Ports, Protocols, and Services Management Component Local Service Assessment (PPSM CLSA). Verify the services allowed by the firewall match the PPSM CLSA firewall-cmd --list-all-zones \n #{all_zones}"
+    firewalld_properties = input('firewalld_properties')
     describe firewalld do
       it { should be_running }
+      its('default_zone') { should eq firewalld_properties['default_zone'] }
+      it { should have_service_enabled_in_zone(firewalld_properties['services']) }
+      it { should have_port_enabled_in_zone(firewalld_properties['ports'])}
     end
   end
 end
