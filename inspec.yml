@@ -443,7 +443,9 @@ inputs:
     value:
       default_zone: public
       ports:
+      -
       protocols:
+      -
       services:
       - cockpit
       - dhcpv6-client
