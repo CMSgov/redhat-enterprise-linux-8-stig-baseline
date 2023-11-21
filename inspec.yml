@@ -56,7 +56,10 @@ inputs:
   - name: exempt_home_users
     description: Users exempt from home directory-based controls in array format
     type: Array
-    value: ["vagrant"]
+    value:
+    - root
+    - vagrant
+    - ec2_user
 
   # SV-230309, SV-230317, SV-230320, SV-230321, SV-230322, SV-230325, SV-230328. SV-230384, SV-244531, SV-244532
   - name: non_interactive_shells
