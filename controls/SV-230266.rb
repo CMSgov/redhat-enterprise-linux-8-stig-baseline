@@ -62,7 +62,7 @@ command:
     end
 
     describe command('grep -r ^kernel.kexec_load_disabled /etc/sysctl.conf /etc/sysctl.d/*.conf') do
-      its('stdout') { should match /kernel.kexec_load_disabled(\s+)=(\s+)1$/ }
+      its('stdout') { should match /kernel.kexec_load_disabled(\s+)?[=](\s+)?1$/ }
     end
   end
 end
