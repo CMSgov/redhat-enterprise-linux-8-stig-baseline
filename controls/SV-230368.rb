@@ -45,11 +45,11 @@ five generations.
   tag cci: ['CCI-000200']
   tag nist: ['IA-5 (1) (e)']
 
-  %w(
-    system-auth
-    password-auth
-  ).each do |path|
-    describe pam("/etc/pam.d/#{path}") do
+  [
+    pam_auth_files['password-auth'],
+    pam_auth_files['system-auth']
+  ].each do |path|
+    describe pam(path) do
       its('lines') { should match_pam_rule('password (required|requisite|sufficient) pam_pwhistory.so').any_with_integer_arg('remember', '>=', input('min_reuse_generations')) }
     end
   end
