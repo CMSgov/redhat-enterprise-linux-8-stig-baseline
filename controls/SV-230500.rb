@@ -60,18 +60,22 @@ program and the PPSM CAL."
   tag cci: ['CCI-000382']
   tag nist: ['CM-7 b']
 
+  firewalld_properties = input('firewalld_properties')
+
   if virtualization.system.eql?('docker')
     impact 0.0
     describe 'Control not applicable within a container' do
       skip 'Control not applicable within a container'
     end
   else
-    firewalld_properties = input('firewalld_properties')
     describe firewalld do
       it { should be_running }
       its('default_zone') { should eq firewalld_properties['default_zone'] }
-      it { should have_service_enabled_in_zone(firewalld_properties['services']) }
-      it { should have_port_enabled_in_zone(firewalld_properties['ports'])}
+    end
+    describe firewalld.where { zone == firewalld_properties['default_zone'] } do
+      its('ports') { should cmp firewalld_properties['ports'] }
+      its('protocols') { should cmp firewalld_properties['protocols'] }
+      its('services') { should cmp firewalld_properties['services'] }
     end
   end
 end
