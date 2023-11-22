@@ -8,7 +8,7 @@
   become: yes
   vars:
     rhel8stig_bootloader_password_hash: "changethispassword"
-    rhel_08_040123: false
-    rhel_08_040124: false
-    rhel_08_040125: false
-    rhel_08_010380: false
+    rhel_08_040123: false # RHEL 8 must mount /tmp with the nodev option.
+    rhel_08_040124: false # RHEL 8 must mount /tmp with the nosuid option.
+    rhel_08_040125: false # RHEL 8 must mount /tmp with the noexec option.
+    rhel_08_010380: false # RHEL 8 must require users to provide a password for privilege escalation.
