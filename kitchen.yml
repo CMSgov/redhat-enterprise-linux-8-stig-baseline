@@ -8,8 +8,8 @@ verifier:
   inspec_tests:
     - name: Red Hat 8 STIG
       path: .
-  # Failed Controls
   controls:
+    # Controls Currently Failing
     - SV-230223
     - SV-230224
     - SV-230233
