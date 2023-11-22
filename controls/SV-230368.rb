@@ -45,6 +45,8 @@ five generations.
   tag cci: ['CCI-000200']
   tag nist: ['IA-5 (1) (e)']
 
+  pam_auth_files = input('pam_auth_files')
+  
   [
     pam_auth_files['password-auth'],
     pam_auth_files['system-auth']
