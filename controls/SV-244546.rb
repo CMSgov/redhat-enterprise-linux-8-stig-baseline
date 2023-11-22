@@ -25,67 +25,50 @@ It can be used to either blacklist or whitelist processes or file access.
     Proceed with caution with enforcing the use of this daemon. Improper
 configuration may render the system non-functional. The "fapolicyd" API is
 not namespace aware and can cause issues when launching or running containers.'
-  desc 'check', 'Verify the RHEL 8 "fapolicyd" employs a deny-all, permit-by-exception
-policy.
+  desc 'check', 'Verify the RHEL 8 "fapolicyd" employs a deny-all, permit-by-exception policy.
 
-    Check that "fapolicyd" is in enforcement mode with the following command:
+Check that "fapolicyd" is in enforcement mode with the following command:
 
-    $ sudo grep permissive /etc/fapolicyd/fapolicyd.conf
+$ sudo grep permissive /etc/fapolicyd/fapolicyd.conf
 
-    permissive = 0
+permissive = 0
 
-    Check that fapolicyd employs a deny-all policy on system mounts with the
-following commands:
+Check that fapolicyd employs a deny-all policy on system mounts with the following commands:
 
-    $ sudo tail /etc/fapolicyd/fapolicyd.rules
+For RHEL 8.4 systems and older:
+$ sudo tail /etc/fapolicyd/fapolicyd.rules
 
-    allow exe=/usr/bin/python3.7 : ftype=text/x-python
-    deny_audit perm=any pattern=ld_so : all
-    deny perm=any all : all
+For RHEL 8.5 systems and newer:
+$ sudo tail /etc/fapolicyd/compiled.rules
 
-    $ sudo cat /etc/fapolicyd/fapolicyd.mounts
+allow exe=/usr/bin/python3.7 : ftype=text/x-python
+deny_audit perm=any pattern=ld_so : all
+deny perm=any all : all
 
-    /dev/shm
-    /run
-    /sys/fs/cgroup
-    /
-    /home
-    /boot
-    /run/user/42
-    /run/user/1000
+If fapolicyd is not running in enforcement mode with a deny-all, permit-by-exception policy, this is a finding.'
+  desc 'fix', 'Configure RHEL 8 to employ a deny-all, permit-by-exception application whitelisting policy with "fapolicyd".
 
-    If fapolicyd is not running in enforcement mode on all system mounts with a
-deny-all, permit-by-exception policy, this is a finding.'
-  desc 'fix', %q(Configure RHEL 8 to employ a deny-all, permit-by-exception application
-whitelisting policy with "fapolicyd" using the following command:
+With the "fapolicyd" installed and enabled, configure the daemon to function in permissive mode until the whitelist is built correctly to avoid system lockout. Do this by editing the "/etc/fapolicyd/fapolicyd.conf" file with the following line:
 
-    Note: Running this command requires a root shell
+permissive = 1
 
-    # mount | egrep '^tmpfs| ext4| ext3| xfs' | awk '{ printf "%s    ", $3 }' >> /etc/fapolicyd/fapolicyd.mounts
+For RHEL 8.4 systems and older:
+Build the whitelist in the "/etc/fapolicyd/fapolicyd.rules" file ensuring the last rule is "deny perm=any all : all".
 
-    With the "fapolicyd" installed and enabled, configure the daemon to
-function in permissive mode until the whitelist is built correctly to avoid
-system lockout. Do this by editing the "/etc/fapolicyd/fapolicyd.conf" file
-with the following line:
+For RHEL 8.5 systems and newer:
+Build the whitelist in a file within the "/etc/fapolicyd/rules.d" directory ensuring the last rule is "deny perm=any all : all".
 
-    permissive = 1
+Once it is determined the whitelist is built correctly, set the fapolicyd to enforcing mode by editing the "permissive" line in the /etc/fapolicyd/fapolicyd.conf file.
 
-    Build the whitelist in the "/etc/fapolicyd/fapolicyd.rules" file ensuring
-the last rule is "deny perm=any all : all".
-
-    Once it is determined the whitelist is built correctly, set the fapolicyd
-to enforcing mode by editing the "permissive" line in the
-/etc/fapolicyd/fapolicyd.conf file.
-
-    permissive = 0)
+permissive = 0'
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000368-GPOS-00154'
   tag satisfies: ['SRG-OS-000368-GPOS-00154', 'SRG-OS-000370-GPOS-00155', 'SRG-OS-000480-GPOS-00232']
   tag gid: 'V-244546'
-  tag rid: 'SV-244546r743887_rule'
+  tag rid: 'SV-244546r858730_rule'
   tag stig_id: 'RHEL-08-040137'
-  tag fix_id: 'F-47778r743886_fix'
+  tag fix_id: 'F-47778r858729_fix'
   tag cci: ['CCI-001764']
   tag nist: ['CM-7 (2)']
 
