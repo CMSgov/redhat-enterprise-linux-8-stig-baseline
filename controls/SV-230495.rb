@@ -12,45 +12,38 @@ additional attack vectors.
 which was initially developed for automotive and is now also used in marine,
 industrial, and medical applications. Disabling CAN protects the system against
 exploitation of any flaws in its implementation.'
-  desc 'check', 'Verify the operating system disables the ability to load the CAN protocol
-kernel module.
+  desc 'check', 'Verify the operating system disables the ability to load the CAN protocol kernel module.
 
-    $ sudo grep -ri CAN /etc/modprobe.d/* | grep -i "/bin/true"
+$ sudo grep -r can /etc/modprobe.d/* | grep "/bin/true"
 
-    install CAN /bin/true
+install can /bin/true
 
-    If the command does not return any output, or the line is commented out,
-and use of the CAN protocol is not documented with the Information System
-Security Officer (ISSO) as an operational requirement, this is a finding.
+If the command does not return any output, or the line is commented out, and use of the CAN protocol is not documented with the Information System Security Officer (ISSO) as an operational requirement, this is a finding.
 
-    Verify the operating system disables the ability to use the CAN protocol.
+Verify the operating system disables the ability to use the CAN protocol.
 
-    Check to see if the CAN protocol is disabled with the following command:
+Check to see if the CAN protocol is disabled with the following command:
 
-    $ sudo grep -ri CAN /etc/modprobe.d/* | grep -i "blacklist"
+$ sudo grep -r can /etc/modprobe.d/* | grep "blacklist"
 
-    blacklist CAN
+blacklist can
 
-    If the command does not return any output or the output is not "blacklist
-CAN", and use of the CAN protocol is not documented with the Information
-System Security Officer (ISSO) as an operational requirement, this is a finding.'
-  desc 'fix', 'Configure the operating system to disable the ability to use the CAN
-protocol kernel module.
+If the command does not return any output or the output is not "blacklist can", and use of the CAN protocol is not documented with the Information System Security Officer (ISSO) as an operational requirement, this is a finding.'
+  desc 'fix', 'Configure the operating system to disable the ability to use the CAN protocol kernel module.
 
-    Add or update the following lines in the file
-"/etc/modprobe.d/blacklist.conf":
+Add or update the following lines in the file "/etc/modprobe.d/blacklist.conf":
 
-    install CAN /bin/true
-    blacklist CAN
+install can /bin/true
+blacklist can
 
-    Reboot the system for the settings to take effect.'
+Reboot the system for the settings to take effect.'
   impact 0.3
   tag severity: 'low'
   tag gtitle: 'SRG-OS-000095-GPOS-00049'
   tag gid: 'V-230495'
-  tag rid: 'SV-230495r627750_rule'
+  tag rid: 'SV-230495r792914_rule'
   tag stig_id: 'RHEL-08-040022'
-  tag fix_id: 'F-33139r568232_fix'
+  tag fix_id: 'F-33139r792913_fix'
   tag cci: ['CCI-000381']
   tag nist: ['CM-7 a']
 
