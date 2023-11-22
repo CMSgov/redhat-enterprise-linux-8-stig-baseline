@@ -17,6 +17,8 @@ driver:
 lifecycle:
   pre_converge:
     - remote: |
+        echo "Switching to Root User"
+        sudo su -i
         echo "NOTICE - Installing needed packages"
         sudo dnf -y clean all
         sudo dnf -y install --nogpgcheck bc bind-utils redhat-lsb-core vim
@@ -28,16 +30,35 @@ lifecycle:
         sudo chmod 600 /etc/sudoers && sudo sed -i'' "/ec2-user/d" /etc/sudoers && sudo chmod 400 /etc/sudoers
 
         # Ansible Harden did not include - TODO move to main
-        echo "NOTICE - SV-237643: RHEL 8 must require re-authentication when using the "sudo" command."
-        sudo echo 'Defaults timestamp_timeout' > /etc/sudoers.d/timestamp_timeout
         echo "NOTICE - SV-230330: RHEL 8 must not allow users to override SSH environment variables."
         sudo sed -i 's/.*PermitUserEnvironment.*/PermitUserEnvironment no/g' /etc/ssh/sshd_config
-        echo "NOTICE - SV-237642: RHEL 8 must use the invoking user's password for privilege escalation"
-        sudo echo 'Defaults !targetpw' > /etc/sudoers.d/target_pw; sudo echo 'Defaults !rootpw' > /etc/sudoers.d/root_pw; sudo echo 'Defaults !runaspw' > /etc/sudoers.d/run_as_pw; 
-        echo "NOTICE - SV-230251: The RHEL 8 SSH server must be configured to use only Message Authentication Codes (MACs) employing FIPS 140-2 validated cryptographic hash algorithms."
+        echo "NOTICE - SV-230380: RHEL 8 must not allow accounts configured with blank or null passwords"
+        sudo sed -i 's/.*PermitEmptyPasswords.*/PermitEmptyPasswords no/g' /etc/ssh/sshd_config
+        #echo "NOTICE - SV-230251: The RHEL 8 SSH server must be configured to use only Message Authentication Codes (MACs) employing FIPS 140-2 validated cryptographic hash algorithms."
         # TODO
+        echo "NOTICE - SV-230355: RHEL 8 must map the authenticated identity to the user or group account for PKI-based authentication."
+        sudo touch /etc/sssd/sssd.conf
+        sudo mkdir -p /etc/sssd/conf.d
         echo "NOTICE - SV-244553: RHEL 8 must ignore IPv4 Internet Control Message Protocol (ICMP) redirect messages."
         sudo sysctl -w net.ipv4.conf.all.accept_redirects=0
+        echo "NOTICE - SV-230325: All RHEL 8 local initialization files must have mode 0740 or less permissive"
+        sudo chmod g-wx,o-rwx $(find /root/* /home/* -xdev -maxdepth 1 -name '.*' -type f -perm /037)
+        echo "NOTICE - SV-230364: RHEL 8 passwords must have a 24 hours/1 day minimum password lifetime restriction in /etc/shadow."
+        sudo chage -m 1 ec2-user
+        sudo chage -m 1 nobody
+
+        # Requires root?
+        #echo "NOTICE - SV-237643: RHEL 8 must require re-authentication when using the sudo command."
+        #sudo echo 'Defaults timestamp_timeout=0' > /etc/sudoers.d/90-timestamp-timeout
+        #echo "NOTICE - SV-237642: RHEL 8 must use the invoking user's password for privilege escalation when using 'sudo'"
+        #sudo echo 'Defaults !targetpw' > /etc/sudoers.d/90-target-pw
+        #sudo echo 'Defaults !rootpw' > /etc/sudoers.d/90-root-pw
+        #sudo echo 'Defaults !runaspw' > /etc/sudoers.d/90-run-as-pw
+
+        echo "Exiting Root User"
+        exit
+
+        
 
 
 transport:
