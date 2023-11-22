@@ -28,16 +28,16 @@ lifecycle:
         sudo chmod 600 /etc/sudoers && sudo sed -i'' "/ec2-user/d" /etc/sudoers && sudo chmod 400 /etc/sudoers
 
         # Ansible Harden did not include - TODO move to main
-        #echo "NOTICE - SV-237643: RHEL 8 must require re-authentication when using the "sudo" command."
-        #sudo echo 'Defaults timestamp_timeout' > /etc/sudoers.d/timestamp_timeout
-        #echo "NOTICE - SV-230330: RHEL 8 must not allow users to override SSH environment variables."
-        #sudo sed -i 's/.*PermitUserEnvironment.*/PermitUserEnvironment no/g' /etc/ssh/sshd_config
-        #echo "NOTICE - SV-237642: RHEL 8 must use the invoking user's password for privilege escalation"
-        #sudo echo 'Defaults !targetpw' > /etc/sudoers.d/target_pw; sudo echo 'Defaults !rootpw' > /etc/sudoers.d/root_pw; sudo echo 'Defaults !runaspw' > /etc/sudoers.d/run_as_pw; 
-        #echo "NOTICE - SV-230251: The RHEL 8 SSH server must be configured to use only Message Authentication Codes (MACs) employing FIPS 140-2 validated cryptographic hash algorithms."
-        ## TODO
-        #echo "NOTICE - SV-244553: RHEL 8 must ignore IPv4 Internet Control Message Protocol (ICMP) redirect messages."
-        #sudo sysctl -w net.ipv4.conf.all.accept_redirects=0
+        echo "NOTICE - SV-237643: RHEL 8 must require re-authentication when using the "sudo" command."
+        sudo echo 'Defaults timestamp_timeout' > /etc/sudoers.d/timestamp_timeout
+        echo "NOTICE - SV-230330: RHEL 8 must not allow users to override SSH environment variables."
+        sudo sed -i 's/.*PermitUserEnvironment.*/PermitUserEnvironment no/g' /etc/ssh/sshd_config
+        echo "NOTICE - SV-237642: RHEL 8 must use the invoking user's password for privilege escalation"
+        sudo echo 'Defaults !targetpw' > /etc/sudoers.d/target_pw; sudo echo 'Defaults !rootpw' > /etc/sudoers.d/root_pw; sudo echo 'Defaults !runaspw' > /etc/sudoers.d/run_as_pw; 
+        echo "NOTICE - SV-230251: The RHEL 8 SSH server must be configured to use only Message Authentication Codes (MACs) employing FIPS 140-2 validated cryptographic hash algorithms."
+        # TODO
+        echo "NOTICE - SV-244553: RHEL 8 must ignore IPv4 Internet Control Message Protocol (ICMP) redirect messages."
+        sudo sysctl -w net.ipv4.conf.all.accept_redirects=0
 
 
 transport:
