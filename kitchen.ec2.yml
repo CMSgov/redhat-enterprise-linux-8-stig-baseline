@@ -37,15 +37,21 @@ lifecycle:
         #echo "NOTICE - SV-230251: The RHEL 8 SSH server must be configured to use only Message Authentication Codes (MACs) employing FIPS 140-2 validated cryptographic hash algorithms."
         # TODO
         echo "NOTICE - SV-230355: RHEL 8 must map the authenticated identity to the user or group account for PKI-based authentication."
-        sudo touch /etc/sssd/sssd.conf
+        sudo echo "[certmap]" > /etc/sssd/sssd.conf
         sudo mkdir -p /etc/sssd/conf.d
         echo "NOTICE - SV-244553: RHEL 8 must ignore IPv4 Internet Control Message Protocol (ICMP) redirect messages."
         sudo sysctl -w net.ipv4.conf.all.accept_redirects=0
         echo "NOTICE - SV-230325: All RHEL 8 local initialization files must have mode 0740 or less permissive"
-        sudo chmod g-wx,o-rwx $(find /root/* /home/* -xdev -maxdepth 1 -name '.*' -type f -perm /037)
+        sudo chmod g-wx,o-rwx $(find /root/.* /home/* -xdev -maxdepth 1 -name '.*' -type f -perm /037)
         echo "NOTICE - SV-230364: RHEL 8 passwords must have a 24 hours/1 day minimum password lifetime restriction in /etc/shadow."
         sudo chage -m 1 ec2-user
         sudo chage -m 1 nobody
+        echo "NOTICE - SV-230496: RHEL 8 must disable the stream control transmission protocol (SCTP)"
+        echo -e "install SCTP /bin/true\nblacklist SCTP" > /etc/modprobe.d/90-sctp
+        echo "NOTICE - SV-230497: RHEL 8 must disable the transparent inter-process communication (TIPC) protocol."
+        echo -e "install TIPC /bin/true\nblacklist TIPC" > /etc/modprobe.d/90-tipc
+        echo "NOTICE -SV-230351: RHEL 8 must be able to initiate directly a session lock for all connection types using smartcard when the smartcard is removed"
+        sudo authselect select sssd with-smartcard with-smartcard-lock-on-removal
 
         # Requires root?
         #echo "NOTICE - SV-237643: RHEL 8 must require re-authentication when using the sudo command."
