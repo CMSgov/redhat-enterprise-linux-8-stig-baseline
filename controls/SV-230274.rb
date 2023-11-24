@@ -63,7 +63,7 @@ restart the "sssd" service, run the following command:
     end
   elsif file(input('sssd_conf_path')).exist?
     describe parse_config_file(input('sssd_conf_path')) do
-its('sssd.certificate_verification') { should match /ocsp_dgst(\s+)?=(\s+)?sha1/ }
+      its('sssd.certificate_verification') { should match /ocsp_dgst(\s+)?=(\s+)?sha1/ }
     end
     describe service('sssd') do
       it { should be_installed }
