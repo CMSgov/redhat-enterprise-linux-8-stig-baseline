@@ -8,7 +8,8 @@ verifier:
   inspec_tests:
     - name: Red Hat 8 STIG
       path: .
-  #input_files:
+  input_files:
+    - kitchen.inputs.yml
   #  - compliance/inputs/inputs.yml
   waiver_files:
     - compliance/waivers/waiver.yml
