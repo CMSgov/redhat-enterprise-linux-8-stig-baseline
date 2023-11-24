@@ -51,3 +51,4 @@ jobs:
       - name: Ensure the scan meets our ${{ matrix.suite }} results threshold
         run: |
           saf validate threshold -i spec/results/rhel-8_${{ matrix.suite }}.json -F ${{ matrix.suite }}.threshold.yml
+          
