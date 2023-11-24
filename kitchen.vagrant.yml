@@ -16,6 +16,21 @@ driver:
     clipboard: "disabled"
     #nestedpaging: "off
 
+provisioner:
+  name: ansible_playbook
+  hosts: all
+  # require_ansible_repo: false
+  # require_ansible_omnibus: false
+  require_chef_for_busser: false
+  require_ruby_for_busser: false
+  ansible_binary_path: /usr/local/bin
+  require_pip3: true
+  ansible_verbose: true
+  roles_path: spec/ansible/roles
+  galaxy_ignore_certs: true
+  requirements_path: spec/ansible/roles/requirements.yml
+  ansible_extra_flags: <%= ENV['ANSIBLE_EXTRA_FLAGS'] %>
+
 platforms:
   - name: almalinux-8
     driver:

@@ -14,11 +14,24 @@ driver:
   require_chef_for_busser: false
   privileged: true
 
+provisioner:
+  name: ansible_playbook
+  hosts: all
+  # require_ansible_repo: false
+  # require_ansible_omnibus: false
+  require_chef_for_busser: false
+  require_ruby_for_busser: false
+  ansible_binary_path: /usr/local/bin
+  require_pip3: true
+  ansible_verbose: true
+  roles_path: spec/ansible/roles
+  galaxy_ignore_certs: true
+  requirements_path: spec/ansible/roles/requirements.yml
+  ansible_extra_flags: <%= ENV['ANSIBLE_EXTRA_FLAGS'] %>
+
 lifecycle:
   pre_converge:
     - remote: |
-        echo "Switching to Root User"
-        sudo su -i
         echo "NOTICE - Installing needed packages"
         sudo dnf -y clean all
         sudo dnf -y install --nogpgcheck bc bind-utils redhat-lsb-core vim
@@ -59,13 +72,7 @@ lifecycle:
         #echo "NOTICE - SV-237642: RHEL 8 must use the invoking user's password for privilege escalation when using 'sudo'"
         #sudo echo 'Defaults !targetpw' > /etc/sudoers.d/90-target-pw
         #sudo echo 'Defaults !rootpw' > /etc/sudoers.d/90-root-pw
-        #sudo echo 'Defaults !runaspw' > /etc/sudoers.d/90-run-as-pw
-
-        echo "Exiting Root User"
-        exit
-
-        
-
+        #sudo echo 'Defaults !runaspw' > /etc/sudoers.d/90-run-as-pw   
 
 transport:
   name: ssh
