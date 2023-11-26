@@ -56,6 +56,12 @@ section of the database file and add or update the following lines:
     describe 'The system is not smartcard enabled thus this control is Not Applicable' do
       skip 'The system is not using Smartcards / PIVs to fulfil the MFA requirement, this control is Not Applicable.'
     end
+  elsif !package('gnome-desktop3').installed?
+    impact 0.0
+    describe 'The system does not have GNOME installed' do
+      skip "The system does not have GNOME installed, this requirement is Not
+        Applicable."
+    end
   else
     describe command('grep -R removal-action /etc/dconf/db/*') do
       its('stdout.strip') { should match /^[^#].*:[\s]*removal-action[\s]*=[\s']*lock-screen[\s']*$/ }
