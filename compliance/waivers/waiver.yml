@@ -1,0 +1,16 @@
+---
+SV-230511:
+  run: false 
+  justification: rhel_08_040123 - RHEL 8 must mount /tmp with the nodev option.
+SV-230512:
+  run: false 
+  justification: rhel_08_040124 - RHEL 8 must mount /tmp with the nosuid option.
+SV-230513:
+  run: false
+  justification: rhel_08_040125 - RHEL 8 must mount /tmp with the noexec option.
+SV-230271:
+  run: false 
+  justification: rhel_08_010380 - RHEL 8 must require users to provide a password for privilege escalation.
+SV-245540: 
+  run: false 
+  justification: rhel_08_010001 - The RHEL 8 operating system must implement the Endpoint Security for Linux Threat Prevention tool.

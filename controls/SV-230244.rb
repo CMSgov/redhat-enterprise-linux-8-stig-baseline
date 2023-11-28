@@ -45,7 +45,11 @@ For the changes to take effect, the SSH daemon must be restarted:
     end
   else
     describe sshd_config do
+<<<<<<< HEAD
       its('ClientAliveCountMax') { should cmp input('sshd_client_alive_count_max') }
+=======
+      its('ClientAliveCountMax') { should cmp '1' }
+>>>>>>> 309cdac (SV-230244 (#19))
     end
   end
 end
