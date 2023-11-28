@@ -15,44 +15,36 @@ U.S. Government Personal Identity Verification (PIV) card and the DoD CAC.
 checking, but for this requirement focuses on the System Security Services
 Daemon (SSSD). By default, sssd performs Online Certificate Status Protocol
 (OCSP) checking and certificate verification using a sha256 digest function.'
-  desc 'check', 'Verify the operating system implements certificate status checking for
-multifactor authentication.
+  desc 'check', 'Verify the operating system implements certificate status checking for multifactor authentication.
 
-    Check to see if Online Certificate Status Protocol (OCSP) is enabled and
-using the proper digest value on the system with the following command:
+Note: If the System Administrator demonstrates the use of an approved alternate multifactor authentication method, this requirement is not applicable.
 
-    $ sudo grep certificate_verification /etc/sssd/sssd.conf
-/etc/sssd/conf.d/*.conf | grep -v "^#"
+Check to see if Online Certificate Status Protocol (OCSP) is enabled and using the proper digest value on the system with the following command:
 
-    certificate_verification = ocsp_dgst=sha1
+$ sudo grep certificate_verification /etc/sssd/sssd.conf /etc/sssd/conf.d/*.conf | grep -v "^#"
 
-    If the certificate_verification line is missing from the [sssd] section, or
-is missing "ocsp_dgst=sha1", ask the administrator to indicate what type of
-multifactor authentication is being utilized and how the system implements
-certificate status checking.  If there is no evidence of certificate status
-checking being used, this is a finding.'
-  desc 'fix', 'Configure the operating system to implement certificate status checking for
-multifactor authentication.
+certificate_verification = ocsp_dgst=sha1
 
-    Review the "/etc/sssd/sssd.conf" file to determine if the system is
-configured to prevent OCSP or certificate verification.
+If the certificate_verification line is missing from the [sssd] section, or is missing "ocsp_dgst=sha1", ask the administrator to indicate what type of multifactor authentication is being utilized and how the system implements certificate status checking.  If there is no evidence of certificate status checking being used, this is a finding.'
+  desc 'fix', 'Configure the operating system to implement certificate status checking for multifactor authentication.
 
-    Add the following line to the "/etc/sssd/sssd.conf" file:
+Review the "/etc/sssd/sssd.conf" file to determine if the system is configured to prevent OCSP or certificate verification.
 
-    certificate_verification = ocsp_dgst=sha1
+Add the following line to the [sssd] section of the "/etc/sssd/sssd.conf" file:
 
-    The "sssd" service must be restarted for the changes to take effect. To
-restart the "sssd" service, run the following command:
+certificate_verification = ocsp_dgst=sha1
 
-    $ sudo systemctl restart sssd.service'
+The "sssd" service must be restarted for the changes to take effect. To restart the "sssd" service, run the following command:
+
+$ sudo systemctl restart sssd.service'
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000375-GPOS-00160'
   tag satisfies: ['SRG-OS-000375-GPOS-00160', 'SRG-OS-000377-GPOS-00162']
   tag gid: 'V-230274'
-  tag rid: 'SV-230274r743945_rule'
+  tag rid: 'SV-230274r858741_rule'
   tag stig_id: 'RHEL-08-010400'
-  tag fix_id: 'F-32918r567569_fix'
+  tag fix_id: 'F-32918r809280_fix'
   tag cci: ['CCI-001948']
   tag nist: ['IA-2 (11)']
 
@@ -70,7 +62,7 @@ restart the "sssd" service, run the following command:
 
     unless sssd_conf_file_contents.empty?
       describe ini({ command: 'cat /etc/sssd/sssd.conf /etc/sssd/conf.d/*.conf' }) do
-        its('sssd.certificate_verification') { should cmp 'ocsp_dgst=sha1' }
+        its('sssd.certificate_verification') { should match /ocsp_dgst(\s+)?=(\s+)?sha1/ }
       end
     end
   end

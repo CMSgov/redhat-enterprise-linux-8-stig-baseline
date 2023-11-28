@@ -173,12 +173,6 @@ inputs:
     type: Numeric
     value: 900
 
-  #SV-230356
-  - name: max_retry
-    description: Maximum number of retry attempts for login
-    type: Numeric
-    value: 3
-
   #SV-230363
   - name: difok
     description: Minimum number of characters that must be different from previous password
