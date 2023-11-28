@@ -37,6 +37,11 @@ Security for Linux (ENSL) in conjunction with SELinux.
     describe 'Control not applicable within a container' do
       skip 'Control not applicable within a container'
     end
+  elsif input('skip_endpoint_security_tool')
+    impact 0.0
+    describe 'We do not want to implement the Endpoint Security for Linux Threat Prevention tool' do
+      skip 'We do not want to implement the Endpoint Security for Linux Threat Prevention tool'
+    end
   else
     tool = input('linux_threat_prevention_tool')
     describe package(tool['package']) do

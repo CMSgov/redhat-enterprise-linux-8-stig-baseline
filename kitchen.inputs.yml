@@ -1,2 +1,8 @@
 ---
 disable_slow_controls: true
+skip_mount_tmp:
+  nodev: true
+  nosuid: true
+  noexec: true
+skip_password_privilege_escalation: true
+skip_endpoint_security_tool: true

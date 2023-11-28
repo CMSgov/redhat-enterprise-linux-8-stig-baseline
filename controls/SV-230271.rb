@@ -36,6 +36,11 @@ file or files in the "/etc/sudoers.d" directory.'
     describe "Control not applicable within a container & sudo doesn't exist" do
       skip "Control not applicable within a container & sudo doesn't exist"
     end
+  elsif input('skip_password_privilege_escalation')
+    impact 0.0
+    describe 'We do not want require users to provide a password for privilege escalation' do
+      skip 'We do not want require users to provide a password for privilege escalation'
+    end
   else
     processed = []
     to_process = ['/etc/sudoers', '/etc/sudoers.d']

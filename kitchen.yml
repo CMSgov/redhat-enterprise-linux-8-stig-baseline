@@ -10,9 +10,6 @@ verifier:
       path: .
   input_files:
     - kitchen.inputs.yml
-  #  - compliance/inputs/inputs.yml
-  waiver_files:
-    - compliance/waivers/waiver.yml
   load_plugins: true
 
 platforms:

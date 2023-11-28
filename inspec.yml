@@ -452,3 +452,24 @@ inputs:
       - cockpit
       - dhcpv6-client
       - ssh
+
+  # SV-230511, SV-230512, SV-230513
+  - name: skip_mount_tmp
+    description: rhel_08_04012[3-5] - RHEL 8 must mount /tmp with the (nodev|nosuid|noexec) option.
+    type: Hash
+    value:
+      nodev: false
+      nosuid: false
+      noexec: false
+
+  # SV-230271
+  - name: skip_password_privilege_escalation
+    description: rhel_08_010380 - RHEL 8 must require users to provide a password for privilege escalation.
+    type: Boolean
+    value: false
+
+  # SV-245540
+  - name: skip_endpoint_security_tool
+    description:  rhel_08_010001 - The RHEL 8 operating system must implement the Endpoint Security for Linux Threat Prevention tool.
+    type: Boolean
+    value: false
