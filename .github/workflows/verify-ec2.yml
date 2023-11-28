@@ -33,7 +33,7 @@ jobs:
       - name: Clone full repository so we can push
         run: git fetch --prune --unshallow
       - name: Setup Ruby
-      - uses: ruby/setup-ruby@v1
+        uses: ruby/setup-ruby@v1
         with:
           bundler-cache: true
       - name: Disable ri and rdoc
