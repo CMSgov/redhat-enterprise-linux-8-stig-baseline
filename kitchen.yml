@@ -10,8 +10,10 @@ verifier:
       path: .
   input_files:
     - kitchen.inputs.yml
+  <% if ENV['INSPEC_CONTROL'] %>
   controls:
     - "<%= ENV['INSPEC_CONTROL'] %>"
+  <% end %>
   load_plugins: true
 
 platforms:
