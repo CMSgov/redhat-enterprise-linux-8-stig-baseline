@@ -44,7 +44,7 @@ be created.
   tag cci: ['CCI-000016']
   tag nist: ['AC-2 (2)']
 
-  if input('temporary_accounts') .empty?
+  if input('temporary_accounts').empty?
     describe 'Temporary accounts' do
       subject { input('temporary_accounts') }
       it { should be_empty }

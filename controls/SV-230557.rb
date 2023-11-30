@@ -38,7 +38,7 @@ line to "/etc/xinetd.d/tftp" (or modify the line to have the required value):
   if package('tftp-server').installed?
     impact 0.5
     describe command('grep server_args /etc/xinetd.d/tftp') do
-      its('stdout.strip') { should match %r{^\s*server_args\s+=\s+(-s|--secure)\s(\/\S+)$} }
+      its('stdout.strip') { should match %r{^\s*server_args\s+=\s+(-s|--secure)\s(/\S+)$} }
     end
   else
     impact 0.0

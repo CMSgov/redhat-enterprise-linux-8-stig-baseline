@@ -39,7 +39,8 @@ A reboot is required for the changes to take effect.'
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000250-GPOS-00093'
-  tag satisfies: ['SRG-OS-000250-GPOS-00093', 'SRG-OS-000393-GPOS-00173', 'SRG-OS-000394-GPOS-00174', 'SRG-OS-000125-GPOS-00065']
+  tag satisfies: ['SRG-OS-000250-GPOS-00093', 'SRG-OS-000393-GPOS-00173', 'SRG-OS-000394-GPOS-00174',
+                  'SRG-OS-000125-GPOS-00065']
   tag gid: 'V-230251'
   tag rid: 'SV-230251r917870_rule'
   tag stig_id: 'RHEL-08-010290'
@@ -61,7 +62,9 @@ A reboot is required for the changes to take effect.'
 
     unless crypto_policy.nil?
       describe parse_config(crypto_policy.gsub(/\s|'/, "\n")) do
-        its('-oMACs') { should cmp 'hmac-sha2-512,hmac-sha2-256,hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com' }
+        its('-oMACs') {
+          should cmp 'hmac-sha2-512,hmac-sha2-256,hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com'
+        }
       end
     end
   end

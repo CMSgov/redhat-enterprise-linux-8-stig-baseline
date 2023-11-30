@@ -132,16 +132,20 @@ Agreement for details."'
       skip 'Control not applicable within a container'
     end
   else
-    describe 'The banner text is not set because /etc/issue does not exist' do
-      subject { banner_missing }
-      it { should be false }
-    end if banner_missing
+    if banner_missing
+      describe 'The banner text is not set because /etc/issue does not exist' do
+        subject { banner_missing }
+        it { should be false }
+      end
+    end
 
     banner_message = banner_file.content.gsub(/[\r\n\s]/, '')
 
-    describe 'The banner text should match the standard banner' do
-      subject { banner_message }
-      it { should cmp clean_banner }
-    end unless banner_missing
+    unless banner_missing
+      describe 'The banner text should match the standard banner' do
+        subject { banner_message }
+        it { should cmp clean_banner }
+      end
+    end
   end
 end

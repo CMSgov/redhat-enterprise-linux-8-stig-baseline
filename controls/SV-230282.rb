@@ -68,7 +68,7 @@ functions.
     end
   else
     describe command('sestatus') do
-      its('stdout') { should match /^Loaded\spolicy\sname:\s+targeted\n?$/ }
+      its('stdout') { should match(/^Loaded\spolicy\sname:\s+targeted\n?$/) }
     end
 
     describe parse_config_file('/etc/selinux/config') do

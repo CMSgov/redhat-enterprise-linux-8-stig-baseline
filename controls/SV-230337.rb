@@ -61,7 +61,7 @@ line:
       end
       describe parse_config_file('/etc/security/faillock.conf') do
         its('unlock_time') { should cmp >= input('lockout_time') }
-        its('unlock_time') { should cmp <= 604800 }
+        its('unlock_time') { should cmp <= 604_800 }
       end
     end
   end

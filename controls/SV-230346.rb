@@ -54,6 +54,7 @@ to "10" for all accounts and/or account types.
     local_limits = limits_conf(limits_file).*
     # If we got an array (results) check further
     next unless local_limits.is_a?(Array)
+
     local_limits.each do |temp_limit|
       # For each result check if it is a 'hard' limit for 'maxlogins'
       if temp_limit.include?('hard') && temp_limit.include?('maxlogins')

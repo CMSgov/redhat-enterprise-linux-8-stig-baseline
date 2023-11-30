@@ -34,8 +34,8 @@ ALL     ALL=(ALL:ALL) ALL'
   else
     sudoers_files.each do |file|
       describe file(file) do
-        its('content') { should_not match /^ALL[\s]*ALL=\(ALL\)\sALL/ }
-        its('content') { should_not match /^ALL[\s]*ALL=\(ALL:ALL\)\sALL/ }
+        its('content') { should_not match(/^ALL\s*ALL=\(ALL\)\sALL/) }
+        its('content') { should_not match(/^ALL\s*ALL=\(ALL:ALL\)\sALL/) }
       end
     end
   end

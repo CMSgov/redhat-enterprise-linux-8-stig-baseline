@@ -56,7 +56,7 @@ $ sudo yum install opensc'
     end
 
     describe command('opensc-tool --list-drivers | grep -i piv') do
-      its('stdout') { should match /PIV-II/ }
+      its('stdout') { should match(/PIV-II/) }
     end
   end
 end

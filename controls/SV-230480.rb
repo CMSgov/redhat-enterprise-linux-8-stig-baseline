@@ -52,7 +52,7 @@ event queue becomes full, this is a finding.'
     end
   else
     describe parse_config_file('/etc/audit/auditd.conf') do
-      its('overflow_action') { should match /syslog$|single$|halt$/i }
+      its('overflow_action') { should match(/syslog$|single$|halt$/i) }
     end
   end
 end

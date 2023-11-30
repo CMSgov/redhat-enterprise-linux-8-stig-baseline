@@ -48,6 +48,7 @@ file or files in the "/etc/sudoers.d" directory.'
     until to_process.empty?
       in_process = to_process.pop
       next if processed.include? in_process
+
       processed.push in_process
 
       if file(in_process).directory?

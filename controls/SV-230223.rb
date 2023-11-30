@@ -35,7 +35,8 @@ Reboot the system for the changes to take effect.'
   impact 0.7
   tag severity: 'high'
   tag gtitle: 'SRG-OS-000033-GPOS-00014'
-  tag satisfies: ['SRG-OS-000033-GPOS-00014', 'SRG-OS-000125-GPOS-00065', 'SRG-OS-000396-GPOS-00176', 'SRG-OS-000423-GPOS-00187', 'SRG-OS-000478-GPOS-00223']
+  tag satisfies: ['SRG-OS-000033-GPOS-00014', 'SRG-OS-000125-GPOS-00065', 'SRG-OS-000396-GPOS-00176',
+                  'SRG-OS-000423-GPOS-00187', 'SRG-OS-000478-GPOS-00223']
   tag gid: 'V-230223'
   tag rid: 'SV-230223r928585_rule'
   tag stig_id: 'RHEL-08-010020'
@@ -49,13 +50,13 @@ Reboot the system for the changes to take effect.'
     end
   else
     describe command('fips-mode-setup --check') do
-      its('stdout.strip') { should match /FIPS mode is enabled/ }
+      its('stdout.strip') { should match(/FIPS mode is enabled/) }
     end
 
     grub_config = command('grub2-editenv - list').stdout
 
     describe parse_config(grub_config) do
-      its('kernelopts') { should match /fips=1/ }
+      its('kernelopts') { should match(/fips=1/) }
     end
 
     describe file('/proc/sys/crypto/fips_enabled') do

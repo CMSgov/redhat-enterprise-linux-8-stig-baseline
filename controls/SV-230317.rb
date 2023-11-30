@@ -45,6 +45,7 @@ directory owned by the application, it must be documented with the ISSO.'
   findings = Set[]
   users.where { !shell.match(ignore_shells) && (uid >= 1000 || uid == 0) }.entries.each do |user_info|
     next if input('exempt_home_users').include?(user_info.username.to_s)
+
     grep_results = command("grep -i path --exclude=\".bash_history\" #{user_info.home}/.*").stdout.split('\\n')
     grep_results.each do |result|
       result.slice! 'PATH='
@@ -58,6 +59,7 @@ directory owned by the application, it must be documented with the ISSO.'
       line_arr.each do |line|
         # Don't run test on line that exports PATH and is not commented out
         next unless !line.start_with?('export') && !line.start_with?('#')
+
         # Case when :: found in exec search path or : found at beginning
         if line.strip.empty?
           curr_work_dir = command('pwd').stdout.delete("\n")

@@ -66,7 +66,8 @@ configuration survives kernel updates:
   impact 0.3
   tag severity: 'low'
   tag gtitle: 'SRG-OS-000062-GPOS-00031'
-  tag satisfies: ['SRG-OS-000062-GPOS-00031', 'SRG-OS-000037-GPOS-00015', 'SRG-OS-000042-GPOS-00020', 'SRG-OS-000062-GPOS-00031', 'SRG-OS-000392-GPOS-00172', 'SRG-OS-000462-GPOS-00206', 'SRG-OS-000471-GPOS-00215', 'SRG-OS-000473-GPOS-00218']
+  tag satisfies: ['SRG-OS-000062-GPOS-00031', 'SRG-OS-000037-GPOS-00015', 'SRG-OS-000042-GPOS-00020',
+                  'SRG-OS-000062-GPOS-00031', 'SRG-OS-000392-GPOS-00172', 'SRG-OS-000462-GPOS-00206', 'SRG-OS-000471-GPOS-00215', 'SRG-OS-000473-GPOS-00218']
   tag gid: 'V-230468'
   tag rid: 'SV-230468r627750_rule'
   tag stig_id: 'RHEL-08-030601'
@@ -83,11 +84,11 @@ configuration survives kernel updates:
     end
   else
     describe parse_config(grub_config) do
-      its('kernelopts') { should match /audit=1/ }
+      its('kernelopts') { should match(/audit=1/) }
     end
 
     describe parse_config_file('/etc/default/grub') do
-      its('GRUB_CMDLINE_LINUX') { should match /audit=1/ }
+      its('GRUB_CMDLINE_LINUX') { should match(/audit=1/) }
     end
   end
 end

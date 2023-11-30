@@ -49,7 +49,7 @@ processing failure.
     end
   else
     describe command('grep "postmaster:\s*root$" /etc/aliases') do
-      its('stdout.strip') { should match /postmaster:\s*root/ }
+      its('stdout.strip') { should match(/postmaster:\s*root/) }
     end
   end
 end

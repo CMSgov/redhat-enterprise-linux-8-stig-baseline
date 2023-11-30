@@ -66,11 +66,11 @@ configuration survives kernel updates:
     end
   else
     describe parse_config(grub_stdout) do
-      its('kernelopts') { should match /vsyscall=none/ }
+      its('kernelopts') { should match(/vsyscall=none/) }
     end
 
     describe parse_config_file('/etc/default/grub') do
-      its('GRUB_CMDLINE_LINUX') { should match /vsyscall=none/ }
+      its('GRUB_CMDLINE_LINUX') { should match(/vsyscall=none/) }
     end
   end
 end

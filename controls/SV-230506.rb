@@ -66,7 +66,7 @@ following command:
     end
   else
     describe command('nmcli device') do
-      its('stdout.strip') { should_not match /wifi\s*connected/ }
+      its('stdout.strip') { should_not match(/wifi\s*connected/) }
     end
   end
 end

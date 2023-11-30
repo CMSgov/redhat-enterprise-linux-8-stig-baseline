@@ -66,7 +66,8 @@ command:
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000312-GPOS-00122'
-  tag satisfies: ['SRG-OS-000312-GPOS-00122', 'SRG-OS-000312-GPOS-00123', 'SRG-OS-000312-GPOS-00124', 'SRG-OS-000324-GPOS-00125']
+  tag satisfies: ['SRG-OS-000312-GPOS-00122', 'SRG-OS-000312-GPOS-00123', 'SRG-OS-000312-GPOS-00124',
+                  'SRG-OS-000324-GPOS-00125']
   tag gid: 'V-230268'
   tag rid: 'SV-230268r627750_rule'
   tag stig_id: 'RHEL-08-010374'
@@ -85,7 +86,7 @@ command:
     end
 
     describe command('grep -r ^fs.protected_hardlinks /etc/sysctl.conf /etc/sysctl.d/*.conf') do
-      its('stdout') { should match /fs.protected_hardlinks(\s+)=(\s+)1$/ }
+      its('stdout') { should match(/fs.protected_hardlinks(\s+)=(\s+)1$/) }
     end
   end
 end

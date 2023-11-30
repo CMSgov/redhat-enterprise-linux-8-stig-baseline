@@ -161,24 +161,32 @@ Agreement for details."
 
     banner_files.each do |banner_file|
       # Banner property is commented out.
-      describe 'The SSHD Banner is not set' do
-        subject { banner_file.nil? }
-        it { should be false }
-      end if banner_file.nil?
+      if banner_file.nil?
+        describe 'The SSHD Banner is not set' do
+          subject { banner_file.nil? }
+          it { should be false }
+        end
+      end
 
       # Banner property is set to "none"
-      describe 'The SSHD Banner is disabled' do
-        subject { banner_file.match(/none/i).nil? }
-        it { should be true }
-      end if !banner_file.nil? && !banner_file.match(/none/i).nil?
+      if !banner_file.nil? && !banner_file.match(/none/i).nil?
+        describe 'The SSHD Banner is disabled' do
+          subject { banner_file.match(/none/i).nil? }
+          it { should be true }
+        end
+      end
 
       # Banner property provides a path to a file, however, it does not exist.
-      describe 'The SSHD Banner is set, but, the file does not exist' do
-        subject { file(banner_file).exist? }
-        it { should be true }
-      end if !banner_file.nil? && banner_file.match(/none/i).nil? && !file(banner_file).exist?
+      if !banner_file.nil? && banner_file.match(/none/i).nil? && !file(banner_file).exist?
+        describe 'The SSHD Banner is set, but, the file does not exist' do
+          subject { file(banner_file).exist? }
+          it { should be true }
+        end
+      end
 
       # Banner property provides a path to a file and it exists.
+      next unless !banner_file.nil? && banner_file.match(/none/i).nil? && file(banner_file).exist?
+
       describe.one do
         banner = file(banner_file).content.gsub(/[\r\n\s]/, '')
         clean_banner = input('banner_message_text_ral').gsub(/[\r\n\s]/, '')
@@ -187,7 +195,7 @@ Agreement for details."
           subject { banner }
           it { should cmp clean_banner }
         end
-      end if !banner_file.nil? && banner_file.match(/none/i).nil? && file(banner_file).exist?
+      end
     end
   end
 end

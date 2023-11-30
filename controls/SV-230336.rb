@@ -85,15 +85,19 @@ restart the "sssd" service, run the following command:
     describe pam(pam_auth_files['password-auth']) do
       its('lines') do
         should match_pam_rule('auth [default=die]|required pam_faillock.so').all_with_args('unlock_time=(0|never)').or \
-          (match_pam_rule('auth [default=die]|required pam_faillock.so').all_with_integer_arg('unlock_time', '<=', 604800).and \
-            match_pam_rule('auth [default=die]|required pam_faillock.so').all_with_integer_arg('unlock_time', '>=', input('lockout_time')))
+          (match_pam_rule('auth [default=die]|required pam_faillock.so').all_with_integer_arg('unlock_time', '<=',
+                                                                                              604_800).and \
+                                                                                                match_pam_rule('auth [default=die]|required pam_faillock.so').all_with_integer_arg('unlock_time', '>=',
+                                                                                                                                                                                   input('lockout_time')))
       end
     end
     describe pam(pam_auth_files['system-auth']) do
       its('lines') do
         should match_pam_rule('auth [default=die]|required pam_faillock.so').all_with_args('unlock_time=(0|never)').or \
-          (match_pam_rule('auth [default=die]|required pam_faillock.so').all_with_integer_arg('unlock_time', '<=', 604800).and \
-            match_pam_rule('auth [default=die]|required pam_faillock.so').all_with_integer_arg('unlock_time', '>=', input('lockout_time')))
+          (match_pam_rule('auth [default=die]|required pam_faillock.so').all_with_integer_arg('unlock_time', '<=',
+                                                                                              604_800).and \
+                                                                                                match_pam_rule('auth [default=die]|required pam_faillock.so').all_with_integer_arg('unlock_time', '>=',
+                                                                                                                                                                                   input('lockout_time')))
       end
     end
   end

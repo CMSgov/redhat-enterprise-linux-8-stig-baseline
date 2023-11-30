@@ -83,10 +83,14 @@ restart the "sssd" service, run the following command:
     end
   else
     describe pam(pam_auth_files['password-auth']) do
-      its('lines') { should match_pam_rule('auth [default=die]|required pam_faillock.so').all_with_args("dir=#{input('log_directory')}") }
+      its('lines') {
+        should match_pam_rule('auth [default=die]|required pam_faillock.so').all_with_args("dir=#{input('log_directory')}")
+      }
     end
     describe pam(pam_auth_files['system-auth']) do
-      its('lines') { should match_pam_rule('auth [default=die]|required pam_faillock.so').all_with_args("dir=#{input('log_directory')}") }
+      its('lines') {
+        should match_pam_rule('auth [default=die]|required pam_faillock.so').all_with_args("dir=#{input('log_directory')}")
+      }
     end
   end
 end

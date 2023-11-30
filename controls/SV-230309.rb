@@ -70,9 +70,8 @@ the following command:
       if item.length + "\n".length > PATTERN_FILE_MAX_LENGTH
         raise 'Single pattern is longer than PATTERN_FILE_MAX_LENGTH'
       end
-      if ww_chunked[-1].length + "\n".length + item.length > PATTERN_FILE_MAX_LENGTH
-        ww_chunked.append('')
-      end
+
+      ww_chunked.append('') if ww_chunked[-1].length + "\n".length + item.length > PATTERN_FILE_MAX_LENGTH
       ww_chunked[-1] += "\n" + item # This will leave an extra newline at the beginning of chunks
     end
     ww_chunked = ww_chunked.map(&:strip) # This gets rid of the beginning newlines

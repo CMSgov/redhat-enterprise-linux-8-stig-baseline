@@ -61,7 +61,7 @@ the name or IP address of the log aggregation server.
     end
   else
     describe command('grep @@ /etc/rsyslog.conf /etc/rsyslog.d/*.conf') do
-      its('stdout') { should match /^.*:\*\.\*\s*@@[a-z.0-9]*:?[0-9]*?/ }
+      its('stdout') { should match(/^.*:\*\.\*\s*@@[a-z.0-9]*:?[0-9]*?/) }
     end
   end
 end

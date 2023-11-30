@@ -68,11 +68,11 @@ configuration survives kernel updates:
     end
   else
     describe parse_config(grub_stdout) do
-      its('kernelopts') { should match /slub_debug=P/ }
+      its('kernelopts') { should match(/slub_debug=P/) }
     end
 
     describe parse_config_file('/etc/default/grub') do
-      its('GRUB_CMDLINE_LINUX') { should match /slub_debug=P/ }
+      its('GRUB_CMDLINE_LINUX') { should match(/slub_debug=P/) }
     end
   end
 end

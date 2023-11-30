@@ -74,11 +74,11 @@ configuration survives kernel updates:
     end
   else
     describe parse_config(grub_stdout) do
-      its('kernelopts') { should match /pti=on/ }
+      its('kernelopts') { should match(/pti=on/) }
     end
 
     describe parse_config_file('/etc/default/grub') do
-      its('GRUB_CMDLINE_LINUX') { should match  /pti=on/ }
+      its('GRUB_CMDLINE_LINUX') { should match(/pti=on/) }
     end
   end
 end

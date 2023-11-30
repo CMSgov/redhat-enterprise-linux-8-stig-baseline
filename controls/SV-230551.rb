@@ -58,9 +58,7 @@ uncommented file and directory selection lists.'
 
     findings = []
     aide_conf.where { !selection_line.start_with? '!' }.entries.each do |selection|
-      unless selection.rules.include? 'xattrs'
-        findings.append(selection.selection_line)
-      end
+      findings.append(selection.selection_line) unless selection.rules.include? 'xattrs'
     end
 
     describe "List of monitored files/directories without 'xattrs' rule" do

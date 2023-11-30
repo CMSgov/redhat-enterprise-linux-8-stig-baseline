@@ -50,7 +50,7 @@ option:
     end
   elsif file('/etc/audit/auditd.conf').exist?
     describe parse_config_file('/etc/audit/auditd.conf') do
-      its('name_format') { should match /^hostname$|^fqd$|^numeric$/i }
+      its('name_format') { should match(/^hostname$|^fqd$|^numeric$/i) }
     end
   else
     describe "File '/etc/audit/auditd.conf' cannot be found. This test cannot be checked in a automated fashion and you must check it manually" do

@@ -44,7 +44,8 @@ line:
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000250-GPOS-00093'
-  tag satisfies: ['SRG-OS-000250-GPOS-00093', 'SRG-OS-000393-GPOS-00173', 'SRG-OS-000394-GPOS-00174', 'SRG-OS-000125-GPOS-00065']
+  tag satisfies: ['SRG-OS-000250-GPOS-00093', 'SRG-OS-000393-GPOS-00173', 'SRG-OS-000394-GPOS-00174',
+                  'SRG-OS-000125-GPOS-00065']
   tag gid: 'V-230252'
   tag rid: 'SV-230252r743940_rule'
   tag stig_id: 'RHEL-08-010291'

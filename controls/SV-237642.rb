@@ -44,9 +44,9 @@ configuration file in the /etc/sudoers.d/ directory:
     end
   else
     describe bash("egrep -i '(!rootpw|!targetpw|!runaspw)' /etc/sudoers /etc/sudoers.d/* | grep -v '#' |  awk -F ':' '{ print $2 }'") do
-      its('stdout') { should match /^Defaults !targetpw/ }
-      its('stdout') { should match /^Defaults !rootpw/ }
-      its('stdout') { should match /^Defaults !runaspw/ }
+      its('stdout') { should match(/^Defaults !targetpw/) }
+      its('stdout') { should match(/^Defaults !rootpw/) }
+      its('stdout') { should match(/^Defaults !runaspw/) }
     end
   end
 end

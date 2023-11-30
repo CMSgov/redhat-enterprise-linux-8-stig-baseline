@@ -76,9 +76,13 @@ the following line in the /etc/chrony.conf file.
 
     time_sources = ntp_conf('/etc/chrony.conf').server
     # Cover case when a single server is defined and resource returns a string and not an array
-    time_sources = [ time_sources ] if time_sources.is_a? String
+    time_sources = [time_sources] if time_sources.is_a? String
 
-    max_poll_values = time_sources.map { |val| val.match?(/.*maxpoll.*/) ? val.gsub(/.*maxpoll\s+(\d+)(\s+.*|$)/, '\1').to_i : 10 } unless time_sources.nil?
+    unless time_sources.nil?
+      max_poll_values = time_sources.map { |val|
+        val.match?(/.*maxpoll.*/) ? val.gsub(/.*maxpoll\s+(\d+)(\s+.*|$)/, '\1').to_i : 10
+      }
+    end
 
     # Verify the "chrony.conf" file is configured to an authoritative DoD time source by running the following command:
 
@@ -87,18 +91,24 @@ the following line in the /etc/chrony.conf file.
     end
 
     unless ntp_conf('/etc/chrony.conf').server.nil?
-      describe ntp_conf('/etc/chrony.conf') do
-        its('server') { should match input('authoritative_timeserver') }
-      end if ntp_conf('/etc/chrony.conf').server.is_a? String
+      if ntp_conf('/etc/chrony.conf').server.is_a? String
+        describe ntp_conf('/etc/chrony.conf') do
+          its('server') { should match input('authoritative_timeserver') }
+        end
+      end
 
-      describe ntp_conf('/etc/chrony.conf') do
-        its('server.join') { should match input('authoritative_timeserver') }
-      end if ntp_conf('/etc/chrony.conf').server.is_a? Array
+      if ntp_conf('/etc/chrony.conf').server.is_a? Array
+        describe ntp_conf('/etc/chrony.conf') do
+          its('server.join') { should match input('authoritative_timeserver') }
+        end
+      end
     end
     # All time sources must contain valid maxpoll entries
-    describe 'chronyd maxpoll values (99=maxpoll absent)' do
-      subject { max_poll_values }
-      it { should all be < 17 }
-    end unless time_sources.nil?
+    unless time_sources.nil?
+      describe 'chronyd maxpoll values (99=maxpoll absent)' do
+        subject { max_poll_values }
+        it { should all be < 17 }
+      end
+    end
   end
 end

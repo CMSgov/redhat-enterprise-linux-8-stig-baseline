@@ -56,9 +56,9 @@ To restart the "rsyslog" service, run the following command:
     end
   else
     describe command('grep -E \'(auth.*|authpriv.*|daemon.*)\' /etc/rsyslog.conf') do
-      its('stdout.strip') { should match %r{^[\s]*[a-z\.;\*]*auth(,[a-z,]+)*\.\*[\s]*\/*} }
-      its('stdout.strip') { should match %r{^[\s]*[a-z\.;\*]*authpriv(,[a-z,]+)*\.\*[\s]*\/*} }
-      its('stdout.strip') { should match %r{^[\s]*[a-z\.;\*]*daemon(,[a-z,]+)*\.\*[\s]*\/*} }
+      its('stdout.strip') { should match %r{^\s*[a-z.;*]*auth(,[a-z,]+)*\.\*\s*/*} }
+      its('stdout.strip') { should match %r{^\s*[a-z.;*]*authpriv(,[a-z,]+)*\.\*\s*/*} }
+      its('stdout.strip') { should match %r{^\s*[a-z.;*]*daemon(,[a-z,]+)*\.\*\s*/*} }
     end
   end
 end

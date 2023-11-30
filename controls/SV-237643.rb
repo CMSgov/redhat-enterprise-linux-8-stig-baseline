@@ -44,7 +44,7 @@ no results are returned, this is a finding.)
   else
     config = bash("grep -i 'timestamp_timeout' /etc/sudoers /etc/sudoers.d/* |  awk -F ':' '{ print $2 }'")
     describe config do
-      its('stdout') { should match /^Defaults timestamp_timeout/ }
+      its('stdout') { should match(/^Defaults timestamp_timeout/) }
     end
 
     describe parse_config(config.stdout) do

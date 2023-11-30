@@ -48,7 +48,7 @@ BIOS.'
   else
     describe.one do
       describe command('dmesg | grep NX') do
-        it('stdout') { should match /.+(NX \(Execute Disable\) protection: active)/ }
+        it('stdout') { should match(/.+(NX \(Execute Disable\) protection: active)/) }
       end
       describe parse_config_file('/proc/cpuinfo', options) do
         its('flags.split') { should include 'nx' }

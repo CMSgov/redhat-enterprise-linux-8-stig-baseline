@@ -52,6 +52,7 @@ of "/home/smithj", and has a primary group of users.
   findings = Set[]
   users.where { !shell.match(ignore_shells) && (uid >= uid_min || uid == 0) }.entries.each do |user_info|
     next if input('exempt_home_users').include?(user_info.username.to_s)
+
     findings += command("find #{user_info.home} -maxdepth 0 -not -gid #{user_info.gid}").stdout.split("\n")
   end
   describe "Home directories that are not group-owned by the user's primary GID" do

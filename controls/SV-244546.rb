@@ -108,9 +108,11 @@ to enforcing mode by editing the "permissive" line in the
       it { should exist }
     end
 
-    describe file('/etc/fapolicyd/fapolicyd.rules').content.strip.split("\n")[-1] do
-      it { should cmp 'deny all all' }
-    end if file('/etc/fapolicyd/fapolicyd.rules').exist?
+    if file('/etc/fapolicyd/fapolicyd.rules').exist?
+      describe file('/etc/fapolicyd/fapolicyd.rules').content.strip.split("\n")[-1] do
+        it { should cmp 'deny all all' }
+      end
+    end
 
     system_mounts = command("mount | egrep '^tmpfs| ext4| ext3| xfs' | awk '{ printf \"%s\\n\", $3 }'").stdout.split
 
@@ -118,8 +120,10 @@ to enforcing mode by editing the "permissive" line in the
       it { should exist }
     end
 
-    describe file('/etc/fapolicyd/fapolicyd.mounts') do
-      its('content.split') { should match_array system_mounts }
-    end if file('/etc/fapolicyd/fapolicyd.mounts').exist?
+    if file('/etc/fapolicyd/fapolicyd.mounts').exist?
+      describe file('/etc/fapolicyd/fapolicyd.mounts') do
+        its('content.split') { should match_array system_mounts }
+      end
+    end
   end
 end

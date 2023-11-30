@@ -46,7 +46,7 @@ all domains that have the "core" item assigned, this is a finding.)
   describe.one do
     limits_files.each do |lf|
       describe limits_conf(lf) do
-        its('*') { should include %w(hard core 0) }
+        its('*') { should include %w[hard core 0] }
       end
     end
   end
@@ -55,6 +55,7 @@ all domains that have the "core" item assigned, this is a finding.)
     lines.each do |line|
       l = { type: line[0], item: line[1], value: line[2] }
       next unless l[:item].eql?('core')
+
       describe "#{lf} entries" do
         subject { l }
         its([:value]) { should cmp 0 }

@@ -44,7 +44,7 @@ value to \"delayed\" or \"no\":
     end
   else
     describe sshd_config do
-      its('Compression') { should match /no|delayed/ }
+      its('Compression') { should match(/no|delayed/) }
     end
   end
 end

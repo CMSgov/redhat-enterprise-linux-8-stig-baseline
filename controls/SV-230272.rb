@@ -34,7 +34,7 @@ finding.'
     end
   else
     describe command('grep -ir authenticate /etc/sudoers /etc/sudoers.d/*') do
-      its('stdout') { should_not match /!authenticate/ }
+      its('stdout') { should_not match(/!authenticate/) }
     end
   end
 end

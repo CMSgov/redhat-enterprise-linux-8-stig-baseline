@@ -36,7 +36,8 @@ configuring the log group in the /etc/audit/auditd.conf file:
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000057-GPOS-00027'
-  tag satisfies: ['SRG-OS-000057-GPOS-00027', 'SRG-OS-000058-GPOS-00028', 'SRG-OS-000059-GPOS-00029', 'SRG-OS-000206-GPOS-00084']
+  tag satisfies: ['SRG-OS-000057-GPOS-00027', 'SRG-OS-000058-GPOS-00028', 'SRG-OS-000059-GPOS-00029',
+                  'SRG-OS-000206-GPOS-00084']
   tag gid: 'V-230396'
   tag rid: 'SV-230396r627750_rule'
   tag stig_id: 'RHEL-08-030070'

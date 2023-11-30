@@ -36,6 +36,6 @@ updated versions have been installed.
   tag nist: ['SI-2 (6)']
 
   describe parse_config_file('/etc/dnf/dnf.conf') do
-    its('main.clean_requirements_on_remove') { should match /1|True|yes/i }
+    its('main.clean_requirements_on_remove') { should match(/1|True|yes/i) }
   end
 end

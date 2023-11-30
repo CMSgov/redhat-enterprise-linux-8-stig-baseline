@@ -64,7 +64,8 @@ configuration survives kernel updates:
   else
     grub_config = command('grub2-editenv - list').stdout
     kernelopts = parse_config(grub_config)['kernelopts'].strip.gsub(' ', "\n")
-    grub_cmdline_linux = parse_config_file('/etc/default/grub')['GRUB_CMDLINE_LINUX'].strip.gsub(' ', "\n").gsub('"', '')
+    grub_cmdline_linux = parse_config_file('/etc/default/grub')['GRUB_CMDLINE_LINUX'].strip.gsub(' ', "\n").gsub('"',
+                                                                                                                 '')
 
     describe 'kernelopts' do
       subject { parse_config(kernelopts) }

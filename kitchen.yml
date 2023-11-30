@@ -10,6 +10,8 @@ verifier:
       path: .
   input_files:
     - kitchen.inputs.yml
+  controls:
+    - "<%= ENV['INSPEC_CONTROL'] %>"
   load_plugins: true
 
 platforms:

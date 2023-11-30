@@ -66,7 +66,8 @@ restart the "sssd" service, run the following command:
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000105-GPOS-00052'
-  tag satisfies: ['SRG-OS-000105-GPOS-00052', 'SRG-OS-000106-GPOS-00053', 'SRG-OS-000107-GPOS-00054', 'SRG-OS-000108-GPOS-00055']
+  tag satisfies: ['SRG-OS-000105-GPOS-00052', 'SRG-OS-000106-GPOS-00053', 'SRG-OS-000107-GPOS-00054',
+                  'SRG-OS-000108-GPOS-00055']
   tag gid: 'V-230372'
   tag rid: 'SV-230372r627750_rule'
   tag stig_id: 'RHEL-08-020250'
@@ -97,7 +98,9 @@ restart the "sssd" service, run the following command:
       end
     end
     describe pam(pam_auth_files['system-auth']) do
-      its('lines') { should match_pam_rule('auth   [success=done authinfo_unavail=ignore ignore=ignore default=die]   pam_sss.so try_cert_auth') }
+      its('lines') {
+        should match_pam_rule('auth   [success=done authinfo_unavail=ignore ignore=ignore default=die]   pam_sss.so try_cert_auth')
+      }
     end
     describe pam(pam_auth_files['smartcard-auth']) do
       its('lines') { should match_pam_rule('auth   sufficient   pam_sss.so try_cert_auth') }

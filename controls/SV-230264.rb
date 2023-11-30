@@ -60,7 +60,7 @@ repository prior to install by setting the following option in the
   gpgcheck_entry_list.each do |gpgcheck_entry|
     describe "Repo file #{gpgcheck_entry}" do
       subject { file(gpgcheck_entry) }
-      its('content') { should match /gpgcheck\s*=\s*1/ }
+      its('content') { should match(/gpgcheck\s*=\s*1/) }
     end
   end
 end

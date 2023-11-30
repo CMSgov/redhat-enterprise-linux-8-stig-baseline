@@ -65,7 +65,7 @@ restart the "sssd" service, run the following command:
   else
     describe file('/etc/sssd/sssd.conf') do
       it { should exist }
-      its('content') { should match /^[\s]*\[certmap.*\][\s]*$/ }
+      its('content') { should match(/^\s*\[certmap.*\]\s*$/) }
     end
   end
 end

@@ -75,7 +75,7 @@ environment variables.)
       # Check umask for all interactive users
       umasks.each do |key, value|
         max_mode = '0077'.to_i(8)
-        inv_mode = 0777 ^ max_mode
+        inv_mode = 0o777 ^ max_mode
         umask_findings += key if inv_mode & value.to_i(8) != 0
       end
     else

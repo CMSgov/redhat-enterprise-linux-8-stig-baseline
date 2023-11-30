@@ -56,7 +56,9 @@ for off-loading audit logs by setting the following option in
     end
   else
     describe 'rsyslog configuration' do
-      subject { command("grep -i '^\$ActionSendStreamDriverAuthMode' /etc/rsyslog.conf /etc/rsyslog.d/* | awk -F ':' '{ print $2 }'").stdout }
+      subject {
+        command("grep -i '^\$ActionSendStreamDriverAuthMode' /etc/rsyslog.conf /etc/rsyslog.d/* | awk -F ':' '{ print $2 }'").stdout
+      }
       it { should match %r{\$ActionSendStreamDriverAuthMode\s+x509/name} }
     end
   end

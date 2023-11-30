@@ -58,7 +58,7 @@ line "[pam]".
     describe.one do
       describe 'Cache credentials enabled' do
         subject { sssd_config.content }
-        it { should_not match /cache_credentials\s*=\s*true/ }
+        it { should_not match(/cache_credentials\s*=\s*true/) }
       end
       describe 'Offline credentials expiration' do
         subject { sssd_config }

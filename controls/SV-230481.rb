@@ -62,13 +62,17 @@ setting the following options in "/etc/rsyslog.conf" or
     end
   else
     describe 'rsyslog configuration' do
-      subject { command("grep -i '^\$DefaultNetstreamDriver' /etc/rsyslog.conf /etc/rsyslog.d/* | awk -F ':' '{ print $2 }'").stdout }
-      it { should match /\$DefaultNetstreamDriver\s+gtls/ }
+      subject {
+        command("grep -i '^\$DefaultNetstreamDriver' /etc/rsyslog.conf /etc/rsyslog.d/* | awk -F ':' '{ print $2 }'").stdout
+      }
+      it { should match(/\$DefaultNetstreamDriver\s+gtls/) }
     end
 
     describe 'rsyslog configuration' do
-      subject { command("grep -i '^\$ActionSendStreamDriverMode' /etc/rsyslog.conf /etc/rsyslog.d/* | awk -F ':' '{ print $2 }'").stdout }
-      it { should match /\$ActionSendStreamDriverMode\s+1/ }
+      subject {
+        command("grep -i '^\$ActionSendStreamDriverMode' /etc/rsyslog.conf /etc/rsyslog.d/* | awk -F ':' '{ print $2 }'").stdout
+      }
+      it { should match(/\$ActionSendStreamDriverMode\s+1/) }
     end
   end
 end

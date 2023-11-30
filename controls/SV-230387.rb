@@ -53,10 +53,10 @@ following line to "/etc/rsyslog.conf" or a configuration file in the
   else
     describe.one do
       describe command('grep  -hsv "^#" /etc/rsyslog.conf /etc/rsyslog.d/*.conf| grep ^cron') do
-        its('stdout') { should match %r{cron\.\*[\s]*/var/log/cron} }
+        its('stdout') { should match %r{cron\.\*\s*/var/log/cron} }
       end
       describe command('grep  -hsv "^#" /etc/rsyslog.conf /etc/rsyslog.d/*.conf| grep /var/log/messages') do
-        its('stdout') { should match %r{\*.info;mail.none;authpriv.none;cron.none[\s]*/var/log/messages} }
+        its('stdout') { should match %r{\*.info;mail.none;authpriv.none;cron.none\s*/var/log/messages} }
       end
     end
   end

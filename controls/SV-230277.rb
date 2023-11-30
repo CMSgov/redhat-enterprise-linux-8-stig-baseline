@@ -64,11 +64,11 @@ configuration survives kernel updates:
     end
   else
     describe parse_config(grub_stdout) do
-      its('kernelopts') { should match /page_poison=1/ }
+      its('kernelopts') { should match(/page_poison=1/) }
     end
 
     describe parse_config_file('/etc/default/grub') do
-      its('GRUB_CMDLINE_LINUX') { should match /page_poison=1/ }
+      its('GRUB_CMDLINE_LINUX') { should match(/page_poison=1/) }
     end
   end
 end

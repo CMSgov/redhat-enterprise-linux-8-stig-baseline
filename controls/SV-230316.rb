@@ -63,31 +63,37 @@ performed, the "/etc/resolv.conf" file must be empty. An empty
   tag nist: ['CM-6 b']
 
   dns_in_host_line = parse_config_file('/etc/nsswitch.conf',
-      comment_char: '#',
-      assignment_regex: /^\s*([^:]*?)\s*:\s*(.*?)\s*$/
-  ).params['hosts'].include?('dns')
+                                       comment_char: '#',
+                                       assignment_regex: /^\s*([^:]*?)\s*:\s*(.*?)\s*$/).params['hosts'].include?('dns')
 
-  describe 'If `local` resolution is being used, a `hosts` entry in /etc/nsswitch.conf having `dns`' do
-    subject { dns_in_host_line }
-    it { should be false }
-  end unless dns_in_host_line
+  unless dns_in_host_line
+    describe 'If `local` resolution is being used, a `hosts` entry in /etc/nsswitch.conf having `dns`' do
+      subject { dns_in_host_line }
+      it { should be false }
+    end
+  end
 
-  describe 'If `local` resoultion is being used, the /etc/resolv.conf file should' do
-    subject { parse_config_file('/etc/resolv.conf', comment_char: '#').params }
-    it { should be_empty }
-  end unless dns_in_host_line
+  unless dns_in_host_line
+    describe 'If `local` resoultion is being used, the /etc/resolv.conf file should' do
+      subject { parse_config_file('/etc/resolv.conf', comment_char: '#').params }
+      it { should be_empty }
+    end
+  end
 
   nameservers = parse_config_file('/etc/resolv.conf',
-    comment_char: '#'
-  ).params.keys.grep(/nameserver/)
+                                  comment_char: '#').params.keys.grep(/nameserver/)
 
-  describe "The system's nameservers: #{nameservers}" do
-    subject { nameservers }
-    it { should_not be nil }
-  end if dns_in_host_line
+  if dns_in_host_line
+    describe "The system's nameservers: #{nameservers}" do
+      subject { nameservers }
+      it { should_not be nil }
+    end
+  end
 
-  describe 'The number of nameservers' do
-    subject { nameservers.count }
-    it { should cmp >= 2 }
-  end if dns_in_host_line
+  if dns_in_host_line
+    describe 'The number of nameservers' do
+      subject { nameservers.count }
+      it { should cmp >= 2 }
+    end
+  end
 end

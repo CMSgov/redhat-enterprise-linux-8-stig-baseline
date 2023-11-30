@@ -61,7 +61,7 @@ file should be created under the appropriate subdirectory.
     end
   elsif package('gnome-desktop3').installed?
     describe command('gsettings get org.gnome.desktop.screensaver lock-delay') do
-      its('stdout.strip') { should match /uint32\s[0-5]/ }
+      its('stdout.strip') { should match(/uint32\s[0-5]/) }
     end
   else
     impact 0.0

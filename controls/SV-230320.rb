@@ -41,6 +41,7 @@ finding."
 
   users.where { !shell.match(ignore_shells) && (uid >= uid_min || uid == 0) }.entries.each do |user_info|
     next if input('exempt_home_users').include?(user_info.username.to_s)
+
     describe directory(user_info.home) do
       it { should exist }
     end

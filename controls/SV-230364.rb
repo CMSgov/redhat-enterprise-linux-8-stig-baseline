@@ -30,6 +30,7 @@ password lifetime:
   shadow.users.each do |user|
     # filtering on non-system accounts (uid >= 1000)
     next unless user(user).uid >= 1000
+
     describe shadow.users(user) do
       its('min_days.first.to_i') { should cmp >= 1 }
     end

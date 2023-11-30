@@ -67,7 +67,7 @@ section of the database file and add or update the following lines:
     end
   else
     describe command('grep -R removal-action /etc/dconf/db/*') do
-      its('stdout.strip') { should match /^[^#].*:[\s]*removal-action[\s]*=[\s']*lock-screen[\s']*$/ }
+      its('stdout.strip') { should match(/^[^#].*:\s*removal-action\s*=[\s']*lock-screen[\s']*$/) }
     end
   end
 end

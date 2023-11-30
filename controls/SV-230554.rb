@@ -40,7 +40,7 @@ by the ISSO and documented.
     end
   else
     describe command('ip link | grep -i promisc') do
-      its('stdout.strip') { should match /^$/ }
+      its('stdout.strip') { should match(/^$/) }
     end
   end
 end

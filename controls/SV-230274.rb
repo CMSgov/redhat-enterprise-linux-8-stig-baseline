@@ -1,3 +1,4 @@
+require 'pry'
 control 'SV-230274' do
   title 'RHEL 8 must implement certificate status checking for multifactor
 authentication.'
@@ -55,16 +56,16 @@ $ sudo systemctl restart sssd.service'
     end
   else
     sssd_conf_file_contents = command('cat /etc/sssd/sssd.conf /etc/sssd/conf.d/*.conf').stdout.strip
-
+    # binding.pry
     unless sssd_conf_file_contents.empty?
       describe ini({ command: 'cat /etc/sssd/sssd.conf /etc/sssd/conf.d/*.conf' }) do
-        its('sssd.certificate_verification') { should match /#{input('sssd_certificate_verification')}/ }
+        its('sssd.certificate_verification') { should match(/#{input('sssd_certificate_verification')}/) }
       end
-      describe service('sssd') do
-        it { should be_installed }
-        it { should be_enabled }
-        it { should be_running }
-      end
+    end
+    describe service('sssd') do
+      it { should be_installed }
+      it { should be_enabled }
+      it { should be_running }
     end
   end
 end
