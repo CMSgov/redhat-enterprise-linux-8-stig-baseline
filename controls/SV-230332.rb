@@ -92,12 +92,10 @@ restart the "sssd" service, run the following command:
     ].each do |path|
       describe pam(path) do
         its('lines') {
-          should match_pam_rule('auth [default=die]|required pam_faillock.so preauth').all_with_integer_arg('deny', '<=',
-                                                                                                            input('unsuccessful_attempts'))
+          should match_pam_rule('auth [default=die]|required pam_faillock.so preauth').all_with_integer_arg('deny', '<=', input('unsuccessful_attempts'))
         }
         its('lines') {
-          should match_pam_rule('auth [default=die]|required pam_faillock.so preauth').all_with_integer_arg('deny',
-                                                                                                            '>=', 0)
+          should match_pam_rule('auth [default=die]|required pam_faillock.so preauth').all_with_integer_arg('deny', '>=', 0)
         }
       end
     end
