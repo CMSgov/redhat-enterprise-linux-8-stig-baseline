@@ -22,6 +22,16 @@ inputs:
     type: Boolean
     value: false
 
+  # SV-230223
+  - name: use_fips
+    description: "'(boolean)' Set to true if the system is required to use FIPS Encryption"
+    type: Boolean
+    value: true
+
+  # SV-230224
+  - name: data_at_rest_exempt
+    description: "'(boolean) Set to true if the system is exempt from using Data at Rest"
+
   # SV-230548
   - name: container_host
     description: Flag to designate if the target is a container host
@@ -57,9 +67,9 @@ inputs:
     description: Users exempt from home directory-based controls in array format
     type: Array
     value:
-    - root
-    - vagrant
-    - ec2_user
+      - root
+      - vagrant
+      - ec2_user
 
   # SV-230309, SV-230317, SV-230320, SV-230321, SV-230322, SV-230325, SV-230328. SV-230384, SV-244531, SV-244532
   - name: non_interactive_shells
@@ -112,7 +122,7 @@ inputs:
 
   # SV-230503
   - name: bluetooth_installed
-    description: 'Device or operating system has a Bluetooth adapter installed'
+    description: "Device or operating system has a Bluetooth adapter installed"
     type: Boolean
     value: true
 
@@ -146,13 +156,13 @@ inputs:
   - name: smart_card_status
     description: Smart card status (enabled or disabled)
     type: String
-    value: 'enabled'
+    value: "enabled"
 
   # SV-230263
   - name: file_integrity_tool
     description: Name of tool
     type: String
-    value: 'aide'
+    value: "aide"
 
   # SV-230484
   - name: authoritative_timeserver
@@ -218,70 +228,73 @@ inputs:
   - name: banner_message_text_cli
     description: Banner message text for command line interface logins.
     type: String
-    value: "You are accessing a U.S. Government (USG) Information System (IS) that is \
-    provided for USG-authorized use only. By using this IS (which includes any \
-    device attached to this IS), you consent to the following conditions: -The USG \
-    routinely intercepts and monitors communications on this IS for purposes \
-    including, but not limited to, penetration testing, COMSEC monitoring, network \
-    operations and defense, personnel misconduct (PM), law enforcement (LE), and \
-    counterintelligence (CI) investigations. -At any time, the USG may inspect and \
-    seize data stored on this IS. -Communications using, or data stored on, this \
-    IS are not private, are subject to routine monitoring, interception, and \
-    search, and may be disclosed or used for any USG-authorized purpose. -This IS \
-    includes security measures (e.g., authentication and access controls) to \
-    protect USG interests--not for your personal benefit or privacy. \
-    -Notwithstanding the above, using this IS does not constitute consent to PM, \
-    LE or CI investigative searching or monitoring of the content of privileged \
-    communications, or work product, related to personal representation or \
-    services by attorneys, psychotherapists, or clergy, and their assistants. Such \
-    communications and work product are private and confidential. See User \
-    Agreement for details."
+    value:
+      "You are accessing a U.S. Government (USG) Information System (IS) that is \
+      provided for USG-authorized use only. By using this IS (which includes any \
+      device attached to this IS), you consent to the following conditions: -The USG \
+      routinely intercepts and monitors communications on this IS for purposes \
+      including, but not limited to, penetration testing, COMSEC monitoring, network \
+      operations and defense, personnel misconduct (PM), law enforcement (LE), and \
+      counterintelligence (CI) investigations. -At any time, the USG may inspect and \
+      seize data stored on this IS. -Communications using, or data stored on, this \
+      IS are not private, are subject to routine monitoring, interception, and \
+      search, and may be disclosed or used for any USG-authorized purpose. -This IS \
+      includes security measures (e.g., authentication and access controls) to \
+      protect USG interests--not for your personal benefit or privacy. \
+      -Notwithstanding the above, using this IS does not constitute consent to PM, \
+      LE or CI investigative searching or monitoring of the content of privileged \
+      communications, or work product, related to personal representation or \
+      services by attorneys, psychotherapists, or clergy, and their assistants. Such \
+      communications and work product are private and confidential. See User \
+      Agreement for details."
 
   # SV-230225
   - name: banner_message_text_ral
     description: Banner message text for remote access logins.
     type: String
-    value: "You are accessing a U.S. Government (USG) Information System (IS) that is \
-    provided for USG-authorized use only. By using this IS (which includes any \
-    device attached to this IS), you consent to the following conditions: -The USG \
-    routinely intercepts and monitors communications on this IS for purposes \
-    including, but not limited to, penetration testing, COMSEC monitoring, network \
-    operations and defense, personnel misconduct (PM), law enforcement (LE), and \
-    counterintelligence (CI) investigations. -At any time, the USG may inspect and \
-    seize data stored on this IS. -Communications using, or data stored on, this \
-    IS are not private, are subject to routine monitoring, interception, and \
-    search, and may be disclosed or used for any USG-authorized purpose. -This IS \
-    includes security measures (e.g., authentication and access controls) to \
-    protect USG interests--not for your personal benefit or privacy. \
-    -Notwithstanding the above, using this IS does not constitute consent to PM, \
-    LE or CI investigative searching or monitoring of the content of privileged \
-    communications, or work product, related to personal representation or \
-    services by attorneys, psychotherapists, or clergy, and their assistants. Such \
-    communications and work product are private and confidential. See User \
-    Agreement for details."
+    value:
+      "You are accessing a U.S. Government (USG) Information System (IS) that is \
+      provided for USG-authorized use only. By using this IS (which includes any \
+      device attached to this IS), you consent to the following conditions: -The USG \
+      routinely intercepts and monitors communications on this IS for purposes \
+      including, but not limited to, penetration testing, COMSEC monitoring, network \
+      operations and defense, personnel misconduct (PM), law enforcement (LE), and \
+      counterintelligence (CI) investigations. -At any time, the USG may inspect and \
+      seize data stored on this IS. -Communications using, or data stored on, this \
+      IS are not private, are subject to routine monitoring, interception, and \
+      search, and may be disclosed or used for any USG-authorized purpose. -This IS \
+      includes security measures (e.g., authentication and access controls) to \
+      protect USG interests--not for your personal benefit or privacy. \
+      -Notwithstanding the above, using this IS does not constitute consent to PM, \
+      LE or CI investigative searching or monitoring of the content of privileged \
+      communications, or work product, related to personal representation or \
+      services by attorneys, psychotherapists, or clergy, and their assistants. Such \
+      communications and work product are private and confidential. See User \
+      Agreement for details."
 
   # SV-230226
   - name: banner_message_text_gui
     description: Banner message text for graphical user interface logins.
     type: String
-    value: "You are accessing a U.S. Government (USG) Information System (IS) that is \
-    provided for USG-authorized use only. By using this IS (which includes any \
-    device attached to this IS), you consent to the following conditions: -The USG \
-    routinely intercepts and monitors communications on this IS for purposes \
-    including, but not limited to, penetration testing, COMSEC monitoring, network \
-    operations and defense, personnel misconduct (PM), law enforcement (LE), and \
-    counterintelligence (CI) investigations. -At any time, the USG may inspect and \
-    seize data stored on this IS. -Communications using, or data stored on, this \
-    IS are not private, are subject to routine monitoring, interception, and \
-    search, and may be disclosed or used for any USG-authorized purpose. -This IS \
-    includes security measures (e.g., authentication and access controls) to \
-    protect USG interests--not for your personal benefit or privacy. \
-    -Notwithstanding the above, using this IS does not constitute consent to PM, \
-    LE or CI investigative searching or monitoring of the content of privileged \
-    communications, or work product, related to personal representation or \
-    services by attorneys, psychotherapists, or clergy, and their assistants. Such \
-    communications and work product are private and confidential. See User \
-    Agreement for details."
+    value:
+      "You are accessing a U.S. Government (USG) Information System (IS) that is \
+      provided for USG-authorized use only. By using this IS (which includes any \
+      device attached to this IS), you consent to the following conditions: -The USG \
+      routinely intercepts and monitors communications on this IS for purposes \
+      including, but not limited to, penetration testing, COMSEC monitoring, network \
+      operations and defense, personnel misconduct (PM), law enforcement (LE), and \
+      counterintelligence (CI) investigations. -At any time, the USG may inspect and \
+      seize data stored on this IS. -Communications using, or data stored on, this \
+      IS are not private, are subject to routine monitoring, interception, and \
+      search, and may be disclosed or used for any USG-authorized purpose. -This IS \
+      includes security measures (e.g., authentication and access controls) to \
+      protect USG interests--not for your personal benefit or privacy. \
+      -Notwithstanding the above, using this IS does not constitute consent to PM, \
+      LE or CI investigative searching or monitoring of the content of privileged \
+      communications, or work product, related to personal representation or \
+      services by attorneys, psychotherapists, or clergy, and their assistants. Such \
+      communications and work product are private and confidential. See User \
+      Agreement for details."
 
   # SV-230346
   - name: maxlogins_limit
@@ -326,19 +339,19 @@ inputs:
     description: Graphical Display Manager must not be installed
     type: Array
     value:
-    - xorg-x11-server-common
-    - xorg-x11-server-Xorg
-    - xorg-x11-server-utils
-    - xorg-x11-server-Xwayland
+      - xorg-x11-server-common
+      - xorg-x11-server-Xorg
+      - xorg-x11-server-utils
+      - xorg-x11-server-Xwayland
 
   # SV-230390
   - name: disk_error_action
     description: Must take appropriate action when an audit processing failure occurs.
     type: Array
     value:
-    - SYSLOG
-    - SINGLE
-    - HALT
+      - SYSLOG
+      - SINGLE
+      - HALT
 
   # SV-230391
   - name: max_log_file_action
@@ -351,37 +364,37 @@ inputs:
     description: Audit system must take appropriate action when the audit storage volume is full.
     type: Array
     value:
-    - SYSLOG
-    - SINGLE
-    - HALT
+      - SYSLOG
+      - SINGLE
+      - HALT
 
   # SV-230296
   - name: permit_root_login
     description: Whether to permit direct logons to the root account using remote access via SSH
     type: String
-    value: 'no'
+    value: "no"
 
   # SV-230385, SV-230383
   - name: permissions_for_shells
     description: Define default permissions for logon and non-logon shells.
     type: Hash
     value:
-      default_umask: '077'
-      bashrc_umask: '077'
-      cshrc_umask: '077'
+      default_umask: "077"
+      bashrc_umask: "077"
+      cshrc_umask: "077"
 
   # SV-230247
   - name: var_log_messages_group
     description: Group owner of /var/log/messages file
     type: Array
     value:
-    - root
+      - root
 
   # SV-230274
   - name: sssd_certificate_verification
     description: Certificate status checking for multifactor authentication.
     type: String
-    value: 'ocsp_dgst=sha1'
+    value: "ocsp_dgst=sha1"
 
   # SV-230372
   - name: sssd_conf_path
@@ -394,7 +407,7 @@ inputs:
     description: Group owner of /var/log/audit/audit.log
     type: Array
     value:
-    - root
+      - root
 
   # SV-230523, SV-244545, SV-244546
   - name: use_fapolicyd
@@ -449,9 +462,9 @@ inputs:
       ports: []
       protocols: []
       services:
-      - cockpit
-      - dhcpv6-client
-      - ssh
+        - cockpit
+        - dhcpv6-client
+        - ssh
 
   # SV-230511, SV-230512, SV-230513
   - name: skip_mount_tmp
@@ -470,6 +483,6 @@ inputs:
 
   # SV-245540
   - name: skip_endpoint_security_tool
-    description:  rhel_08_010001 - The RHEL 8 operating system must implement the Endpoint Security for Linux Threat Prevention tool.
+    description: rhel_08_010001 - The RHEL 8 operating system must implement the Endpoint Security for Linux Threat Prevention tool.
     type: Boolean
     value: false

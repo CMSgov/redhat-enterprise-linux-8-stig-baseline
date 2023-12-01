@@ -1,3 +1,5 @@
+# al: reviewed
+
 control 'SV-230224' do
   title 'All RHEL 8 local disk partitions must implement cryptographic
 mechanisms to prevent unauthorized disclosure or modification of all
@@ -52,6 +54,11 @@ entire partition, dedicate a partition for encryption in the partition layout.'
              .map { |s| s.sub(/^"(.*)"$/, '\1') } # strip outer quotes if they exist
 
   if virtualization.system.eql?('docker')
+    impact 0.0
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
+    end
+  elsif input('data_at_rest_exempt') == true
     impact 0.0
     describe 'Control not applicable within a container' do
       skip 'Control not applicable within a container'

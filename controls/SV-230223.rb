@@ -1,3 +1,5 @@
+# al: reviewed
+
 control 'SV-230223' do
   title 'RHEL 8 must implement NIST FIPS-validated cryptography for the following: To provision digital signatures, to generate cryptographic hashes, and to protect data requiring data-at-rest protections in accordance with applicable federal laws, Executive Orders, directives, policies, regulations, and standards.'
   desc 'Use of weak or untested encryption algorithms undermines the purposes of using encryption to protect data. The operating system must implement cryptographic modules adhering to the higher standards approved by the federal government since this provides assurance they have been tested and validated.
@@ -47,6 +49,11 @@ Reboot the system for the changes to take effect.'
   if virtualization.system.eql?('docker')
     describe 'Control not applicable within a container' do
       skip "Enforcement of Federal Government approved encryption algorithms should be enabled on the container as well.  Both Container OS and Host OS should be set to FIPS mode, which will require a set of FIPS-compliant cryptographic algorithms to be used on the system. Since checking the host's FIPS compliance can't be done within the container this check should be performed manually."
+    end
+  elsif input('use_fips') == false
+    impact 0.0
+    describe 'This control is Not Applicable as FIPS is not required for this system' do
+      skip 'This control is Not Applicable as FIPS is not required for this system'
     end
   else
     describe command('fips-mode-setup --check') do

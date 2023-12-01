@@ -1,3 +1,5 @@
+# TODO: should use the linux_updates resource unless this is faster
+
 control 'SV-230222' do
   title 'RHEL 8 vendor packaged system security patches and updates must be
 installed and up to date.'
@@ -53,6 +55,10 @@ available from Red Hat within 30 days or sooner as local policy dictates.'
   tag fix_id: 'F-32866r567413_fix'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+
+  only_if("This control takes a long time to execute so it has been disabled through 'slow_controls'") {
+    !input('disable_slow_controls')
+  }
 
   describe command('yum --security check-update -q') do
     its('exit_status') { should be 0 }

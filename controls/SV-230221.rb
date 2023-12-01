@@ -1,3 +1,5 @@
+# al: reviewed
+
 control 'SV-230221' do
   title 'RHEL 8 must be a vendor-supported release.'
   desc 'An operating system release is considered "supported" if the vendor
