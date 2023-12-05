@@ -53,7 +53,7 @@ Reboot the system for the settings to take effect.'
       skip 'Control not applicable within a container'
     end
   else
-    describe kernel_module('SCTP') do
+    describe kernel_module('sctp') do
       it { should be_disabled }
       it { should be_blacklisted }
     end
