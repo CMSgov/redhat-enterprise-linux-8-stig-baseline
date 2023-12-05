@@ -53,7 +53,7 @@ Reboot the system for the settings to take effect.'
       skip 'Control not applicable within a container'
     end
   else
-    describe kernel_module('CAN') do
+    describe kernel_module('can') do
       it { should be_disabled }
       it { should be_blacklisted }
     end
