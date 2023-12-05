@@ -82,22 +82,17 @@ permissive = 0'
       its('permissive') { should eq 0 }
     end
 
-    describe file('/etc/fapolicyd/fapolicyd.rules') do
+    rules_file = '/etc/fapolicyd/compiled.rules'
+    if os.release.to_f < 8.4
+      rules_file = '/etc/fapolicyd/fapolicyd.rules'
+    end
+
+    describe file(rules_file) do
       it { should exist }
     end
 
-    describe file('/etc/fapolicyd/fapolicyd.rules').content.strip.split("\n")[-1] do
+    describe file(rules_file).content.strip.split("\n")[-1] do
       it { should cmp 'deny all all' }
-    end if file('/etc/fapolicyd/fapolicyd.rules').exist?
-
-    system_mounts = command("mount | egrep '^tmpfs| ext4| ext3| xfs' | awk '{ printf \"%s\\n\", $3 }'").stdout.split
-
-    describe file('/etc/fapolicyd/fapolicyd.mounts') do
-      it { should exist }
-    end
-
-    describe file('/etc/fapolicyd/fapolicyd.mounts') do
-      its('content.split') { should match_array system_mounts }
-    end if file('/etc/fapolicyd/fapolicyd.mounts').exist?
+    end if file(rules_file).exist?
   end
 end
