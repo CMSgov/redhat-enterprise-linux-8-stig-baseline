@@ -79,7 +79,7 @@ permissive = 0'
     end
   else
     describe parse_config_file('/etc/fapolicyd/fapolicyd.conf') do
-      its('permissive') { should eq 0 }
+      its('permissive') { should cmp 0 }
     end
 
     rules_file = '/etc/fapolicyd/compiled.rules'
