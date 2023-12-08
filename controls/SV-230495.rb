@@ -60,7 +60,7 @@ protocol kernel module.
       skip 'Control not applicable within a container'
     end
   else
-    describe kernel_module(input('kernel_modules')['controller_area_network']) do
+    describe kernel_module('can') do
       it { should be_disabled }
       it { should be_blacklisted }
     end

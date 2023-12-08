@@ -429,17 +429,6 @@ inputs:
     type: String
     value: /etc/security/faillock.conf
 
-  # SV-230494, SV-230495, SV-230496, SV-230497
-  # NOTE: Redhat should use 'lowercase' over 'UPPERCASE'
-  - name: kernel_modules
-    description: The kernel modules protocols
-    type: Hash
-    value:
-      asynchronous_transfer_mode: ATM
-      controller_area_network: CAN
-      stream_control_transmission_protocol: SCTP
-      transparent_inter_process_communication: TIPC
-
   # SV-230500
   - name: firewalld_properties
     description: Ports, Protocols and Services Rules
