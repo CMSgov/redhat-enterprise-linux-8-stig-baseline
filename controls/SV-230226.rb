@@ -1,3 +1,5 @@
+# al: reviewed
+
 control 'SV-230226' do
   title 'RHEL 8 must display the Standard Mandatory DoD Notice and Consent
 Banner before granting local or remote access to the system via a graphical
@@ -126,20 +128,10 @@ graphical interface.
   tag cci: ['CCI-000048']
   tag nist: ['AC-8 a']
 
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
-    end
-  elsif package('gnome-desktop3').installed?
-    describe command('grep ^banner-message-text /etc/dconf/db/local.d/*') do
-      its('stdout.strip') { should cmp input('banner_message_text_gui') }
-    end
-  else
-    impact 0.0
-    describe 'The system does not have GNOME installed' do
-      skip "The system does not have GNOME installed, this requirement is Not
-        Applicable."
-    end
+  only_if("The system does not have GNOME installed, or we are in a container, this requirement is Not
+        Applicable.", impact: 0.0) { package('gnome-desktop3').installed? && virtualization.system.eql?('docker') }
+
+  describe command('grep ^banner-message-text /etc/dconf/db/local.d/*') do
+    its('stdout.strip') { should cmp input('banner_message_text_gui') }
   end
 end
