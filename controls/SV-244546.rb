@@ -92,7 +92,7 @@ permissive = 0'
     end
 
     describe file(rules_file).content.strip.split("\n")[-1] do
-      it { should cmp 'deny all all' }
+      it { should cmp 'deny perm=any all : all' }
     end if file(rules_file).exist?
   end
 end
