@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-244532' do
   title 'RHEL 8 must be configured so that all files and directories contained
 in local interactive user home directories are group-owned by a group of which
@@ -51,7 +53,7 @@ local interactive user's files and directories, use the following command:
 
   findings = Set[]
   users.where {
-    !username.match(exempt_home_users) && !shell.match(ignore_shells) && (uid >= 1000 || uid == 0)
+    !username.match(exempt_home_users) && !shell.match(ignore_shells) && (uid >= 1000 || uid.zero?)
   }.entries.each do |user_info|
     findings += command("find #{user_info.home} -xdev -not -gid #{user_info.gid}").stdout.split("\n")
   end

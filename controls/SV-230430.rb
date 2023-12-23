@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230430' do
   title 'Successful/unsuccessful uses of setfiles in RHEL 8 must generate an
 audit record.'

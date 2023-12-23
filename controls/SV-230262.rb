@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230262' do
   title 'RHEL 8 library files must be group-owned by root or a system account.'
   desc 'If RHEL 8 were to allow any user to make changes to software

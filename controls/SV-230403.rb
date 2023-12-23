@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230403' do
   title 'RHEL 8 audit system must protect logon UIDs from unauthorized change.'
   desc 'Unauthorized disclosure of audit records can reveal system and

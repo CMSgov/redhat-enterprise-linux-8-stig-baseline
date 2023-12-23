@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # al: reviewed
 
 control 'SV-230226' do

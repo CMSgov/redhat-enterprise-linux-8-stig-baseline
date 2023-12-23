@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230483' do
   title 'RHEL 8 must take action when allocated audit record storage volume
 reaches 75 percent of the repository maximum audit record storage capacity.'

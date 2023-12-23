@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230330' do
   title 'RHEL 8 must not allow users to override SSH environment variables.'
   desc 'SSH environment options potentially allow users to bypass access

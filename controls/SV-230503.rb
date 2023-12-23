@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230503' do
   title 'RHEL 8 must be configured to disable USB mass storage.'
   desc 'USB mass storage permits easy introduction of unknown devices, thereby

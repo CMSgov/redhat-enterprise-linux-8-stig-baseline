@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230390' do
   title 'The RHEL 8 System must take appropriate action when an audit
 processing failure occurs.'

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230327' do
   title 'All RHEL 8 local files and directories must have a valid group owner.'
   desc 'Files without a valid group owner may be unintentionally inherited if

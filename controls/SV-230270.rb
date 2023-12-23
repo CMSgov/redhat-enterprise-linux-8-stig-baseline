@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230270' do
   title 'RHEL 8 must prevent kernel profiling by unprivileged users.'
   desc 'Preventing unauthorized information transfers mitigates the risk of

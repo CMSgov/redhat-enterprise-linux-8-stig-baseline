@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230378' do
   title 'RHEL 8 must enforce a delay of at least four seconds between logon
 prompts following a failed logon attempt.'

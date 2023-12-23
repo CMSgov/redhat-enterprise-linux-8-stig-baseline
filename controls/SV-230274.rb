@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230274' do
   title 'RHEL 8 must implement certificate status checking for multifactor
 authentication.'

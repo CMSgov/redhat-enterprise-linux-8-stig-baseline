@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230478' do
   title 'RHEL 8 must have the packages required for encrypting offloaded audit
 logs installed.'

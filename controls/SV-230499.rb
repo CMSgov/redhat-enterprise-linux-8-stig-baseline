@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230499' do
   title 'RHEL 8 must disable IEEE 1394 (FireWire) Support.'
   desc 'It is detrimental for operating systems to provide, or install by

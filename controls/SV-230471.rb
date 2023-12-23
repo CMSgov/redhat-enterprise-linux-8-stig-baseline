@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230471' do
   title 'RHEL 8 must allow only the Information System Security Manager (ISSM)
 (or individuals or roles appointed by the ISSM) to select which auditable

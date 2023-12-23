@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230454' do
   title "Successful/unsuccessful uses of the creat system call in RHEL 8 must
 generate an audit record."

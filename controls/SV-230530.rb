@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230530' do
   title 'The x86 Ctrl-Alt-Delete key sequence in RHEL 8 must be disabled if a
 graphical user interface is installed.'

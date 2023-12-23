@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230237' do
   title 'The RHEL 8 pam_unix.so module must be configured in the password-auth
 file to use a FIPS 140-2 approved cryptographic hashing algorithm for system

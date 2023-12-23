@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230456' do
   title 'Successful/unsuccessful uses of the chmod command in RHEL 8 must
 generate an audit record.'

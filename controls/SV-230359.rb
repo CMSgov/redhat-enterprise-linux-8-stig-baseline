@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230359' do
   title 'RHEL 8 must enforce password complexity by requiring that at least one
 numeric character be used.'
@@ -42,6 +44,6 @@ to have the required value):
   tag nist: ['IA-5 (1) (a)']
 
   describe parse_config_file('/etc/security/pwquality.conf') do
-    its('dcredit.to_i') { should cmp < 0 }
+    its('dcredit.to_i') { should cmp.negative? }
   end
 end

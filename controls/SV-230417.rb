@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230417' do
   title "The RHEL 8 audit system must be configured to audit any usage of the
 fremovexattr system call."

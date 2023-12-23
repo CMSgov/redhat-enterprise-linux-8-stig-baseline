@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230358' do
   title 'RHEL 8 must enforce password complexity by requiring that at least one
 lower-case character be used.'
@@ -43,6 +45,6 @@ to have the required value):
   tag nist: ['IA-5 (1) (a)']
 
   describe parse_config_file('/etc/security/pwquality.conf') do
-    its('lcredit.to_i') { should cmp < 0 }
+    its('lcredit.to_i') { should cmp.negative? }
   end
 end

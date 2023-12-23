@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230369' do
   title 'RHEL 8 passwords must have a minimum of 15 characters.'
   desc 'The shorter the password, the lower the number of possible

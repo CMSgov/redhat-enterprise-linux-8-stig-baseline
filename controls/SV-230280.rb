@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230280' do
   title 'RHEL 8 must implement address space layout randomization (ASLR) to
 protect its memory from unauthorized code execution.'

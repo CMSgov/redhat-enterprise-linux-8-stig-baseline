@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230384' do
   title 'RHEL 8 must set the umask value to 077 for all local interactive user
 accounts.'
@@ -52,7 +54,7 @@ environment variables.)
 
   uid_min = login_defs.UID_MIN.to_i
 
-  interactive_users = users.where { !shell.match(ignore_shells) && (uid >= uid_min || uid == 0) }.entries
+  interactive_users = users.where { !shell.match(ignore_shells) && (uid >= uid_min || uid.zero?) }.entries
 
   # For each user, build and execute a find command that identifies initialization files
   # in a user's home directory.
@@ -60,7 +62,7 @@ environment variables.)
     # Only check if the home directory is local
     is_local = command("df -l #{u.home}").exit_status
 
-    if is_local == 0
+    if is_local.zero?
       # Get user's initialization files
       dotfiles += command("find #{u.home} -xdev -maxdepth 2 ( -name '.*' ! -name '.bash_history' ) -type f").stdout.split("\n")
 

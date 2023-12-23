@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230322' do
   title 'All RHEL 8 local interactive user home directories must be group-owned
 by the home directory owner’s primary group.'
@@ -50,7 +52,7 @@ of "/home/smithj", and has a primary group of users.
   uid_min = 1000 if uid_min.nil?
 
   findings = Set[]
-  users.where { !shell.match(ignore_shells) && (uid >= uid_min || uid == 0) }.entries.each do |user_info|
+  users.where { !shell.match(ignore_shells) && (uid >= uid_min || uid.zero?) }.entries.each do |user_info|
     next if input('exempt_home_users').include?(user_info.username.to_s)
 
     findings += command("find #{user_info.home} -maxdepth 0 -not -gid #{user_info.gid}").stdout.split("\n")

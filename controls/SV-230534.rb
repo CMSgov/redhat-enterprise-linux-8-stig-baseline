@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230534' do
   title 'The root account must be the only account having unrestricted access
 to the RHEL 8 system.'

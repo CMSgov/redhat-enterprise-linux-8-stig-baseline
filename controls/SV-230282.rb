@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230282' do
   title 'RHEL 8 must enable the SELinux targeted policy.'
   desc 'Without verification of the security functions, security functions may

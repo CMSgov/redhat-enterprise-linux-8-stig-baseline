@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230550' do
   title 'RHEL 8 must be configured to prevent unrestricted mail relaying.'
   desc 'If unrestricted mail relaying is permitted, unauthorized senders could

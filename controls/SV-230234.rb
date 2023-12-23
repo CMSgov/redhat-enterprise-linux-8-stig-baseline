@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230234' do
   title 'RHEL 8 operating systems booted with United Extensible Firmware
 Interface (UEFI) must require authentication upon booting into single-user mode

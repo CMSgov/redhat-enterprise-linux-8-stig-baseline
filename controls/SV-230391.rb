@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230391' do
   title "The RHEL 8 System Administrator (SA) and Information System Security
 Officer (ISSO) (at a minimum) must be alerted when the audit storage volume is

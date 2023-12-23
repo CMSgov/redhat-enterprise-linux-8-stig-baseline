@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230532' do
   title 'The debug-shell systemd service must be disabled on RHEL 8.'
   desc 'The debug-shell requires no authentication and provides root

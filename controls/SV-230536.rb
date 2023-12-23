@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230536' do
   title 'RHEL 8 must not send Internet Control Message Protocol (ICMP)
 redirects.'

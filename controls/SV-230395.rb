@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230395' do
   title 'RHEL 8 must resolve audit information before writing to disk.'
   desc 'Without establishing what type of events occurred, the source of

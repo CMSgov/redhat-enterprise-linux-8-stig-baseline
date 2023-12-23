@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230368' do
   title 'RHEL 8 passwords must be prohibited from reuse for a minimum of five
 generations.'

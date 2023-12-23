@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230441' do
   title "Successful/unsuccessful uses of the rmdir command in RHEL 8 must
 generate an audit record."

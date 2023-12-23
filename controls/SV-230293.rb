@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230293' do
   title 'RHEL 8 must use a separate file system for /var/log.'
   desc 'The use of separate file systems for different paths can protect the

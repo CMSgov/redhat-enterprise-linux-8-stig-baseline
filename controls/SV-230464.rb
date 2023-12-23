@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230464' do
   title 'Successful/unsuccessful uses of the chacl command in RHEL 8 must
 generate an audit record.'

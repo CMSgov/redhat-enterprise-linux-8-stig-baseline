@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230294' do
   title 'RHEL 8 must use a separate file system for the system audit data path.'
   desc 'The use of separate file systems for different paths can protect the

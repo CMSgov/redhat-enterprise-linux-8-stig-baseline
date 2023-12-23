@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230238' do
   title 'RHEL 8 must prevent system daemons from using Kerberos for
 authentication.'

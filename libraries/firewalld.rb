@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'inspec/resources/command'
 
 class FirewallD < Inspec.resource(1)
@@ -12,19 +14,19 @@ class FirewallD < Inspec.resource(1)
   supports platform: 'linux'
   desc 'Use the firewalld resource to check and see if firewalld is configured to grand or deny access to specific hosts or services'
   example <<~EXAMPLE
-      describe firewalld do
-        it { should be_running }
-        its('default_zone') { should eq 'public' }
-        it { should have_service_enabled_in_zone('ssh', 'public') }
-        it { should have_rule_enabled('rule family=ipv4 source address=192.168.0.14 accept', 'public') }
-      end
+    describe firewalld do
+      it { should be_running }
+      its('default_zone') { should eq 'public' }
+      it { should have_service_enabled_in_zone('ssh', 'public') }
+      it { should have_rule_enabled('rule family=ipv4 source address=192.168.0.14 accept', 'public') }
+    end
 
-      describe firewalld.where { zone == 'public' } do
-        its('interfaces') { should cmp ['enp0s3', 'eno2'] }
-        its('sources') { should cmp ['ssh', 'icmp'] }
-        its('services') { should cmp ['192.168.1.0/24', '192.168.1.2'] }
-      end
-    EXAMPLE
+    describe firewalld.where { zone == 'public' } do
+      its('interfaces') { should cmp ['enp0s3', 'eno2'] }
+      its('sources') { should cmp ['ssh', 'icmp'] }
+      its('services') { should cmp ['192.168.1.0/24', '192.168.1.2'] }
+    end
+  EXAMPLE
 
   attr_reader :params
 
@@ -145,7 +147,7 @@ class FirewallD < Inspec.resource(1)
   def target_bound(query_zone)
     # result: a target bound for the zone
     # example: 'DROP'
-    firewalld_command("--permanent --zone=#{query_zone} --get-target").strip()
+    firewalld_command("--permanent --zone=#{query_zone} --get-target").strip
   end
 
   def icmp_block_inversion_bound(query_zone)
@@ -212,9 +214,7 @@ class FirewallD < Inspec.resource(1)
   def firewalld_command(command)
     command = "firewall-cmd #{command}"
     result = inspec.command(command)
-    if result.stderr != ''
-      return "Error on command #{command}: #{result.stderr}"
-    end
+    return "Error on command #{command}: #{result.stderr}" if result.stderr != ''
 
     result.stdout.strip
   end

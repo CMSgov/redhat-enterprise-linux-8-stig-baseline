@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230506' do
   title 'RHEL 8 wireless network adapters must be disabled.'
   desc 'Without protection of communications with wireless peripherals,

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230397' do
   title 'RHEL 8 audit logs must be owned by root to prevent unauthorized read
 access.'

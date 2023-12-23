@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230376' do
   title 'RHEL 8 must prohibit the use of cached authentications after one day.'
   desc 'If cached authentication information is out-of-date, the validity of

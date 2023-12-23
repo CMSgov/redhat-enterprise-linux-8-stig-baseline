@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230476' do
   title 'RHEL 8 must allocate audit record storage capacity to store at least
 one week of audit records, when audit records are not immediately sent to a

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-244535' do
   title 'RHEL 8 must initiate a session lock for graphical user interfaces when
 the screensaver is activated.'

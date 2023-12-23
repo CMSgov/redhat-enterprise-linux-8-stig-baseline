@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230525' do
   title 'A firewall must be able to protect against or limit the effects of
 Denial of Service (DoS) attacks by ensuring RHEL 8 can implement rate-limiting

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230245' do
   title 'The RHEL 8 /var/log/messages file must have mode 0640 or less
 permissive.'

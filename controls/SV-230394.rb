@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230394' do
   title 'RHEL 8 must label all off-loaded audit logs before sending them to the
 central log server.'

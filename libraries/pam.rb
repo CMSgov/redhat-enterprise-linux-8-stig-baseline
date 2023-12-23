@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Pam < Inspec.resource(1)
   # These are aliases for one another
   attr_reader :rules, :lines
@@ -63,9 +65,7 @@ class Pam < Inspec.resource(1)
     @lines         = @rules
 
     @top_config = false
-    if path.strip == '/etc/pam.conf'
-      @top_config = true
-    end
+    @top_config = true if path.strip == '/etc/pam.conf'
 
     parse_content(config_target)
   end
@@ -78,9 +78,7 @@ class Pam < Inspec.resource(1)
   def parse_content(path, service_name = nil)
     config_files = Array(path)
 
-    if path.directory?
-      config_files = inspec.bash("ls #{path}/*").stdout.lines.map { |f| inspec.file(f.strip) }
-    end
+    config_files = inspec.bash("ls #{path}/*").stdout.lines.map { |f| inspec.file(f.strip) } if path.directory?
 
     config_files.each do |config_file|
       next unless config_file.content
@@ -91,9 +89,7 @@ class Pam < Inspec.resource(1)
       end
 
       service = service_name
-      unless service || @top_config
-        service = config_file.basename
-      end
+      service = config_file.basename unless service || @top_config
 
       rules.each do |rule|
         new_rule = Pam::Rule.new(rule, { service_name: service })
@@ -113,9 +109,7 @@ class Pam < Inspec.resource(1)
                         inspec.file(File.join(File.dirname(path.path), new_rule.module_path))
                       end
 
-          if subtarget.exist?
-            parse_content(subtarget, service)
-          end
+          parse_content(subtarget, service) if subtarget.exist?
         else
 
           unless new_rule.type && new_rule.control && new_rule.module_path
@@ -163,14 +157,12 @@ class Pam < Inspec.resource(1)
     end
 
     def services
-      collect { |l| l.service }.sort.uniq
+      collect(&:service).sort.uniq
     end
 
     def service
-      svcs = collect { |l| l.service }.sort.uniq
-      if svcs.length > 1
-        raise PamError, %(More than one service found: '[#{svcs.join("', '")}]')
-      end
+      svcs = collect(&:service).sort.uniq
+      raise PamError, %(More than one service found: '[#{svcs.join("', '")}]') if svcs.length > 1
 
       svcs.first
     end
@@ -236,9 +228,7 @@ class Pam < Inspec.resource(1)
         first_entry = index(rules.first)
         last_entry = index(rules.last)
 
-        if first_entry && last_entry
-          retval = (self[first_entry..last_entry] == rules)
-        end
+        retval = (self[first_entry..last_entry] == rules) if first_entry && last_entry
       else
         # This match allows other rules between the two in question
         retval = (rules.select { |l| super(l) } == rules)
@@ -246,19 +236,19 @@ class Pam < Inspec.resource(1)
 
       retval
     end
-    alias_method :match, :include?
+    alias match include?
 
     # An alias for setting `:exact => true` in the `include` method
     def include_exactly?(rules, opts = {})
       include?(rules, opts.merge({ exact: true }))
     end
-    alias_method :match_exactly, :include_exactly?
+    alias match_exactly include_exactly?
 
     # Convert the data structure to an Array suitable for an RSpec diff
     #
     # @return [Array[String]]
     def to_a
-      sort_by { |l| l.type }.map { |l| l.to_s }
+      sort_by(&:type).map(&:to_s)
     end
 
     # Convert the data structure to a String
@@ -292,8 +282,7 @@ class Pam < Inspec.resource(1)
   # Rule equality is a fuzzy match that can accept regular expression matches
   # within the string to compare
   class Rule
-    attr_reader :to_s
-    attr_reader :service, :silent, :type, :control, :module_path, :module_arguments
+    attr_reader :to_s, :service, :silent, :type, :control, :module_path, :module_arguments
 
     def initialize(rule, opts = {})
       @to_s = rule.strip.gsub(/\s+/, ' ')
@@ -329,9 +318,7 @@ class Pam < Inspec.resource(1)
 
       match_data = rule.match(Regexp.new(rule_regex, Regexp::EXTENDED))
 
-      unless match_data
-        raise PamError, "Invalid PAM configuration rule: '#{rule}'"
-      end
+      raise PamError, "Invalid PAM configuration rule: '#{rule}'" unless match_data
 
       @service          = opts[:service_name] || match_data[:service_name]
       @silent           = match_data[:silent] == '-'
@@ -345,7 +332,7 @@ class Pam < Inspec.resource(1)
       to_cmp = Pam::Rule.new(to_cmp, { service_name: @service }) if to_cmp.is_a?(String)
 
       # The simple match first
-      self.class == to_cmp.class &&
+      instance_of?(to_cmp.class) &&
         @service.match(Regexp.new("^#{to_cmp.service}$")) &&
         @type.match(Regexp.new("^#{to_cmp.type}$")) &&
         @control.match(Regexp.new("^#{to_cmp.control.gsub(/(\[|\])/, '\\\\\\1')}$")) &&
@@ -359,7 +346,7 @@ class Pam < Inspec.resource(1)
             end
         )
     end
-    alias_method :==, :match?
-    alias_method :eql?, :==
+    alias == match?
+    alias eql? ==
   end
 end

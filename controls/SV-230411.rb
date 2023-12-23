@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230411' do
   title 'The RHEL 8 audit package must be installed.'
   desc 'Without establishing what type of events occurred, the source of

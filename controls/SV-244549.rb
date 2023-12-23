@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-244549' do
   title 'All RHEL 8 networked systems must have SSH installed.'
   desc 'Without protection of the transmitted information, confidentiality and

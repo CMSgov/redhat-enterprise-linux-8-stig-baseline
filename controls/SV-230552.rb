@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230552' do
   title 'The RHEL 8 file integrity tool must be configured to verify Access
 Control Lists (ACLs).'

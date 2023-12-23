@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230336' do
   title 'RHEL 8 must automatically lock an account until the locked account is
 released by an administrator when three unsuccessful logon attempts occur

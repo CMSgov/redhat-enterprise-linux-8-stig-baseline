@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230272' do
   title 'RHEL 8 must require users to reauthenticate for privilege escalation.'
   desc 'Without reauthentication, users may access resources or perform tasks

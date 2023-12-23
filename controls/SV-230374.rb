@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230374' do
   title 'RHEL 8 emergency accounts must be automatically removed or disabled
 after the crisis is resolved or within 72 hours.'
@@ -60,7 +62,7 @@ until the crisis is resolved.'
     input('temporary_accounts').each do |acct|
       describe user(acct.to_s) do
         its('maxdays') { should cmp <= 3 }
-        its('maxdays') { should cmp > 0 }
+        its('maxdays') { should cmp.positive? }
       end
     end
   end

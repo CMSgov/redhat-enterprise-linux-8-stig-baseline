@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230389' do
   title 'The RHEL 8 Information System Security Officer (ISSO) and System
 Administrator (SA) (at a minimum) must have mail aliases to be notified of an

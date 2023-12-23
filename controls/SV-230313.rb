@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230313' do
   title 'RHEL 8 must disable core dumps for all users.'
   desc 'It is detrimental for operating systems to provide, or install by

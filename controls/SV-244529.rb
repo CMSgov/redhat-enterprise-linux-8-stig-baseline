@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-244529' do
   title 'RHEL 8 must use a separate file system for /var/tmp.'
   desc 'The use of separate file systems for different paths can protect the

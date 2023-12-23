@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230269' do
   title 'RHEL 8 must restrict access to the kernel message buffer.'
   desc 'Preventing unauthorized information transfers mitigates the risk of

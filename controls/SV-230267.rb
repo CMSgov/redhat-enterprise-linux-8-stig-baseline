@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230267' do
   title 'RHEL 8 must enable kernel parameters to enforce discretionary access
 control on symlinks.'

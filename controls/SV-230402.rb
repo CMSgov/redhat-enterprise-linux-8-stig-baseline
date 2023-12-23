@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230402' do
   title 'RHEL 8 audit system must protect auditing rules from unauthorized
 change.'

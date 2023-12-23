@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230407' do
   title 'RHEL 8 must generate audit records for all account creations,
 modifications, disabling, and termination events that affect /etc/gshadow.'

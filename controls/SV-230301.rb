@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230301' do
   title 'RHEL 8 must prevent special devices on non-root local partitions.'
   desc 'The "nodev" mount option causes the system to not interpret

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230228' do
   title 'All RHEL 8 remote access methods must be monitored.'
   desc 'Remote access services, such as those providing remote access to

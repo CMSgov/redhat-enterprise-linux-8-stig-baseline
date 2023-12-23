@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-244520' do
   title "The RHEL 8 system-auth file must be configured to use a sufficient
 number of hashing rounds."

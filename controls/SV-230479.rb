@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230479' do
   title 'The RHEL 8 audit records must be off-loaded onto a different system or
 storage media from the system being audited.'

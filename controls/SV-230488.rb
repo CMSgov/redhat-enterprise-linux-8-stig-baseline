@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230488' do
   title 'RHEL 8 must not have any automated bug reporting tools installed.'
   desc 'It is detrimental for operating systems to provide, or install by

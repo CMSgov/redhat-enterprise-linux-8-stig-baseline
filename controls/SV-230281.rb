@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230281' do
   title 'YUM must remove all software components after updated versions have
 been installed on RHEL 8.'

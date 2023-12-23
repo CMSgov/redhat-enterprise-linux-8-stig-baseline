@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230484' do
   title 'RHEL 8 must securely compare internal information system clocks at
 least every 24 hours with a server synchronized to an authoritative time

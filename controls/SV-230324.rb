@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230324' do
   title 'All RHEL 8 local interactive user accounts must be assigned a home
 directory upon creation.'

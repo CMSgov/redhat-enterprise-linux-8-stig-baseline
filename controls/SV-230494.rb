@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230494' do
   title 'RHEL 8 must disable the asynchronous transfer mode (ATM) protocol.'
   desc 'It is detrimental for operating systems to provide, or install by

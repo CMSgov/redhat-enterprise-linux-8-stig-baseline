@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230243' do
   title 'A sticky bit must be set on all RHEL 8 public directories to prevent
 unauthorized and unintended information transferred via shared system

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230561' do
   title 'The tuned package must not be installed unless mission essential on
 RHEL 8.'

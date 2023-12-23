@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230299' do
   title 'RHEL 8 must prevent files with the setuid and setgid bit set from
 being executed on file systems that contain user home directories.'

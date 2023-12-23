@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230328' do
   title 'A separate RHEL 8 filesystem must be used for user home directories
 (such as /home or an equivalent).'

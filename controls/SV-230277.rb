@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230277' do
   title 'RHEL 8 must clear the page allocator to prevent use-after-free
 attacks.'

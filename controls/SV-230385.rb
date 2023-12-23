@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230385' do
   title 'RHEL 8 must define default permissions for logon and non-logon shells.'
   desc 'The umask controls the default access mode assigned to newly created

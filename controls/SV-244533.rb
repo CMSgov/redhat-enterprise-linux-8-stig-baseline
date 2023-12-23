@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-244533' do
   title 'RHEL 8 must configure the use of the pam_faillock.so module in the
 /etc/pam.d/system-auth file.'

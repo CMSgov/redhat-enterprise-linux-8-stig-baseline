@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230315' do
   title 'RHEL 8 must disable core dump backtraces.'
   desc 'It is detrimental for operating systems to provide, or install by

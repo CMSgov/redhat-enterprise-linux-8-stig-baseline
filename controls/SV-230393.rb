@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230393' do
   title 'The RHEL 8 audit system must audit local events.'
   desc 'Without establishing what type of events occurred, the source of

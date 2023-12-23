@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230529' do
   title 'The x86 Ctrl-Alt-Delete key sequence must be disabled on RHEL 8.'
   desc 'A locally logged-on user, who presses Ctrl-Alt-Delete when at the

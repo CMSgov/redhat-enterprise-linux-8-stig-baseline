@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-244527' do
   title 'RHEL 8 must have the packages required to use the hardware random
 number generator entropy gatherer service.'

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230251' do
   title 'The RHEL 8 SSH server must be configured to use only Message
 Authentication Codes (MACs) employing FIPS 140-2 validated cryptographic hash

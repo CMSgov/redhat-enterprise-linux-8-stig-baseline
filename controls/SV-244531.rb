@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-244531' do
   title 'All RHEL 8 local interactive user home directory files must have mode
 0750 or less permissive.'
@@ -39,7 +41,7 @@ directory with the following command:
 
   findings = Set[]
   users.where {
-    !username.match(exempt_home_users) && !shell.match(ignore_shells) && (uid >= 1000 || uid == 0)
+    !username.match(exempt_home_users) && !shell.match(ignore_shells) && (uid >= 1000 || uid.zero?)
   }.entries.each do |user_info|
     findings += command("find #{user_info.home} -xdev -not -name '.*' -perm /027 -type f").stdout.split("\n")
   end

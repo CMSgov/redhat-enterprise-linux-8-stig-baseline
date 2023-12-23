@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230286' do
   title 'The RHEL 8 SSH public host key files must have mode 0644 or less
 permissive.'

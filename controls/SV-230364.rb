@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230364' do
   title 'RHEL 8 passwords must have a 24 hours/1 day minimum password lifetime
 restriction in /etc/shadow.'

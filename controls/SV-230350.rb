@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230350' do
   title 'RHEL 8 must prevent users from disabling session control mechanisms.'
   desc 'A session lock is a temporary action taken when a user stops work and

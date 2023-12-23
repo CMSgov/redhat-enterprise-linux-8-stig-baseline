@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230392' do
   title 'The RHEL 8 audit system must take appropriate action when the audit
 storage volume is full.'

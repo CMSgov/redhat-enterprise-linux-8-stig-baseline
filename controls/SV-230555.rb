@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230555' do
   title 'RHEL 8 remote X connections for interactive users must be disabled
 unless to fulfill documented and validated mission requirements.'

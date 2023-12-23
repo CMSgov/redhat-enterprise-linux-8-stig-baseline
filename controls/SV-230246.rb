@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230246' do
   title 'The RHEL 8 /var/log/messages file must be owned by root.'
   desc "Only authorized personnel should be aware of errors and the details of

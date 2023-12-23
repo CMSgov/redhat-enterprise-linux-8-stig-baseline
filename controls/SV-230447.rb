@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230447' do
   title 'Successful/unsuccessful uses of the crontab command in RHEL 8 must
 generate an audit record.'

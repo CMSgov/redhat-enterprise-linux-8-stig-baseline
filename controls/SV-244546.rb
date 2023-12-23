@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-244546' do
   title 'The RHEL 8 fapolicy module must be configured to employ a deny-all,
 permit-by-exception policy to allow the execution of authorized software

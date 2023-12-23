@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230485' do
   title 'RHEL 8 must disable the chrony daemon from acting as a server.'
   desc 'Inaccurate time stamps make it more difficult to correlate events and

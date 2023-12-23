@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230474' do
   title 'RHEL 8 audit tools must be group-owned by root.'
   desc 'Protecting audit information also includes identifying and protecting

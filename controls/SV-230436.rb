@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230436' do
   title 'Successful/unsuccessful uses of the pam_timestamp_check command in
 RHEL 8 must generate an audit record.'

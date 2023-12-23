@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230297' do
   title 'The auditd service must be running in RHEL 8.'
   desc  "Configuring RHEL 8 to implement organization-wide security

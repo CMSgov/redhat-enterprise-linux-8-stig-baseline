@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230539' do
   title 'RHEL 8 must not forward IPv6 source-routed packets by default.'
   desc 'Source-routed packets allow the source of the packet to suggest that

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230351' do
   title 'RHEL 8 must be able to initiate directly a session lock for all
 connection types using smartcard when the smartcard is removed.'

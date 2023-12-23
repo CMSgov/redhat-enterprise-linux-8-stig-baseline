@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230342' do
   title 'RHEL 8 must log user name information when unsuccessful logon attempts
 occur.'

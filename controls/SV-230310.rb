@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230310' do
   title 'RHEL 8 must disable kernel dumps unless needed.'
   desc 'Kernel core dumps may contain the full contents of system memory at

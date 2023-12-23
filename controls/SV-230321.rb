@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230321' do
   title 'All RHEL 8 local interactive user home directories must have mode 0750
 or less permissive.'

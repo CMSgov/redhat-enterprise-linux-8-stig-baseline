@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230445' do
   title "Successful/unsuccessful uses of the finit_module command in RHEL 8
 must generate an audit record."

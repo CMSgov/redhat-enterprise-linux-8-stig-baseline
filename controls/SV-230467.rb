@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230467' do
   title 'Successful/unsuccessful modifications to the lastlog file in RHEL 8
 must generate an audit record.'

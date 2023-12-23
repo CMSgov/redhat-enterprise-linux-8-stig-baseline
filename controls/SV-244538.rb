@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-244538' do
   title 'RHEL 8 must prevent a user from overriding the session idle-delay
 setting for the graphical user interface.'

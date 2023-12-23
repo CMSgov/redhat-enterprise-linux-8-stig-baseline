@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230258' do
   title 'RHEL 8 system commands must be owned by root.'
   desc 'If RHEL 8 were to allow any user to make changes to software

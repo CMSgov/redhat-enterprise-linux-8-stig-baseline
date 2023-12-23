@@ -37,6 +37,7 @@ lifecycle:
         sudo dnf -y install --nogpgcheck bc bind-utils redhat-lsb-core vim
         echo "updating system packages"
         sudo dnf -y update --nogpgcheck --nobest
+        sudo dnf -y distro-sync
         echo "NOTICE - Updating the ec2-user to keep sudo working"
         sudo chage -d $(( $( date +%s ) / 86400 )) ec2-user
         echo "NOTICE - updating ec2-user sudo config"

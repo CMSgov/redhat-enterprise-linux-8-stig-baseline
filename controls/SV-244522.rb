@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-244522' do
   title 'RHEL 8 operating systems booted with a BIOS must require  a unique
 superusers name upon booting into single-user and maintenance modes.'

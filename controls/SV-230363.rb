@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230363' do
   title 'RHEL 8 must require the change of at least 8 characters when passwords
 are changed.'

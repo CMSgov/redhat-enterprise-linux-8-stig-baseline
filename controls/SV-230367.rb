@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230367' do
   title 'RHEL 8 user account passwords must be configured so that existing
 passwords are restricted to a 60-day maximum lifetime.'
@@ -34,7 +36,7 @@ lifetime restriction.
 
     describe shadow.users(user) do
       its('max_days.first.to_i') { should cmp <= 60 }
-      its('max_days.first.to_i') { should cmp > 0 }
+      its('max_days.first.to_i') { should cmp.positive? }
     end
   end
 end

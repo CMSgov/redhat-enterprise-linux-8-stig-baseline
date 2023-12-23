@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230541' do
   title 'RHEL 8 must not accept router advertisements on all IPv6 interfaces.'
   desc 'Routing protocol daemons are typically used on routers to exchange

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230260' do
   title 'RHEL 8 library files must have mode 0755 or less permissive.'
   desc 'If RHEL 8 were to allow any user to make changes to software

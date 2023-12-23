@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230323' do
   title 'All RHEL 8 local interactive user home directories defined in the
 /etc/passwd file must exist.'

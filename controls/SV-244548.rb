@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-244548' do
   title 'RHEL 8 must enable the USBGuard.'
   desc 'Without authenticating devices, unidentified or unknown devices may be

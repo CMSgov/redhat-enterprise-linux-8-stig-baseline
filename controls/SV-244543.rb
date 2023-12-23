@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-244543' do
   title 'RHEL 8 must notify the System Administrator (SA) and Information
 System Security Officer (ISSO) (at a minimum) when allocated audit record

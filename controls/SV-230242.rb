@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230242' do
   title "All RHEL 8 public directories must be owned by root or a system
 account to prevent unauthorized and unintended information transferred via

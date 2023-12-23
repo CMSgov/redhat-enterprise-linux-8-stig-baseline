@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230401' do
   title 'RHEL 8 audit log directory must have a mode of 0700 or less permissive
 to prevent unauthorized read access.'

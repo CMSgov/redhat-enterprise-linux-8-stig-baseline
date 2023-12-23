@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230295' do
   title 'A separate RHEL 8 filesystem must be used for the /tmp directory.'
   desc 'The use of separate file systems for different paths can protect the

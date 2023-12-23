@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-244526' do
   title 'The RHEL 8 SSH daemon must be configured to use system-wide crypto
 policies.'

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230225' do
   title 'RHEL 8 must display the Standard Mandatory DoD Notice and Consent
 Banner before granting local or remote access to the system via a ssh logon.'

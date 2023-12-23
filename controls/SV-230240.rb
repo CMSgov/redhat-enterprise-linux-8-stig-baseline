@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230240' do
   title 'RHEL 8 must use a Linux Security Module configured to enforce limits
 on system services.'

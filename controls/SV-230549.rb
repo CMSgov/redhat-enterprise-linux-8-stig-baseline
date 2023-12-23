@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230549' do
   title 'RHEL 8 must use reverse path filtering on all IPv4 interfaces.'
   desc 'It is detrimental for operating systems to provide, or install by

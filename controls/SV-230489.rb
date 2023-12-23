@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230489' do
   title 'RHEL 8 must not have the sendmail package installed.'
   desc 'It is detrimental for operating systems to provide, or install by

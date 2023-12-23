@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230526' do
   title 'All RHEL 8 networked systems must have and implement SSH to protect
 the confidentiality and integrity of transmitted and received information, as

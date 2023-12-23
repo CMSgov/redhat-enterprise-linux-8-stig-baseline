@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230524' do
   title 'RHEL 8 must block unauthorized peripherals before establishing a
 connection.'

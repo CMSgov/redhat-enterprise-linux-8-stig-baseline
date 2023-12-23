@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230472' do
   title 'RHEL 8 audit tools must have a mode of 0755 or less permissive.'
   desc 'Protecting audit information also includes identifying and protecting

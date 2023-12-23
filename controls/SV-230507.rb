@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230507' do
   title 'RHEL 8 Bluetooth must be disabled.'
   desc 'Without protection of communications with wireless peripherals,

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230371' do
   title 'RHEL 8 duplicate User IDs (UIDs) must not exist for interactive users.'
   desc 'To ensure accountability and prevent unauthenticated access,

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230279' do
   title 'RHEL 8 must clear SLUB/SLAB objects to prevent use-after-free attacks.'
   desc 'Some adversaries launch attacks with the intent of executing code in

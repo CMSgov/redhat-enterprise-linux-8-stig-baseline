@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-237642' do
   title %q(RHEL 8 must use the invoking user's password for privilege escalation
 when using "sudo".)

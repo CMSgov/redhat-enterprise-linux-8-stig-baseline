@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230537' do
   title 'RHEL 8 must not respond to Internet Control Message Protocol (ICMP)
 echoes sent to a broadcast address.'

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230540' do
   title 'RHEL 8 must not be performing packet forwarding unless the system is a
 router.'

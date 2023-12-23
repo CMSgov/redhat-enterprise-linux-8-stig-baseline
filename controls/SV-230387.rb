@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230387' do
   title 'Cron logging must be implemented in RHEL 8.'
   desc 'Cron logging can be used to trace the successful or unsuccessful

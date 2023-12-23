@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230290' do
   title 'The RHEL 8 SSH daemon must not allow authentication using known host’s
 authentication.'

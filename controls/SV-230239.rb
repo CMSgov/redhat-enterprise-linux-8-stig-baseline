@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230239' do
   title 'The krb5-workstation package must not be installed on RHEL 8.'
   desc 'Unapproved mechanisms that are used for authentication to the

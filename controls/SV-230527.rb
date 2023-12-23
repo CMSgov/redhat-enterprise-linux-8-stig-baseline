@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230527' do
   title 'RHEL 8 must force a frequent session key renegotiation for SSH
 connections to the server.'

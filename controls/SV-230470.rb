@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230470' do
   title 'RHEL 8 must enable Linux audit logging for the USBGuard daemon.'
   desc 'Without the capability to generate audit records, it would be

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230296' do
   title 'RHEL 8 must not permit direct logons to the root account using remote
 access via SSH.'

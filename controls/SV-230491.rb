@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230491' do
   title 'RHEL 8 must enable mitigations against processor-based
 vulnerabilities.'

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230386' do
   title 'The RHEL 8 audit system must be configured to audit the execution of
 privileged functions and prevent all software from executing at higher

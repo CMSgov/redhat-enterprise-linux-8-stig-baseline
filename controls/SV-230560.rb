@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230560' do
   title 'The iprutils package must not be installed unless mission essential on
 RHEL 8.'

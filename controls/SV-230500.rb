@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230500' do
   title 'RHEL 8 must be configured to prohibit or restrict the use of
 functions, ports, protocols, and/or services, as defined in the Ports,

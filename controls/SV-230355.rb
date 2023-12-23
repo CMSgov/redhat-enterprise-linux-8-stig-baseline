@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230355' do
   title 'RHEL 8 must map the authenticated identity to the user or group
 account for PKI-based authentication.'

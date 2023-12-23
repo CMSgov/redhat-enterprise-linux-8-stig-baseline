@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230510' do
   title 'RHEL 8 must mount /dev/shm with the noexec option.'
   desc 'The organization must identify authorized software programs and permit

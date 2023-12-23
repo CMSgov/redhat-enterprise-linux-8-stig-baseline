@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230347' do
   title 'RHEL 8 must enable a user session lock until that user re-establishes
 access using established identification and authentication procedures for

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230547' do
   title 'RHEL 8 must restrict exposed kernel pointer addresses access.'
   desc 'It is detrimental for operating systems to provide, or install by

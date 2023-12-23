@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230276' do
   title 'RHEL 8 must implement non-executable data to protect its memory from
 unauthorized code execution.'

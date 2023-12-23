@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230229' do
   title 'RHEL 8, for PKI-based authentication, must validate certificates by
 constructing a certification path (which includes status information) to an

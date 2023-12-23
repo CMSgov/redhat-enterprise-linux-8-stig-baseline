@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230502' do
   title 'The RHEL 8 file system automounter must be disabled unless required.'
   desc 'Automatically mounting file systems permits easy introduction of

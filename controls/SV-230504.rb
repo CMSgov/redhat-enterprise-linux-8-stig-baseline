@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230504' do
   title 'A RHEL 8 firewall must employ a deny-all, allow-by-exception policy
 for allowing connections to other systems.'

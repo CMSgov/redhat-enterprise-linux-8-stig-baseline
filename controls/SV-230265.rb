@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230265' do
   title 'RHEL 8 must prevent the installation of software, patches, service
 packs, device drivers, or operating system components of local packages without

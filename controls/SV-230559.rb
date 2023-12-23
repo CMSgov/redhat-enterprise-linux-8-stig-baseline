@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230559' do
   title 'The gssproxy package must not be installed unless mission essential on
 RHEL 8.'

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230380' do
   title 'RHEL 8 must not allow accounts configured with blank or null
 passwords.'

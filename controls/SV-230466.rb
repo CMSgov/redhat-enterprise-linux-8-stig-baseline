@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230466' do
   title 'Successful/unsuccessful modifications to the faillock log file in RHEL
 8 must generate an audit record.'

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230275' do
   title 'RHEL 8 must accept Personal Identity Verification (PIV) credentials.'
   desc 'The use of PIV credentials facilitates standardization and reduces the

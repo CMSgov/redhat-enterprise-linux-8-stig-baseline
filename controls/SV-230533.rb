@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230533' do
   title 'The Trivial File Transfer Protocol (TFTP) server package must not be
 installed if not required for RHEL 8 operational support.'

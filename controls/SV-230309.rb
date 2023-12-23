@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230309' do
   title 'Local RHEL 8 initialization files must not execute world-writable
 programs.'
@@ -50,7 +52,7 @@ the following command:
 
     # Get home directory for users with UID >= 1000 or UID == 0 and support interactive logins.
     dotfiles = Set[]
-    u = users.where { !shell.match(ignore_shells) && (uid >= 1000 || uid == 0) }.entries
+    u = users.where { !shell.match(ignore_shells) && (uid >= 1000 || uid.zero?) }.entries
     # For each user, build and execute a find command that identifies initialization files
     # in a user's home directory.
     u.each do |user|
@@ -67,12 +69,10 @@ the following command:
     ww_chunked = ['']
     ww_files.each do |item|
       item = item.strip
-      if item.length + "\n".length > PATTERN_FILE_MAX_LENGTH
-        raise 'Single pattern is longer than PATTERN_FILE_MAX_LENGTH'
-      end
+      raise 'Single pattern is longer than PATTERN_FILE_MAX_LENGTH' if item.length + "\n".length > PATTERN_FILE_MAX_LENGTH
 
       ww_chunked.append('') if ww_chunked[-1].length + "\n".length + item.length > PATTERN_FILE_MAX_LENGTH
-      ww_chunked[-1] += "\n" + item # This will leave an extra newline at the beginning of chunks
+      ww_chunked[-1] += "\n#{item}" # This will leave an extra newline at the beginning of chunks
     end
     ww_chunked = ww_chunked.map(&:strip) # This gets rid of the beginning newlines
     if ww_chunked[0] == ''
@@ -85,7 +85,7 @@ the following command:
       dotfile = dotfile.strip
       ww_chunked.each do |ww_pattern_file|
         count = command("grep -c -f <(echo \"#{ww_pattern_file}\") \"#{dotfile}\"").stdout.strip.to_i
-        findings << dotfile if count > 0
+        findings << dotfile if count.positive?
       end
     end
     describe 'Local initialization files that are found to reference world-writable files' do

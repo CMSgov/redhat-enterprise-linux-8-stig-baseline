@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-244525' do
   title 'The RHEL 8 SSH daemon must be configured with a timeout interval.'
   desc 'Terminating an idle SSH session within a short time period reduces the

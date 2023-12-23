@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230329' do
   title 'Unattended or automatic logon via the RHEL 8 graphical user interface
 must not be allowed.'

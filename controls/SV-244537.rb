@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-244537' do
   title 'RHEL 8 must have the tmux package installed.'
   desc 'A session lock is a temporary action taken when a user stops work and

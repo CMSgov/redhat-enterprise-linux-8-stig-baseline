@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230287' do
   title 'The RHEL 8 SSH private host key files must have mode 0640 or less permissive.'
   desc 'If an unauthorized user obtains the private SSH host key file, the

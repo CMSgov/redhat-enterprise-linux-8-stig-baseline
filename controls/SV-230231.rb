@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230231' do
   title 'RHEL 8 must encrypt all stored passwords with a FIPS 140-2 approved
 cryptographic hashing algorithm.'

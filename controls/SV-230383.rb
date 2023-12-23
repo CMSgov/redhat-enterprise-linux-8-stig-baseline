@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230383' do
   title 'RHEL 8 must define default permissions for all authenticated users in
 such a way that the user can only read and modify their own files.'

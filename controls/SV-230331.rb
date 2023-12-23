@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230331' do
   title 'RHEL 8 temporary user accounts must be provisioned with an expiration
 time of 72 hours or less.'
@@ -53,7 +55,7 @@ be created.
     input('temporary_accounts').each do |acct|
       describe user(acct.to_s) do
         its('maxdays') { should cmp <= 3 }
-        its('maxdays') { should cmp > 0 }
+        its('maxdays') { should cmp.positive? }
       end
     end
   end

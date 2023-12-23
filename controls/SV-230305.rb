@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230305' do
   title 'RHEL 8 must prevent files with the setuid and setgid bit set from
 being executed on file systems that are used with removable media.'

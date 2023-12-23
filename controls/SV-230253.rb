@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230253' do
   title 'RHEL 8 must ensure the SSH server uses strong entropy.'
   desc 'The most important characteristic of a random number generator is its

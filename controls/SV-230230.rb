@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230230' do
   title 'RHEL 8, for certificate-based authentication, must enforce authorized
 access to the corresponding private key.'

@@ -1,48 +1,47 @@
-# al: reviewed
+# frozen_string_literal: true
+
+# reviewed: ALL
+# Tested @R1V12
 
 control 'SV-230221' do
   title 'RHEL 8 must be a vendor-supported release.'
-  desc 'An operating system release is considered "supported" if the vendor
-continues to provide security patches for the product. With an unsupported
-release, it will not be possible to resolve security issues discovered in the
-system software.
+  desc 'An operating system release is considered "supported" if the vendor continues to
+    provide security patches for the product. With an unsupported release, it will not be
+    possible to resolve security issues discovered in the system software.
 
-    Red Hat offers the Extended Update Support (EUS) ad-on to a Red Hat
-Enterprise Linux subscription, for a fee, for those customers who wish to
-standardize on a specific minor release for an extended period. The RHEL 8
-minor releases eligible for EUS are 8.1, 8.2, 8.4, 8.6, and 8.8. Each RHEL 8
-EUS stream is available for 24 months from the availability of the minor
-release. RHEL 8.10 will be the final minor release overall. For more details on
-the Red Hat Enterprise Linux Life Cycle  visit
-https://access.redhat.com/support/policy/updates/errata.'
-  desc 'check', 'Verify the version of the operating system is vendor supported.
+    Red Hat offers the Extended Update Support (EUS) add-on to a Red Hat Enterprise Linux
+    subscription, for a fee, for those customers who wish to standardize on a specific
+    minor release for an extended period. The RHEL 8 minor releases eligible for EUS are
+    8.1, 8.2, 8.4, 8.6, and 8.8. Each RHEL 8 EUS stream is available for 24 months from the
+    availability of the minor release. RHEL 8.10 will be the final minor release overall. For
+    more details on the Red Hat Enterprise Linux Life Cycle
+    visit https://access.redhat.com/support/policy/updates/errata/.
 
-Check the version of the operating system with the following command:
+    Note: The life-cycle time spans and dates are subject to adjustment.'
 
-$ sudo cat /etc/redhat-release
+  desc 'check', " Verify the version of the operating system is vendor supported.
+    Note: The lifecycle time spans and dates are subject to adjustment.
 
-Red Hat Enterprise Linux Server release 8.4 (Ootpa)
+    Check the version of the operating system with the following command:
 
-Current End of Extended Update Support for RHEL 8.1 is 30 November 2021.
+    $ sudo cat /etc/redhat-release
 
-Current End of Extended Update Support for RHEL 8.2 is 30 April 2022.
+    Red Hat Enterprise Linux Server release 8.6 (Ootpa)
 
-Current End of Extended Update Support for RHEL 8.4 is 30 April 2023.
+    Current End of Extended Update Support for RHEL 8.1 is 30 November 2021.
+    Current End of Extended Update Support for RHEL 8.2 is 30 April 2022.
+    Current End of Extended Update Support for RHEL 8.4 is 31 May 2023.
+    Current End of Maintenance Support for RHEL 8.5 is 31 May 2022.
+    Current End of Extended Update Support for RHEL 8.6 is 31 May 2024.
+    Current End of Maintenance Support for RHEL 8.7 is 31 May 2023.
+    Current End of Extended Update Support for RHEL 8.8 is 31 May 2025.
+    Current End of Maintenance Support for RHEL 8.9 is 31 May 2024.
+    Current End of Maintenance Support for RHEL 8.10 is 31 May 2029.
 
-Current End of Maintenance Support for RHEL 8.5 is 30 April 2022.
+    If the release is not supported by the vendor, this is a finding."
 
-Current End of Extended Update Support for RHEL 8.6 is 30 April 2024.
-
-Current End of Maintenance Support for RHEL 8.7 is 30 April 2023.
-
-Current End of Extended Update Support for RHEL 8.8 is 30 April 2025.
-
-Current End of Maintenance Support for RHEL 8.9 is 30 April 2024.
-
-Current End of Maintenance Support for RHEL 8.10 is 31 May 2029.
-
-If the release is not supported by the vendor, this is a finding.'
   desc 'fix', 'Upgrade to a supported version of RHEL 8.'
+
   impact 0.7
   tag severity: 'high'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
@@ -55,31 +54,35 @@ If the release is not supported by the vendor, this is a finding.'
 
   release = os.release
 
-  EOMS_DATE = case release
-              when /^8\.1/
-                '30 November 2021'
-              when /^8\.2/
-                '30 April 2022'
-              when /^8\.3/
-                '30 April 2021'
-              when /^8\.4/
-                '30 April 2023'
-              when /^8\.5/
-                '30 April 2022'
-              when /^8\.6/
-                '30 April 2024'
-              when /^8\.7/
-                '30 April 2023'
-              when /^8\.8/
-                '30 April 2025'
-              when /^8\.9/
-                '30 April 2024'
-              when /^8\.10/
-                '31 May 2029'
-              end
+  EOMS_DATE = {
+    /^8\.1/ => '30 November 2021',
+    /^8\.2/ => '30 April 2022',
+    /^8\.3/ => '30 April 2021',
+    /^8\.4/ => '30 April 2023',
+    /^8\.5/ => '30 April 2022',
+    /^8\.6/ => '30 April 2024',
+    /^8\.7/ => '30 April 2023',
+    /^8\.8/ => '30 April 2025',
+    /^8\.9/ => '30 April 2024',
+    /^8\.10/ => '31 May 2029'
+  }.find { |k, _v| k.match(release) }&.last
 
-  describe "The release \"#{release}\" must still be within the support window, ending #{EOMS_DATE}" do
-    subject { Date.today <= Date.parse(EOMS_DATE) }
-    it { should be true }
+  describe "The release \"#{release}\" is still be within the support window" do
+    it "ending on #{EOMS_DATE}" do
+      expect(Date.today).to be <= Date.parse(EOMS_DATE)
+    end
   end
 end
+
+# DSL Method
+#   describe "The release \"#{release}\" must still be within the support window, ending #{EOMS_DATE}" do
+#     subject { Date.today <= Date.parse(EOMS_DATE) }
+#     it { should be true }
+#   end
+# end
+#
+# Another rspec approach were we capture start, middle, end
+# start_date = Date.parse('2022-01-01')
+# end_date = Date.parse('2022-12-31')
+# specific_date = Date.today
+# expect(specific_date).to be_between(start_date, end_date)

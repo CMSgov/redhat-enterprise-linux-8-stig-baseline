@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230554' do
   title 'RHEL 8 network interfaces must not be in promiscuous mode.'
   desc 'Network interfaces in promiscuous mode allow for the capture of all

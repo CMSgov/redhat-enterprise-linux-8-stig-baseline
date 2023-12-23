@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230349' do
   title 'RHEL 8 must ensure session control is automatically started at shell
 initialization.'

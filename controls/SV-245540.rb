@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-245540' do
   title 'The RHEL 8 operating system must implement the Endpoint Security for
 Linux Threat Prevention tool.'

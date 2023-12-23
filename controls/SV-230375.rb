@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230375' do
   title 'All RHEL 8 passwords must contain at least one special character.'
   desc 'Use of a complex password helps to increase the time and resources
@@ -41,6 +43,6 @@ to have the required value):
   tag nist: ['IA-5 (1) (a)']
 
   describe parse_config_file('/etc/security/pwquality.conf') do
-    its('ocredit.to_i') { should cmp < 0 }
+    its('ocredit.to_i') { should cmp.negative? }
   end
 end

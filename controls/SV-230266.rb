@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230266' do
   title 'RHEL 8 must prevent the loading of a new kernel for later execution.'
   desc 'Changes to any software components can have significant effects on the

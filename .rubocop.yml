@@ -1,6 +1,22 @@
+AllCops:
+  Exclude:
+    - "libraries/**/*"
+
+Naming/FileName:
+  Enabled: false
+
+Metrics/BlockLength:
+  Max: 300
+
+Layout/LineLength:
+  Max: 700
+
+Lint/ConstantDefinitionInBlock:
+  Enabled: false
+
 Style/WordArray:
-  Description: 'Use %w or %W for an array of words. (https://rubystyle.guide#percent-w)'
-  Enabled : false
+  Description: "Use %w or %W for an array of words. (https://rubystyle.guide#percent-w)"
+  Enabled: false
 
 Style/RedundantPercentQ:
   Enabled: true
@@ -9,7 +25,7 @@ Style/NestedParenthesizedCalls:
   Enabled: false
 
 Style/TrailingCommaInHashLiteral:
-  Description: 'https://docs.rubocop.org/rubocop/cops_style.html#styletrailingcommainhashliteral'
+  Description: "https://docs.rubocop.org/rubocop/cops_style.html#styletrailingcommainhashliteral"
   Enabled: true
   EnforcedStyleForMultiline: no_comma
 

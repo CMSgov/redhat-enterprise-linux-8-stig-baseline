@@ -4,9 +4,13 @@ maintainer: MITRE SAF Team
 copyright: MITRE
 license: Apache-2.0
 summary: "This Security Technical Implementation Guide is published as a tool to improve the security of Department of Defense (DoD) information systems. The requirements are derived from the National Institute of Standards and Technology (NIST) 800-53 and related documents. Comments or proposed revisions to this document should be sent via email to the following address: disa.stig_spt@mail.mil."
-version: 1.6.4
+version: 1.12.0
 
 inspec_version: ">= 4.0"
+
+depends:
+- name: linux-updates
+  git: https://github.com/dev-sec/linux-patch-baseline
 
 inputs:
   - name: os_versions
@@ -22,6 +26,12 @@ inputs:
     type: Boolean
     value: false
 
+  # SV-230222
+  - name: disconnected_system
+    description: The system is not connected to the public internet or doesn't have access to a RPM package server 
+    type: Boolean
+    value: false
+
   # SV-230223
   - name: use_fips
     description: "'(boolean)' Set to true if the system is required to use FIPS Encryption"
@@ -31,6 +41,8 @@ inputs:
   # SV-230224
   - name: data_at_rest_exempt
     description: "'(boolean) Set to true if the system is exempt from using Data at Rest"
+    type: Boolean
+    value: false
 
   # SV-230548
   - name: container_host

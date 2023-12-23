@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230548' do
   title 'RHEL 8 must disable the use of user namespaces.'
   desc 'It is detrimental for operating systems to provide, or install by

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230255' do
   title 'The RHEL 8 operating system must implement DoD-approved TLS encryption
 in the OpenSSL package.'

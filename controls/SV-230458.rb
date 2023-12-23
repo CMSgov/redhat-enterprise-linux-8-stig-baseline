@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230458' do
   title "Successful/unsuccessful uses of the fchownat system call in RHEL 8
 must generate an audit record."

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230497' do
   title 'RHEL 8 must disable the transparent inter-process communication (TIPC)
 protocol.'

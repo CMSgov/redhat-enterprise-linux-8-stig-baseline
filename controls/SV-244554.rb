@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-244554' do
   title 'RHEL 8 must enable hardening for the Berkeley Packet Filter
 Just-in-time compiler.'

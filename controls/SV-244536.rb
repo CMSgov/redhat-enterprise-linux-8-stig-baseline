@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-244536' do
   title 'RHEL 8 must disable the user list at logon for graphical user
 interfaces.'

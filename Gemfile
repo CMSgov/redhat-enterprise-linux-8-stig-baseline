@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 source 'https://rubygems.org'
 
-gem 'test-kitchen'
+gem 'cookstyle'
 gem 'highline'
 gem 'inspec'
 gem 'inspec-bin'
@@ -13,4 +15,4 @@ gem 'kitchen-sync'
 gem 'kitchen-vagrant'
 gem 'rake'
 gem 'rubocop'
-gem 'cookstyle'
+gem 'test-kitchen'

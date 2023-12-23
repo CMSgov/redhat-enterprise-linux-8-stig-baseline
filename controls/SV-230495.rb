@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230495' do
   title 'RHEL 8 must disable the controller area network (CAN) protocol.'
   desc 'It is detrimental for operating systems to provide, or install by

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230233' do
   title 'The RHEL 8 shadow password suite must be configured to use a sufficient number of hashing rounds.'
   desc 'The system must use a strong hashing algorithm to store the password.

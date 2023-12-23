@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230373' do
   title 'RHEL 8 account identifiers (individuals, groups, roles, and devices)
 must be disabled after 35 days of inactivity.'

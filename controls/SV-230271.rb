@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230271' do
   title 'RHEL 8 must require users to provide a password for privilege
 escalation.'

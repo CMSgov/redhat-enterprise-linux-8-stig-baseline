@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-237641' do
   title 'RHEL 8 must restrict privilege elevation to authorized personnel.'
   desc 'The sudo command allows a user to execute programs with elevated

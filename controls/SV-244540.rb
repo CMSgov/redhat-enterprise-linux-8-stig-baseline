@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-244540' do
   title 'RHEL 8 must not allow blank or null passwords in the system-auth file.'
   desc 'If an account has an empty password, anyone could log on and run

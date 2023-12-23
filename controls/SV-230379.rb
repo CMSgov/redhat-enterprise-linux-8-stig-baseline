@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230379' do
   title 'RHEL 8 must not have unnecessary accounts.'
   desc 'Accounts providing no operational purpose provide additional

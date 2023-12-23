@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230433' do
   title 'Successful/unsuccessful uses of unix_chkpwd in RHEL 8 must generate an
 audit record.'

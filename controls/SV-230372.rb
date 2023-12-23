@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230372' do
   title 'RHEL 8 must implement smart card logon for multifactor authentication
 for access to interactive accounts.'

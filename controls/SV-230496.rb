@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230496' do
   title 'RHEL 8 must disable the stream control transmission protocol (SCTP).'
   desc 'It is detrimental for operating systems to provide, or install by

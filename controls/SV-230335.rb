@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230335' do
   title 'RHEL 8 must automatically lock an account when three unsuccessful
 logon attempts occur during a 15-minute time period.'

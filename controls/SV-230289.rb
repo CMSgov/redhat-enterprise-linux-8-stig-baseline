@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230289' do
   title "The RHEL 8 SSH daemon must not allow compression or must only allow
 compression after successful authentication."

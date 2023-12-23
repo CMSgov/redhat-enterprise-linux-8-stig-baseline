@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230346' do
   title 'RHEL 8 must limit the number of concurrent sessions to ten for all
 accounts and/or account types.'

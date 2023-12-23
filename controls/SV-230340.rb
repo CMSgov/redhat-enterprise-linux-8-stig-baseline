@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230340' do
   title 'RHEL 8 must prevent system messages from being presented when three
 unsuccessful logon attempts occur.'

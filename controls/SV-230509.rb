@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230509' do
   title 'RHEL 8 must mount /dev/shm with the nosuid option.'
   desc 'The organization must identify authorized software programs and permit

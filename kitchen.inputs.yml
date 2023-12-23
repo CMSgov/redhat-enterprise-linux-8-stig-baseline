@@ -1,5 +1,7 @@
 ---
-disable_slow_controls: true
+disable_slow_controls: false
+disconnected_system: false
+data_at_rest_exempt: false
 skip_mount_tmp:
   nodev: true
   nosuid: true

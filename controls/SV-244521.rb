@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-244521' do
   title 'RHEL 8 operating systems booted with United Extensible Firmware
 Interface (UEFI) must require a unique superusers name upon booting into

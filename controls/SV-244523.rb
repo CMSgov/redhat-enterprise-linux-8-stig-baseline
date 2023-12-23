@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-244523' do
   title 'RHEL 8 operating systems must require authentication upon booting into
 emergency mode.'

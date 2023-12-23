@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230557' do
   title 'If the Trivial File Transfer Protocol (TFTP) server is required, the
 RHEL 8 TFTP daemon must be configured to operate in secure mode.'

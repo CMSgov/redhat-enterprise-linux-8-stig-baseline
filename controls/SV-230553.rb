@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230553' do
   title 'The graphical display manager must not be installed on RHEL 8 unless
 approved.'

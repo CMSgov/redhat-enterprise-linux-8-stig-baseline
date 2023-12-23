@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230558' do
   title 'A File Transfer Protocol (FTP) server package must not be installed
 unless mission essential on RHEL 8.'

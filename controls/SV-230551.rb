@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230551' do
   title 'The RHEL 8 file integrity tool must be configured to verify extended
 attributes.'

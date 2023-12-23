@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230288' do
   title 'The RHEL 8 SSH daemon must perform strict mode checking of home
 directory configuration files.'

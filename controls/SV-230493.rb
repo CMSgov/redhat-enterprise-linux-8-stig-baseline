@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230493' do
   title 'RHEL 8 must cover or disable the built-in or attached camera when not
 in use.'

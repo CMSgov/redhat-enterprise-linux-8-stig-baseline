@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230353' do
   title 'RHEL 8 must automatically lock command line user sessions after 15
 minutes of inactivity.'

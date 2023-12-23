@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # TODO: explain somewhere that :all_with_args, :all_without_args, :all_with_integer_arg
 # will cause match_pam_rule to return true when there are no potential matches
 RSpec::Matchers.define :match_pam_rule do |expected|
@@ -18,10 +20,8 @@ RSpec::Matchers.define :match_pam_rule do |expected|
       retval = false
     end
 
-    if [:all_with_integer_arg, :any_with_integer_arg].include? @args_type
-      unless Numeric.method_defined?(@args[:operator])
-        raise("Error: Operator '#{@args[:operator]}' is an invalid numeric comparison operator.")
-      end
+    if %i[all_with_integer_arg any_with_integer_arg].include? @args_type && !Numeric.method_defined?(@args[:operator])
+      raise("Error: Operator '#{@args[:operator]}' is an invalid numeric comparison operator.")
     end
 
     actual_munge = {}
@@ -38,6 +38,7 @@ RSpec::Matchers.define :match_pam_rule do |expected|
           end
 
           next unless potentials && !potentials.empty?
+
           actual_munge[service] ||= []
           actual_munge[service] += potentials.map(&:to_s)
 
@@ -73,7 +74,7 @@ RSpec::Matchers.define :match_pam_rule do |expected|
               else
                 actual_munge.map do |service, lines|
                   lines.map do |line|
-                    service + ' ' + line
+                    "#{service} #{line}"
                   end
                 end.flatten.join("\n")
               end

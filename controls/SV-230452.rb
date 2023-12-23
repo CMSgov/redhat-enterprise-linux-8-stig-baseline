@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230452' do
   title "Successful/unsuccessful uses of the open_by_handle_at system call in
 RHEL 8 must generate an audit record."

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-244541' do
   title 'RHEL 8 must not allow blank or null passwords in the password-auth
 file.'

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230556' do
   title 'The RHEL 8 SSH daemon must prevent remote hosts from connecting to the
 proxy display.'

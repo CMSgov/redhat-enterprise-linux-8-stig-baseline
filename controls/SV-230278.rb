@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230278' do
   title 'RHEL 8 must disable virtual syscalls.'
   desc 'Syscalls are special routines in the Linux kernel, which userspace

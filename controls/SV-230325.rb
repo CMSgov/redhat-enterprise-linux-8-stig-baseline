@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230325' do
   title 'All RHEL 8 local initialization files must have mode 0740 or less
 permissive.'
@@ -38,7 +40,7 @@ following command:
   ignore_shells = input('non_interactive_shells').join('|')
 
   findings = Set[]
-  users.where { !shell.match(ignore_shells) && (uid >= 1000 || uid == 0) }.entries.each do |user_info|
+  users.where { !shell.match(ignore_shells) && (uid >= 1000 || uid.zero?) }.entries.each do |user_info|
     findings += command("find #{user_info.home} -xdev -maxdepth 1 -name '.*' -type f -perm /037").stdout.split("\n")
   end
   describe findings do

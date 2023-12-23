@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230545' do
   title 'RHEL 8 must disable access to network bpf syscall from unprivileged
 processes.'

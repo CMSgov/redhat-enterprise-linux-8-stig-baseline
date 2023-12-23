@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230302' do
   title 'RHEL 8 must prevent code from being executed on file systems that
 contain user home directories.'

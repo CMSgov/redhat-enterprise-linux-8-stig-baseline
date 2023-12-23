@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230284' do
   title 'There must be no .shosts files on the RHEL 8 operating system.'
   desc 'The ".shosts" files are used to configure host-based authentication

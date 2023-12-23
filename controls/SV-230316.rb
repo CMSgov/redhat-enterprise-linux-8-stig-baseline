@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230316' do
   title 'For RHEL 8 systems using Domain Name Servers (DNS) resolution, at
 least two name servers must be configured.'

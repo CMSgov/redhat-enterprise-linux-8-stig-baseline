@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230546' do
   title 'RHEL 8 must restrict usage of ptrace to descendant  processes.'
   desc 'It is detrimental for operating systems to provide, or install by

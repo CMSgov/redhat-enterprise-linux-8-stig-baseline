@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230521' do
   title 'RHEL 8 must mount /var/tmp with the nosuid option.'
   desc 'The organization must identify authorized software programs and permit

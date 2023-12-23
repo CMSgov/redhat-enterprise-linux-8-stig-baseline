@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230264' do
   title 'RHEL 8 must prevent the installation of software, patches, service
 packs, device drivers, or operating system components from a repository without

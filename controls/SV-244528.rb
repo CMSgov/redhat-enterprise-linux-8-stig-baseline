@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-244528' do
   title 'The RHEL 8 SSH daemon must not allow GSSAPI authentication, except to
 fulfill documented and validated mission requirements.'

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230298' do
   title 'The rsyslog service must be running in RHEL 8.'
   desc 'Configuring RHEL 8 to implement organization-wide security

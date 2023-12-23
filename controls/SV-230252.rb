@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230252' do
   title 'The RHEL 8 operating system must implement DoD-approved encryption to
 protect the confidentiality of SSH server connections.'

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230486' do
   title 'RHEL 8 must disable network management of the chrony daemon.'
   desc 'Inaccurate time stamps make it more difficult to correlate events and

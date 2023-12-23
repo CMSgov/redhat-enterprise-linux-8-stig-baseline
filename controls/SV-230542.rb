@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230542' do
   title 'RHEL 8 must not accept router advertisements on all IPv6 interfaces by
 default.'

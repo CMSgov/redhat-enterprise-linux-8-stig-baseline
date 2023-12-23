@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230259' do
   title 'RHEL 8 system commands must be group-owned by root or a system
 account.'

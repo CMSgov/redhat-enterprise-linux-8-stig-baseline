@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230362' do
   title 'RHEL 8 must require the change of at least four character classes when
 passwords are changed.'

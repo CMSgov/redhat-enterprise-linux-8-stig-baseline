@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230377' do
   title 'RHEL 8 must prevent the use of dictionary words for passwords.'
   desc 'If RHEL 8 allows the user to select passwords based on dictionary

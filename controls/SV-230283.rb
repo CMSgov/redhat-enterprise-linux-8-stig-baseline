@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230283' do
   title 'There must be no shosts.equiv files on the RHEL 8 operating system.'
   desc 'The "shosts.equiv" files are used to configure host-based

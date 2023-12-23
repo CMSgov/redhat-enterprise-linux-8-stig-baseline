@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230366' do
   title 'RHEL 8 user account passwords must have a 60-day maximum password
 lifetime restriction.'
@@ -30,6 +32,6 @@ PASS_MAX_DAYS 60'
 
   describe login_defs do
     its('PASS_MAX_DAYS.to_i') { should cmp <= 60 }
-    its('PASS_MAX_DAYS.to_i') { should cmp > 0 }
+    its('PASS_MAX_DAYS.to_i') { should cmp.positive? }
   end
 end

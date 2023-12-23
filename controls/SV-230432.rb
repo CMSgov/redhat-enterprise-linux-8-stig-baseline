@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230432' do
   title 'Successful/unsuccessful uses of setsebool in RHEL 8 must generate an
 audit record.'

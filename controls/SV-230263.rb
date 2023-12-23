@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230263' do
   title 'The RHEL 8 file integrity tool must notify the system administrator
 when changes to the baseline configuration or anomalies in the operation of any

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230307' do
   title 'RHEL 8 must prevent special devices on file systems that are imported
 via Network File System (NFS).'

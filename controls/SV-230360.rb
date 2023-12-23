@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230360' do
   title 'RHEL 8 must require the maximum number of repeating characters of the
 same character class be limited to four when passwords are changed.'
@@ -43,6 +45,6 @@ the line to have the required value):
 
   describe parse_config_file('/etc/security/pwquality.conf') do
     its('maxclassrepeat') { should cmp <= 4 }
-    its('maxclassrepeat') { should cmp > 0 }
+    its('maxclassrepeat') { should cmp.positive? }
   end
 end

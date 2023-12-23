@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-244519' do
   title 'RHEL 8 must display a banner before granting local or remote access to
 the system via a graphical user logon.'

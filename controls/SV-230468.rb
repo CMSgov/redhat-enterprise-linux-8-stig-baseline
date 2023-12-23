@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230468' do
   title 'RHEL 8 must enable auditing of processes that start prior to the audit
 daemon.'

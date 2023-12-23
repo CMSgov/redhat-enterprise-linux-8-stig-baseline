@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230531' do
   title 'The systemd Ctrl-Alt-Delete burst key sequence in RHEL 8 must be
 disabled.'

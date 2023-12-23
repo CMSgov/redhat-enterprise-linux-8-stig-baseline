@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230469' do
   title 'RHEL 8 must allocate an audit_backlog_limit of sufficient size to
 capture processes that start prior to the audit daemon.'

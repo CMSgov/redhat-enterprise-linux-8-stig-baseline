@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230381' do
   title 'RHEL 8 must display the date and time of the last successful account
 logon upon logon.'

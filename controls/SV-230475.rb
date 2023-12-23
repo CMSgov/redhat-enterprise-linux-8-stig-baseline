@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230475' do
   title 'RHEL 8 must use cryptographic mechanisms to protect the integrity of
 audit tools.'

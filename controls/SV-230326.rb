@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230326' do
   title 'All RHEL 8 local files and directories must have a valid owner.'
   desc 'Unowned files and directories may be unintentionally inherited if a

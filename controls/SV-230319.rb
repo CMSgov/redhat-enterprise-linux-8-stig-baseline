@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230319' do
   title 'All RHEL 8 world-writable directories must be group-owned by root,
 sys, bin, or an application group.'
