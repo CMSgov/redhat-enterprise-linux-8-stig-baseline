@@ -2,7 +2,8 @@
 
 # ALL: reviewed
 # Tested, @R1V12
-
+# TODO: This should really have a resource
+ 
 control "SV-230224" do
   title "All RHEL 8 local disk partitions must implement disk encryption"
   desc 'RHEL 8 systems handling data requiring "data at rest" protections
@@ -68,6 +69,7 @@ control "SV-230224" do
     impact 0.0
     describe_and_skip("Data At Rest Requirements have been set to Not Applicabe by the `data_at_rest_exempt` input.")
   elsif all_args.empty?
+    #TODO: Determine if this is an NA vs and NR or even a pass
     describe_and_skip("Command blkid did not return and non-psuedo block devices.")
   else
     all_args.each do |args|
