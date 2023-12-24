@@ -22,40 +22,71 @@ jobs:
     steps:
       - name: add needed packages
         run: sudo apt-get install -y jq
+
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
+
       - name: Check out repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
+
       - name: Clone full repository so we can push
         run: git fetch --prune --unshallow
+
+      - name: Set short git commit SHA
+        id: vars
+        run: |
+          calculatedSha=$(git rev-parse --short ${{ github.sha }})
+          echo "COMMIT_SHORT_SHA=$calculatedSha" >> $GITHUB_ENV
+
+      - name: Confirm git commit SHA output
+        run: echo ${{ env.COMMIT_SHORT_SHA }}
+
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: "3.1"
+
       - name: Disable ri and rdoc
         run: 'echo "gem: --no-ri --no-rdoc" >> ~/.gemrc'
-      - run: bundle install
+
+      - name: Run Bundle Install
+        run: bundle install
+
       # - name: Regenerate current `profile.json`
       #   run: |
       #     bundle exec inspec json . | jq . > profile.json
+
+      - name: Installed Inspec
+        run: bundle exec inspec version
+
       - name: Vendor the Profile
         run: bundle exec inspec vendor . --overwrite
+
       - name: Lint the Inspec profile
         run: bundle exec inspec check .
+
       - name: Run kitchen test
         run: bundle exec kitchen test --destroy=always ${{ matrix.suite }}-rhel-8 || true
+
       - name: Save Test Result JSON
         uses: actions/upload-artifact@v3
         with:
+          name: ${{ github.workflow }}-${{ env.COMMIT_SHORT_SHA }}-results
           path: spec/results/
+
+      - name: Upload ${{ matrix.suite }} to Heimdall
+        run: |
+          curl -# -s -F data=@spec/results/rhel-8_${{ matrix.suite }}.json -F "filename=${{ env.COMMIT_SHORT_SHA }}-rhel-8_${{ matrix.suite }}" -F "public=true" -F "evaluationTags=${{ env.COMMIT_SHORT_SHA }},${{ github.repository }},${{ github.workflow }}" -H "Authorization: Api-Key ${{ secrets.SAF_HEIMDALL_UPLOAD_KEY }}" "${{ vars.SAF_HEIMDALL_URL }}/evaluations"
+
       - name: Display our ${{ matrix.suite }} results summary
         uses: mitre/saf_action@v1
         with:
           command_string: "view summary -i spec/results/rhel-8_${{ matrix.suite }}.json"
+
       - name: Ensure the scan meets our ${{ matrix.suite }} results threshold
         uses: mitre/saf_action@v1
         with:
