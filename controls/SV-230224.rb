@@ -4,7 +4,7 @@
 # Tested, @R1V12
 
 control "SV-230224" do
-  title 'All RHEL 8 local disk partitions must implement disk encryption'
+  title "All RHEL 8 local disk partitions must implement disk encryption"
   desc 'RHEL 8 systems handling data requiring "data at rest" protections
     must employ cryptographic mechanisms to prevent unauthorized disclosure and
     modification of the information at rest.
@@ -27,8 +27,8 @@ control "SV-230224" do
 
     /dev/mapper/rhel-root:  UUID="67b7d7fe-de60-6fd0-befb-e6748cf97743" TYPE="crypto_LUKS"
 
-    Every persistent disk partition present must be of type "crypto_LUKS". 
-    
+    Every persistent disk partition present must be of type "crypto_LUKS".
+
     If any partitions other than pseudo file systems (such as /proc or /sys) are not
     type "crypto_LUKS", ask the administrator to indicate how the partitions are
     encrypted.  If there is no evidence that all local disk partitions are
@@ -55,26 +55,24 @@ control "SV-230224" do
 
   all_args = command("blkid").stdout.strip.split("\n").map { |s| s.sub(/^"(.*)"$/, '\1') }
 
+  def describe_and_skip(message)
+    describe message do
+      skip message
+    end
+  end
+
   if virtualization.system.eql?("docker")
     impact 0.0
-    describe "Disk Encryption and Data At Rest Implementation is handled on the Container Host" do
-      skip "Disk Encryption and Data At Rest Implementation is handled on the Container Host"
-    end
+    describe_and_skip("Disk Encryption and Data At Rest Implementation is handled on the Container Host")
   elsif input("data_at_rest_exempt") == true
     impact 0.0
-    describe "Data At Rest Requirements have been set to Not Applicabe by the `data_at_rest_exempt` input." do
-      skip "Data At Rest Requirements have been set to Not Applicabe by the `data_at_rest_exempt` input."
-    end
+    describe_and_skip("Data At Rest Requirements have been set to Not Applicabe by the `data_at_rest_exempt` input.")
+  elsif all_args.empty?
+    describe_and_skip("Command blkid did not return and non-psuedo block devices.")
   else
-    if all_args.empty?
-      describe "Command blkid did not return and non-psuedo block devices." do
-        skip "Command blkid did not return and non-psuedo block devices."
-      end
-    else
-      all_args.each do |args|
-        describe args do
-          it { should match(/\bcrypto_LUKS\b/) }
-        end
+    all_args.each do |args|
+      describe args do
+        it { should match(/\bcrypto_LUKS\b/) }
       end
     end
   end

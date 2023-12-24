@@ -90,16 +90,16 @@ permissive = 0'
     end
 
     rules_file = '/etc/fapolicyd/compiled.rules'
-    if os.release.to_f < 8.4
-      rules_file = '/etc/fapolicyd/fapolicyd.rules'
-    end
+    rules_file = '/etc/fapolicyd/fapolicyd.rules' if os.release.to_f < 8.4
 
     describe file(rules_file) do
       it { should exist }
     end
 
-    describe file(rules_file).content.strip.split("\n")[-1] do
-      it { should cmp 'deny perm=any all : all' }
-    end if file(rules_file).exist?
+    if file(rules_file).exist?
+      describe file(rules_file).content.strip.split("\n")[-1] do
+        it { should cmp 'deny perm=any all : all' }
+      end
+    end
   end
 end

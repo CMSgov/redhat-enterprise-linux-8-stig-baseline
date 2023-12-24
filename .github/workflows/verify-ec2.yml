@@ -40,9 +40,11 @@ jobs:
       - name: Disable ri and rdoc
         run: 'echo "gem: --no-ri --no-rdoc" >> ~/.gemrc'
       - run: bundle install
-      - name: Regenerate current `profile.json`
-        run: |
-          bundle exec inspec json . | jq . > profile.json
+      # - name: Regenerate current `profile.json`
+      #   run: |
+      #     bundle exec inspec json . | jq . > profile.json
+      - name: Vendor the Profile
+        run: bundle exec inspec vendor --overwrite
       - name: Lint the Inspec profile
         run: bundle exec inspec check .
       - name: Run kitchen test

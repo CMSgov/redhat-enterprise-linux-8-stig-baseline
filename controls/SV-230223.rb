@@ -77,7 +77,7 @@ control 'SV-230223' do
   if virtualization.system.eql?('docker')
     impact 0.0
     describe 'Control not applicable in a container' do
-      skip "The host OS controls the FIPS mode settings. The host OS should also be scanned with the applicable OS validation profile."
+      skip 'The host OS controls the FIPS mode settings. The host OS should also be scanned with the applicable OS validation profile.'
     end
   elsif input('use_fips') == false
     impact 0.0
