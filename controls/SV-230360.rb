@@ -43,8 +43,17 @@ the line to have the required value):
   tag cci: ['CCI-000195']
   tag nist: ['IA-5 (1) (b)']
 
-  describe parse_config_file('/etc/security/pwquality.conf') do
-    its('maxclassrepeat') { should cmp <= 4 }
-    its('maxclassrepeat') { should cmp.positive? }
+  value = input('maxclassrepeat')
+  setting = 'maxclassrepeat'
+
+  describe 'pwquality.conf settings' do
+    let(:config) { parse_config_file('/etc/security/pwquality.conf', multiple_values: true) }
+    let(:count) { config.params[setting].length }
+    it "only sets `#{setting}` once" do
+      expect(count).to eq(1)
+    end
+    it "does not set `#{setting}` to more then #{value}" do
+      expect(config.params[setting]).to cmp <= value
+    end
   end
 end

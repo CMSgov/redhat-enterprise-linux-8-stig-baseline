@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 control 'SV-230357' do
   title 'RHEL 8 must enforce password complexity by requiring that at least one
 uppercase character be used.'
@@ -17,33 +15,45 @@ compromised.
 Note that in order to require uppercase characters, without degrading the
 "minlen" value, the credit value must be expressed as a negative number in
 "/etc/security/pwquality.conf".'
-  desc 'check', 'Verify the value for "ucredit" in "/etc/security/pwquality.conf" with
-the following command:
 
-    $ sudo grep ucredit /etc/security/pwquality.conf
+  desc 'check', 'Verify the value for "ucredit" with the following command:
 
-    ucredit = -1
+$ sudo grep -r ucredit /etc/security/pwquality.conf*
 
-    If the value of "ucredit" is a positive number or is commented out, this
-is a finding.'
-  desc 'fix', 'Configure the operating system to enforce password complexity by requiring
-that at least one uppercase character be used by setting the "ucredit" option.
+/etc/security/pwquality.conf:ucredit = -1
 
-    Add the following line to /etc/security/pwquality.conf (or modify the line
-to have the required value):
+If the value of "ucredit" is a positive number or is commented out, this is a finding.
 
-    ucredit = -1'
+If conflicting results are returned, this is a finding.'
+
+  desc 'fix', 'Configure the operating system to enforce password complexity by requiring that at least one uppercase character be used by setting the "ucredit" option.
+
+Add the following line to /etc/security/pwquality.conf (or modify the line to have the required value):
+
+ucredit = -1
+
+Remove any configurations that conflict with the above value.'
+
   impact 0.5
+
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000069-GPOS-00037'
   tag gid: 'V-230357'
-  tag rid: 'SV-230357r627750_rule'
+  tag rid: 'SV-230357r858771_rule'
   tag stig_id: 'RHEL-08-020110'
-  tag fix_id: 'F-33001r567818_fix'
+  tag fix_id: 'F-33001r858770_fix'
   tag cci: ['CCI-000192']
   tag nist: ['IA-5 (1) (a)']
 
-  describe parse_config_file('/etc/security/pwquality.conf') do
-    its('ucredit.to_i') { should cmp.negative? }
+  describe 'pwquality.conf settings' do
+    let(:config) { parse_config_file('/etc/security/pwquality.conf', multiple_values: true) }
+    let(:setting) { 'ucredit' }
+    let(:count) { config.params[setting].length }
+    it 'only sets `ucredit` once' do
+      expect(count).to eq(1)
+    end
+    it 'does not set `ucredit` to a positive value' do
+      expect(config.params[setting]).to cmp < 0
+    end
   end
 end

@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
 control 'SV-230362' do
-  title 'RHEL 8 must require the change of at least four character classes when
-passwords are changed.'
+  title 'RHEL 8 must require the change of at least four character classes when passwords are changed.'
   desc 'Use of a complex password helps to increase the time and resources
 required to compromise the password. Password complexity, or strength, is a
 measure of the effectiveness of a password in resisting attempts at guessing
@@ -41,7 +40,17 @@ the line to have the required value):
   tag cci: ['CCI-000195']
   tag nist: ['IA-5 (1) (b)']
 
-  describe parse_config_file('/etc/security/pwquality.conf') do
-    its('minclass') { should cmp >= 4 }
+  value = input('minclass')
+  setting = 'minclass'
+
+  describe 'pwquality.conf settings' do
+    let(:config) { parse_config_file('/etc/security/pwquality.conf', multiple_values: true) }
+    let(:count) { config.params[setting].length }
+    it "only sets `#{setting}` once" do
+      expect(count).to eq(1)
+    end
+    it "does not set `#{setting}` to more then #{value}" do
+      expect(config.params[setting]).to cmp <= value
+    end
   end
 end

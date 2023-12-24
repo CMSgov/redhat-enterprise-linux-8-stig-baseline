@@ -2,23 +2,18 @@
 driver:
   name: ec2
   associate_public_ip: true
-  instance_type: c5.large
-  ebs_optimized: true
-  block_device_mappings:
-    - device_name: /dev/sda1
-      ebs:
-        delete_on_termination: true
-        volume_size: 30
-        volume_type: gp2
-  interface: public
-  require_chef_for_busser: false
+  interface: dns
   privileged: true
+  instance_initiated_shutdown_behavior: stop
+  require_chef_for_busser: false
+  metadata_options:
+    http_tokens: 'required'
+    http_put_response_hop_limit: 1
+    instance_metadata_tags: 'enabled'
 
 provisioner:
   name: ansible_playbook
   hosts: all
-  # require_ansible_repo: false
-  # require_ansible_omnibus: false
   require_chef_for_busser: false
   require_ruby_for_busser: false
   ansible_binary_path: /usr/local/bin

@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 control 'SV-230381' do
   title 'RHEL 8 must display the date and time of the last successful account
 logon upon logon.'
@@ -14,6 +12,7 @@ occurred with the following command:
 
     If "pam_lastlog" is missing from "/etc/pam.d/postlogin" file, or the
 silent option is present, this is a finding.'
+
   desc 'fix', 'Configure the operating system to provide users with feedback on when
 account accesses last occurred by setting the required configuration options in
 "/etc/pam.d/postlogin".
@@ -25,11 +24,14 @@ account accesses last occurred by setting the required configuration options in
   tag severity: 'low'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-230381'
-  tag rid: 'SV-230381r627750_rule'
+  tag rid: 'SV-230381r858726_rule'
   tag stig_id: 'RHEL-08-020340'
   tag fix_id: 'F-33025r567890_fix'
-  tag cci: ['CCI-000366']
-  tag nist: ['CM-6 b']
+  tag cci: ['CCI-000366', 'CCI-000052']
+  tag nist: ['CM-6 b', 'AC-9']
+
+  require 'pry'
+  binding.pry
 
   describe pam('/etc/pam.d/postlogin') do
     its('lines') { should match_pam_rule('session .* pam_lastlog.so').all_with_args('showfailed') }

@@ -30,13 +30,15 @@ lifetime restriction.
   tag cci: ['CCI-000199']
   tag nist: ['IA-5 (1) (d)']
 
-  shadow.users.each do |user|
-    # filtering on non-system accounts (uid >= 1000)
-    next unless user(user).uid >= 1000
+  value = input('pass_max_days')
 
-    describe shadow.users(user) do
-      its('max_days.first.to_i') { should cmp <= 60 }
-      its('max_days.first.to_i') { should cmp.positive? }
+  bad_users = users.where { uid >= 1000 }.where { value > 60 or maxdays.negative? }.usernames
+  in_scope_users = bad_users - input('exempt_home_users')
+
+  describe 'Users are not be able' do
+    it "to retain passwords for more then #{value} day(s)" do
+      failure_message = "The following users can update their password more then every #{value} day(s): #{in_scope_users.join(', ')}"
+      expect(in_scope_users).to be_empty, failure_message
     end
   end
 end

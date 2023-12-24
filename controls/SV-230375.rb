@@ -42,7 +42,15 @@ to have the required value):
   tag cci: ['CCI-001619']
   tag nist: ['IA-5 (1) (a)']
 
-  describe parse_config_file('/etc/security/pwquality.conf') do
-    its('ocredit.to_i') { should cmp.negative? }
+  describe 'pwquality.conf settings' do
+    let(:config) { parse_config_file('/etc/security/pwquality.conf', multiple_values: true) }
+    let(:setting) { 'ocredit' }
+    let(:count) { config.params[setting].length }
+    it 'only sets `ocredit` once' do
+      expect(count).to eq(1)
+    end
+    it 'does not set `ocredit` to a positive value' do
+      expect(config.params[setting]).to cmp < 0
+    end
   end
 end
