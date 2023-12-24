@@ -43,6 +43,8 @@ jobs:
       # - name: Regenerate current `profile.json`
       #   run: |
       #     bundle exec inspec json . | jq . > profile.json
+      - name: Vendor the Profile
+        run: bundle exec inspec vendor .
       - name: Lint the Inspec profile
         run: bundle exec inspec check .
       - name: Vendor the Profile
