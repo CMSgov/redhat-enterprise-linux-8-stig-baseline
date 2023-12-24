@@ -36,16 +36,25 @@ finding."
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
 
+  exempt_users = input('exempt_home_users')
   ignore_shells = input('non_interactive_shells').join('|')
+  actvite_users_without_homedir = users.where { !shell.match(ignore_shells) && home.nil? }.entries
 
-  uid_min = login_defs.UID_MIN.to_i
-  uid_min = 1000 if uid_min.nil?
+  # only_if("This control is Not Applicable since no 'non-exempt' users were found", impact: 0.0) { !active_home.empty? }
 
-  users.where { !shell.match(ignore_shells) && (uid >= uid_min || uid.zero?) }.entries.each do |user_info|
-    next if input('exempt_home_users').include?(user_info.username.to_s)
+  describe 'All non-exempt users' do
+    it 'have an assinded home directory that exists' do
+      failure_message = "The following users do not have an assigned home directory: #{actvite_users_without_homedir.join(', ')}"
+      expect(actvite_users_without_homedir).to be_empty, failure_message
+    end
+  end
+  describe 'Note: `exempt_home_users` skipped user' do
+    exempt_users.each do |u|
+      next if exempt_users.empty?
 
-    describe directory(user_info.home) do
-      it { should exist }
+      it u.to_s do
+        expect(user(u).username).to be_truthy.or be_nil
+      end
     end
   end
 end
