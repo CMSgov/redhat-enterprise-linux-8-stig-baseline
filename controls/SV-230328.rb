@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 control 'SV-230328' do
-  title 'A separate RHEL 8 filesystem must be used for user home directories
-(such as /home or an equivalent).'
-  desc 'The use of separate file systems for different paths can protect the
-system from failures resulting from a file system becoming full or failing.'
+  title "A separate RHEL 8 filesystem must be used for user home directories
+(such as /home or an equivalent)."
+  desc "The use of separate file systems for different paths can protect the
+system from failures resulting from a file system becoming full or failing."
   desc 'check', %q(Verify that a separate file system/partition has been created for
 non-privileged local interactive user home directories.
 
@@ -35,6 +35,7 @@ interactive users with the following command:
     If a separate entry for the file system/partition containing the
 non-privileged interactive user home directories does not exist, this is a
 finding.)
+
   desc 'fix', 'Migrate the "/home" directory onto a separate file
 system/partition.'
   impact 0.5
@@ -47,28 +48,33 @@ system/partition.'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
 
+  only_if('This requirement is Not Applicable inside a container, the containers host manages the containers filesystems') {
+    !virtualization.system.eql?('docker')
+  }
+
   ignore_shells = input('non_interactive_shells').join('|')
+  homes = users.where { uid >= 1000 && !shell.match(ignore_shells) }.homes
+  root_device = etc_fstab.where { mount_point == '/' }.device_name
 
-  uid_min = login_defs.read_params['UID_MIN'].to_i
-  uid_min = 1000 if uid_min.nil?
-
-  if virtualization.system.eql?('docker')
+  if input('seperate_filesystem_exempt')
     impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
+    describe 'This system is not required to have sperate filesystems for each mount point' do
+      skip 'The system is managing filesystems and space via other mechinisums, this requirement is Not Applicable'
     end
   else
-    # excluding root because its home directory is usually "/root" (mountpoint "/")
-    users.where { !shell.match(ignore_shells) && (uid >= uid_min) }.entries.each do |user_info|
-      next if input('exempt_home_users').include?(user_info.username.to_s)
+    homes.each do |home|
+      pn_parent = Pathname.new(home).parent.to_s
+      home_device = etc_fstab.where { mount_point == pn_parent }.device_name
 
-      home_mount = command(%(df #{user_info.home} --output=target | tail -1)).stdout.strip
-      describe user_info.username do
-        context 'with mountpoint' do
-          context home_mount do
-            it { should_not be_empty }
-            it { should_not match(%r{^/$}) }
-          end
+      describe "The '#{pn_parent}' mount point" do
+        subject { home_device }
+
+        it 'is not on the same partition as the root partition' do
+          is_expected.not_to equal(root_device)
+        end
+
+        it 'has its own partition' do
+          is_expected.not_to be_empty
         end
       end
     end
