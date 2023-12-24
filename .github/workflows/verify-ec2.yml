@@ -44,7 +44,7 @@ jobs:
       #   run: |
       #     bundle exec inspec json . | jq . > profile.json
       - name: Vendor the Profile
-        run: bundle exec inspec vendor --overwrite
+        run: bundle exec inspec vendor . --overwrite
       - name: Lint the Inspec profile
         run: bundle exec inspec check .
       - name: Run kitchen test

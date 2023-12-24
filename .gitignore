@@ -15,6 +15,7 @@ spec/results/**
 Gemfile.lock
 inspec.lock
 .kitchen
+vendor/
 
 # Used by dotenv library to load environment variables.
 # .env
