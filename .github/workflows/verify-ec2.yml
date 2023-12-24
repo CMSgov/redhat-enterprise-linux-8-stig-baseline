@@ -35,7 +35,7 @@ jobs:
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: '3.1'
+          ruby-version: "3.1"
           bundler-cache: true
       - name: Disable ri and rdoc
         run: 'echo "gem: --no-ri --no-rdoc" >> ~/.gemrc'
@@ -43,10 +43,10 @@ jobs:
       # - name: Regenerate current `profile.json`
       #   run: |
       #     bundle exec inspec json . | jq . > profile.json
-      - name: Vendor the Profile
-        run: bundle exec inspec vendor . --overwrite
       - name: Lint the Inspec profile
         run: bundle exec inspec check .
+      - name: Vendor the Profile
+        run: bundle exec inspec vendor . --overwrite
       - name: Run kitchen test
         run: bundle exec kitchen test --destroy=always ${{ matrix.suite }}-rhel-8 || true
       - name: Save Test Result JSON
