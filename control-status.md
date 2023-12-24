@@ -96,7 +96,7 @@
 | SV-230317 |          |        |       |                 |                                                 |
 | SV-230318 |          |        |       |                 |                                                 |
 | SV-230319 |          |        |       |                 |                                                 |
-| SV-230320 |          |        |       |                 |                                                 |
+| SV-230320 | Yes      | Yes    | Yes   | ---             | `exempt_home_users`<br>`non_interactive_shells` |
 | SV-230321 |          |        |       |                 |                                                 |
 | SV-230322 |          |        |       |                 |                                                 |
 | SV-230323 |          |        |       |                 |                                                 |
