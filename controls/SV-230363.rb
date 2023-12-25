@@ -48,12 +48,18 @@ line to have the required value):
 
   describe 'pwquality.conf settings' do
     let(:config) { parse_config_file('/etc/security/pwquality.conf', multiple_values: true) }
-    let(:count) { config.params[setting].length }
-    it "only sets `#{setting}` once" do
-      expect(count).to eq(1)
+    let(:setting_value) { config.params[setting].is_a?(Integer) ? [config.params[setting]] : Array(config.params[setting]) }
+
+    it "has `#{setting}` set" do
+      expect(setting_value).not_to be_empty, "#{setting} is not set in pwquality.conf"
     end
-    it "does not set `#{setting}` to more then #{value}" do
-      expect(config.params[setting]).to cmp <= value
+
+    it "only sets `#{setting}` once" do
+      expect(setting_value.length).to eq(1), "#{setting} is commented or set more than once in pwquality.conf"
+    end
+
+    it "does not set `#{setting}` to more than #{value}" do
+      expect(setting_value.first.to_i).to be <= value.to_i, "#{setting} is set to a value greater than #{value} in pwquality.conf"
     end
   end
 end

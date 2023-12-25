@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 control 'SV-230358' do
-  title 'RHEL 8 must enforce password complexity by requiring that at least one
-lower-case character be used.'
+  title "RHEL 8 must enforce password complexity by requiring that at least one
+lower-case character be used."
   desc 'Use of a complex password helps to increase the time and resources
 required to compromise the password. Password complexity, or strength, is a
 measure of the effectiveness of a password in resisting attempts at guessing
@@ -47,12 +47,18 @@ to have the required value):
   describe 'pwquality.conf settings' do
     let(:config) { parse_config_file('/etc/security/pwquality.conf', multiple_values: true) }
     let(:setting) { 'lcredit' }
-    let(:count) { config.params[setting].length }
-    it 'only sets `lcredit` once' do
-      expect(count).to eq(1)
+    let(:value) { Array(config.params[setting]) }
+
+    it 'has `lcredit` set' do
+      expect(value).not_to be_empty, 'lcredit is not set in pwquality.conf'
     end
+
+    it 'only sets `lcredit` once' do
+      expect(value.length).to eq(1), 'lcredit is commented or set more than once in pwquality.conf'
+    end
+
     it 'does not set `lcredit` to a positive value' do
-      expect(config.params[setting]).to cmp < 0
+      expect(value.first.to_i).to be < 0, 'lcredit is not set to a negative value in pwquality.conf'
     end
   end
 end

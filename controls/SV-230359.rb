@@ -46,12 +46,18 @@ to have the required value):
   describe 'pwquality.conf settings' do
     let(:config) { parse_config_file('/etc/security/pwquality.conf', multiple_values: true) }
     let(:setting) { 'dcredit' }
-    let(:count) { config.params[setting].length }
-    it 'only sets `dcredit` once' do
-      expect(count).to eq(1)
+    let(:value) { Array(config.params[setting]) }
+
+    it 'has `dcredit` set' do
+      expect(value).not_to be_empty, 'dcredit is not set in pwquality.conf'
     end
+
+    it 'only sets `dcredit` once' do
+      expect(value.length).to eq(1), 'dcredit is commented or set more than once in pwquality.conf'
+    end
+
     it 'does not set `dcredit` to a positive value' do
-      expect(config.params[setting]).to cmp < 0
+      expect(value.first.to_i).to be < 0, 'dcredit is not set to a negative value in pwquality.conf'
     end
   end
 end
