@@ -3,9 +3,9 @@
 # ALL: reviewed
 # Tested, @R1V12
 # TODO: This should really have a resource
- 
-control "SV-230224" do
-  title "All RHEL 8 local disk partitions must implement disk encryption"
+
+control 'SV-230224' do
+  title 'All RHEL 8 local disk partitions must implement disk encryption'
   desc 'RHEL 8 systems handling data requiring "data at rest" protections
     must employ cryptographic mechanisms to prevent unauthorized disclosure and
     modification of the information at rest.
@@ -16,7 +16,7 @@ control "SV-230224" do
     information. Organizations have the flexibility to either encrypt all
     information on storage devices (i.e., full disk encryption) or encrypt specific
     data structures (e.g., files, records, or fields).'
-  desc "check", 'Verify RHEL 8 prevents unauthorized disclosure or modification of all
+  desc 'check', 'Verify RHEL 8 prevents unauthorized disclosure or modification of all
     information requiring at-rest protection by using disk encryption.
 
     If there is a documented and approved reason for not having data-at-rest
@@ -35,7 +35,7 @@ control "SV-230224" do
     encrypted.  If there is no evidence that all local disk partitions are
     encrypted, this is a finding.'
 
-  desc "fix", "Configure RHEL 8 to prevent unauthorized modification of all information at
+  desc 'fix', "Configure RHEL 8 to prevent unauthorized modification of all information at
     rest by using disk encryption.
 
     Encrypting a partition in an already installed system is more difficult,
@@ -44,17 +44,17 @@ control "SV-230224" do
 
   impact 0.5
 
-  tag severity: "medium"
-  tag gtitle: "SRG-OS-000185-GPOS-00079"
-  tag satisfies: ["SRG-OS-000185-GPOS-00079", "SRG-OS-000404-GPOS-00183", "SRG-OS-000405-GPOS-00184"]
-  tag gid: "V-230224"
-  tag rid: "SV-230224r627750_rule"
-  tag stig_id: "RHEL-08-010030"
-  tag fix_id: "F-32868r567419_fix"
-  tag cci: ["CCI-001199"]
-  tag nist: ["SC-28"]
+  tag severity: 'medium'
+  tag gtitle: 'SRG-OS-000185-GPOS-00079'
+  tag satisfies: ['SRG-OS-000185-GPOS-00079', 'SRG-OS-000404-GPOS-00183', 'SRG-OS-000405-GPOS-00184']
+  tag gid: 'V-230224'
+  tag rid: 'SV-230224r627750_rule'
+  tag stig_id: 'RHEL-08-010030'
+  tag fix_id: 'F-32868r567419_fix'
+  tag cci: ['CCI-001199']
+  tag nist: ['SC-28']
 
-  all_args = command("blkid").stdout.strip.split("\n").map { |s| s.sub(/^"(.*)"$/, '\1') }
+  all_args = command('blkid').stdout.strip.split("\n").map { |s| s.sub(/^"(.*)"$/, '\1') }
 
   def describe_and_skip(message)
     describe message do
@@ -62,15 +62,15 @@ control "SV-230224" do
     end
   end
 
-  if virtualization.system.eql?("docker")
+  if virtualization.system.eql?('docker')
     impact 0.0
-    describe_and_skip("Disk Encryption and Data At Rest Implementation is handled on the Container Host")
-  elsif input("data_at_rest_exempt") == true
+    describe_and_skip('Disk Encryption and Data At Rest Implementation is handled on the Container Host')
+  elsif input('data_at_rest_exempt') == true
     impact 0.0
-    describe_and_skip("Data At Rest Requirements have been set to Not Applicabe by the `data_at_rest_exempt` input.")
+    describe_and_skip('Data At Rest Requirements have been set to Not Applicabe by the `data_at_rest_exempt` input.')
   elsif all_args.empty?
-    #TODO: Determine if this is an NA vs and NR or even a pass
-    describe_and_skip("Command blkid did not return and non-psuedo block devices.")
+    # TODO: Determine if this is an NA vs and NR or even a pass
+    describe_and_skip('Command blkid did not return and non-psuedo block devices.')
   else
     all_args.each do |args|
       describe args do

@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 control 'SV-230332' do
-  title 'RHEL 8 must automatically lock an account when three unsuccessful
-logon attempts occur.'
+  title "RHEL 8 must automatically lock an account when three unsuccessful
+logon attempts occur."
   desc 'By limiting the number of failed logon attempts, the risk of
 unauthorized system access via user password guessing, otherwise known as
 brute-force attacks, is reduced. Limits are imposed by locking the account.
@@ -79,13 +79,22 @@ restart the "sssd" service, run the following command:
   tag cci: ['CCI-000044']
   tag nist: ['AC-7 a']
 
-  os_version_min = input('os_versions')['min']
+  unsuccessful_attempts = input('unsuccessful_attempts')
   pam_auth_files = input('pam_auth_files')
 
-  if os.release.to_f >= os_version_min
+  only_if('This system uses Centralized Account Management to manage this requirement', impact: 0.0) {
+    !input('central_account_management')
+  }
+
+  # NOTE:
+  # This check applies to RHEL versions 8.0 and 8.1,
+  # # if the system is RHEL version 8.2 or newer,
+  # this check is not applicable.
+
+  if os.release.to_f >= 8.2
     impact 0.0
-    describe "The release is #{os.release}" do
-      skip "The release is #{os_version_min} or newer; Currently on release #{os.release}, this control is Not Applicable."
+    describe 'This requirement only applies to RHEL 8 version(s) 8.0 and 8.1' do
+      skip "Currently on release #{os.release}, this control is Not Applicable."
     end
   else
     [
@@ -95,7 +104,7 @@ restart the "sssd" service, run the following command:
       describe pam(path) do
         its('lines') {
           should match_pam_rule('auth [default=die]|required pam_faillock.so preauth').all_with_integer_arg('deny',
-                                                                                                            '<=', input('unsuccessful_attempts'))
+                                                                                                            '<=', unsuccessful_attempts)
         }
         its('lines') {
           should match_pam_rule('auth [default=die]|required pam_faillock.so preauth').all_with_integer_arg('deny',

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230364' do
   title 'RHEL 8 passwords must have a 24 hours/1 day minimum password lifetime
 restriction in /etc/shadow.'
@@ -32,7 +34,6 @@ password lifetime:
   bad_users = users.where { uid >= 1000 }.where { mindays < 1 }.usernames
   in_scope_users = bad_users - input('exempt_home_users')
 
-  require 'pry'; binding.pry
   describe 'Users should not' do
     it 'be able to change their password more then once a 24 hour peroid' do
       failure_message = "The following users can update their password more then once a day: #{in_scope_users.join(', ')}"

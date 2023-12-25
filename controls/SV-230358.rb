@@ -58,7 +58,7 @@ to have the required value):
     end
 
     it 'does not set `lcredit` to a positive value' do
-      expect(value.first.to_i).to be < 0, 'lcredit is not set to a negative value in pwquality.conf'
+      expect(value.first.to_i).to be.negative?, 'lcredit is not set to a negative value in pwquality.conf'
     end
   end
 end

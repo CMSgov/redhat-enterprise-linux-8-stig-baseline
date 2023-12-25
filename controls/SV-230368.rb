@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-control "SV-230368" do
+control 'SV-230368' do
   title "RHEL 8 passwords must be prohibited from reuse for a minimum of five
 generations."
   desc 'Password complexity, or strength, is a measure of the effectiveness of
@@ -16,7 +16,7 @@ password complexity. This is set in both:
 
     Note that manual changes to the listed files may be overwritten by the
 "authselect" program.'
-  desc "check", 'Verify the operating system prohibits password reuse for a minimum of five
+  desc 'check', 'Verify the operating system prohibits password reuse for a minimum of five
 generations.
 
     Check for the value of the "remember" argument in
@@ -30,7 +30,7 @@ command:
     If the line containing "pam_pwhistory.so" does not have the "remember"
 module argument set, is commented out, or the value of the "remember" module
 argument is set to less than "5", this is a finding.'
-  desc "fix", 'Configure the operating system to prohibit password reuse for a minimum of
+  desc 'fix', 'Configure the operating system to prohibit password reuse for a minimum of
 five generations.
 
     Add the following line in "/etc/pam.d/system-auth" and
@@ -38,20 +38,20 @@ five generations.
 
     password required pam_pwhistory.so use_authtok remember=5 retry=3'
   impact 0.5
-  tag severity: "medium"
-  tag gtitle: "SRG-OS-000077-GPOS-00045"
-  tag gid: "V-230368"
-  tag rid: "SV-230368r627750_rule"
-  tag stig_id: "RHEL-08-020220"
-  tag fix_id: "F-33012r567851_fix"
-  tag cci: ["CCI-000200"]
-  tag nist: ["IA-5 (1) (e)"]
+  tag severity: 'medium'
+  tag gtitle: 'SRG-OS-000077-GPOS-00045'
+  tag gid: 'V-230368'
+  tag rid: 'SV-230368r627750_rule'
+  tag stig_id: 'RHEL-08-020220'
+  tag fix_id: 'F-33012r567851_fix'
+  tag cci: ['CCI-000200']
+  tag nist: ['IA-5 (1) (e)']
 
-  pam_auth_files = input("pam_auth_files")
+  pam_auth_files = input('pam_auth_files')
 
-  [pam_auth_files["password-auth"], pam_auth_files["system-auth"]].each do |path|
+  [pam_auth_files['password-auth'], pam_auth_files['system-auth']].each do |path|
     describe pam(path) do
-      its("lines") { should match_pam_rule("password (required|requisite|sufficient) pam_pwhistory.so").any_with_integer_arg("remember", ">=", input("min_reuse_generations")) }
+      its('lines') { should match_pam_rule('password (required|requisite|sufficient) pam_pwhistory.so').any_with_integer_arg('remember', '>=', input('min_reuse_generations')) }
     end
   end
 end

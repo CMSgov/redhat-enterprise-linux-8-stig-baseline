@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # TODO: Add this to the course content as a teaching example
 
 control 'SV-230357' do
@@ -61,7 +63,7 @@ Remove any configurations that conflict with the above value.'
     end
 
     it 'does not set `ucredit` to a positive value' do
-      expect(value.first.to_i).to be < 0, 'ucredit is not set to a negative value in pwquality.conf'
+      expect(value.first.to_i).to be.negative?, 'ucredit is not set to a negative value in pwquality.conf'
     end
   end
 end

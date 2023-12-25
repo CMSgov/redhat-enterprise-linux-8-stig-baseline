@@ -158,6 +158,18 @@ inputs:
     type: Boolean
     value: true
 
+  # SV-230332, SV-230333
+  - name: unsuccessful_attempts
+    description: The number of allowed failed login attempts
+    type: Numeric
+    value: 3
+
+  # SV-230332
+  - name: central_account_management
+    description: The system is using a central account management system to manage user acoutns and security
+    type: Boolean
+    value: false
+
   # SV-230537
   - name: ipv6_enabled
     description: Set to 'true' if IPv6 is enabled on the system.

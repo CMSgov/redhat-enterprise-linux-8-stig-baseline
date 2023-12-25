@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 control 'SV-230333' do
-  title 'RHEL 8 must automatically lock an account when three unsuccessful
-logon attempts occur.'
+  title "RHEL 8 must automatically lock an account when three unsuccessful
+logon attempts occur."
   desc 'By limiting the number of failed logon attempts, the risk of
 unauthorized system access via user password guessing, otherwise known as
 brute-force attacks, is reduced. Limits are imposed by locking the account.
@@ -47,12 +47,15 @@ line:
   tag cci: ['CCI-000044']
   tag nist: ['AC-7 a']
 
-  os_version_max = input('os_versions')['max']
+  # Note:
+  # This check applies to RHEL versions 8.2 or newer,
+  # if the system is RHEL version 8.0 or 8.1,
+  # this check is not applicable.
 
-  if os.release.to_f <= os_version_max
+  if os.release.to_f < 8.2
     impact 0.0
-    describe "The release is #{os.release}" do
-      skip "The release is lower than #{os_version_max}; Currently on release #{os.release}, this control is Not Applicable."
+    describe 'This requirement only applies to RHEL 8 Systems 8.2 and newer' do
+      skip "Currently on release #{os.release}, this control is Not Applicable."
     end
   else
     describe parse_config_file('/etc/security/faillock.conf') do

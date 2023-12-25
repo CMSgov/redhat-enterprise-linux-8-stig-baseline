@@ -1,68 +1,76 @@
 # frozen_string_literal: true
 
 control 'SV-230374' do
-  title 'RHEL 8 emergency accounts must be automatically removed or disabled
-after the crisis is resolved or within 72 hours.'
-  desc "Emergency accounts are privileged accounts established in response to
-crisis situations where the need for rapid account activation is required.
-Therefore, emergency account activation may bypass normal account authorization
-processes. If these accounts are automatically disabled, system maintenance
-during emergencies may not be possible, thus adversely affecting system
-availability.
+  title 'RHEL 8 must automatically expire temporary accounts within 72 hours.'
+  desc 'Temporary accounts are privileged or nonprivileged accounts that are
+    established during pressing circumstances, such as new software or hardware
+    configuration or an incident response, where the need for prompt account
+    activation requires bypassing normal account authorization procedures.
 
-    Emergency accounts are different from infrequently used accounts (i.e.,
-local logon accounts used by the organization's system administrators when
-network or normal logon/access is not available). Infrequently used accounts
-are not subject to automatic termination dates. Emergency accounts are accounts
-created in response to crisis situations, usually for use by maintenance
-personnel. The automatic expiration or disabling time period may be extended as
-needed until the crisis is resolved; however, it must not be extended
-indefinitely. A permanent account should be established for privileged users
-who need long-term maintenance accounts.
+    If any inactive temporary accounts are left enabled on the system and are
+    not either manually removed or automatically expired within 72 hours, the
+    security posture of the system will be degraded and exposed to exploitation
+    by unauthorized users or insider threat actors.
 
-    To address access requirements, many RHEL 8 systems can be integrated with
-enterprise-level authentication/access mechanisms that meet or exceed access
-control policy requirements."
-  desc 'check', 'Verify emergency accounts have been provisioned with an expiration date of
-72 hours.
+    Temporary accounts are different from emergency accounts. Emergency accounts,
+    also known as "last resort" or "break glass" accounts, are local logon accounts
+    enabled on the system for emergency use by authorized system administrators
+    to manage a system when standard logon methods are failing or not available.
 
-    For every existing emergency account, run the following command to obtain
-its account expiration information.
+    Emergency accounts are not subject to manual removal or scheduled expiration
+    requirements.
 
-    $ sudo chage -l system_account_name
+    The automatic expiration of temporary accounts may be extended as needed by
+    the circumstances but it must not be extended indefinitely. A documented
+    permanent account should be established for privileged users who need long-term
+    maintenance accounts.'
+
+  desc 'check', 'Verify temporary accounts have been provisioned with an
+    expiration date of 72 hours.
+
+    For every existing temporary account, run the following command to obtain its
+    account expiration information:
+
+    $ sudo chage -l <temporary_account_name> | grep -i "account expires"
 
     Verify each of these accounts has an expiration date set within 72 hours.
-    If any emergency accounts have no expiration date set or do not expire
-within 72 hours, this is a finding.'
-  desc 'fix', 'If an emergency account must be created, configure the system to terminate
-the account after 72 hours with the following command to set an expiration date
-for the account. Substitute "system_account_name" with the account to be
-created.
 
-    $ sudo chage -E `date -d "+3 days" +%Y-%m-%d` system_account_name
+    If any temporary accounts have no expiration date set or do not expire within
+    72 hours, this is a finding.'
 
-    The automatic expiration or disabling time period may be extended as needed
-until the crisis is resolved.'
+  desc 'fix', "Configure the operating system to expire temporary accounts after
+    72 hours with the following command:
+
+    $ sudo chage -E $(date -d +3days +%Y-%m-%d) <temporary_account_name>"
+
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000123-GPOS-00064'
   tag gid: 'V-230374'
-  tag rid: 'SV-230374r627750_rule'
+  tag rid: 'SV-230374r903129_rule'
   tag stig_id: 'RHEL-08-020270'
-  tag fix_id: 'F-33018r567869_fix'
+  tag fix_id: 'F-33018r902730_fix'
   tag cci: ['CCI-001682']
   tag nist: ['AC-2 (2)']
 
-  if input('temporary_accounts').empty?
+  temporary_accounts = input('temporary_accounts')
+
+  if temp_accounts.empty?
     describe 'Temporary accounts' do
-      subject { input('temporary_accounts') }
-      it { should be_empty }
+      it 'should be empty' do
+        expect(temp_accounts).to be_empty
+      end
     end
   else
-    input('temporary_accounts').each do |acct|
-      describe user(acct.to_s) do
-        its('maxdays') { should cmp <= 3 }
-        its('maxdays') { should cmp.positive? }
+    temp_accounts.each do |acct|
+      context "User #{acct}" do
+        it 'should have maxdays less than or equal to 3' do
+          expect(user(acct.to_s).maxdays).to be <= 3
+        end
+
+        it 'should have maxdays greater than 0' do
+          expect(user(acct.to_s).maxdays).to be > 0
+        end
       end
     end
   end

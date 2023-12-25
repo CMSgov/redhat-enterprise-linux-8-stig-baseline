@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230365' do
   title 'RHEL 8 passwords for new users or password changes must have a 24 hours/1 day minimum password lifetime restriction in /etc/login.defs.'
   desc "Enforcing a minimum password lifetime helps to prevent repeated
