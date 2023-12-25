@@ -2,7 +2,7 @@
 
 # TODO: Add this to the course content as a teaching example
 
-control "SV-230357" do
+control 'SV-230357' do
   title "RHEL 8 must enforce password complexity by requiring that at least one
 uppercase character be used."
   desc 'Use of a complex password helps to increase the time and resources
@@ -20,7 +20,7 @@ Note that in order to require uppercase characters, without degrading the
 "minlen" value, the credit value must be expressed as a negative number in
 "/etc/security/pwquality.conf".'
 
-  desc "check", 'Verify the value for "ucredit" with the following command:
+  desc 'check', 'Verify the value for "ucredit" with the following command:
 
 $ sudo grep -r ucredit /etc/security/pwquality.conf*
 
@@ -30,7 +30,7 @@ If the value of "ucredit" is a positive number or is commented out, this is a fi
 
 If conflicting results are returned, this is a finding.'
 
-  desc "fix", 'Configure the operating system to enforce password complexity by requiring that at least one uppercase character be used by setting the "ucredit" option.
+  desc 'fix', 'Configure the operating system to enforce password complexity by requiring that at least one uppercase character be used by setting the "ucredit" option.
 
 Add the following line to /etc/security/pwquality.conf (or modify the line to have the required value):
 
@@ -40,30 +40,30 @@ Remove any configurations that conflict with the above value.'
 
   impact 0.5
 
-  tag severity: "medium"
-  tag gtitle: "SRG-OS-000069-GPOS-00037"
-  tag gid: "V-230357"
-  tag rid: "SV-230357r858771_rule"
-  tag stig_id: "RHEL-08-020110"
-  tag fix_id: "F-33001r858770_fix"
-  tag cci: ["CCI-000192"]
-  tag nist: ["IA-5 (1) (a)"]
+  tag severity: 'medium'
+  tag gtitle: 'SRG-OS-000069-GPOS-00037'
+  tag gid: 'V-230357'
+  tag rid: 'SV-230357r858771_rule'
+  tag stig_id: 'RHEL-08-020110'
+  tag fix_id: 'F-33001r858770_fix'
+  tag cci: ['CCI-000192']
+  tag nist: ['IA-5 (1) (a)']
 
-  describe "pwquality.conf:" do
-    let(:config) { parse_config_file("/etc/security/pwquality.conf", multiple_values: true) }
-    let(:setting) { "ucredit" }
+  describe 'pwquality.conf:' do
+    let(:config) { parse_config_file('/etc/security/pwquality.conf', multiple_values: true) }
+    let(:setting) { 'ucredit' }
     let(:value) { Array(config.params[setting]) }
 
-    it "has `ucredit` set" do
-      expect(value).not_to be_empty, "ucredit is not set in pwquality.conf"
+    it 'has `ucredit` set' do
+      expect(value).not_to be_empty, 'ucredit is not set in pwquality.conf'
     end
 
-    it "only sets `ucredit` once" do
-      expect(value.length).to eq(1), "ucredit is commented or set more than once in pwquality.conf"
+    it 'only sets `ucredit` once' do
+      expect(value.length).to eq(1), 'ucredit is commented or set more than once in pwquality.conf'
     end
 
-    it "does not set `ucredit` to a positive value" do
-      expect(value.first.to_i).to cmp < 0, "ucredit is not set to a negative value in pwquality.conf"
+    it 'does not set `ucredit` to a positive value' do
+      expect(value.first.to_i).to cmp < 0, 'ucredit is not set to a negative value in pwquality.conf'
     end
   end
 end

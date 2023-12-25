@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-control "SV-230352" do
+control 'SV-230352' do
   title "RHEL 8 must automatically lock graphical user sessions after 15
 minutes of inactivity."
   desc "A session lock is a temporary action taken when a user stops work and
@@ -12,7 +12,7 @@ determined. Rather than be forced to wait for a period of time to expire before
 the user session can be locked, RHEL 8 needs to provide users with the ability
 to manually invoke a session lock so users can secure their session if it is
 necessary to temporarily vacate the immediate physical vicinity."
-  desc "check", 'Verify the operating system initiates a session lock after a 15-minute
+  desc 'check', 'Verify the operating system initiates a session lock after a 15-minute
 period of inactivity for graphical user interfaces with the following commands:
 
     This requirement assumes the use of the RHEL 8 default graphical user
@@ -25,7 +25,7 @@ interface installed, this requirement is Not Applicable.
 
     If "idle-delay" is set to "0" or a value greater than "900", this is
 a finding.'
-  desc "fix", "Configure the operating system to initiate a screensaver after a 15-minute
+  desc 'fix', "Configure the operating system to initiate a screensaver after a 15-minute
 period of inactivity for graphical user interfaces.
 
     Create a database to contain the system-wide screensaver settings (if it
@@ -44,29 +44,29 @@ lines:
 
     $ sudo dconf update"
   impact 0.5
-  tag severity: "medium"
-  tag gtitle: "SRG-OS-000029-GPOS-00010"
-  tag satisfies: ["SRG-OS-000029-GPOS-00010", "SRG-OS-000031-GPOS-00012"]
-  tag gid: "V-230352"
-  tag rid: "SV-230352r646876_rule"
-  tag stig_id: "RHEL-08-020060"
-  tag fix_id: "F-32996r567803_fix"
-  tag cci: ["CCI-000057"]
-  tag nist: ["AC-11 a"]
+  tag severity: 'medium'
+  tag gtitle: 'SRG-OS-000029-GPOS-00010'
+  tag satisfies: ['SRG-OS-000029-GPOS-00010', 'SRG-OS-000031-GPOS-00012']
+  tag gid: 'V-230352'
+  tag rid: 'SV-230352r646876_rule'
+  tag stig_id: 'RHEL-08-020060'
+  tag fix_id: 'F-32996r567803_fix'
+  tag cci: ['CCI-000057']
+  tag nist: ['AC-11 a']
 
-  if virtualization.system.eql?("docker")
+  if virtualization.system.eql?('docker')
     impact 0.0
-    describe "Control not applicable within a container" do
-      skip "Control not applicable within a container"
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
     end
-  elsif package("gnome-desktop3").installed?
+  elsif package('gnome-desktop3').installed?
     describe command("gsettings get org.gnome.desktop.session idle-delay | cut -d ' ' -f2") do
-      its("stdout.strip") { should cmp <= 900 }
-      its("stdout.strip") { should cmp >= 0 }
+      its('stdout.strip') { should cmp <= 900 }
+      its('stdout.strip') { should cmp >= 0 }
     end
   else
     impact 0.0
-    describe "The system does not have GNOME installed" do
+    describe 'The system does not have GNOME installed' do
       skip "The system does not have GNOME installed, this requirement is Not
         Applicable."
     end

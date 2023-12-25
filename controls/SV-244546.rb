@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-control "SV-244546" do
+control 'SV-244546' do
   title "The RHEL 8 fapolicy module must be configured to employ a deny-all,
 permit-by-exception policy to allow the execution of authorized software
 programs."
@@ -27,7 +27,7 @@ It can be used to either blacklist or whitelist processes or file access.
     Proceed with caution with enforcing the use of this daemon. Improper
 configuration may render the system non-functional. The "fapolicyd" API is
 not namespace aware and can cause issues when launching or running containers.'
-  desc "check", 'Verify the RHEL 8 "fapolicyd" employs a deny-all, permit-by-exception policy.
+  desc 'check', 'Verify the RHEL 8 "fapolicyd" employs a deny-all, permit-by-exception policy.
 
 Check that "fapolicyd" is in enforcement mode with the following command:
 
@@ -48,7 +48,7 @@ deny_audit perm=any pattern=ld_so : all
 deny perm=any all : all
 
 If fapolicyd is not running in enforcement mode with a deny-all, permit-by-exception policy, this is a finding.'
-  desc "fix", 'Configure RHEL 8 to employ a deny-all, permit-by-exception application whitelisting policy with "fapolicyd".
+  desc 'fix', 'Configure RHEL 8 to employ a deny-all, permit-by-exception application whitelisting policy with "fapolicyd".
 
 With the "fapolicyd" installed and enabled, configure the daemon to function in permissive mode until the whitelist is built correctly to avoid system lockout. Do this by editing the "/etc/fapolicyd/fapolicyd.conf" file with the following line:
 
@@ -64,41 +64,41 @@ Once it is determined the whitelist is built correctly, set the fapolicyd to enf
 
 permissive = 0'
   impact 0.5
-  tag severity: "medium"
-  tag gtitle: "SRG-OS-000368-GPOS-00154"
+  tag severity: 'medium'
+  tag gtitle: 'SRG-OS-000368-GPOS-00154'
   tag satisfies: [
-    "SRG-OS-000368-GPOS-00154",
-    "SRG-OS-000370-GPOS-00155",
-    "SRG-OS-000480-GPOS-00232",
+    'SRG-OS-000368-GPOS-00154',
+    'SRG-OS-000370-GPOS-00155',
+    'SRG-OS-000480-GPOS-00232'
   ]
-  tag gid: "V-244546"
-  tag rid: "SV-244546r858730_rule"
-  tag stig_id: "RHEL-08-040137"
-  tag fix_id: "F-47778r858729_fix"
-  tag cci: ["CCI-001764"]
-  tag nist: ["CM-7 (2)"]
+  tag gid: 'V-244546'
+  tag rid: 'SV-244546r858730_rule'
+  tag stig_id: 'RHEL-08-040137'
+  tag fix_id: 'F-47778r858729_fix'
+  tag cci: ['CCI-001764']
+  tag nist: ['CM-7 (2)']
 
   # Check if the system is a Docker container
-  if virtualization.system.eql?("docker")
+  if virtualization.system.eql?('docker')
     impact 0.0
-    describe "Control not applicable within a container" do
-      skip "Control not applicable within a container"
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
     end
   else
     # Parse the fapolicyd configuration file
-    fapolicyd_config = parse_config_file("/etc/fapolicyd/fapolicyd.conf")
+    fapolicyd_config = parse_config_file('/etc/fapolicyd/fapolicyd.conf')
 
-    describe "Fapolicyd configuration" do
-      it "permissive should not be commented out" do
-        expect(fapolicyd_config.content).to match(/^permissive\s*=\s*0$/), "permissive is commented out in the fapolicyd.conf file"
+    describe 'Fapolicyd configuration' do
+      it 'permissive should not be commented out' do
+        expect(fapolicyd_config.content).to match(/^permissive\s*=\s*0$/), 'permissive is commented out in the fapolicyd.conf file'
       end
-      it "should have permissive set to 0" do
-        expect(fapolicyd_config.params["permissive"]).to cmp "0"
+      it 'should have permissive set to 0' do
+        expect(fapolicyd_config.params['permissive']).to cmp '0'
       end
     end
 
     # Determine the rules file based on the OS release
-    rules_file = os.release.to_f < 8.4 ? "/etc/fapolicyd/fapolicyd.rules" : "/etc/fapolicyd/compiled.rules"
+    rules_file = os.release.to_f < 8.4 ? '/etc/fapolicyd/fapolicyd.rules' : '/etc/fapolicyd/compiled.rules'
 
     # Check if the rules file exists
     describe file(rules_file) do
@@ -110,8 +110,8 @@ permissive = 0'
       rules = file(rules_file).content.strip.split("\n")
       last_rule = rules.last
 
-      describe "Last rule in the rules file" do
-        it { expect(last_rule).to cmp "deny perm=any all : all" }
+      describe 'Last rule in the rules file' do
+        it { expect(last_rule).to cmp 'deny perm=any all : all' }
       end
     end
   end

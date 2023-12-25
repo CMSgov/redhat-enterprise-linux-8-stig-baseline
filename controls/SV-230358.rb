@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-control "SV-230358" do
+control 'SV-230358' do
   title "RHEL 8 must enforce password complexity by requiring that at least one
 lower-case character be used."
   desc 'Use of a complex password helps to increase the time and resources
@@ -17,7 +17,7 @@ compromised.
 Note that in order to require lower-case characters without degrading the
 "minlen" value, the credit value must be expressed as a negative number in
 "/etc/security/pwquality.conf".'
-  desc "check", 'Verify the value for "lcredit" in "/etc/security/pwquality.conf" with
+  desc 'check', 'Verify the value for "lcredit" in "/etc/security/pwquality.conf" with
 the following command:
 
     $ sudo grep lcredit /etc/security/pwquality.conf
@@ -26,7 +26,7 @@ the following command:
 
     If the value of "lcredit" is a positive number or is commented out, this
 is a finding.'
-  desc "fix", 'Configure the operating system to enforce password complexity by requiring
+  desc 'fix', 'Configure the operating system to enforce password complexity by requiring
 that at least one lower-case character be used by setting the "lcredit"
 option.
 
@@ -35,30 +35,30 @@ to have the required value):
 
     lcredit = -1'
   impact 0.5
-  tag severity: "medium"
-  tag gtitle: "SRG-OS-000070-GPOS-00038"
-  tag gid: "V-230358"
-  tag rid: "SV-230358r627750_rule"
-  tag stig_id: "RHEL-08-020120"
-  tag fix_id: "F-33002r567821_fix"
-  tag cci: ["CCI-000193"]
-  tag nist: ["IA-5 (1) (a)"]
+  tag severity: 'medium'
+  tag gtitle: 'SRG-OS-000070-GPOS-00038'
+  tag gid: 'V-230358'
+  tag rid: 'SV-230358r627750_rule'
+  tag stig_id: 'RHEL-08-020120'
+  tag fix_id: 'F-33002r567821_fix'
+  tag cci: ['CCI-000193']
+  tag nist: ['IA-5 (1) (a)']
 
-  describe "pwquality.conf settings" do
-    let(:config) { parse_config_file("/etc/security/pwquality.conf", multiple_values: true) }
-    let(:setting) { "lcredit" }
+  describe 'pwquality.conf settings' do
+    let(:config) { parse_config_file('/etc/security/pwquality.conf', multiple_values: true) }
+    let(:setting) { 'lcredit' }
     let(:value) { Array(config.params[setting]) }
 
-    it "has `lcredit` set" do
-      expect(value).not_to be_empty, "lcredit is not set in pwquality.conf"
+    it 'has `lcredit` set' do
+      expect(value).not_to be_empty, 'lcredit is not set in pwquality.conf'
     end
 
-    it "only sets `lcredit` once" do
-      expect(value.length).to eq(1), "lcredit is commented or set more than once in pwquality.conf"
+    it 'only sets `lcredit` once' do
+      expect(value.length).to eq(1), 'lcredit is commented or set more than once in pwquality.conf'
     end
 
-    it "does not set `lcredit` to a positive value" do
-      expect(value.first.to_i).to be < 0, "lcredit is not set to a negative value in pwquality.conf"
+    it 'does not set `lcredit` to a positive value' do
+      expect(value.first.to_i).to be < 0, 'lcredit is not set to a negative value in pwquality.conf'
     end
   end
 end
