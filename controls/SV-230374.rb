@@ -53,7 +53,7 @@ control 'SV-230374' do
   tag cci: ['CCI-001682']
   tag nist: ['AC-2 (2)']
 
-  temporary_accounts = input('temporary_accounts')
+  temp_accounts = input('temporary_accounts')
 
   if temp_accounts.empty?
     describe 'Temporary accounts' do
