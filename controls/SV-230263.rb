@@ -36,7 +36,7 @@ Check the cron directories for scripts controlling the execution and notificatio
 If the file integrity application does not exist, or a script file controlling the execution of the file integrity application does not exist, or the file integrity application does not notify designated personnel of changes, this is a finding.'
   desc 'fix', 'Configure the file integrity tool to run automatically on the system at least weekly and to notify designated personnel if baseline configurations are changed in an unauthorized manner. The AIDE tool can be configured to email designated personnel with the use of the cron system.
 
-The following example output is generic. It will set cron to run AIDE daily and to send email at the completion of the analysis. 
+The following example output is generic. It will set cron to run AIDE daily and to send email at the completion of the analysis.
 
      $ sudo more /etc/cron.daily/aide
 

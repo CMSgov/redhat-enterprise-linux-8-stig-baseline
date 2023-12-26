@@ -12,7 +12,7 @@ Verify that the "mailx" package is installed on the system:
      $ sudo yum list installed mailx
 
      mailx.x86_64     12.5-29.el8     @rhel-8-for-x86_64-baseos-rpm
-	 
+
 If "mailx" package is not installed, this is a finding.'
   desc 'fix', 'Install the "mailx" package on the system:
 

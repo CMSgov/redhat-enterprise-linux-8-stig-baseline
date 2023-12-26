@@ -29,7 +29,7 @@ $ sudo grep -i '$ActionSendStreamDriverMode' /etc/rsyslog.conf /etc/rsyslog.d/*.
 
 If the value of the "$ActionSendStreamDriverMode" option is not set to "1" or the line is commented out, this is a finding.
 
-If neither of the definitions above are set, ask the System Administrator to indicate how the audit logs are off-loaded to a different system or media. 
+If neither of the definitions above are set, ask the System Administrator to indicate how the audit logs are off-loaded to a different system or media.
 
 If there is no evidence that the transfer of the audit logs being off-loaded to another system or media is encrypted, this is a finding.)
   desc 'fix', 'Configure the operating system to encrypt off-loaded audit records by

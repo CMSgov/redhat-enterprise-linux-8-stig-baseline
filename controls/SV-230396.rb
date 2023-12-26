@@ -31,8 +31,8 @@ of "0600" or less permissive with the following command:
 
     If the audit log has a mode more permissive than "0600", this is a
 finding.'
-  desc 'fix', 'Configure the audit log to be protected from unauthorized read access by setting the correct permissive mode with the following command: 
- 
+  desc 'fix', 'Configure the audit log to be protected from unauthorized read access by setting the correct permissive mode with the following command:
+
 $ sudo chmod 0600 /var/log/audit/audit.log'
   impact 0.5
   tag severity: 'medium'

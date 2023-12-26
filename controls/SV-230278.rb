@@ -26,7 +26,7 @@ kernelopts=root=/dev/mapper/rhel-root ro crashkernel=auto resume=/dev/mapper/rhe
 
 If "vsyscall" is not set to "none" or is missing, this is a finding.
 
-Check that vsyscalls are disabled by default to persist in kernel updates: 
+Check that vsyscalls are disabled by default to persist in kernel updates:
 
 $ sudo grep vsyscall /etc/default/grub
 

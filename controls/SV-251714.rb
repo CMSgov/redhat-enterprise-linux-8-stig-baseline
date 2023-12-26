@@ -9,7 +9,7 @@ RHEL 8 uses "pwquality" as a mechanism to enforce password complexity. This is s
 By limiting the number of attempts to meet the pwquality module complexity requirements before returning with an error, the system will audit abnormal attempts at password changes.'
   desc 'check', 'Note: This requirement applies to RHEL versions 8.0 through 8.3. If the system is RHEL version 8.4 or newer, this requirement is not applicable.
 
-Verify the operating system is configured to limit the "pwquality" retry option to 3. 
+Verify the operating system is configured to limit the "pwquality" retry option to 3.
 
 Check for the use of the "pwquality" retry option in the system-auth file with the following command:
 

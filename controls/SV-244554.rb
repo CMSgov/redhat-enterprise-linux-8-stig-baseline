@@ -35,7 +35,7 @@ If conflicting results are returned, this is a finding.'
 
 net.core.bpf_jit_harden = 2
 
-Remove any configurations that conflict with the above from the following locations: 
+Remove any configurations that conflict with the above from the following locations:
 /run/sysctl.d/*.conf
 /usr/local/lib/sysctl.d/*.conf
 /usr/lib/sysctl.d/*.conf

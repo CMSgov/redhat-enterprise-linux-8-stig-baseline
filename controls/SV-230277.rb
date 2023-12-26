@@ -25,7 +25,7 @@ kernelopts=root=/dev/mapper/rhel-root ro crashkernel=auto resume=/dev/mapper/rhe
 
 If "page_poison" is not set to "1" or is missing, this is a finding.
 
-Check that page poisoning is enabled by default to persist in kernel updates: 
+Check that page poisoning is enabled by default to persist in kernel updates:
 
 $ sudo grep page_poison /etc/default/grub
 

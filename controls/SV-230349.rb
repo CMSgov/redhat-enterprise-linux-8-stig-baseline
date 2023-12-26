@@ -10,7 +10,7 @@ Determine if tmux is currently running:
      $ sudo ps all | grep tmux | grep -v grep
 
 If the command does not produce output, this is a finding.
- 
+
 Determine the location of the tmux script:
      $ sudo grep -r tmux /etc/bashrc /etc/profile.d
 

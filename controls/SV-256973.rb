@@ -31,7 +31,7 @@ Example output:
            Key fingerprint = 6A6A A7C9 7C88 90AE C6AE  BFE2 F76F 66C3 D408 2792
      uid                   Red Hat, Inc. (auxiliary key) <security@redhat.com>
      sub   rsa4096/1B5584D3 2018-06-27 [E]
-	   
+
 Compare key fingerprints of installed Red Hat GPG keys with fingerprints listed for RHEL 8 on Red Hat "Product Signing Keys" webpage at https://access.redhat.com/security/team/key.
 
 If key fingerprints do not match, this is a finding.'
@@ -42,11 +42,11 @@ Insert RHEL 8 installation disc or attach RHEL 8 installation image to the syste
 Assuming the mounted location is "/media/cdrom", use the following command to copy Red Hat GPG key file onto the system:
 
      $ sudo cp /media/cdrom/RPM-GPG-KEY-redhat-release /etc/pki/rpm-gpg/
-	 
+
 Import Red Hat GPG keys from key file into system keyring:
 
      $ sudo rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-release
-	 
+
 Using the steps listed in the Check Text, confirm the newly imported keys show as installed on the system and verify their fingerprints match vendor values.'
   impact 0.5
   tag check_id: 'C-60651r902750_chk'

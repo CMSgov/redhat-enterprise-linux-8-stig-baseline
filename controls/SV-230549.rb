@@ -32,7 +32,7 @@ If conflicting results are returned, this is a finding.'
 
 net.ipv4.conf.all.rp_filter = 1
 
-Remove any configurations that conflict with the above from the following locations: 
+Remove any configurations that conflict with the above from the following locations:
 /run/sysctl.d/*.conf
 /usr/local/lib/sysctl.d/*.conf
 /usr/lib/sysctl.d/*.conf

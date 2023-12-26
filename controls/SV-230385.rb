@@ -18,9 +18,9 @@ Note: If the value of the "UMASK" parameter is set to "000" in the "/etc/bashrc"
 
 /etc/bashrc:          umask 077
 /etc/bashrc:          umask 077
-/etc/csh.cshrc:      umask 077   
 /etc/csh.cshrc:      umask 077
-/etc/profile:      umask 077   
+/etc/csh.cshrc:      umask 077
+/etc/profile:      umask 077
 /etc/profile:      umask 077
 
 If the value for the "UMASK" parameter is not "077", or the "UMASK" parameter is missing or is commented out, this is a finding.'

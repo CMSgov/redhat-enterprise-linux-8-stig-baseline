@@ -38,7 +38,7 @@ Add or edit the following line in a system configuration file, in the "/etc/sysc
 
 kernel.kexec_load_disabled = 1
 
-Remove any configurations that conflict with the above from the following locations: 
+Remove any configurations that conflict with the above from the following locations:
 /run/sysctl.d/*.conf
 /usr/local/lib/sysctl.d/*.conf
 /usr/lib/sysctl.d/*.conf

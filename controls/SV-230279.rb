@@ -27,7 +27,7 @@ kernelopts=root=/dev/mapper/rhel-root ro crashkernel=auto resume=/dev/mapper/rhe
 
 If "slub_debug" is not set to "P" or is missing, this is a finding.
 
-Check that poisoning of SLUB/SLAB objects is enabled by default to persist in kernel updates: 
+Check that poisoning of SLUB/SLAB objects is enabled by default to persist in kernel updates:
 
 $ sudo grep slub_debug /etc/default/grub
 

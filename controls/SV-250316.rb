@@ -27,9 +27,9 @@ If the security context type of the non-default tally directory is not "faillog_
 
 Update the /etc/selinux/targeted/contexts/files/file_contexts.local with "faillog_t" context type for the non-default faillock tally directory with the following command:
 
-$ sudo semanage fcontext -a -t faillog_t "/var/log/faillock(/.*)?" 
+$ sudo semanage fcontext -a -t faillog_t "/var/log/faillock(/.*)?"
 
-Next, update the context type of the non-default faillock directory/subdirectories and files with the following command:	
+Next, update the context type of the non-default faillock directory/subdirectories and files with the following command:
 
 $ sudo restorecon -R -v /var/log/faillock'
   impact 0.5

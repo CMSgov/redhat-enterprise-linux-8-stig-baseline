@@ -32,11 +32,11 @@ If "user.max_user_namespaces" is not set to "0", is missing or commented out, th
 If conflicting results are returned, this is a finding.'
   desc 'fix', 'Configure RHEL 8 to disable the use of user namespaces by adding the following line to a file, in the "/etc/sysctl.d" directory:
 
-Note: User namespaces are used primarily for Linux containers. If containers are in use, this requirement is not applicable. 
+Note: User namespaces are used primarily for Linux containers. If containers are in use, this requirement is not applicable.
 
 user.max_user_namespaces = 0
 
-Remove any configurations that conflict with the above from the following locations: 
+Remove any configurations that conflict with the above from the following locations:
 /run/sysctl.d/*.conf
 /usr/local/lib/sysctl.d/*.conf
 /usr/lib/sysctl.d/*.conf

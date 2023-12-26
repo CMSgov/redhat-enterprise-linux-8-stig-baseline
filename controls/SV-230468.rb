@@ -43,7 +43,7 @@ kernelopts=root=/dev/mapper/rhel-root ro crashkernel=auto resume=/dev/mapper/rhe
 
 If the "audit" entry does not equal "1", is missing, or the line is commented out, this is a finding.
 
-Check that auditing is enabled by default to persist in kernel updates: 
+Check that auditing is enabled by default to persist in kernel updates:
 
 $ sudo grep audit /etc/default/grub
 

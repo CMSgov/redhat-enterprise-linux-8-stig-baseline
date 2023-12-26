@@ -26,7 +26,7 @@ kernelopts=root=/dev/mapper/rhel-root ro crashkernel=auto resume=/dev/mapper/rhe
 
 If the "audit_backlog_limit" entry does not equal "8192" or greater, is missing, or the line is commented out, this is a finding.
 
-Check the audit_backlog_limit is set to persist in kernel updates: 
+Check the audit_backlog_limit is set to persist in kernel updates:
 
 $ sudo grep audit /etc/default/grub
 

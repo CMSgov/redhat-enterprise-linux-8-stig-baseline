@@ -10,7 +10,7 @@ Check that the AIDE package is installed with the following command:
 
      aide-0.16-14.el8_5.1.x86_64
 
-If AIDE is not installed, ask the System Administrator how file integrity checks are performed on the system. 
+If AIDE is not installed, ask the System Administrator how file integrity checks are performed on the system.
 
 If there is no application installed to perform integrity checks, this is a finding.
 
@@ -53,7 +53,7 @@ Example output:
      Start timestamp: 2022-10-20 11:03:16 -0700 (AIDE 0.16)
      AIDE found differences between database and filesystem!!
      ...
-	 
+
 Done.'
   impact 0.5
   tag check_id: 'C-55147r880728_chk'

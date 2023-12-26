@@ -39,7 +39,7 @@ $ sudo cp /usr/lib/firewalld/zones/drop.xml /etc/firewalld/zones/[custom].xml
 This will provide a clean configuration file to work with that employs a deny-all approach. Note: Add the exceptions that are required for mission functionality and update the short title in the xml file to match the [custom] zone name.
 
 Reload the firewall rules to make the new [custom] zone available to load:
-$ sudo firewall-cmd --reload 
+$ sudo firewall-cmd --reload
 
 Set the default zone to the new [custom] zone:
 $ sudo firewall-cmd --set-default-zone=[custom]

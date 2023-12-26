@@ -27,7 +27,7 @@ If "Defaults !runaspw" is not defined, this is a finding.)
      Defaults !rootpw
      Defaults !runaspw
 
-Remove any configurations that conflict with the above from the following locations: 
+Remove any configurations that conflict with the above from the following locations:
      /etc/sudoers
      /etc/sudoers.d/'
   impact 0.5

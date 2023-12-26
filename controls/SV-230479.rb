@@ -32,7 +32,7 @@ currently available only as part of the rsyslogd 3.15.0 and above.
 
      /etc/rsyslog.conf:*.* @@[logaggregationserver.example.mil]:[port]
 
-If a remote server is not configured, or the line is commented out, ask the system administrator to indicate how the audit logs are offloaded to a different system or media. 
+If a remote server is not configured, or the line is commented out, ask the system administrator to indicate how the audit logs are offloaded to a different system or media.
 
 If there is no evidence that the audit logs are being offloaded to another system or media, this is a finding.'
   desc 'fix', 'Configure the operating system to offload audit records onto a different system or media from the system being audited by specifying the remote logging server in "/etc/rsyslog.conf" or "/etc/rsyslog.d/[customfile].conf" with the name or IP address of the log aggregation server.
@@ -40,7 +40,7 @@ If there is no evidence that the audit logs are being offloaded to another syste
 For UDP:
      *.* @[logaggregationserver.example.mil]:[port]
 
-For TCP: 
+For TCP:
      *.* @@[logaggregationserver.example.mil]:[port]'
   impact 0.5
   tag severity: 'medium'

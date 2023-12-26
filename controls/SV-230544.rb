@@ -39,7 +39,7 @@ Add or edit the following line in a system configuration file, in the "/etc/sysc
 
 net.ipv6.conf.all.accept_redirects = 0
 
-Remove any configurations that conflict with the above from the following locations: 
+Remove any configurations that conflict with the above from the following locations:
 /run/sysctl.d/*.conf
 /usr/local/lib/sysctl.d/*.conf
 /usr/lib/sysctl.d/*.conf
