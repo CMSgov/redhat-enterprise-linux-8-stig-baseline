@@ -48,7 +48,7 @@ all domains that have the "core" item assigned, this is a finding.)
   describe.one do
     limits_files.each do |lf|
       describe limits_conf(lf) do
-        its('*') { should include %w[hard core 0] }
+        its('*') { should include %w(hard core 0) }
       end
     end
   end
