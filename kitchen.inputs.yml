@@ -8,3 +8,4 @@ skip_mount_tmp:
   noexec: true
 skip_password_privilege_escalation: true
 skip_endpoint_security_tool: true
+use_fapolicyd: true

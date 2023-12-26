@@ -78,16 +78,12 @@ permissive = 0'
   tag cci: ['CCI-001764']
   tag nist: ['CM-7 (2)']
 
-  if !input('use_fapolicyd')
+  # Check if the system is a Docker container or not using Fapolicyd
+  if virtualization.system.eql?('docker') || !input('use_fapolicyd')
     impact 0.0
-    describe 'The organization is not using the Fapolicyd service to manage firewall servies, this control is Not Applicable' do
-      skip 'The organization is not using the Fapolicyd service to manage firewall servies, this control is Not Applicable'
-    end
-  # Check if the system is a Docker container
-  elsif virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
+    describe 'Control not applicable' do
+      skip 'The organization is not using the Fapolicyd service to manage firewall services, this control is Not Applicable' unless input('use_fapolicyd')
+      skip 'Control not applicable within a container' if virtualization.system.eql?('docker')
     end
   else
     # Parse the fapolicyd configuration file
