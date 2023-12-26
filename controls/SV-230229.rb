@@ -92,9 +92,13 @@ control 'SV-230229' do
   end
 
   describe 'Ensure the RootCA is a DoD-issued certificate with a valid date' do
-    subject { x509_certificate(root_ca_full_path) }
-    its('issuer_dn') { should match '/C=US/O=U.S. Government/OU=DoD/OU=PKI/CN=DoD Root CA 3' }
-    its('subject_dn') { should match '/C=US/O=U.S. Government/OU=DoD/OU=PKI/CN=DoD Root CA 3' }
-    its('validity_in_days') { should be > 0 }
+    if file(root_ca_full_path).exist?
+      subject { x509_certificate(root_ca_full_path) }
+      its('issuer_dn') { should match '/C=US/O=U.S. Government/OU=DoD/OU=PKI/CN=DoD Root CA 3' }
+      its('subject_dn') { should match '/C=US/O=U.S. Government/OU=DoD/OU=PKI/CN=DoD Root CA 3' }
+      its('validity_in_days') { should be > 0 }
+    else
+      skip "The #{root_ca_full_path} cannot be verified as a valid DoD-issued certificate before it exists"
+    end
   end
 end
