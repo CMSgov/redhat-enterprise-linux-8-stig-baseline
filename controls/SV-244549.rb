@@ -34,7 +34,7 @@ $ sudo yum install openssh-server.x86_64'
   tag satisfies: ['SRG-OS-000423-GPOS-00187', 'SRG-OS-000424-GPOS-00188', 'SRG-OS-000425-GPOS-00189',
                   'SRG-OS-000426-GPOS-00190']
   tag gid: 'V-244549'
-  tag rid: 'SV-244549r743896_rule'
+  tag rid: 'SV-244549r916422_rule'
   tag stig_id: 'RHEL-08-040159'
   tag fix_id: 'F-47781r743895_fix'
   tag cci: ['CCI-002418']

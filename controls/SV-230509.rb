@@ -43,7 +43,7 @@ option by adding /modifying the /etc/fstab with the following line:
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000368-GPOS-00154'
   tag gid: 'V-230509'
-  tag rid: 'SV-230509r627750_rule'
+  tag rid: 'SV-230509r854050_rule'
   tag stig_id: 'RHEL-08-040121'
   tag fix_id: 'F-33153r568274_fix'
   tag cci: ['CCI-001764']

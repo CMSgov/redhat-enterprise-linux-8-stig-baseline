@@ -46,7 +46,7 @@ by adding /modifying the /etc/fstab with the following line:
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000368-GPOS-00154'
   tag gid: 'V-230515'
-  tag rid: 'SV-230515r627750_rule'
+  tag rid: 'SV-230515r854056_rule'
   tag stig_id: 'RHEL-08-040127'
   tag fix_id: 'F-33159r568292_fix'
   tag cci: ['CCI-001764']

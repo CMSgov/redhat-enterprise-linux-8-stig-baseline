@@ -25,7 +25,7 @@ following command:
   tag stig_id: 'RHEL-08-010100'
   tag fix_id: 'F-32874r567437_fix'
   tag cci: ['CCI-000186']
-  tag nist: ['IA-5 (2) (b)']
+  tag nist: ['IA-5 (2) (b)', 'IA-5 (2) (a) (1)']
 
   if virtualization.system.eql?('docker')
     impact 0.0

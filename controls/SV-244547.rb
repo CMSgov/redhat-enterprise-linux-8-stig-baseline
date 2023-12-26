@@ -37,7 +37,7 @@ $ sudo yum install usbguard.x86_64'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000378-GPOS-00163'
   tag gid: 'V-244547'
-  tag rid: 'SV-244547r743890_rule'
+  tag rid: 'SV-244547r854076_rule'
   tag stig_id: 'RHEL-08-040139'
   tag fix_id: 'F-47779r743889_fix'
   tag cci: ['CCI-001958']

@@ -5,15 +5,14 @@ control 'SV-230288' do
 directory configuration files.'
   desc 'If other users have access to modify user-specific SSH configuration
 files, they may be able to log on to the system as another user.'
-  desc 'check', 'Verify the SSH daemon performs strict mode checking of home directory
-configuration files with the following command:
+  desc 'check', 'Verify the SSH daemon performs strict mode checking of home directory configuration files with the following command:
 
-    $ sudo grep -i strictmodes /etc/ssh/sshd_config
+$ sudo grep -ir strictmodes /etc/ssh/sshd_config*
 
-    StrictModes yes
+StrictModes yes
 
-    If "StrictModes" is set to "no", is missing, or the returned line is
-commented out, this is a finding.'
+If "StrictModes" is set to "no", is missing, or the returned line is commented out, this is a finding.
+If conflicting results are returned, this is a finding.'
   desc 'fix', 'Configure SSH to perform strict mode checking of home directory
 configuration files. Uncomment the "StrictModes" keyword in
 "/etc/ssh/sshd_config" and set the value to "yes":
@@ -28,7 +27,7 @@ the SSH daemon, run the following command:
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-230288'
-  tag rid: 'SV-230288r627750_rule'
+  tag rid: 'SV-230288r858701_rule'
   tag stig_id: 'RHEL-08-010500'
   tag fix_id: 'F-32932r567611_fix'
   tag cci: ['CCI-000366']

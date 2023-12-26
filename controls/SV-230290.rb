@@ -6,15 +6,14 @@ authentication.'
   desc 'Configuring this setting for the SSH daemon provides additional
 assurance that remote logon via SSH will require a password, even in the event
 of misconfiguration elsewhere.'
-  desc 'check', 'Verify the SSH daemon does not allow authentication using known host’s
-authentication with the following command:
+  desc 'check', 'Verify the SSH daemon does not allow authentication using known host’s authentication with the following command:
 
-    $ sudo grep -i IgnoreUserKnownHosts /etc/ssh/sshd_config
+$ sudo grep -ir IgnoreUserKnownHosts /etc/ssh/sshd_config*
 
-    IgnoreUserKnownHosts yes
+IgnoreUserKnownHosts yes
 
-    If the value is returned as "no", the returned line is commented out, or
-no output is returned, this is a finding.'
+If the value is returned as "no", the returned line is commented out, or no output is returned, this is a finding.
+If conflicting results are returned, this is a finding.'
   desc 'fix', 'Configure the SSH daemon to not allow authentication using known host’s
 authentication.
 
@@ -31,7 +30,7 @@ the SSH daemon, run the following command:
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-230290'
-  tag rid: 'SV-230290r627750_rule'
+  tag rid: 'SV-230290r858705_rule'
   tag stig_id: 'RHEL-08-010520'
   tag fix_id: 'F-32934r567617_fix'
   tag cci: ['CCI-000366']

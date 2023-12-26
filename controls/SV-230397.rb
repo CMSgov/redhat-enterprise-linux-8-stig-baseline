@@ -46,7 +46,7 @@ location is "/var/log/audit/audit.log".'
   tag stig_id: 'RHEL-08-030080'
   tag fix_id: 'F-33041r567938_fix'
   tag cci: ['CCI-000162']
-  tag nist: ['AU-9']
+  tag nist: ['AU-9', 'AU-9 a']
 
   log_file = auditd_conf('/etc/audit/auditd.conf').log_file
 

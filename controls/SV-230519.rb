@@ -48,7 +48,7 @@ defaults,nodev,nosuid,noexec 0 0'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000368-GPOS-00154'
   tag gid: 'V-230519'
-  tag rid: 'SV-230519r627750_rule'
+  tag rid: 'SV-230519r854060_rule'
   tag stig_id: 'RHEL-08-040131'
   tag fix_id: 'F-33163r568304_fix'
   tag cci: ['CCI-001764']

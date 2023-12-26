@@ -15,28 +15,28 @@ compromised.
     RHEL 8 utilizes "pwquality" as a mechanism to enforce password
 complexity. The "minclass" option sets the minimum number of required classes
 of characters for the new password (digits, uppercase, lowercase, others).'
-  desc 'check', 'Verify the value of the "minclass" option in
-"/etc/security/pwquality.conf" with the following command:
+  desc 'check', 'Verify the value of the "minclass" option with the following command:
 
-    $ sudo grep minclass /etc/security/pwquality.conf
-    minclass = 4
+$ sudo grep -r minclass /etc/security/pwquality.conf*
 
-    If the value of "minclass" is set to less than "4" or is commented out,
-this is a finding.'
-  desc 'fix', 'Configure the operating system to require the change of at least four
-character classes when passwords are changed by setting the "minclass" option.
+/etc/security/pwquality.conf:minclass = 4
 
-    Add the following line to "/etc/security/pwquality.conf conf" (or modify
-the line to have the required value):
+If the value of "minclass" is set to less than "4" or is commented out, this is a finding.
+If conflicting results are returned, this is a finding.'
+  desc 'fix', 'Configure the operating system to require the change of at least four character classes when passwords are changed by setting the "minclass" option.
 
-    minclass = 4'
+Add the following line to "/etc/security/pwquality.conf conf" (or modify the line to have the required value):
+
+minclass = 4
+
+Remove any configurations that conflict with the above value.'
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000072-GPOS-00040'
   tag gid: 'V-230362'
-  tag rid: 'SV-230362r627750_rule'
+  tag rid: 'SV-230362r858781_rule'
   tag stig_id: 'RHEL-08-020160'
-  tag fix_id: 'F-33006r567833_fix'
+  tag fix_id: 'F-33006r858780_fix'
   tag cci: ['CCI-000195']
   tag nist: ['IA-5 (1) (b)']
 

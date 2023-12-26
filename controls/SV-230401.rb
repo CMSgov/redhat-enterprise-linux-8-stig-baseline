@@ -41,7 +41,7 @@ by default this location is "/var/log/audit".'
   tag stig_id: 'RHEL-08-030120'
   tag fix_id: 'F-33045r567950_fix'
   tag cci: ['CCI-000162']
-  tag nist: ['AU-9']
+  tag nist: ['AU-9', 'AU-9 a']
 
   log_dir = command("dirname #{auditd_conf('/etc/audit/auditd.conf').log_file}").stdout.strip
 

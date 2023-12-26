@@ -30,28 +30,33 @@ policy for allowing connections to other systems with the following commands:
 
     If no zones are active on the RHEL 8 interfaces or if the target is set to
 a different option other than "DROP", this is a finding.'
-  desc 'fix', 'Configure the "firewalld" daemon to employ a deny-all, allow-by-exception
-with the following commands:
+  desc 'fix', 'Configure the "firewalld" daemon to employ a deny-all, allow-by-exception with the following commands:
 
-    $ sudo firewall-cmd --permanent --new-zone=[custom]
+$ sudo firewall-cmd --permanent --new-zone=[custom]
 
-    $ sudo cp /usr/lib/firewalld/zones/drop.xml
-/etc/firewalld/zones/[custom].xml
+$ sudo cp /usr/lib/firewalld/zones/drop.xml /etc/firewalld/zones/[custom].xml
 
-    This will provide a clean configuration file to work with that employs a
-deny-all approach. Next, add the exceptions that are required for mission
-functionality.
+This will provide a clean configuration file to work with that employs a deny-all approach. Note: Add the exceptions that are required for mission functionality and update the short title in the xml file to match the [custom] zone name.
 
-    $ sudo firewall-cmd --set-default-zone=[custom]
+Reload the firewall rules to make the new [custom] zone available to load:
+$ sudo firewall-cmd --reload 
 
-    Note: This is a runtime and permanent change.'
+Set the default zone to the new [custom] zone:
+$ sudo firewall-cmd --set-default-zone=[custom]
+
+Note: This is a runtime and permanent change.
+Add any interfaces to the new [custom] zone:
+$ sudo firewall-cmd --permanent --zone=[custom] --change-interface=ens33
+
+Reload the firewall rules for changes to take effect:
+$ sudo firewall-cmd --reload'
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000297-GPOS-00115'
   tag gid: 'V-230504'
-  tag rid: 'SV-230504r627750_rule'
+  tag rid: 'SV-230504r854047_rule'
   tag stig_id: 'RHEL-08-040090'
-  tag fix_id: 'F-33148r568259_fix'
+  tag fix_id: 'F-33148r809320_fix'
   tag cci: ['CCI-002314']
   tag legacy: []
   tag nist: ['AC-17 (1)']

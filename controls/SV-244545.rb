@@ -44,7 +44,7 @@ $ sudo systemctl enable --now fapolicyd'
   tag gtitle: 'SRG-OS-000368-GPOS-00154'
   tag satisfies: ['SRG-OS-000368-GPOS-00154', 'SRG-OS-000370-GPOS-00155', 'SRG-OS-000480-GPOS-00232']
   tag gid: 'V-244545'
-  tag rid: 'SV-244545r743884_rule'
+  tag rid: 'SV-244545r854074_rule'
   tag stig_id: 'RHEL-08-040136'
   tag fix_id: 'F-47777r743883_fix'
   tag cci: ['CCI-001764']

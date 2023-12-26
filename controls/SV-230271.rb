@@ -27,9 +27,9 @@ file or files in the "/etc/sudoers.d" directory.'
   tag gtitle: 'SRG-OS-000373-GPOS-00156'
   tag satisfies: ['SRG-OS-000373-GPOS-00156', 'SRG-OS-000373-GPOS-00157', 'SRG-OS-000373-GPOS-00158']
   tag gid: 'V-230271'
-  tag rid: 'SV-230271r627750_rule'
+  tag rid: 'SV-230271r854026_rule'
   tag stig_id: 'RHEL-08-010380'
-  tag fix_id: 'F-32915r567560_fix'
+  tag fix_id: 'F-32915r854025_fix'
   tag cci: ['CCI-002038']
   tag nist: ['IA-11']
 

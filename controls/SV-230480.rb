@@ -41,7 +41,7 @@ event queue becomes full, this is a finding.'
   tag gtitle: 'SRG-OS-000342-GPOS-00133'
   tag satisfies: ['SRG-OS-000342-GPOS-00133', 'SRG-OS-000479-GPOS-00224']
   tag gid: 'V-230480'
-  tag rid: 'SV-230480r627750_rule'
+  tag rid: 'SV-230480r877390_rule'
   tag stig_id: 'RHEL-08-030700'
   tag fix_id: 'F-33124r568187_fix'
   tag cci: ['CCI-001851']

@@ -38,7 +38,7 @@ is recommended to add this option as the last step in securing the system.'
   tag stig_id: 'RHEL-08-030121'
   tag fix_id: 'F-33046r567953_fix'
   tag cci: ['CCI-000162']
-  tag nist: ['AU-9']
+  tag nist: ['AU-9', 'AU-9 a']
 
   if virtualization.system.eql?('docker')
     impact 0.0

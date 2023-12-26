@@ -45,7 +45,7 @@ for off-loading audit logs by setting the following option in
   tag gtitle: 'SRG-OS-000342-GPOS-00133'
   tag satisfies: ['SRG-OS-000342-GPOS-00133', 'SRG-OS-000479-GPOS-00224']
   tag gid: 'V-230482'
-  tag rid: 'SV-230482r627750_rule'
+  tag rid: 'SV-230482r877390_rule'
   tag stig_id: 'RHEL-08-030720'
   tag fix_id: 'F-33126r568193_fix'
   tag cci: ['CCI-001851']

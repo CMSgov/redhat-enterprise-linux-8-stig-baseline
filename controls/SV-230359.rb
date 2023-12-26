@@ -17,29 +17,28 @@ compromised.
 complexity. Note that in order to require numeric characters, without degrading
 the minlen value, the credit value must be expressed as a negative number in
 "/etc/security/pwquality.conf".'
-  desc 'check', 'Verify the value for "dcredit" in "/etc/security/pwquality.conf" with
-the following command:
+  desc 'check', 'Verify the value for "dcredit" with the following command:
 
-    $ sudo grep dcredit /etc/security/pwquality.conf
+$ sudo grep -r dcredit /etc/security/pwquality.conf*
 
-    dcredit = -1
+/etc/security/pwquality.conf:dcredit = -1
 
-    If the value of "dcredit" is a positive number or is commented out, this
-is a finding.'
-  desc 'fix', 'Configure the operating system to enforce password complexity by requiring
-that at least one numeric character be used by setting the "dcredit" option.
+If the value of "dcredit" is a positive number or is commented out, this is a finding.
+If conflicting results are returned, this is a finding.'
+  desc 'fix', 'Configure the operating system to enforce password complexity by requiring that at least one numeric character be used by setting the "dcredit" option.
 
-    Add the following line to /etc/security/pwquality.conf (or modify the line
-to have the required value):
+Add the following line to /etc/security/pwquality.conf (or modify the line to have the required value):
 
-    dcredit = -1'
+dcredit = -1
+
+Remove any configurations that conflict with the above value.'
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000071-GPOS-00039'
   tag gid: 'V-230359'
-  tag rid: 'SV-230359r627750_rule'
+  tag rid: 'SV-230359r858775_rule'
   tag stig_id: 'RHEL-08-020130'
-  tag fix_id: 'F-33003r567824_fix'
+  tag fix_id: 'F-33003r858774_fix'
   tag cci: ['CCI-000194']
   tag nist: ['IA-5 (1) (a)']
 

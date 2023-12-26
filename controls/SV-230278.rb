@@ -16,29 +16,23 @@ control of the return instruction pointer.  Disabling vsyscalls help to prevent
 return oriented programming (ROP) attacks via buffer overflows and overruns. If
 the system intends to run containers based on RHEL 6 components, then virtual
 syscalls will need enabled so the components function properly.'
-  desc 'check', 'Verify that GRUB 2 is configured to disable vsyscalls with the following
-commands:
+  desc 'check', 'Verify that GRUB 2 is configured to disable vsyscalls with the following commands:
 
-    Check that the current GRUB 2 configuration disables vsyscalls:
+Check that the current GRUB 2 configuration disables vsyscalls:
 
-    $ sudo grub2-editenv - list | grep vsyscall
+$ sudo grub2-editenv list | grep vsyscall
 
-    kernelopts=root=/dev/mapper/rhel-root ro crashkernel=auto
-resume=/dev/mapper/rhel-swap rd.lvm.lv=rhel/root rd.lvm.lv=rhel/swap rhgb quiet
-fips=1 page_poison=1 vsyscall=none audit=1 audit_backlog_limit=8192
-boot=UUID=8d171156-cd61-421c-ba41-1c021ac29e82
+kernelopts=root=/dev/mapper/rhel-root ro crashkernel=auto resume=/dev/mapper/rhel-swap rd.lvm.lv=rhel/root rd.lvm.lv=rhel/swap rhgb quiet fips=1 page_poison=1 vsyscall=none audit=1 audit_backlog_limit=8192 boot=UUID=8d171156-cd61-421c-ba41-1c021ac29e82
 
-    If "vsyscall" is not set to "none" or is missing, this is a finding.
+If "vsyscall" is not set to "none" or is missing, this is a finding.
 
-    Check that vsyscalls are disabled by default to persist in kernel updates:
+Check that vsyscalls are disabled by default to persist in kernel updates: 
 
-    $ sudo grep vsyscall /etc/default/grub
+$ sudo grep vsyscall /etc/default/grub
 
-    GRUB_CMDLINE_LINUX="vsyscall=none"
+GRUB_CMDLINE_LINUX="vsyscall=none"
 
-    If "vsyscall" is not set to "none", is missing or commented out and is
-not documented with the Information System Security Officer (ISSO) as an
-operational requirement, this is a finding.'
+If "vsyscall" is not set to "none", is missing or commented out and is not documented with the Information System Security Officer (ISSO) as an operational requirement, this is a finding.'
   desc 'fix', 'Document the use of vsyscalls with the ISSO as an operational requirement
 or disable them with the following command:
 
@@ -53,7 +47,7 @@ configuration survives kernel updates:
   tag gtitle: 'SRG-OS-000134-GPOS-00068'
   tag satisfies: ['SRG-OS-000134-GPOS-00068', 'SRG-OS-000433-GPOS-00192']
   tag gid: 'V-230278'
-  tag rid: 'SV-230278r743948_rule'
+  tag rid: 'SV-230278r792886_rule'
   tag stig_id: 'RHEL-08-010422'
   tag fix_id: 'F-32922r743947_fix'
   tag cci: ['CCI-001084']

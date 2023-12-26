@@ -8,11 +8,12 @@ commands with the privileges of that account. Accounts with empty passwords
 should never be used in operational environments.'
   desc 'check', 'To verify that null passwords cannot be used, run the following command:
 
-$ sudo grep -i permitemptypasswords /etc/ssh/sshd_config
+$ sudo grep -ir permitemptypasswords /etc/ssh/sshd_config*
 
 PermitEmptyPasswords no
 
-If "PermitEmptyPasswords" is set to "yes", this is a finding.'
+If "PermitEmptyPasswords" is set to "yes", this is a finding.
+If conflicting results are returned, this is a finding.'
   desc 'fix', 'Edit the following line in "etc/ssh/sshd_config" to prevent logons with
 empty passwords.
 
@@ -26,7 +27,7 @@ the SSH daemon, run the following command:
   tag severity: 'high'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-230380'
-  tag rid: 'SV-230380r743993_rule'
+  tag rid: 'SV-230380r858715_rule'
   tag stig_id: 'RHEL-08-020330'
   tag fix_id: 'F-33024r743992_fix'
   tag cci: ['CCI-000366']

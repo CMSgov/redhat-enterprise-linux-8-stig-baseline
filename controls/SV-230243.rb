@@ -22,16 +22,13 @@ verified by acceptance/validation processes in DoD or other government agencies.
 storage) that may be assessed on specific information system components.'
   desc 'check', 'Verify that all world-writable directories have the sticky bit set.
 
-    Check to see that all world-writable directories have the sticky bit set by
-running the following command:
+Check to see that all world-writable directories have the sticky bit set by running the following command:
 
-    $ sudo find / -type d \\( -perm -0002 -a ! -perm -1000 \\) -print
-2>/dev/null
+$ sudo find / -type d \\( -perm -0002 -a ! -perm -1000 \\) -print 2>/dev/null
 
-    drwxrwxrwxt 7 root root 4096 Jul 26 11:19 /tmp
+drwxrwxrwt 7 root root 4096 Jul 26 11:19 /tmp
 
-    If any of the returned directories are world-writable and do not have the
-sticky bit set, this is a finding.'
+If any of the returned directories are world-writable and do not have the sticky bit set, this is a finding.'
   desc 'fix', 'Configure all world-writable directories to have the sticky bit set to
 prevent unauthorized and unintended information transferred via shared system
 resources.
@@ -45,7 +42,7 @@ sticky bit:
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000138-GPOS-00069'
   tag gid: 'V-230243'
-  tag rid: 'SV-230243r627750_rule'
+  tag rid: 'SV-230243r792857_rule'
   tag stig_id: 'RHEL-08-010190'
   tag fix_id: 'F-32887r567476_fix'
   tag cci: ['CCI-001090']

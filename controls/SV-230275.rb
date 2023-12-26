@@ -35,7 +35,7 @@ $ sudo yum install opensc'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000376-GPOS-00161'
   tag gid: 'V-230275'
-  tag rid: 'SV-230275r627750_rule'
+  tag rid: 'SV-230275r854030_rule'
   tag stig_id: 'RHEL-08-010410'
   tag fix_id: 'F-32919r567572_fix'
   tag cci: ['CCI-001953']

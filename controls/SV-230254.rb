@@ -51,7 +51,7 @@ this is a finding.'
   tag satisfies: ['SRG-OS-000250-GPOS-00093', 'SRG-OS-000393-GPOS-00173', 'SRG-OS-000394-GPOS-00174',
                   'SRG-OS-000125-GPOS-00065']
   tag gid: 'V-230254'
-  tag rid: 'SV-230254r627750_rule'
+  tag rid: 'SV-230254r877394_rule'
   tag stig_id: 'RHEL-08-010293'
   tag fix_id: 'F-32898r567509_fix'
   tag cci: ['CCI-001453']

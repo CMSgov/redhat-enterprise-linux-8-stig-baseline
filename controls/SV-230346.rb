@@ -38,7 +38,7 @@ to "10" for all accounts and/or account types.
   tag severity: 'low'
   tag gtitle: 'SRG-OS-000027-GPOS-00008'
   tag gid: 'V-230346'
-  tag rid: 'SV-230346r627750_rule'
+  tag rid: 'SV-230346r877399_rule'
   tag stig_id: 'RHEL-08-020024'
   tag fix_id: 'F-32990r619863_fix'
   tag cci: ['CCI-000054']

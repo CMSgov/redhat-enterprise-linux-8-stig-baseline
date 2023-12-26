@@ -42,7 +42,7 @@ path, by default this location is usually "/var/log/audit".'
   tag stig_id: 'RHEL-08-030100'
   tag fix_id: 'F-33043r567944_fix'
   tag cci: ['CCI-000162']
-  tag nist: ['AU-9']
+  tag nist: ['AU-9', 'AU-9 a']
 
   if virtualization.system.eql?('docker')
     impact 0.0

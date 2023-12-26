@@ -39,7 +39,7 @@ option:
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000342-GPOS-00133'
   tag gid: 'V-230394'
-  tag rid: 'SV-230394r627750_rule'
+  tag rid: 'SV-230394r877390_rule'
   tag stig_id: 'RHEL-08-030062'
   tag fix_id: 'F-33038r567929_fix'
   tag cci: ['CCI-001851']
