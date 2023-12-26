@@ -245,10 +245,16 @@ inputs:
     value: []
 
   # SV-230229
+  - name: root_ca_location
+    description: Path to an location fo the DoD trust anchor certificate file (DoD)
+    type: String
+    value: "/etc/sssd/pki/"
+
+  # SV-230229
   - name: root_ca_file
     description: Path to an accepted trust anchor certificate file (DoD)
     type: String
-    value: "/etc/sssd/pki/sssd_auth_ca_db.pem"
+    value: "sssd_auth_ca_db.pem"
 
   # SV-230333
   - name: unsuccessful_attempts

@@ -7,8 +7,12 @@
   yum:
     name:
       - jq
+      - yq
       - vim
       - bc
+      - unzip
+      - wget
+      - curl
       #- python3-libsemanage
     state: latest
 - name: Install required packages via pip

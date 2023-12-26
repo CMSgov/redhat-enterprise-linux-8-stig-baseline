@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-
 class Pam < Inspec.resource(1)
   # These are aliases for one another
   attr_reader :rules, :lines

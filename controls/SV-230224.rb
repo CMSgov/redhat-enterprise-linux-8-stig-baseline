@@ -2,10 +2,10 @@
 
 # ALL: reviewed
 # Tested, @R1V12
-# TODO: This should really have a resource
 
 control 'SV-230224' do
   title 'All RHEL 8 local disk partitions must implement disk encryption'
+
   desc 'RHEL 8 systems handling data requiring "data at rest" protections
     must employ cryptographic mechanisms to prevent unauthorized disclosure and
     modification of the information at rest.
@@ -16,6 +16,7 @@ control 'SV-230224' do
     information. Organizations have the flexibility to either encrypt all
     information on storage devices (i.e., full disk encryption) or encrypt specific
     data structures (e.g., files, records, or fields).'
+
   desc 'check', 'Verify RHEL 8 prevents unauthorized disclosure or modification of all
     information requiring at-rest protection by using disk encryption.
 
@@ -61,6 +62,8 @@ control 'SV-230224' do
       skip message
     end
   end
+
+  # TODO: This should really have a resource
 
   if virtualization.system.eql?('docker')
     impact 0.0
