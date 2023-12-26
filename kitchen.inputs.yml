@@ -6,6 +6,6 @@ skip_mount_tmp:
   nodev: true
   nosuid: true
   noexec: true
-skip_password_privilege_escalation: true
+skip_password_privilege_escalation: false
 skip_endpoint_security_tool: true
 use_fapolicyd: true
