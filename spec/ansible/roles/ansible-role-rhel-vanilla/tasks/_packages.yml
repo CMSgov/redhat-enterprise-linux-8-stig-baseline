@@ -7,7 +7,6 @@
   yum:
     name:
       - jq
-      - yq
       - vim
       - bc
       - unzip
