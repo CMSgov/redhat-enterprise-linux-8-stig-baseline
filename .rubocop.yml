@@ -39,3 +39,6 @@ Style/TrailingCommaInArrayLiteral:
 
 Style/BlockDelimiters:
   Enabled: false
+
+Lint/AmbiguousBlockAssociation:
+  Enabled: false
