@@ -14,37 +14,6 @@ control 'SV-230274' do
     U.S. Government Personal Identity Verification (PIV) card and the DoD CAC.
 
     RHEL 8 includes multiple options for configuring certificate status
-<<<<<<< HEAD
-    checking, but for this requirement focuses on the System Security Services
-    Daemon (SSSD). By default, sssd performs Online Certificate Status Protocol
-    (OCSP) checking and certificate verification using a sha256 digest function.'
-
-  desc 'check', 'Verify the operating system implements certificate status checking
-    for multifactor authentication.
-
-    Note: If the System Administrator demonstrates the use of an approved alternate
-    multifactor authentication method, this requirement is Not Applicable.
-
-    Check to see if Online Certificate Status Protocol (OCSP) is enabled and using
-    the proper digest value on the system with the following command:
-
-    $ sudo grep certificate_verification /etc/sssd/sssd.conf /etc/sssd/conf.d/*.conf | grep -v "^#" certificate_verification = ocsp_dgst=sha1
-
-    If the certificate_verification line is missing from the [sssd] section,
-    or is missing "ocsp_dgst=sha1", ask the administrator to indicate what type of
-    multifactor authentication is being utilized and how the system implements certificate
-    status checking.
-
-    If there is no evidence of certificate status checking being used, this is a Finding.'
-
-  desc 'fix', 'Configure the operating system to implement certificate status checking
-    for multifactor authentication.
-
-    Review the "/etc/sssd/sssd.conf" file to determine if the system is configured to
-    prevent OCSP or certificate verification.
-
-    Add the following line to the [sssd] section of the "/etc/sssd/sssd.conf" file:
-=======
 checking, but for this requirement focuses on the System Security Services
 Daemon (SSSD). By default, sssd performs Online Certificate Status Protocol
 (OCSP) checking and certificate verification using a sha256 digest function.'
@@ -53,18 +22,9 @@ Daemon (SSSD). By default, sssd performs Online Certificate Status Protocol
 Note: If the System Administrator demonstrates the use of an approved alternate multifactor authentication method, this requirement is not applicable.
 
 Check to see if Online Certificate Status Protocol (OCSP) is enabled and using the proper digest value on the system with the following command:
->>>>>>> 87a05e3c31795238f35c7bb155a9770db9a9c15c
 
 $ sudo grep certificate_verification /etc/sssd/sssd.conf /etc/sssd/conf.d/*.conf | grep -v "^#"
 
-<<<<<<< HEAD
-    The "sssd" service must be restarted for the changes to take effect.
-
-    To restart the "sssd" service, run the following command:
-
-    $ sudo systemctl restart sssd.service'
-
-=======
 certificate_verification = ocsp_dgst=sha1
 
 If the certificate_verification line is missing from the [sssd] section, or is missing "ocsp_dgst=sha1", ask the administrator to indicate what type of multifactor authentication is being utilized and how the system implements certificate status checking.  If there is no evidence of certificate status checking being used, this is a finding.'
@@ -79,7 +39,6 @@ certificate_verification = ocsp_dgst=sha1
 The "sssd" service must be restarted for the changes to take effect. To restart the "sssd" service, run the following command:
 
 $ sudo systemctl restart sssd.service'
->>>>>>> 87a05e3c31795238f35c7bb155a9770db9a9c15c
   impact 0.5
 
   tag severity: 'medium'

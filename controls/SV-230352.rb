@@ -42,11 +42,7 @@ lines:
 
     Update the system databases:
 
-<<<<<<< HEAD
     $ sudo dconf update"
-=======
-    $ sudo dconf update'
->>>>>>> 87a05e3c31795238f35c7bb155a9770db9a9c15c
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000029-GPOS-00010'

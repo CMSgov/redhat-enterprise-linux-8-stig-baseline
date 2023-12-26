@@ -52,9 +52,7 @@ local interactive user's files and directories, use the following command:
   exempt_home_users = input('exempt_home_users').join('|')
 
   findings = Set[]
-  users.where {
-    !username.match(exempt_home_users) && !shell.match(ignore_shells) && (uid >= 1000 || uid.zero?)
-  }.entries.each do |user_info|
+  users.where { !username.match(exempt_home_users) && !shell.match(ignore_shells) && (uid >= 1000 || uid.zero?) }.entries.each do |user_info|
     findings += command("find #{user_info.home} -xdev -not -gid #{user_info.gid}").stdout.split("\n")
   end
   describe findings do

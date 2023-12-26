@@ -4,7 +4,7 @@ control 'SV-230413' do
   title 'The RHEL 8 audit system must be configured to audit any usage of the setxattr, fsetxattr, lsetxattr, removexattr, fremovexattr, and lremovexattr system calls.'
   desc 'Without generating audit records that are specific to the security and mission needs of the organization, it would be difficult to establish, correlate, and investigate the events relating to an incident or identify those responsible for one.
 
-Audit records can be generated from various components within the information system (e.g., module or policy filter). 
+Audit records can be generated from various components within the information system (e.g., module or policy filter).
 
 "Setxattr" is a system call used to set an extended attribute value.
 "Fsetxattr" is a system call used to set an extended attribute value. This is used to set extended attributes on a file.
@@ -39,12 +39,7 @@ The audit daemon must be restarted for the changes to take effect.'
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000062-GPOS-00031'
-<<<<<<< HEAD
-  tag satisfies: ['SRG-OS-000062-GPOS-00031', 'SRG-OS-000037-GPOS-00015', 'SRG-OS-000042-GPOS-00020',
-                  'SRG-OS-000062-GPOS-00031', 'SRG-OS-000392-GPOS-00172', 'SRG-OS-000458-GPOS-00203', 'SRG-OS-000462-GPOS-00206', 'SRG-OS-000463-GPOS-00207', 'SRG-OS-000468-GPOS-00212', 'SRG-OS-000471-GPOS-00215', 'SRG-OS-000474-GPOS-00219', 'SRG-OS-000466-GPOS-00210']
-=======
   tag satisfies: ['SRG-OS-000062-GPOS-00031', 'SRG-OS-000037-GPOS-00015', 'SRG-OS-000042-GPOS-00020', 'SRG-OS-000392-GPOS-00172', 'SRG-OS-000458-GPOS-00203', 'SRG-OS-000462-GPOS-00206', 'SRG-OS-000463-GPOS-00207', 'SRG-OS-000468-GPOS-00212', 'SRG-OS-000471-GPOS-00215', 'SRG-OS-000474-GPOS-00219', 'SRG-OS-000466-GPOS-00210']
->>>>>>> 87a05e3c31795238f35c7bb155a9770db9a9c15c
   tag gid: 'V-230413'
   tag rid: 'SV-230413r810463_rule'
   tag stig_id: 'RHEL-08-030200'

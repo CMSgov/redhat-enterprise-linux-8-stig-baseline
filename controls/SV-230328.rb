@@ -1,27 +1,18 @@
 # frozen_string_literal: true
 
 control 'SV-230328' do
-<<<<<<< HEAD
-  title "A separate RHEL 8 filesystem must be used for user home directories
-(such as /home or an equivalent)."
-  desc "The use of separate file systems for different paths can protect the
-system from failures resulting from a file system becoming full or failing."
-  desc 'check', %q(Verify that a separate file system/partition has been created for
-non-privileged local interactive user home directories.
-=======
   title 'A separate RHEL 8 filesystem must be used for user home directories
 (such as /home or an equivalent).'
   desc 'The use of separate file systems for different paths can protect the
 system from failures resulting from a file system becoming full or failing.'
   desc 'check', %q(Verify that a separate file system has been created for non-privileged local interactive user home directories.
->>>>>>> 87a05e3c31795238f35c7bb155a9770db9a9c15c
 
-Check the home directory assignment for all non-privileged users, users with a User Identifier (UID) greater than 1000, on the system with the following command:
+  Check the home directory assignment for all non-privileged users, users with a User Identifier (UID) greater than 1000, on the system with the following command:
 
      $ sudo awk -F: '($3>=1000)&&($7 !~ /nologin/){print $1,$3,$6}' /etc/passwd
 
-     doej 1001 /home/doej 
-     publicj 1002 /home/publicj 
+     doej 1001 /home/doej
+     publicj 1002 /home/publicj
      smithj 1003 /home/smithj
 
 The output of the command will give the directory/partition that contains the home directories for the non-privileged users on the system (in this example, "/home") and users’ shell. All accounts with a valid shell (such as /bin/bash) are considered interactive users.
@@ -34,17 +25,8 @@ Note: The partition of "/home" is used in the example.
 
      /dev/mapper/...   /home   xfs   defaults,noexec,nosuid,nodev 0 0
 
-<<<<<<< HEAD
-    If a separate entry for the file system/partition containing the
-non-privileged interactive user home directories does not exist, this is a
-finding.)
-
-  desc 'fix', 'Migrate the "/home" directory onto a separate file
-system/partition.'
-=======
 If a separate entry for the file system/partition containing the nonprivileged interactive user home directories does not exist, this is a finding.)
   desc 'fix', 'Migrate the "/home" directory onto a separate file system.'
->>>>>>> 87a05e3c31795238f35c7bb155a9770db9a9c15c
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'

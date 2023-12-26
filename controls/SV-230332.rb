@@ -86,8 +86,7 @@ restart the "sssd" service, run the following command:
     !input('central_account_management')
   }
 
-  # NOTE:
-  # This check applies to RHEL versions 8.0 and 8.1,
+  # NOTE: This check applies to RHEL versions 8.0 and 8.1,
   # # if the system is RHEL version 8.2 or newer,
   # this check is not applicable.
 

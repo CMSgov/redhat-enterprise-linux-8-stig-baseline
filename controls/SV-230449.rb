@@ -4,7 +4,7 @@ control 'SV-230449' do
   title 'Successful/unsuccessful uses of the truncate, ftruncate, creat, open, openat, and open_by_handle_at system calls in RHEL 8 must generate an audit record.'
   desc 'Without generating audit records that are specific to the security and mission needs of the organization, it would be difficult to establish, correlate, and investigate the events relating to an incident or identify those responsible for one.
 
-Audit records can be generated from various components within the information system (e.g., module or policy filter). The "truncate" and "ftruncate" functions are used to truncate a file to a specified length. 
+Audit records can be generated from various components within the information system (e.g., module or policy filter). The "truncate" and "ftruncate" functions are used to truncate a file to a specified length.
 
 The "creat" system call is used to open and possibly create a file or device.
 The "open" system call opens a file specified by a pathname. If the specified file does not exist, it may optionally be created by "open".
@@ -39,12 +39,7 @@ The audit daemon must be restarted for the changes to take effect.'
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000062-GPOS-00031'
-<<<<<<< HEAD
-  tag satisfies: ['SRG-OS-000062-GPOS-00031', 'SRG-OS-000037-GPOS-00015', 'SRG-OS-000042-GPOS-00020',
-                  'SRG-OS-000062-GPOS-00031', 'SRG-OS-000392-GPOS-00172', 'SRG-OS-000462-GPOS-00206', 'SRG-OS-000471-GPOS-00215', 'SRG-OS-000064-GPOS-00033']
-=======
   tag satisfies: ['SRG-OS-000062-GPOS-00031', 'SRG-OS-000037-GPOS-00015', 'SRG-OS-000042-GPOS-00020', 'SRG-OS-000392-GPOS-00172', 'SRG-OS-000462-GPOS-00206', 'SRG-OS-000471-GPOS-00215', 'SRG-OS-000064-GPOS-00033']
->>>>>>> 87a05e3c31795238f35c7bb155a9770db9a9c15c
   tag gid: 'V-230449'
   tag rid: 'SV-230449r810455_rule'
   tag stig_id: 'RHEL-08-030420'

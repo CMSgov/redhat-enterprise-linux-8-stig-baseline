@@ -19,27 +19,6 @@ compromised.
 Note that in order to require uppercase characters, without degrading the
 "minlen" value, the credit value must be expressed as a negative number in
 "/etc/security/pwquality.conf".'
-<<<<<<< HEAD
-
-  desc 'check', 'Verify the value for "ucredit" with the following command:
-
-$ sudo grep -r ucredit /etc/security/pwquality.conf*
-
-/etc/security/pwquality.conf:ucredit = -1
-
-If the value of "ucredit" is a positive number or is commented out, this is a finding.
-
-If conflicting results are returned, this is a finding.'
-
-  desc 'fix', 'Configure the operating system to enforce password complexity by requiring that at least one uppercase character be used by setting the "ucredit" option.
-
-Add the following line to /etc/security/pwquality.conf (or modify the line to have the required value):
-
-ucredit = -1
-
-Remove any configurations that conflict with the above value.'
-
-=======
   desc 'check', 'Verify the value for "ucredit" with the following command:
 
 $ sudo grep -r ucredit /etc/security/pwquality.conf*
@@ -55,7 +34,6 @@ Add the following line to /etc/security/pwquality.conf (or modify the line to ha
 ucredit = -1
 
 Remove any configurations that conflict with the above value.'
->>>>>>> 87a05e3c31795238f35c7bb155a9770db9a9c15c
   impact 0.5
 
   tag severity: 'medium'

@@ -47,8 +47,7 @@ line:
   tag cci: ['CCI-000044']
   tag nist: ['AC-7 a']
 
-  # Note:
-  # This check applies to RHEL versions 8.2 or newer,
+  # NOTE: This check applies to RHEL versions 8.2 or newer,
   # if the system is RHEL version 8.0 or 8.1,
   # this check is not applicable.
 

@@ -41,7 +41,7 @@ Remove any configurations that conflict with the above value.'
   tag cci: ['CCI-001619']
   tag nist: ['IA-5 (1) (a)']
 
-  value = input('ocredit')
+  # value = input('ocredit')
   setting = 'ocredit'
 
   describe 'pwquality.conf settings' do

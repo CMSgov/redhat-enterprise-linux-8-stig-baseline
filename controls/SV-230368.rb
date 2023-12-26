@@ -1,20 +1,10 @@
 # frozen_string_literal: true
 
 control 'SV-230368' do
-<<<<<<< HEAD
-  title "RHEL 8 passwords must be prohibited from reuse for a minimum of five
-generations."
-  desc 'Password complexity, or strength, is a measure of the effectiveness of
-a password in resisting attempts at guessing and brute-force attacks. If the
-information system or application allows the user to reuse their password
-consecutively when that password has exceeded its defined lifetime, the end
-result is a password that is not changed per policy requirements.
-=======
   title 'RHEL 8 must be configured in the password-auth file to prohibit password reuse for a minimum of five generations.'
   desc 'Password complexity, or strength, is a measure of the effectiveness of a password in resisting attempts at guessing and brute-force attacks. If the information system or application allows the user to reuse their password consecutively when that password has exceeded its defined lifetime, the end result is a password that is not changed per policy requirements.
->>>>>>> 87a05e3c31795238f35c7bb155a9770db9a9c15c
 
-RHEL 8 uses "pwhistory" consecutively as a mechanism to prohibit password reuse. This is set in both:
+  RHEL 8 uses "pwhistory" consecutively as a mechanism to prohibit password reuse. This is set in both:
 /etc/pam.d/password-auth
 /etc/pam.d/system-auth.
 

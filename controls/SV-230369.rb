@@ -22,12 +22,7 @@ components be required, they will not count towards the total "score" of
 "minlen". This will enable "minlen" to require a 15-character minimum.
 
     The DoD minimum password requirement is 15 characters.'
-<<<<<<< HEAD
-  desc 'check', 'Verify the operating system enforces a minimum 15-character
-    password length. The "minlen" option sets the minimum number of characters in a new password.
-=======
   desc 'check', 'Verify the operating system enforces a minimum 15-character password length. The "minlen" option sets the minimum number of characters in a new password.
->>>>>>> 87a05e3c31795238f35c7bb155a9770db9a9c15c
 
 Check for the value of the "minlen" option with the following command:
 
@@ -38,22 +33,12 @@ $ sudo grep -r minlen /etc/security/pwquality.conf*
 If the command does not return a "minlen" value of 15 or greater, this is a finding.
 If conflicting results are returned, this is a finding.'
   desc 'fix', 'Configure operating system to enforce a minimum 15-character password length.
-<<<<<<< HEAD
 
 Add the following line to "/etc/security/pwquality.conf" (or modify the line to have the required value):
 
 minlen = 15
 
 Remove any configurations that conflict with the above value.'
-
-=======
-
-Add the following line to "/etc/security/pwquality.conf" (or modify the line to have the required value):
-
-minlen = 15
-
-Remove any configurations that conflict with the above value.'
->>>>>>> 87a05e3c31795238f35c7bb155a9770db9a9c15c
   impact 0.5
 
   tag severity: 'medium'

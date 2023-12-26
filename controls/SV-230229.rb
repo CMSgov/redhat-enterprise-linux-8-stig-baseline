@@ -23,52 +23,6 @@ control 'SV-230229' do
     typically issued by a trusted CA.
 
     This requirement verifies that a certification path to an accepted trust
-<<<<<<< HEAD
-    anchor is used for certificate validation and that the path includes status
-    information. Path validation is necessary for a relying party to make an
-    informed trust decision when presented with any certificate not already
-    explicitly trusted. Status information for certification paths includes
-    certificate revocation lists or online certificate status protocol responses.
-    Validation of the certificate status information is out of scope for this
-    requirement."
-
-  desc 'check', "Verify RHEL 8 for PKI-based authentication has valid certificates by
-    constructing a certification path (which includes status information) to an
-    accepted trust anchor.
-
-    Check that the system has a valid DoD root CA installed with the following
-    command:
-
-      $ sudo openssl x509 -text -in /etc/sssd/pki/sssd_auth_ca_db.pem
-
-        Certificate:
-          Data:
-              Version: 3 (0x2)
-              Serial Number: 1 (0x1)
-              Signature Algorithm: sha256WithRSAEncryption
-              Issuer: C = US, O = U.S. Government, OU = DoD, OU = PKI, CN = DoD
-    Root CA 3
-              Validity
-                Not Before: Mar 20 18:46:41 2012 GMT
-                Not After   : Dec 30 18:46:41 2029 GMT
-              Subject: C = US, O = U.S. Government, OU = DoD, OU = PKI, CN = DoD
-    Root CA 3
-              Subject Public Key Info:
-                Public Key Algorithm: rsaEncryption
-
-    If the root ca file is not a DoD-issued certificate with a valid date and
-    installed in the /etc/sssd/pki/sssd_auth_ca_db.pem location, this is a finding."
-
-  desc 'fix', "Configure RHEL 8, for PKI-based authentication, to validate certificates by
-    constructing a certification path (which includes status information) to an
-    accepted trust anchor.
-
-    Obtain a valid copy of the DoD root CA file from the PKI CA certificate
-    bundle from cyber.mil and copy the DoD_PKE_CA_chain.pem into the following file:
-
-      /etc/sssd/pki/sssd_auth_ca_db.pem"
-
-=======
 anchor is used for certificate validation and that the path includes status
 information. Path validation is necessary for a relying party to make an
 informed trust decision when presented with any certificate not already
@@ -102,8 +56,7 @@ If the root ca file is not a DoD-issued certificate with a valid date and instal
 
 Obtain a valid copy of the DoD root CA file from the PKI CA certificate bundle at cyber.mil and copy into the following file:
 
-/etc/sssd/pki/sssd_auth_ca_db.pem'
->>>>>>> 87a05e3c31795238f35c7bb155a9770db9a9c15c
+/etc/sssd/pki/sssd_auth_ca_db.pem"
   impact 0.5
 
   tag severity: 'medium'
