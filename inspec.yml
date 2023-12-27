@@ -481,7 +481,7 @@ inputs:
     type: String
     value: "0755"
 
-  # SV-251707, SV-251708
+  # SV-251707, SV-251708, SV-251709
   - name: system_libraries
     description: Define system libraries which should have strict permissions enforced
     type: Array
@@ -491,6 +491,12 @@ inputs:
       - /usr/lib
       - /usr/lib64
 
+  #SV-251709
+  - name: required_system_accounts
+    description: List of system accounts permitted to group-own system libraries
+    type: Array
+    value:
+      - root
 
   # SV-230247
   - name: var_log_messages_group

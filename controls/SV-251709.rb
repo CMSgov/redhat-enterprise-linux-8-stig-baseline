@@ -26,4 +26,15 @@ $ sudo chgrp root [DIRECTORY]'
   tag 'documentable'
   tag cci: ['CCI-001499']
   tag nist: ['CM-5 (6)']
+
+  non_root_owned_libs = input('system_libraries').select { |lib|
+    input("required_system_accounts").include?(file(lib).group)
+  }
+
+describe "System libraries" do
+ it "should be owned by root" do
+   fail_msg = "Libs not group-owned by root:\n\t-#{non_root_owned_libs.join("\n\t-")}"
+   expect(non_root_owned_libs).to be_empty, fail_msg
+ end
+end
 end
