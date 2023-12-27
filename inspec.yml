@@ -567,3 +567,9 @@ inputs:
     description: rhel_08_010001 - The RHEL 8 operating system must implement the Endpoint Security for Linux Threat Prevention tool.
     type: Boolean
     value: false
+  
+  # SV-250315
+  - name: non_default_tally_dir
+    description: The directory used by pam_faillock
+    type: String
+    value: /var/log/faillock

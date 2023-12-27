@@ -48,4 +48,23 @@ $ sudo restorecon -R -v /var/log/faillock'
   tag 'documentable'
   tag cci: ['CCI-000044', 'CCI-002238']
   tag nist: ['AC-7 a', 'AC-7 b']
+
+  # NOTE: This check applies to RHEL versions 8.0 and 8.1,
+  # # if the system is RHEL version 8.2 or newer,
+  # this check is not applicable.
+
+  if os.release.to_f >= 8.2
+    impact 0.0
+    describe 'This requirement only applies to RHEL 8 version(s) 8.0 and 8.1' do
+      skip "Currently on release #{os.release}, this control is Not Applicable."
+    end
+  else
+    describe parse_config_file('/etc/security/faillock.conf') do
+      its('dir') { should cmp input('non_default_tally_dir') }
+    end
+    describe "The selected non-default tally directory for PAM: #{input('non_default_tally_dir')}" do
+      subject( file(input('non_default_tally_dir')) )
+      its('selinux_label') { should match /faillog_t/ }
+    end
+  end
 end
