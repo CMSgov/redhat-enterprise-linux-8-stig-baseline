@@ -32,4 +32,8 @@ Add the following line to the "/etc/pam.d/system-auth" file (or modify the line 
   tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+
+  describe pam('/etc/pam.d/system-auth') do
+    its('lines') { should match_pam_rule('.* .* pam_pwquality.so') }  
+  end  
 end
