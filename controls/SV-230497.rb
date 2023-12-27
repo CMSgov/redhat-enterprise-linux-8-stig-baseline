@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 control 'SV-230497' do
-  title 'RHEL 8 must disable the transparent inter-process communication (TIPC)
-protocol.'
-  desc 'It is detrimental for operating systems to provide, or install by
+  title "RHEL 8 must disable the transparent inter-process communication (TIPC)
+protocol."
+  desc "It is detrimental for operating systems to provide, or install by
 default, functionality exceeding requirements or mission objectives. These
 unnecessary capabilities or services are often overlooked and therefore may
 remain unsecured. They increase the risk to the platform by providing
@@ -13,7 +13,7 @@ additional attack vectors.
 
     The Transparent Inter-Process Communication (TIPC) protocol is designed to
 provide communications between nodes in a cluster. Disabling TIPC protects the
-system against exploitation of any flaws in its implementation.'
+system against exploitation of any flaws in its implementation."
   desc 'check', 'Verify the operating system disables the ability to load the TIPC protocol kernel module.
 
 $ sudo grep -r tipc /etc/modprobe.d/* | grep "/bin/true"

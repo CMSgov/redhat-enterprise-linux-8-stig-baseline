@@ -2,7 +2,7 @@
 
 control 'SV-230278' do
   title 'RHEL 8 must disable virtual syscalls.'
-  desc 'Syscalls are special routines in the Linux kernel, which userspace
+  desc "Syscalls are special routines in the Linux kernel, which userspace
 applications ask to do privileged tasks.  Invoking a system call is an
 expensive operation because the processor must interrupt the currently
 executing task and switch context to kernel mode and then back to userspace
@@ -15,7 +15,7 @@ switching expense.
 control of the return instruction pointer.  Disabling vsyscalls help to prevent
 return oriented programming (ROP) attacks via buffer overflows and overruns. If
 the system intends to run containers based on RHEL 6 components, then virtual
-syscalls will need enabled so the components function properly.'
+syscalls will need enabled so the components function properly."
   desc 'check', 'Verify that GRUB 2 is configured to disable vsyscalls with the following commands:
 
 Check that the current GRUB 2 configuration disables vsyscalls:

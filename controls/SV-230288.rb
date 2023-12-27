@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 control 'SV-230288' do
-  title 'The RHEL 8 SSH daemon must perform strict mode checking of home
-directory configuration files.'
-  desc 'If other users have access to modify user-specific SSH configuration
-files, they may be able to log on to the system as another user.'
+  title "The RHEL 8 SSH daemon must perform strict mode checking of home
+directory configuration files."
+  desc "If other users have access to modify user-specific SSH configuration
+files, they may be able to log on to the system as another user."
   desc 'check', 'Verify the SSH daemon performs strict mode checking of home directory configuration files with the following command:
 
 $ sudo grep -ir strictmodes /etc/ssh/sshd_config*

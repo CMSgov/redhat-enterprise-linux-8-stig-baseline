@@ -29,12 +29,12 @@ Verify all system partitions are encrypted with the following command:
 Every persistent disk partition present must be of type "crypto_LUKS". If any partitions other than the boot partition or pseudo file systems (such as /proc or /sys) are not type "crypto_LUKS", ask the administrator to indicate how the partitions are encrypted.
 
 If there is no evidence that these partitions are encrypted, this is a finding.'
-  desc 'fix', 'Configure RHEL 8 to prevent unauthorized modification of all information at
+  desc 'fix', "Configure RHEL 8 to prevent unauthorized modification of all information at
 rest by using disk encryption.
 
     Encrypting a partition in an already installed system is more difficult,
     because existing partitions will need to be resized and changed. To encrypt an
-    entire partition, dedicate a partition for encryption in the partition layout.'
+    entire partition, dedicate a partition for encryption in the partition layout."
 
   impact 0.5
 

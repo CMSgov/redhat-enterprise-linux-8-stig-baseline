@@ -2,7 +2,7 @@
 
 control 'SV-230393' do
   title 'The RHEL 8 audit system must audit local events.'
-  desc 'Without establishing what type of events occurred, the source of
+  desc "Without establishing what type of events occurred, the source of
 events, where events occurred, and the outcome of events, it would be difficult
 to establish, correlate, and investigate the events leading up to an outage or
 attack.
@@ -10,7 +10,7 @@ attack.
     Audit record content that may be necessary to satisfy this requirement
 includes, for example, time stamps, source and destination addresses,
 user/process identifiers, event descriptions, success/fail indications,
-filenames involved, and access control or flow control rules invoked.'
+filenames involved, and access control or flow control rules invoked."
   desc 'check', 'Verify the RHEL 8 Audit Daemon is configured to include local events, with
 the following command:
 

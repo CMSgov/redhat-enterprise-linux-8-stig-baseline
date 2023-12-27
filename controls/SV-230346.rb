@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 control 'SV-230346' do
-  title 'RHEL 8 must limit the number of concurrent sessions to ten for all
-accounts and/or account types.'
-  desc 'Operating system management includes the ability to control the number
+  title "RHEL 8 must limit the number of concurrent sessions to ten for all
+accounts and/or account types."
+  desc "Operating system management includes the ability to control the number
 of users and user sessions that utilize an operating system. Limiting the
 number of allowed users and sessions per user is helpful in reducing the risks
 related to DoS attacks.
@@ -11,7 +11,7 @@ related to DoS attacks.
     This requirement addresses concurrent sessions for information system
 accounts and does not address concurrent sessions by single users via multiple
 system accounts. The maximum number of concurrent sessions should be defined
-based on mission needs and the operational environment for each system.'
+based on mission needs and the operational environment for each system."
   desc 'check', %q(Verify the operating system limits the number of concurrent sessions to
 "10" for all accounts and/or account types by issuing the following command:
 
@@ -63,7 +63,7 @@ to "10" for all accounts and/or account types.
         # If the limit is in range, push to compliant files
         if temp_limit[-1].to_i <= input('maxlogins_limit')
           compliant_files.push(limits_file)
-        # Otherwise add to noncompliant files
+          # Otherwise add to noncompliant files
         else
           noncompliant_files.push(limits_file)
         end

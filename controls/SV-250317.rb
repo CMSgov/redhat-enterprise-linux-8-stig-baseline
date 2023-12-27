@@ -79,35 +79,56 @@ control 'SV-250317' do
     !input('network_router')
   }
 
-  forwarding = kernel_parameter('net.ipv4.conf.all.forwarding')
-  describe 'IPv4 packet forwarding' do
-    it 'is disabled in sysctl -a' do
-      expect(forwarding.value).to cmp 0
-      expect(forwarding.value).not_to be_nil
+  # Define the kernel parameter to be checked
+  parameter = 'net.ipv4.conf.all.forwarding'
+  action = 'IPv4 packet forwarding'
+
+  # Get the current value of the kernel parameter
+  current_value = kernel_parameter(parameter)
+
+  # Check if the system is a Docker container
+  if virtualization.system.eql?('docker')
+    impact 0.0
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
     end
-  end
-
-  sysctl_directory_blobs = input('sysctl_conf_files').map(&:strip).join(' ')
-  cmd_results = command("grep -r net.ipv4.conf.all.forwarding #{sysctl_directory_blobs} {} \;").stdout.split("\n")
-  results_hash = cmd_results.each_with_object({}) do |item, results|
-    file, setting = item.split(':')
-    results[file] ||= []
-    results[file] << setting.split('=').last
-  end
-  # Now `results_hash` is:
-  describe 'Configuration files' do
-    if cmd_results.empty?
-      it 'do not have `net.ipv4.conf.all.forwarding` disabled directly' do
-        expect(results_hash).not_to be_empty, 'Add the line `net.ipv4.conf.all.forwarding=0` to a file in the `/etc/sysctl.d/` directory'
+  else
+    # Check if IPv4 packet forwarding is disabled
+    describe "#{action}" do
+      it 'is disabled in sysctl -a' do
+        expect(current_value.value).to cmp 0
+        expect(current_value.value).not_to be_nil
       end
-    else
-      describe 'for IPv4 packet forwarding' do
-        it 'have a single unique entry' do
-          expect(results_hash.values.flatten.count).to eq(1), "Expected one unique configuration, but got #{results_hash}"
-        end
+    end
 
-        it 'do not have more then one IPv4 packet forwarding value' do
-          expect(results_hash.values.flatten.all? { |v| v == '0' }).to be true
+    # Get the list of sysctl configuration files
+    sysctl_config_files = input('sysctl_conf_files').map(&:strip).join(' ')
+
+    # Search for the kernel parameter in the configuration files
+    search_results = command("grep -r #{parameter} #{sysctl_config_files} {} \;").stdout.split("\n")
+
+    # Parse the search results into a hash
+    config_values = search_results.each_with_object({}) do |item, results|
+      file, setting = item.split(':')
+      results[file] ||= []
+      results[file] << setting.split('=').last
+    end
+
+    # Check the configuration files
+    describe 'Configuration files' do
+      if search_results.empty?
+        it 'do not have `#{parameter}` disabled directly' do
+          expect(config_values).not_to be_empty, "Add the line `#{parameter}=0` to a file in the `/etc/sysctl.d/` directory"
+        end
+      else
+        describe "for #{action}" do
+          it 'have a single unique entry' do
+            expect(config_values.values.flatten.count).to eq(1), "Expected one unique configuration, but got #{config_values}"
+          end
+
+          it "do not have more then one #{action} value" do
+            expect(config_values.values.flatten.all? { |v| v == '0' }).to be true
+          end
         end
       end
     end

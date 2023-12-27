@@ -2,7 +2,7 @@
 
 control 'SV-230371' do
   title 'RHEL 8 duplicate User IDs (UIDs) must not exist for interactive users.'
-  desc 'To ensure accountability and prevent unauthenticated access,
+  desc "To ensure accountability and prevent unauthenticated access,
 interactive users must be identified and authenticated to prevent potential
 misuse and compromise of the system.
 
@@ -18,7 +18,7 @@ information system without identification or authentication; and
     2) Accesses that occur through authorized use of group authenticators
 without individual authentication. Organizations may require unique
 identification of individuals in group accounts (e.g., shared privilege
-accounts) or for detailed accountability of individual activity.'
+accounts) or for detailed accountability of individual activity."
   desc 'check', %q(Verify that RHEL 8 contains no duplicate User IDs (UIDs) for interactive
 users.
 

@@ -2,13 +2,13 @@
 
 control 'SV-230233' do
   title 'The RHEL 8 shadow password suite must be configured to use a sufficient number of hashing rounds.'
-  desc 'The system must use a strong hashing algorithm to store the password.
+  desc "The system must use a strong hashing algorithm to store the password.
 The system must use a sufficient number of hashing rounds to ensure the
 required level of entropy.
 
     Passwords need to be protected at all times, and encryption is the standard
 method for protecting passwords. If passwords are not encrypted, they can be
-plainly read (i.e., clear text) and easily compromised.'
+plainly read (i.e., clear text) and easily compromised."
   desc 'check', 'Check that a minimum number of hash rounds is configured by running the following command:
 
      $ sudo grep -E "^SHA_CRYPT_" /etc/login.defs

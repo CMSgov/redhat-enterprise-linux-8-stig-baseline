@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 control 'SV-230306' do
-  title 'RHEL 8 must prevent code from being executed on file systems that are
-imported via Network File System (NFS).'
+  title "RHEL 8 must prevent code from being executed on file systems that are
+imported via Network File System (NFS)."
   desc 'The "noexec" mount option causes the system not to execute binary
 files. This option must be used for mounting any file system not containing
 approved binary as they may be incompatible. Executing files from untrusted

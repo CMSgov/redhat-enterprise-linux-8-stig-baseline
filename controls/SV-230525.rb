@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 control 'SV-230525' do
-  title 'A firewall must be able to protect against or limit the effects of
+  title "A firewall must be able to protect against or limit the effects of
 Denial of Service (DoS) attacks by ensuring RHEL 8 can implement rate-limiting
-measures on impacted network interfaces.'
+measures on impacted network interfaces."
   desc 'DoS is a condition when a resource is not available for legitimate
 users. When this occurs, the organization either cannot accomplish its mission
 or must operate at degraded capacity.

@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 control 'SV-230225' do
-  title 'RHEL 8 must display the Standard Mandatory DoD Notice and Consent
-Banner before granting local or remote access to the system via a ssh logon.'
+  title "RHEL 8 must display the Standard Mandatory DoD Notice and Consent
+Banner before granting local or remote access to the system via a ssh logon."
   desc %q(Display of a standardized and approved use notification before granting access to the operating system ensures privacy and security notification verbiage used is consistent with applicable federal laws, Executive Orders, directives, policies, regulations, standards, and guidance.
 
 System use notifications are required only for access via logon interfaces with human users and are not required when such human interfaces do not exist.

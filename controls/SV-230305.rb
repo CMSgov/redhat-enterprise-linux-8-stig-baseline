@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 control 'SV-230305' do
-  title 'RHEL 8 must prevent files with the setuid and setgid bit set from
-being executed on file systems that are used with removable media.'
+  title "RHEL 8 must prevent files with the setuid and setgid bit set from
+being executed on file systems that are used with removable media."
   desc 'The "nosuid" mount option causes the system not to execute
 "setuid" and "setgid" files with owner privileges. This option must be used
 for mounting any file system not containing approved "setuid" and "setguid"

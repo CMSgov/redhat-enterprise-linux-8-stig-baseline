@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 control 'SV-230392' do
-  title 'The RHEL 8 audit system must take appropriate action when the audit
-storage volume is full.'
-  desc 'It is critical that when RHEL 8 is at risk of failing to process audit
+  title "The RHEL 8 audit system must take appropriate action when the audit
+storage volume is full."
+  desc "It is critical that when RHEL 8 is at risk of failing to process audit
 logs as required, it takes action to mitigate the failure. Audit processing
 failures include software/hardware errors; failures in the audit capturing
 mechanisms; and audit storage capacity being reached or exceeded. Responses to
@@ -22,7 +22,7 @@ communication with this server is lost or the server fails, RHEL 8 must queue
 audit records locally until communication is restored or until the audit
 records are retrieved manually. Upon restoration of the connection to the
 centralized collection server, action should be taken to synchronize the local
-audit data with the collection server.'
+audit data with the collection server."
   desc 'check', 'Verify RHEL 8 takes the appropriate action when the audit storage volume is
 full.
 

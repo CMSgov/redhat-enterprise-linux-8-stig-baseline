@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 control 'SV-230482' do
-  title 'RHEL 8 must authenticate the remote logging server for off-loading
-audit logs.'
+  title "RHEL 8 must authenticate the remote logging server for off-loading
+audit logs."
   desc 'Information stored in one location is vulnerable to accidental or
 incidental deletion or alteration.
 

@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 control 'SV-230467' do
-  title 'Successful/unsuccessful modifications to the lastlog file in RHEL 8
-must generate an audit record.'
-  desc 'Without the capability to generate audit records, it would be
+  title "Successful/unsuccessful modifications to the lastlog file in RHEL 8
+must generate an audit record."
+  desc "Without the capability to generate audit records, it would be
 difficult to establish, correlate, and investigate the events relating to an
 incident or identify those responsible for one.
 
@@ -29,7 +29,7 @@ all direct access to the information system;
 
     3) All account creations, modifications, disabling, and terminations; and
 
-    4) All kernel module load, unload, and restart actions.'
+    4) All kernel module load, unload, and restart actions."
   desc 'check', 'Verify RHEL 8 generates an audit record when successful/unsuccessful
 modifications to the "lastlog" file by performing the following command to
 check the file system rules in "/etc/audit/audit.rules":

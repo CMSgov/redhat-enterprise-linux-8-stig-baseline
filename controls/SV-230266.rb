@@ -2,7 +2,7 @@
 
 control 'SV-230266' do
   title 'RHEL 8 must prevent the loading of a new kernel for later execution.'
-  desc 'Changes to any software components can have significant effects on the overall security of the operating system. This requirement ensures the software has not been tampered with and that it has been provided by a trusted vendor.
+  desc "Changes to any software components can have significant effects on the overall security of the operating system. This requirement ensures the software has not been tampered with and that it has been provided by a trusted vendor.
 
 Disabling kexec_load prevents an unsigned kernel image (that could be a windows kernel or modified vulnerable kernel) from being loaded. Kexec can be used subvert the entire secureboot process and should be avoided at all costs especially since it can load unsigned kernel images.
 
@@ -12,7 +12,7 @@ The sysctl --system command will load settings from all system configuration fil
 /usr/local/lib/sysctl.d/*.conf
 /usr/lib/sysctl.d/*.conf
 /lib/sysctl.d/*.conf
-/etc/sysctl.conf'
+/etc/sysctl.conf"
   desc 'check', 'Verify the operating system is configured to disable kernel image loading with the following commands:
 
 Check the status of the kernel.kexec_load_disabled kernel parameter.

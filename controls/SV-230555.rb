@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 control 'SV-230555' do
-  title 'RHEL 8 remote X connections for interactive users must be disabled
-unless to fulfill documented and validated mission requirements.'
+  title "RHEL 8 remote X connections for interactive users must be disabled
+unless to fulfill documented and validated mission requirements."
   desc %q(The security risk of using X11 forwarding is that the client's X11
 display server may be exposed to attack when the SSH client requests
 forwarding.  A system administrator may have a stance in which they want to

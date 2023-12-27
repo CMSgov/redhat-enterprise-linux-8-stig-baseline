@@ -1,16 +1,16 @@
 # frozen_string_literal: true
 
 control 'SV-230476' do
-  title 'RHEL 8 must allocate audit record storage capacity to store at least
+  title "RHEL 8 must allocate audit record storage capacity to store at least
 one week of audit records, when audit records are not immediately sent to a
-central audit record storage facility.'
-  desc 'To ensure RHEL 8 systems have a sufficient storage capacity in which
+central audit record storage facility."
+  desc "To ensure RHEL 8 systems have a sufficient storage capacity in which
 to write the audit logs, RHEL 8 needs to be able to allocate audit record
 storage capacity.
 
     The task of allocating audit record storage capacity is usually performed
-during initial installation of RHEL 8.'
-  desc 'check', 'Verify RHEL 8 allocates audit record storage capacity to store at least one week of audit records when audit records are not immediately sent to a central audit record storage facility.
+during initial installation of RHEL 8."
+  desc 'check', "Verify RHEL 8 allocates audit record storage capacity to store at least one week of audit records when audit records are not immediately sent to a central audit record storage facility.
 
 Determine to which partition the audit records are being written with the following command:
 
@@ -29,8 +29,8 @@ $ sudo du -sh [audit_partition]
 
 If the audit record partition is not allocated for sufficient storage capacity, this is a finding.
 
-Note: The partition size needed to capture a week of audit records is based on the activity level of the system and the total storage capacity available. Typically 10.0 GB of storage space for audit records should be sufficient.'
-  desc 'fix', 'Allocate enough storage capacity for at least one week of audit records
+Note: The partition size needed to capture a week of audit records is based on the activity level of the system and the total storage capacity available. Typically 10.0 GB of storage space for audit records should be sufficient."
+  desc 'fix', "Allocate enough storage capacity for at least one week of audit records
 when audit records are not immediately sent to a central audit record storage
 facility.
 
@@ -39,7 +39,7 @@ records, resize the partition with sufficient space to contain one week of
 audit records.
 
     If audit records are not stored on a partition made specifically for audit
-records, a new partition with sufficient space will need be to be created.'
+records, a new partition with sufficient space will need be to be created."
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000341-GPOS-00132'

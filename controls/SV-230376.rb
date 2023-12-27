@@ -2,12 +2,12 @@
 
 control 'SV-230376' do
   title 'RHEL 8 must prohibit the use of cached authentications after one day.'
-  desc 'If cached authentication information is out-of-date, the validity of
+  desc "If cached authentication information is out-of-date, the validity of
 the authentication information may be questionable.
 
     RHEL 8 includes multiple options for configuring authentication, but this
 requirement will be focus on the System Security Services Daemon (SSSD). By
-default sssd does not cache credentials.'
+default sssd does not cache credentials."
   desc 'check', 'Verify that the SSSD prohibits the use of cached authentications after one
 day.
 

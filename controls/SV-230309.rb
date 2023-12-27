@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
 control 'SV-230309' do
-  title 'Local RHEL 8 initialization files must not execute world-writable
-programs.'
-  desc 'If user start-up files execute world-writable programs, especially in
+  title "Local RHEL 8 initialization files must not execute world-writable
+programs."
+  desc "If user start-up files execute world-writable programs, especially in
 unprotected directories, they could be maliciously modified to destroy user
 files or otherwise compromise the system at the user level. If the system is
 compromised at the user level, it is easier to elevate privileges to eventually
-compromise the system at the root and network level.'
+compromise the system at the root and network level."
   desc 'check', 'Verify that local initialization files do not execute world-writable
 programs.
 
@@ -28,10 +28,10 @@ home directories in the "/home" directory.
 
     If any local initialization files are found to reference world-writable
 files, this is a finding.'
-  desc 'fix', 'Set the mode on files being executed by the local initialization files with
+  desc 'fix', "Set the mode on files being executed by the local initialization files with
 the following command:
 
-    $ sudo chmod 0755 <file>'
+    $ sudo chmod 0755 <file>"
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
@@ -47,7 +47,6 @@ the following command:
       skip 'This control consistently takes a long to run and has been disabled using the disable_slow_controls attribute. You must enable this control for a full accredidation for production.'
     end
   else
-
     ignore_shells = input('non_interactive_shells').join('|')
 
     # Get home directory for users with UID >= 1000 or UID == 0 and support interactive logins.

@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 control 'SV-230363' do
-  title 'RHEL 8 must require the change of at least 8 characters when passwords
-are changed.'
+  title "RHEL 8 must require the change of at least 8 characters when passwords
+are changed."
   desc 'Use of a complex password helps to increase the time and resources
 required to compromise the password. Password complexity, or strength, is a
 measure of the effectiveness of a password in resisting attempts at guessing

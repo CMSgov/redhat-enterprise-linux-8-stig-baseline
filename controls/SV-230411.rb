@@ -2,7 +2,7 @@
 
 control 'SV-230411' do
   title 'The RHEL 8 audit package must be installed.'
-  desc 'Without establishing what type of events occurred, the source of
+  desc "Without establishing what type of events occurred, the source of
 events, where events occurred, and the outcome of events, it would be difficult
 to establish, correlate, and investigate the events leading up to an outage or
 attack.
@@ -14,7 +14,7 @@ filenames involved, and access control or flow control rules invoked.
 
     Associating event types with detected events in RHEL 8 audit logs provides
 a means of investigating an attack, recognizing resource utilization or
-capacity thresholds, or identifying an improperly configured RHEL 8 system.'
+capacity thresholds, or identifying an improperly configured RHEL 8 system."
   desc 'check', 'Verify the audit service is configured to produce audit records.
 
 Check that the audit service is installed with the following command:
@@ -22,13 +22,13 @@ Check that the audit service is installed with the following command:
 $ sudo yum list installed audit
 
 If the "audit" package is not installed, this is a finding.'
-  desc 'fix', 'Configure the audit service to produce audit records containing the
+  desc 'fix', "Configure the audit service to produce audit records containing the
 information needed to establish when (date and time) an event occurred.
 
     Install the audit service (if the audit service is not already installed)
 with the following command:
 
-    $ sudo yum install audit'
+    $ sudo yum install audit"
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000062-GPOS-00031'

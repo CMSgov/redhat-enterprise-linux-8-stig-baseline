@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-250315' do
   title 'RHEL 8 systems, versions 8.2 and above, must configure SELinux context type to allow the use of a non-default faillock tally directory.'
   desc %q(By limiting the number of failed logon attempts, the risk of unauthorized system access via user password guessing, otherwise known as brute-force attacks, is reduced. Limits are imposed by locking the account.

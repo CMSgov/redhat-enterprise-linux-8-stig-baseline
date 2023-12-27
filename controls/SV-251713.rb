@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-251713' do
   title 'RHEL 8 must ensure the password complexity module is enabled in the system-auth file.'
   desc 'Use of a complex password helps to increase the time and resources required to compromise the password. Password complexity, or strength, is a measure of the effectiveness of a password in resisting attempts at guessing and brute-force attacks. "pwquality" enforces complex password construction configuration and has the ability to limit brute-force attacks on the system.

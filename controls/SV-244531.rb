@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 control 'SV-244531' do
-  title 'All RHEL 8 local interactive user home directory files must have mode
-0750 or less permissive.'
-  desc 'Excessive permissions on local interactive user home directories may
-allow unauthorized access to user files by other users.'
+  title "All RHEL 8 local interactive user home directory files must have mode
+0750 or less permissive."
+  desc "Excessive permissions on local interactive user home directories may
+allow unauthorized access to user files by other users."
   desc 'check', 'Verify all files and directories contained in a local interactive user home
 directory, excluding local initialization files, have a mode of "0750".
     Files that begin with a "." are excluded from this requirement.

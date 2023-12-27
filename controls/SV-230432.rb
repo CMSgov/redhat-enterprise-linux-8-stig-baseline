@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 control 'SV-230432' do
-  title 'Successful/unsuccessful uses of setsebool in RHEL 8 must generate an
-audit record.'
+  title "Successful/unsuccessful uses of setsebool in RHEL 8 must generate an
+audit record."
   desc 'Reconstruction of harmful events or forensic analysis is not possible
 if audit records do not contain enough information.
 

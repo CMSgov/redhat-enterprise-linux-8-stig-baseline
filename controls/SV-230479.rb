@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 control 'SV-230479' do
-  title 'The RHEL 8 audit records must be off-loaded onto a different system or
-storage media from the system being audited.'
+  title "The RHEL 8 audit records must be off-loaded onto a different system or
+storage media from the system being audited."
   desc 'Information stored in one location is vulnerable to accidental or
 incidental deletion or alteration.
 
@@ -26,7 +26,7 @@ currently available only as part of the rsyslogd 3.15.0 and above.
     TCP *.* @@remotesystemname
     RELP *.* :omrelp:remotesystemname:2514
     Note that a port number was given as there is no standard port for RELP.'
-  desc 'check', 'Verify the audit system offloads audit records onto a different system or media from the system being audited with the following command:
+  desc 'check', "Verify the audit system offloads audit records onto a different system or media from the system being audited with the following command:
 
      $ sudo grep @@ /etc/rsyslog.conf /etc/rsyslog.d/*.conf
 
@@ -34,7 +34,7 @@ currently available only as part of the rsyslogd 3.15.0 and above.
 
 If a remote server is not configured, or the line is commented out, ask the system administrator to indicate how the audit logs are offloaded to a different system or media.
 
-If there is no evidence that the audit logs are being offloaded to another system or media, this is a finding.'
+If there is no evidence that the audit logs are being offloaded to another system or media, this is a finding."
   desc 'fix', 'Configure the operating system to offload audit records onto a different system or media from the system being audited by specifying the remote logging server in "/etc/rsyslog.conf" or "/etc/rsyslog.d/[customfile].conf" with the name or IP address of the log aggregation server.
 
 For UDP:

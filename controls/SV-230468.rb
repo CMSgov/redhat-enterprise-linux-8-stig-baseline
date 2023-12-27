@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 control 'SV-230468' do
-  title 'RHEL 8 must enable auditing of processes that start prior to the audit
-daemon.'
-  desc 'Without the capability to generate audit records, it would be
+  title "RHEL 8 must enable auditing of processes that start prior to the audit
+daemon."
+  desc "Without the capability to generate audit records, it would be
 difficult to establish, correlate, and investigate the events relating to an
 incident or identify those responsible for one.
 
@@ -34,7 +34,7 @@ all direct access to the information system;
 
     3) All account creations, modifications, disabling, and terminations; and
 
-    4) All kernel module load, unload, and restart actions.'
+    4) All kernel module load, unload, and restart actions."
   desc 'check', 'Verify RHEL 8 enables auditing of processes that start prior to the audit daemon with the following commands:
 
 $ sudo grub2-editenv list | grep audit

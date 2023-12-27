@@ -2,9 +2,9 @@
 
 control 'SV-230377' do
   title 'RHEL 8 must prevent the use of dictionary words for passwords.'
-  desc 'If RHEL 8 allows the user to select passwords based on dictionary
+  desc "If RHEL 8 allows the user to select passwords based on dictionary
 words, this increases the chances of password compromise by increasing the
-opportunity for successful guesses, and brute-force attacks.'
+opportunity for successful guesses, and brute-force attacks."
   desc 'check', 'Verify RHEL 8 prevents the use of dictionary words for passwords.
 
 Determine if the field "dictcheck" is set with the following command:

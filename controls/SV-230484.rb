@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 control 'SV-230484' do
-  title 'RHEL 8 must securely compare internal information system clocks at
+  title "RHEL 8 must securely compare internal information system clocks at
 least every 24 hours with a server synchronized to an authoritative time
 source, such as the United States Naval Observatory (USNO) time servers, or a
 time server designated for the appropriate DoD network (NIPRNet/SIPRNet),
-and/or the Global Positioning System (GPS).'
+and/or the Global Positioning System (GPS)."
   desc 'Inaccurate time stamps make it more difficult to correlate events and
 can lead to an inaccurate analysis. Determining the correct time a particular
 event occurred on a system is critical when conducting forensic analysis and
@@ -53,11 +53,11 @@ source by running the following command:
 
     If the parameter "server" is not set or is not set to an authoritative
 DoD time source, this is a finding.'
-  desc 'fix', 'Configure the operating system to securely compare internal information
+  desc 'fix', "Configure the operating system to securely compare internal information
 system clocks at least every 24 hours with an NTP server by adding/modifying
 the following line in the /etc/chrony.conf file.
 
-    server [ntp.server.name] iburst maxpoll 16'
+    server [ntp.server.name] iburst maxpoll 16"
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000355-GPOS-00143'
@@ -75,7 +75,6 @@ the following line in the /etc/chrony.conf file.
       skip 'Control not applicable within a container'
     end
   else
-
     time_sources = ntp_conf('/etc/chrony.conf').server
     # Cover case when a single server is defined and resource returns a string and not an array
     time_sources = [time_sources] if time_sources.is_a? String

@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 control 'SV-230397' do
-  title 'RHEL 8 audit logs must be owned by root to prevent unauthorized read
-access.'
+  title "RHEL 8 audit logs must be owned by root to prevent unauthorized read
+access."
   desc "Only authorized personnel should be aware of errors and the details of
 the errors. Error messages are an indicator of an organization's operational
 state or can identify the RHEL 8 system or platform. Additionally, Personally

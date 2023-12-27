@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 control 'SV-230477' do
-  title 'RHEL 8 must have the packages required for offloading audit logs
-installed.'
+  title "RHEL 8 must have the packages required for offloading audit logs
+installed."
   desc 'Information stored in one location is vulnerable to accidental or
 incidental deletion or alteration.
 
@@ -37,10 +37,10 @@ logs installed with the following commands:
 indicate how audit logs are being offloaded and what packages are installed to
 support it.  If there is no evidence of audit logs being offloaded, this is a
 finding.'
-  desc 'fix', 'Configure the operating system to offload audit logs by installing the
+  desc 'fix', "Configure the operating system to offload audit logs by installing the
 required packages with the following command:
 
-    $ sudo yum install rsyslog'
+    $ sudo yum install rsyslog"
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'

@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 control 'SV-230256' do
-  title 'The RHEL 8 operating system must implement DoD-approved TLS encryption
-in the GnuTLS package.'
-  desc 'Without cryptographic integrity protections, information can be
+  title "The RHEL 8 operating system must implement DoD-approved TLS encryption
+in the GnuTLS package."
+  desc "Without cryptographic integrity protections, information can be
 altered by unauthorized users without detection.
 
     Transport Layer Security (TLS) encryption is a required security setting as
@@ -23,7 +23,7 @@ maintaining the confidentiality of the secret key used to generate the hash.
     The GnuTLS library offers an API to access secure communications protocols.
  SSLv2 is not available in the GnuTLS library.  The RHEL 8 system-wide crypto
 policy defines employed algorithms in the
-/etc/crypto-policies/back-ends/gnutls.config file.'
+/etc/crypto-policies/back-ends/gnutls.config file."
   desc 'check', 'Verify the GnuTLS library is configured to only allow DoD-approved SSL/TLS Versions:
 
 $ sudo grep -io +vers.*  /etc/crypto-policies/back-ends/gnutls.config

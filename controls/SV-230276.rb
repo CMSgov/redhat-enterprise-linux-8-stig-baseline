@@ -1,16 +1,16 @@
 # frozen_string_literal: true
 
 control 'SV-230276' do
-  title 'RHEL 8 must implement non-executable data to protect its memory from
-unauthorized code execution.'
-  desc 'Some adversaries launch attacks with the intent of executing code in
+  title "RHEL 8 must implement non-executable data to protect its memory from
+unauthorized code execution."
+  desc "Some adversaries launch attacks with the intent of executing code in
 non-executable regions of memory or in memory locations that are prohibited.
 Security safeguards employed to protect memory include, for example, data
 execution prevention and address space layout randomization. Data execution
 prevention safeguards can be either hardware-enforced or software-enforced with
 hardware providing the greater strength of mechanism.
 
-    Examples of attacks are buffer overflow attacks.'
+    Examples of attacks are buffer overflow attacks."
   desc 'check', 'Verify the NX (no-execution) bit flag is set on the system.
 
     Check that the no-execution bit flag is set with the following commands:
@@ -26,8 +26,8 @@ check the cpuinfo settings with the following command:
     flags : fpu vme de pse tsc ms nx rdtscp lm constant_tsc
 
     If "flags" does not contain the "nx" flag, this is a finding.'
-  desc 'fix', 'The NX bit execute protection must be enabled in the system
-BIOS.'
+  desc 'fix', "The NX bit execute protection must be enabled in the system
+BIOS."
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000433-GPOS-00192'

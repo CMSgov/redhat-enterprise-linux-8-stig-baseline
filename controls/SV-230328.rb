@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 control 'SV-230328' do
-  title 'A separate RHEL 8 filesystem must be used for user home directories
-(such as /home or an equivalent).'
-  desc 'The use of separate file systems for different paths can protect the
-system from failures resulting from a file system becoming full or failing.'
+  title "A separate RHEL 8 filesystem must be used for user home directories
+(such as /home or an equivalent)."
+  desc "The use of separate file systems for different paths can protect the
+system from failures resulting from a file system becoming full or failing."
   desc 'check', %q(Verify that a separate file system has been created for non-privileged local interactive user home directories.
 
   Check the home directory assignment for all non-privileged users, users with a User Identifier (UID) greater than 1000, on the system with the following command:

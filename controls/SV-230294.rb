@@ -2,8 +2,8 @@
 
 control 'SV-230294' do
   title 'RHEL 8 must use a separate file system for the system audit data path.'
-  desc 'The use of separate file systems for different paths can protect the
-system from failures resulting from a file system becoming full or failing.'
+  desc "The use of separate file systems for different paths can protect the
+system from failures resulting from a file system becoming full or failing."
   desc 'check', 'Verify that a separate file system/partition has been created for the
 system audit data path with the following command:
 

@@ -3,9 +3,9 @@
 # al: reviewed
 
 control 'SV-230226' do
-  title 'RHEL 8 must display the Standard Mandatory DoD Notice and Consent
+  title "RHEL 8 must display the Standard Mandatory DoD Notice and Consent
 Banner before granting local or remote access to the system via a graphical
-user logon.'
+user logon."
   desc 'Display of a standardized and approved use notification before
 granting access to the operating system ensures privacy and security
 notification verbiage used is consistent with applicable federal laws,

@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
 control 'SV-230552' do
-  title 'The RHEL 8 file integrity tool must be configured to verify Access
-Control Lists (ACLs).'
-  desc 'ACLs can provide permissions beyond those permitted through the file
+  title "The RHEL 8 file integrity tool must be configured to verify Access
+Control Lists (ACLs)."
+  desc "ACLs can provide permissions beyond those permitted through the file
 mode and must be verified by file integrity tools.
 
     RHEL 8 installation media come with a file integrity tool, Advanced
-Intrusion Detection Environment (AIDE).'
+Intrusion Detection Environment (AIDE)."
   desc 'check', 'Verify the file integrity tool is configured to verify ACLs.
 
 Note: AIDE is highly configurable at install time. This requirement assumes the "aide.conf" file is under the "/etc" directory.

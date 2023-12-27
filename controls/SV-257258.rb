@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-257258' do
   title 'RHEL 8 must terminate idle user sessions.'
   desc 'Terminating an idle session within a short time period reduces the window of opportunity for unauthorized personnel to take control of a management session enabled on the console or console port that has been left unattended.'

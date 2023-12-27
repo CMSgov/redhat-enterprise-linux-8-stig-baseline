@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
 control 'SV-230401' do
-  title 'RHEL 8 audit log directory must have a mode of 0700 or less permissive
-to prevent unauthorized read access.'
-  desc 'Unauthorized disclosure of audit records can reveal system and
+  title "RHEL 8 audit log directory must have a mode of 0700 or less permissive
+to prevent unauthorized read access."
+  desc "Unauthorized disclosure of audit records can reveal system and
 configuration data to attackers, thus compromising its confidentiality.
 
     Audit information includes all information (e.g., audit records, audit
-settings, audit reports) needed to successfully audit RHEL 8 system activity.'
+settings, audit reports) needed to successfully audit RHEL 8 system activity."
   desc 'check', 'Verify the audit log directories have a mode of "0700" or less permissive
 by first determining where the audit logs are stored with the following command:
 

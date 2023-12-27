@@ -2,7 +2,7 @@
 
 control 'SV-230262' do
   title 'RHEL 8 library files must be group-owned by root or a system account.'
-  desc 'If RHEL 8 were to allow any user to make changes to software
+  desc "If RHEL 8 were to allow any user to make changes to software
 libraries, then those changes might be implemented without undergoing the
 appropriate testing and approvals that are part of a robust change management
 process.
@@ -12,7 +12,7 @@ accessible and configurable, as in the case of interpreted languages. Software
 libraries also include privileged programs that execute with escalated
 privileges. Only qualified and authorized individuals will be allowed to obtain
 access to information system components for purposes of initiating changes,
-including upgrades and modifications.'
+including upgrades and modifications."
   desc 'check', 'Verify the system-wide shared library files are group-owned by "root"
 with the following command:
 

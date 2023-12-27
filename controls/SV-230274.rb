@@ -3,7 +3,7 @@
 control 'SV-230274' do
   title 'RHEL 8 must implement certificate status checking for multifactor authentication.'
 
-  desc 'Using an authentication device, such as a DoD Common Access Card (CAC)
+  desc "Using an authentication device, such as a DoD Common Access Card (CAC)
     or token that is separate from the information system, ensures that even if the
     information system is compromised, credentials stored on the authentication
     device will not be affected.
@@ -16,7 +16,7 @@ control 'SV-230274' do
     RHEL 8 includes multiple options for configuring certificate status
 checking, but for this requirement focuses on the System Security Services
 Daemon (SSSD). By default, sssd performs Online Certificate Status Protocol
-(OCSP) checking and certificate verification using a sha256 digest function.'
+(OCSP) checking and certificate verification using a sha256 digest function."
   desc 'check', 'Verify the operating system implements certificate status checking for multifactor authentication.
 
 Note: If the System Administrator demonstrates the use of an approved alternate multifactor authentication method, this requirement is not applicable.

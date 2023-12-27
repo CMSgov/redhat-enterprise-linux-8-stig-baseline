@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 control 'SV-230390' do
-  title 'The RHEL 8 System must take appropriate action when an audit
-processing failure occurs.'
-  desc 'It is critical for the appropriate personnel to be aware if a system
+  title "The RHEL 8 System must take appropriate action when an audit
+processing failure occurs."
+  desc "It is critical for the appropriate personnel to be aware if a system
 is at risk of failing to process audit logs as required. Without this
 notification, the security personnel may be unaware of an impending failure of
 the audit capability, and system operation may be adversely affected.
@@ -15,7 +15,7 @@ exceeded.
     This requirement applies to each audit data storage repository (i.e.,
 distinct information system component where audit records are stored), the
 centralized audit storage capacity of organizations (i.e., all audit data
-storage repositories combined), or both.'
+storage repositories combined), or both."
   desc 'check', 'Verify RHEL 8 takes the appropriate action when an audit processing failure
 occurs.
 

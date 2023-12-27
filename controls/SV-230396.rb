@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 control 'SV-230396' do
-  title 'RHEL 8 audit logs must have a mode of 0600 or less permissive to
-prevent unauthorized read access.'
+  title "RHEL 8 audit logs must have a mode of 0600 or less permissive to
+prevent unauthorized read access."
   desc "Only authorized personnel should be aware of errors and the details of
 the errors. Error messages are an indicator of an organization's operational
 state or can identify the RHEL 8 system or platform. Additionally, Personally
@@ -31,9 +31,9 @@ of "0600" or less permissive with the following command:
 
     If the audit log has a mode more permissive than "0600", this is a
 finding.'
-  desc 'fix', 'Configure the audit log to be protected from unauthorized read access by setting the correct permissive mode with the following command:
+  desc 'fix', "Configure the audit log to be protected from unauthorized read access by setting the correct permissive mode with the following command:
 
-$ sudo chmod 0600 /var/log/audit/audit.log'
+$ sudo chmod 0600 /var/log/audit/audit.log"
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000057-GPOS-00027'

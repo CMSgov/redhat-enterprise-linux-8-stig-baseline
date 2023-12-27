@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-256974' do
   title 'RHEL 8 must be configured to allow sending email notifications of unauthorized configuration changes to designated personnel.'
   desc "Unauthorized changes to the baseline configuration could make the system vulnerable to various attacks or allow unauthorized access to the operating system. Changes to operating system configurations can have unintended side effects, some of which may be relevant to security.

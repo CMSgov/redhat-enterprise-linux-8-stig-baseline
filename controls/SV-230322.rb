@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
 control 'SV-230322' do
-  title 'All RHEL 8 local interactive user home directories must be group-owned
-by the home directory owner’s primary group.'
-  desc 'If the Group Identifier (GID) of a local interactive user’s home
+  title "All RHEL 8 local interactive user home directories must be group-owned
+by the home directory owner’s primary group."
+  desc "If the Group Identifier (GID) of a local interactive user’s home
 directory is not the same as the primary GID of the user, this would allow
 unauthorized access to the user’s files, and users that share the same group
-may not be able to access files that they legitimately should.'
+may not be able to access files that they legitimately should."
   desc 'check', %q(Verify the assigned home directory of all local interactive users is group-owned by that user’s primary GID with the following command:
 
 Note: This may miss local interactive users that have been assigned a privileged UID. Evidence of interactive use may be obtained from a number of log files containing system logon information. The returned directory "/home/smithj" is used as an example.

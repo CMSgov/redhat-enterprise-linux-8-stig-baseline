@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 control 'SV-251710' do
   title 'The RHEL 8 operating system must use a file integrity tool to verify correct operation of all security functions.'
-  desc 'Without verification of the security functions, security functions may not operate correctly, and the failure may go unnoticed. Security function is defined as the hardware, software, and/or firmware of the information system responsible for enforcing the system security policy and supporting the isolation of code and data on which the protection is based. Security functionality includes, but is not limited to, establishing system accounts, configuring access authorizations (i.e., permissions, privileges), setting events to be audited, and setting intrusion detection parameters.
+  desc "Without verification of the security functions, security functions may not operate correctly, and the failure may go unnoticed. Security function is defined as the hardware, software, and/or firmware of the information system responsible for enforcing the system security policy and supporting the isolation of code and data on which the protection is based. Security functionality includes, but is not limited to, establishing system accounts, configuring access authorizations (i.e., permissions, privileges), setting events to be audited, and setting intrusion detection parameters.
 
-This requirement applies to the RHEL 8 operating system performing security function verification/testing and/or systems and environments that require this functionality.'
+This requirement applies to the RHEL 8 operating system performing security function verification/testing and/or systems and environments that require this functionality."
   desc 'check', %q(Verify that Advanced Intrusion Detection Environment (AIDE) is installed and verifies the correct operation of all security functions.
 
 Check that the AIDE package is installed with the following command:
@@ -18,7 +20,7 @@ If AIDE is installed, check if it has been initialized with the following comman
      $ sudo /usr/sbin/aide --check
 
 If the output is "Couldn't open file /var/lib/aide/aide.db.gz for reading", this is a finding.)
-  desc 'fix', 'Install AIDE, initialize it, and perform a manual check.
+  desc 'fix', "Install AIDE, initialize it, and perform a manual check.
 
 Install AIDE:
      $ sudo yum install aide
@@ -54,7 +56,7 @@ Example output:
      AIDE found differences between database and filesystem!!
      ...
 
-Done.'
+Done."
   impact 0.5
   tag check_id: 'C-55147r880728_chk'
   tag severity: 'medium'

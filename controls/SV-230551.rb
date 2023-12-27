@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
 control 'SV-230551' do
-  title 'The RHEL 8 file integrity tool must be configured to verify extended
-attributes.'
-  desc 'Extended attributes in file systems are used to contain arbitrary data
+  title "The RHEL 8 file integrity tool must be configured to verify extended
+attributes."
+  desc "Extended attributes in file systems are used to contain arbitrary data
 and file metadata with security implications.
 
     RHEL 8 installation media come with a file integrity tool, Advanced
-Intrusion Detection Environment (AIDE).'
+Intrusion Detection Environment (AIDE)."
   desc 'check', 'Verify the file integrity tool is configured to verify extended attributes.
 
     If AIDE is not installed, ask the System Administrator how file integrity

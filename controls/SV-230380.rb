@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 control 'SV-230380' do
-  title 'RHEL 8 must not allow accounts configured with blank or null
-passwords.'
-  desc 'If an account has an empty password, anyone could log on and run
+  title "RHEL 8 must not allow accounts configured with blank or null
+passwords."
+  desc "If an account has an empty password, anyone could log on and run
 commands with the privileges of that account. Accounts with empty passwords
-should never be used in operational environments.'
+should never be used in operational environments."
   desc 'check', 'To verify that null passwords cannot be used, run the following command:
 
 $ sudo grep -ir permitemptypasswords /etc/ssh/sshd_config*

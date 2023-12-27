@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 control 'SV-230273' do
-  title 'RHEL 8 must have the packages required for multifactor authentication
-installed.'
-  desc 'Using an authentication device, such as a DoD Common Access Card (CAC)
+  title "RHEL 8 must have the packages required for multifactor authentication
+installed."
+  desc "Using an authentication device, such as a DoD Common Access Card (CAC)
 or token that is separate from the information system, ensures that even if the
 information system is compromised, credentials stored on the authentication
 device will not be affected.
@@ -24,7 +24,7 @@ example, dial-up, broadband, and wireless.
     This requirement only applies to components where this is specific to the
 function of the device or has the concept of an organizational user (e.g., VPN,
 proxy capability). This does not apply to authentication for the purpose of
-configuring the device itself (management).'
+configuring the device itself (management)."
   desc 'check', 'Verify the operating system has the packages required for multifactor
 authentication installed with the following commands:
 
@@ -36,10 +36,10 @@ authentication installed with the following commands:
 to indicate what type of multifactor authentication is being utilized and what
 packages are installed to support it.  If there is no evidence of multifactor
 authentication being used, this is a finding.'
-  desc 'fix', 'Configure the operating system to implement multifactor authentication by
+  desc 'fix', "Configure the operating system to implement multifactor authentication by
 installing the required package with the following command:
 
-    $ sudo yum install openssl-pkcs11'
+    $ sudo yum install openssl-pkcs11"
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000375-GPOS-00160'

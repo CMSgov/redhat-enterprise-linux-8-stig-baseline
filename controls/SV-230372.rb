@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 control 'SV-230372' do
-  title 'RHEL 8 must implement smart card logon for multifactor authentication
-for access to interactive accounts.'
-  desc 'Using an authentication device, such as a Common Access Card (CAC) or
+  title "RHEL 8 must implement smart card logon for multifactor authentication
+for access to interactive accounts."
+  desc "Using an authentication device, such as a Common Access Card (CAC) or
 token that is separate from the information system, ensures that even if the
 information system is compromised, that compromise will not affect credentials
 stored on the authentication device.
@@ -17,7 +17,7 @@ U.S. Government Personal Identity Verification card and the DoD CAC.
 RHEL 8. Some methods include a local system multifactor account mapping or
 joining the system to a domain and utilizing a Red Hat idM server or Microsoft
 Windows Active Directory server. Any of these methods will require that the
-client operating system handle the multifactor authentication correctly.'
+client operating system handle the multifactor authentication correctly."
   desc 'check', 'Verify RHEL 8 uses multifactor authentication for local access to accounts.
 
     Note: If the System Administrator demonstrates the use of an approved

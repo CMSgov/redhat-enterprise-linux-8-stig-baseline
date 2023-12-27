@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 control 'SV-244542' do
-  title 'RHEL 8 audit records must contain information to establish what type
+  title "RHEL 8 audit records must contain information to establish what type
 of events occurred, the source of events, where events occurred, and the
-outcome of events.'
-  desc 'Without establishing what type of events occurred, the source of
+outcome of events."
+  desc "Without establishing what type of events occurred, the source of
 events, where events occurred, and the outcome of events, it would be difficult
 to establish, correlate, and investigate the events leading up to an outage or
 attack.
@@ -16,7 +16,7 @@ filenames involved, and access control or flow control rules invoked.
 
     Associating event types with detected events in RHEL 8 audit logs provides
 a means of investigating an attack, recognizing resource utilization or
-capacity thresholds, or identifying an improperly configured RHEL 8 system.'
+capacity thresholds, or identifying an improperly configured RHEL 8 system."
   desc 'check', 'Verify the audit service is configured to produce audit records with the following command:
 
 $ sudo systemctl status auditd.service
@@ -26,13 +26,13 @@ Loaded:loaded (/usr/lib/systemd/system/auditd.service; enabled; vendor preset: e
 Active: active (running) since Tues 2020-12-11 12:56:56 EST; 4 weeks 0 days ago
 
 If the audit service is not "active" and "running", this is a finding.'
-  desc 'fix', 'Configure the audit service to produce audit records containing the
+  desc 'fix', "Configure the audit service to produce audit records containing the
 information needed to establish when (date and time) an event occurred with the
 following commands:
 
     $ sudo systemctl enable auditd.service
 
-    $ sudo systemctl start auditd.service'
+    $ sudo systemctl start auditd.service"
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000062-GPOS-00031'

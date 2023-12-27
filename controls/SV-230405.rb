@@ -1,16 +1,16 @@
 # frozen_string_literal: true
 
 control 'SV-230405' do
-  title 'RHEL 8 must generate audit records for all account creations,
+  title "RHEL 8 must generate audit records for all account creations,
 modifications, disabling, and termination events that affect
-/etc/security/opasswd.'
-  desc 'Without generating audit records that are specific to the security and
+/etc/security/opasswd."
+  desc "Without generating audit records that are specific to the security and
 mission needs of the organization, it would be difficult to establish,
 correlate, and investigate the events relating to an incident or identify those
 responsible for one.
 
     Audit records can be generated from various components within the
-information system (e.g., module or policy filter).'
+information system (e.g., module or policy filter)."
   desc 'check', 'Verify RHEL 8 generates audit records for all account creations,
 modifications, disabling, and termination events that affect
 "/etc/security/opasswd".

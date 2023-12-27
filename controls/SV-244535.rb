@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 control 'SV-244535' do
-  title 'RHEL 8 must initiate a session lock for graphical user interfaces when
-the screensaver is activated.'
+  title "RHEL 8 must initiate a session lock for graphical user interfaces when
+the screensaver is activated."
   desc "A session time-out lock is a temporary action taken when a user stops
 work and moves away from the immediate physical vicinity of the information
 system but does not log out because of the temporary nature of the absence.

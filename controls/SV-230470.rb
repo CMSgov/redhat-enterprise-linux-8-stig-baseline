@@ -2,7 +2,7 @@
 
 control 'SV-230470' do
   title 'RHEL 8 must enable Linux audit logging for the USBGuard daemon.'
-  desc 'Without the capability to generate audit records, it would be
+  desc "Without the capability to generate audit records, it would be
 difficult to establish, correlate, and investigate the events relating to an
 incident or identify those responsible for one.
 
@@ -33,7 +33,7 @@ all direct access to the information system;
 
     3) All account creations, modifications, disabling, and terminations; and
 
-    4) All kernel module load, unload, and restart actions.'
+    4) All kernel module load, unload, and restart actions."
   desc 'check', 'Verify RHEL 8 enables Linux audit logging of the USBGuard daemon with the
 following commands:
 

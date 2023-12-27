@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 control 'SV-244524' do
-  title 'The RHEL 8 pam_unix.so module must be configured in the system-auth
+  title "The RHEL 8 pam_unix.so module must be configured in the system-auth
 file to use a FIPS 140-2 approved cryptographic hashing algorithm for system
-authentication.'
-  desc 'Unapproved mechanisms that are used for authentication to the
+authentication."
+  desc "Unapproved mechanisms that are used for authentication to the
 cryptographic module are not verified and therefore cannot be relied upon to
 provide confidentiality or integrity, and DoD data may be compromised.
 
@@ -14,7 +14,7 @@ mechanisms for authenticating to cryptographic modules.
     FIPS 140-2 is the current standard for validating that mechanisms used to
 access cryptographic modules utilize authentication that meets DoD
 requirements. This allows for Security Levels 1, 2, 3, or 4 for use on a
-general-purpose computing system.'
+general-purpose computing system."
   desc 'check', 'Verify that pam_unix.so module is configured to use sha512.
 
 Check that pam_unix.so module is configured to use sha512 in /etc/pam.d/system-auth with the following command:

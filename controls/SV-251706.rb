@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-251706' do
   title 'The RHEL 8 operating system must not have accounts configured with blank or null passwords.'
   desc 'If an account has an empty password, anyone could log on and run commands with the privileges of that account. Accounts with empty passwords should never be used in operational environments.'
@@ -6,12 +8,12 @@ control 'SV-251706' do
 $ sudo awk -F: '!$2 {print $1}' /etc/shadow
 
 If the command returns any results, this is a finding.)
-  desc 'fix', 'Configure all accounts on the system to have a password or lock the account with the following commands:
+  desc 'fix', "Configure all accounts on the system to have a password or lock the account with the following commands:
 
 Perform a password reset:
 $ sudo passwd [username]
 Lock an account:
-$ sudo passwd -l [username]'
+$ sudo passwd -l [username]"
   impact 0.7
   tag check_id: 'C-55143r809340_chk'
   tag severity: 'high'

@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 control 'SV-230227' do
-  title 'RHEL 8 must display the Standard Mandatory DoD Notice and Consent
+  title "RHEL 8 must display the Standard Mandatory DoD Notice and Consent
 Banner before granting local or remote access to the system via a command line
-user logon.'
+user logon."
   desc 'Display of a standardized and approved use notification before
 granting access to the operating system ensures privacy and security
 notification verbiage used is consistent with applicable federal laws,
@@ -42,7 +42,7 @@ communications, or work product, related to personal representation or services
 by attorneys, psychotherapists, or clergy, and their assistants. Such
 communications and work product are private and confidential. See User
 Agreement for details."'
-  desc 'check', 'Verify RHEL 8 displays the Standard Mandatory DoD Notice and Consent Banner
+  desc 'check', "Verify RHEL 8 displays the Standard Mandatory DoD Notice and Consent Banner
 before granting access to the operating system via a command line user logon.
 
     Check that RHEL 8 displays a banner at the command line login screen with
@@ -80,7 +80,7 @@ communications and work product are private and confidential. See User
 Agreement for details.”
 
     If the banner text does not match the Standard Mandatory DoD Notice and
-Consent Banner exactly, this is a finding.'
+Consent Banner exactly, this is a finding."
   desc 'fix', 'Configure RHEL 8 to display the Standard Mandatory DoD Notice and Consent
 Banner before granting access to the system via command line logon.
 

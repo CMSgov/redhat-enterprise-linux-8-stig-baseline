@@ -2,7 +2,7 @@
 
 control 'SV-230540' do
   title 'RHEL 8 must not enable IPv6 packet forwarding unless the system is a router.'
-  desc 'Routing protocol daemons are typically used on routers to exchange network topology information with other routers. If this software is used when not required, system network information may be unnecessarily transmitted across the network.
+  desc "Routing protocol daemons are typically used on routers to exchange network topology information with other routers. If this software is used when not required, system network information may be unnecessarily transmitted across the network.
 
 The sysctl --system command will load settings from all system configuration files. All configuration files are sorted by their filename in lexicographic order, regardless of which of the directories they reside in. If multiple files specify the same option, the entry in the file with the lexicographically latest name will take precedence. Files are read from directories in the following list from top to bottom. Once a file of a given filename is loaded, any file of the same name in subsequent directories is ignored.
 /etc/sysctl.d/*.conf
@@ -10,7 +10,7 @@ The sysctl --system command will load settings from all system configuration fil
 /usr/local/lib/sysctl.d/*.conf
 /usr/lib/sysctl.d/*.conf
 /lib/sysctl.d/*.conf
-/etc/sysctl.conf'
+/etc/sysctl.conf"
   desc 'check', 'Verify RHEL 8 is not performing IPv6 packet forwarding, unless the system is a router.
 
 Note: If IPv6 is disabled on the system, this requirement is Not Applicable.

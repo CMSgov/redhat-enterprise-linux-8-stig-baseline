@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
 control 'SV-230556' do
-  title 'The RHEL 8 SSH daemon must prevent remote hosts from connecting to the
-proxy display.'
-  desc 'When X11 forwarding is enabled, there may be additional exposure to
+  title "The RHEL 8 SSH daemon must prevent remote hosts from connecting to the
+proxy display."
+  desc "When X11 forwarding is enabled, there may be additional exposure to
 the server and client displays if the sshd proxy display is configured to
 listen on the wildcard address.  By default, sshd binds the forwarding server
 to the loopback address and sets the hostname part of the DIPSLAY environment
 variable to localhost.  This prevents remote hosts from connecting to the proxy
-display.'
+display."
   desc 'check', 'Verify the SSH daemon prevents remote hosts from connecting to the proxy display.
 
 Check the SSH X11UseLocalhost setting with the following command:

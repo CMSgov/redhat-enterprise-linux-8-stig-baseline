@@ -2,13 +2,13 @@
 
 control 'SV-230275' do
   title 'RHEL 8 must accept Personal Identity Verification (PIV) credentials.'
-  desc 'The use of PIV credentials facilitates standardization and reduces the
+  desc "The use of PIV credentials facilitates standardization and reduces the
 risk of unauthorized access.
 
     The DoD has mandated the use of the Common Access Card (CAC) to support
 identity management and personal authentication for systems covered under
 Homeland Security Presidential Directive (HSPD) 12, as well as making the CAC a
-primary component of layered protection for national security systems.'
+primary component of layered protection for national security systems."
   desc 'check', 'Verify RHEL 8 accepts PIV credentials.
 
     Check that the "opensc" package is installed on the system with the
@@ -52,7 +52,6 @@ $ sudo yum install opensc'
       skip 'The system is not utilizing smart card authentication, this control is Not Applicable.'
     end
   else
-
     describe package('opensc') do
       it { should be_installed }
     end

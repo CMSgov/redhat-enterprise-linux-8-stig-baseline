@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 control 'SV-230347' do
-  title 'RHEL 8 must enable a user session lock until that user re-establishes
+  title "RHEL 8 must enable a user session lock until that user re-establishes
 access using established identification and authentication procedures for
-graphical user sessions.'
-  desc 'A session lock is a temporary action taken when a user stops work and
+graphical user sessions."
+  desc "A session lock is a temporary action taken when a user stops work and
 moves away from the immediate physical vicinity of the information system but
 does not want to log out because of the temporary nature of the absence.
 
@@ -13,7 +13,7 @@ determined.
 
     Regardless of where the session lock is determined and implemented, once
 invoked, the session lock must remain in place until the user reauthenticates.
-No other activity aside from reauthentication must unlock the system.'
+No other activity aside from reauthentication must unlock the system."
   desc 'check', %q(Verify the operating system enables a user's session lock until that user
 re-establishes access using established identification and authentication
 procedures with the following command:

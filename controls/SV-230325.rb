@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 control 'SV-230325' do
-  title 'All RHEL 8 local initialization files must have mode 0740 or less
-permissive.'
+  title "All RHEL 8 local initialization files must have mode 0740 or less
+permissive."
   desc "Local initialization files are used to configure the user's shell
 environment upon logon. Malicious modification of these files could compromise
 accounts upon logon."

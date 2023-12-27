@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 control 'SV-245540' do
-  title 'The RHEL 8 operating system must implement the Endpoint Security for
-Linux Threat Prevention tool.'
+  title "The RHEL 8 operating system must implement the Endpoint Security for
+Linux Threat Prevention tool."
   desc "Adding endpoint security tools can provide the capability to
 automatically take actions in response to malicious behavior, which can provide
 additional agility in reacting to network threats. These tools also often

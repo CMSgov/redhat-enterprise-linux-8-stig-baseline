@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 control 'SV-230389' do
-  title 'The RHEL 8 Information System Security Officer (ISSO) and System
+  title "The RHEL 8 Information System Security Officer (ISSO) and System
 Administrator (SA) (at a minimum) must have mail aliases to be notified of an
-audit processing failure.'
-  desc 'It is critical for the appropriate personnel to be aware if a system
+audit processing failure."
+  desc "It is critical for the appropriate personnel to be aware if a system
 is at risk of failing to process audit logs as required. Without this
 notification, the security personnel may be unaware of an impending failure of
 the audit capability, and system operation may be adversely affected.
@@ -16,7 +16,7 @@ exceeded.
     This requirement applies to each audit data storage repository (i.e.,
 distinct information system component where audit records are stored), the
 centralized audit storage capacity of organizations (i.e., all audit data
-storage repositories combined), or both.'
+storage repositories combined), or both."
   desc 'check', 'Verify that the administrators are notified in the event of an audit
 processing failure.
 

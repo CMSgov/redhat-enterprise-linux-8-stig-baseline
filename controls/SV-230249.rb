@@ -20,10 +20,10 @@ $ sudo stat -c "%U" /var/log
 root
 
 If "root" is not returned as a result, this is a finding.'
-  desc 'fix', 'Change the owner of the directory /var/log to root by running the following
+  desc 'fix', "Change the owner of the directory /var/log to root by running the following
 command:
 
-    $ sudo chown root /var/log'
+    $ sudo chown root /var/log"
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000206-GPOS-00084'

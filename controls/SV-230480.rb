@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 control 'SV-230480' do
-  title 'RHEL 8 must take appropriate action when the internal event queue is
-full.'
+  title "RHEL 8 must take appropriate action when the internal event queue is
+full."
   desc 'Information stored in one location is vulnerable to accidental or
 incidental deletion or alteration.
 

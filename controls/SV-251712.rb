@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 control 'SV-251712' do
   title 'The RHEL 8 operating system must not be configured to bypass password requirements for privilege escalation.'
-  desc 'Without re-authentication, users may access resources or perform tasks for which they do not have authorization.
+  desc "Without re-authentication, users may access resources or perform tasks for which they do not have authorization.
 
 When operating systems provide the capability to escalate a functional capability, it is critical the user re-authenticate.
 
-'
+"
   desc 'check', 'Verify the operating system is not be configured to bypass password requirements for privilege escalation.
 
 Check the configuration of the "/etc/pam.d/sudo" file with the following command:

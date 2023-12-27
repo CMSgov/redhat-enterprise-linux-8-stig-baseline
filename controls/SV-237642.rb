@@ -22,14 +22,14 @@ If conflicting results are returned, this is a finding.
 If "Defaults !targetpw" is not defined, this is a finding.
 If "Defaults !rootpw" is not defined, this is a finding.
 If "Defaults !runaspw" is not defined, this is a finding.)
-  desc 'fix', 'Define the following in the Defaults section of the /etc/sudoers file or a configuration file in the /etc/sudoers.d/ directory:
+  desc 'fix', "Define the following in the Defaults section of the /etc/sudoers file or a configuration file in the /etc/sudoers.d/ directory:
      Defaults !targetpw
      Defaults !rootpw
      Defaults !runaspw
 
 Remove any configurations that conflict with the above from the following locations:
      /etc/sudoers
-     /etc/sudoers.d/'
+     /etc/sudoers.d/"
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'

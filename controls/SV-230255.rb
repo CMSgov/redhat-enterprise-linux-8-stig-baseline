@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 control 'SV-230255' do
-  title 'The RHEL 8 operating system must implement DoD-approved TLS encryption
-in the OpenSSL package.'
-  desc 'Without cryptographic integrity protections, information can be
+  title "The RHEL 8 operating system must implement DoD-approved TLS encryption
+in the OpenSSL package."
+  desc "Without cryptographic integrity protections, information can be
 altered by unauthorized users without detection.
 
     Remote access (e.g., RDP) is access to DoD nonpublic information systems by
@@ -18,7 +18,7 @@ maintaining the confidentiality of the secret key used to generate the hash.
 
     RHEL 8 incorporates system-wide crypto policies by default.  The employed
 algorithms can be viewed in the /etc/crypto-policies/back-ends/openssl.config
-file.'
+file."
   desc 'check', 'Verify the OpenSSL library is configured to use only DoD-approved TLS encryption:
 
 For versions prior to crypto-policies-20210617-1.gitc776d3e.el8.noarch:

@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 control 'SV-230277' do
-  title 'RHEL 8 must clear the page allocator to prevent use-after-free
-attacks.'
-  desc 'Some adversaries launch attacks with the intent of executing code in
+  title "RHEL 8 must clear the page allocator to prevent use-after-free
+attacks."
+  desc "Some adversaries launch attacks with the intent of executing code in
 non-executable regions of memory or in memory locations that are prohibited.
 Security safeguards employed to protect memory include, for example, data
 execution prevention and address space layout randomization. Data execution
@@ -14,7 +14,7 @@ hardware providing the greater strength of mechanism.
 reference to that page after being freed or before being initialized will be
 detected and prevented. This prevents many types of use-after-free
 vulnerabilities at little performance cost. Also prevents leak of data and
-detection of corrupted memory.'
+detection of corrupted memory."
   desc 'check', 'Verify that GRUB 2 is configured to enable page poisoning to mitigate use-after-free vulnerabilities with the following commands:
 
 Check that the current GRUB 2 configuration has page poisoning enabled:

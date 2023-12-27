@@ -28,7 +28,7 @@ If the kernel boot parameter is configured to use FIPS mode, check to see if the
      1
 
 If FIPS mode is not "on", the kernel boot parameter is not configured for FIPS mode, or the system does not have a value of "1" for "fips_enabled" in "/proc/sys/crypto", this is a finding.'
-  desc 'fix', 'Configure the operating system to implement DOD-approved encryption by following the steps below:
+  desc 'fix', "Configure the operating system to implement DOD-approved encryption by following the steps below:
 
 To enable strict FIPS compliance, the fips=1 kernel option needs to be added to the kernel boot parameters during system installation so key generation is done with FIPS-approved algorithms and continuous monitoring tests in place.
 
@@ -36,7 +36,7 @@ Enable FIPS mode after installation (not strict FIPS-compliant) with the followi
 
      $ sudo fips-mode-setup --enable
 
-Reboot the system for the changes to take effect.'
+Reboot the system for the changes to take effect."
   impact 0.7
   tag severity: 'high'
   tag gtitle: 'SRG-OS-000033-GPOS-00014'

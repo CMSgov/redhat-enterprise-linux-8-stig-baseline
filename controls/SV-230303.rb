@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 control 'SV-230303' do
-  title 'RHEL 8 must prevent special devices on file systems that are used with
-removable media.'
+  title "RHEL 8 must prevent special devices on file systems that are used with
+removable media."
   desc 'The "nodev" mount option causes the system not to interpret
 character or block special devices. Executing character or block special
 devices from untrusted file systems increases the opportunity for unprivileged

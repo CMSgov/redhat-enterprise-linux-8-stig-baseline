@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-250316' do
   title 'RHEL 8 systems below version 8.2 must configure SELinux context type ' \
         'to allow the use of a non-default faillock tally directory.'

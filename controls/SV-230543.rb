@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 control 'SV-230543' do
-  title 'RHEL 8 must not allow interfaces to perform Internet Control Message
-Protocol (ICMP) redirects by default.'
+  title "RHEL 8 must not allow interfaces to perform Internet Control Message
+Protocol (ICMP) redirects by default."
   desc %q(ICMP redirect messages are used by routers to inform hosts that a more direct route exists for a particular destination. These messages contain information from the system's route table, possibly revealing portions of the network topology.
 
 There are notable differences between Internet Protocol version 4 (IPv4) and Internet Protocol version 6 (IPv6). There is only a directive to disable sending of IPv4 redirected packets. Refer to RFC4294 for an explanation of "IPv6 Node Requirements", which resulted in this difference between IPv4 and IPv6.

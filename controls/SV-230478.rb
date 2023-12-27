@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 control 'SV-230478' do
-  title 'RHEL 8 must have the packages required for encrypting offloaded audit
-logs installed.'
+  title "RHEL 8 must have the packages required for encrypting offloaded audit
+logs installed."
   desc 'Information stored in one location is vulnerable to accidental or
 incidental deletion or alteration.
 
@@ -37,10 +37,10 @@ offloaded audit logs installed with the following commands:
 to indicate how audit logs are being encrypted during offloading and what
 packages are installed to support it.  If there is no evidence of audit logs
 being encrypted during offloading, this is a finding.'
-  desc 'fix', 'Configure the operating system to encrypt offloaded audit logs by
+  desc 'fix', "Configure the operating system to encrypt offloaded audit logs by
 installing the required packages with the following command:
 
-    $ sudo yum install rsyslog-gnutls'
+    $ sudo yum install rsyslog-gnutls"
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'

@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 control 'SV-230254' do
-  title 'The RHEL 8 operating system must implement DoD-approved encryption in
-the OpenSSL package.'
-  desc 'Without cryptographic integrity protections, information can be
+  title "The RHEL 8 operating system must implement DoD-approved encryption in
+the OpenSSL package."
+  desc "Without cryptographic integrity protections, information can be
 altered by unauthorized users without detection.
 
     Remote access (e.g., RDP) is access to DoD nonpublic information systems by
@@ -18,7 +18,7 @@ maintaining the confidentiality of the secret key used to generate the hash.
 
     RHEL 8 incorporates system-wide crypto policies by default.  The employed
 algorithms can be viewed in the /etc/crypto-policies/back-ends/openssl.config
-file.'
+file."
   desc 'check', 'Verify the OpenSSL library is configured to use only ciphers employing FIPS
 140-2-approved algorithms:
 
@@ -39,12 +39,12 @@ file.'
 
     If the system-wide crypto policy is set to anything other than "FIPS",
 this is a finding.'
-  desc 'fix', 'Configure the RHEL 8 OpenSSL library to use only ciphers employing FIPS
+  desc 'fix', "Configure the RHEL 8 OpenSSL library to use only ciphers employing FIPS
 140-2-approved algorithms with the following command:
 
     $ sudo fips-mode-setup --enable
 
-    A reboot is required for the changes to take effect.'
+    A reboot is required for the changes to take effect."
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000250-GPOS-00093'
