@@ -45,4 +45,13 @@ Remove any configurations that conflict with the above value.'
   tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+
+  only_if("This requirement only applies to RHEL 8 versions above 8.4", impact: 0.0) {
+    if os.release.to_f >= 8.4
+  }
+
+  describe "System pwquality setting" do
+    subject { parse_config(command("grep -rh retry /etc/security/pwquality.conf*").stdout.strip) }
+    its('retry') { should be >= input('min_retry') }
+  end
 end
