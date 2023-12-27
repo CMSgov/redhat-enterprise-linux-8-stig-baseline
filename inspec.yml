@@ -481,7 +481,7 @@ inputs:
     type: String
     value: "0755"
 
-  # SV-251707
+  # SV-251707, SV-251708
   - name: system_libraries
     description: Define system libraries which should have strict permissions enforced
     type: Array
