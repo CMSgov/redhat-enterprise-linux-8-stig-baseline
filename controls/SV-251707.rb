@@ -33,7 +33,7 @@ $ sudo chmod 755 [DIRECTORY]'
 
   describe "System libraries" do
     it "should not have permissions set higher than #{input('permissions_for_libs')}" do
-      fail_msg = "Overly permissive system libraries:\n\t-#{overly_permissive_libs.join("\n\t-")}"
+      fail_msg = "Overly permissive system libraries:\n\t- #{overly_permissive_libs.join("\n\t- ")}"
       expect(overly_permissive_libs).to be_empty, fail_msg
     end
   end

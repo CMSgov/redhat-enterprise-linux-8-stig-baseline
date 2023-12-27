@@ -28,13 +28,13 @@ $ sudo chgrp root [DIRECTORY]'
   tag nist: ['CM-5 (6)']
 
   non_root_owned_libs = input('system_libraries').select { |lib|
-    input("required_system_accounts").include?(file(lib).group)
+    input('required_system_accounts').include?(file(lib).group)
   }
 
-describe "System libraries" do
- it "should be owned by root" do
-   fail_msg = "Libs not group-owned by root:\n\t-#{non_root_owned_libs.join("\n\t-")}"
-   expect(non_root_owned_libs).to be_empty, fail_msg
- end
-end
+  describe "System libraries" do
+    it "should be owned by a required system account" do
+      fail_msg = "Libs not group-owned by a system account:\n\t- #{non_root_owned_libs.join("\n\t- ")}"
+      expect(non_root_owned_libs).to be_empty, fail_msg
+    end
+  end
 end

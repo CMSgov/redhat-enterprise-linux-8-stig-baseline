@@ -33,7 +33,7 @@ $ sudo chown root [DIRECTORY]'
 
   describe "System libraries" do
     it "should be owned by root" do
-      fail_msg = "Libs not owned by root:\n\t-#{non_root_owned_libs.join("\n\t-")}"
+      fail_msg = "Libs not owned by root:\n\t- #{non_root_owned_libs.join("\n\t- ")}"
       expect(non_root_owned_libs).to be_empty, fail_msg
     end
   end
