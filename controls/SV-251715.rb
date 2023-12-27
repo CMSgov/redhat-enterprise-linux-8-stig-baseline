@@ -41,6 +41,8 @@ Add the following line to the "/etc/pam.d/password-auth" file (or modify the lin
     !(os.release.to_f >= 8.4)
   }
 
+  pam_auth_files = input('pam_auth_files')
+
   describe pam_auth_files['password-auth'] do
     its('lines') { should match_pam_rule('.* .* pam_pwquality.so').any_with_integer_arg('retry', '>=', input('min_retry')) }
   end

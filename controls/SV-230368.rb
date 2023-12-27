@@ -35,9 +35,7 @@ Add the following line in "/etc/pam.d/password-auth" (or modify the line to have
 
   pam_auth_files = input('pam_auth_files')
 
-  [pam_auth_files['password-auth'], pam_auth_files['system-auth']].each do |path|
-    describe pam(path) do
-      its('lines') { should match_pam_rule('password (required|requisite|sufficient) pam_pwhistory.so').any_with_integer_arg('remember', '>=', input('min_reuse_generations')) }
-    end
+  describe pam(pam_auth_files['password-auth']) do
+    its('lines') { should match_pam_rule('password (required|requisite|sufficient) pam_pwhistory.so').any_with_integer_arg('remember', '>=', input('min_reuse_generations')) }
   end
 end
