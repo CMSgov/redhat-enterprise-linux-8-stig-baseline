@@ -67,8 +67,8 @@ $ sudo restorecon -R -v /var/log/faillock'
   tag cci: ['CCI-000044', 'CCI-002238']
   tag nist: ['AC-7 a', 'AC-7 b']
 
-  only_if('This check applies to RHEL versions 8.0 and 8.1. If the system is RHEL version 8.2 or newer, this check is Not Applicable.') {
-    os.release.match?(/'8.0'|'8.1'/)
+  only_if('This check applies to RHEL version 8.2 and later. If the system is not RHEL version 8.2 or newer, this check is Not Applicable.') {
+    os.release.to_f >= 8.2
   }
 
   describe selinux do
@@ -79,16 +79,12 @@ $ sudo restorecon -R -v /var/log/faillock'
 
   # TODO: refactor this with the pam resource
   describe file('/etc/pam.d/password-auth') do
-    its('content') { should match(%r{auth\s+required\s+pam_faillock.so preauth dir=/var/log/faillock}) }
-    its('content') { should match(%r{auth\s+required\s+pam_faillock.so authfail dir=/var/log/faillock}) }
+    its('content') { should match(%r{auth\s+required\s+pam_faillock.so preauth dir=#{input('non_default_tally_dir')}}) }
+    its('content') { should match(%r{auth\s+required\s+pam_faillock.so authfail dir=#{input('non_default_tally_dir')}}) }
   end
 
-  security_context = command('ls -Zd /var/log/faillock').stdout.strip.split(':')[2]
-  faillock_tally = input('faillock_tally')
-
-  describe 'The security context type of the non-default tally directory' do
-    it "is set to security context type: #{faillock_tally}" do
-      expect(security_context).to cmp faillock_tally
-    end
+  describe "The selected non-default tally directory for PAM: #{input('non_default_tally_dir')}" do
+    subject( file(input('non_default_tally_dir')) )
+    its('selinux_label') { should match /#{input("faillock_tally")}/ }
   end
 end

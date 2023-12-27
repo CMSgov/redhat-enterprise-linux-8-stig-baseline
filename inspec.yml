@@ -100,7 +100,7 @@ inputs:
     type: Numeric
     value: 15
 
-  # SV-250316
+  # SV-250315, SV-250316
   - name: 'faillock_tally'
     description: The default SELinux security context type of the non-default tally directory
     type: String
