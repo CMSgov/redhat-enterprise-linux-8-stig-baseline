@@ -94,6 +94,12 @@ inputs:
     type: Numeric
     value: 5
 
+  # SV-251714
+  - name: min_retry
+    description: Number of permitted password retries
+    type: Numeric
+    value: 3
+
   # SV-230369, SV-230370
   - name: pass_min_len
     description: Minimum number of characters for a new password
