@@ -111,9 +111,7 @@ control 'SV-230268' do
   tag cci: ['CCI-002165']
   tag nist: ['AC-3 (4)']
 
-  
-
- # Define the kernel parameter to be checked
+  # Define the kernel parameter to be checked
   parameter = 'fs.protected_hardlinks'
   action = 'enforce discretionary access control on hardlinks'
 
@@ -128,7 +126,7 @@ control 'SV-230268' do
     end
   else
     # Check if IPv4 packet forwarding is disabled
-    describe "#{action}" do
+    describe action.to_s do
       it 'is disabled in sysctl -a' do
         expect(current_value.value).to cmp 0
         expect(current_value.value).not_to be_nil
