@@ -100,6 +100,30 @@ inputs:
     type: Numeric
     value: 15
 
+  # SV-250316
+  - name: 'faillock_tally'
+    description: The default SELinux security context type of the non-default tally directory
+    type: String
+    value: "faillog_t"
+
+  # SV-250317
+  - name: network_router
+    description: This indicates if the system is acting as a rounter on the network
+    type: Boolean
+    value: false
+
+  # SV-250317
+  - name: sysctl_conf_files
+    description: The system files that have sysctl configuration information
+    type: Array
+    value:
+      - '/etc/sysctl.d/*.conf'
+      - '/run/sysctl.d/*.conf'
+      - '/usr/local/lib/sysctl.d/*.conf'
+      - '/usr/lib/sysctl.d/*.conf'
+      - '/lib/sysctl.d/*.conf'
+      - '/etc/sysctl.conf'
+
   # SV-230234
   - name: grub_uefi_main_cfg
     description: Main grub boot config file

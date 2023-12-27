@@ -1,49 +1,68 @@
+# frozen_string_literal: true
+
 control 'SV-250317' do
   title 'RHEL 8 must not enable IPv4 packet forwarding unless the system is a router.'
-  desc 'Routing protocol daemons are typically used on routers to exchange network topology information with other routers. If this software is used when not required, system network information may be unnecessarily transmitted across the network.
 
-The sysctl --system command will load settings from all system configuration files. All configuration files are sorted by their filename in lexicographic order, regardless of which of the directories they reside in. If multiple files specify the same option, the entry in the file with the lexicographically latest name will take precedence. Files are read from directories in the following list from top to bottom. Once a file of a given filename is loaded, any file of the same name in subsequent directories is ignored.
-/etc/sysctl.d/*.conf
-/run/sysctl.d/*.conf
-/usr/local/lib/sysctl.d/*.conf
-/usr/lib/sysctl.d/*.conf
-/lib/sysctl.d/*.conf
-/etc/sysctl.conf'
-  desc 'check', 'Verify RHEL 8 is not performing IPv4 packet forwarding, unless the system is a router.
+  desc "Routing protocol daemons are typically used on routers to exchange network
+    topology information with other routers. If this software is used when not required,
+    system network information may be unnecessarily transmitted across the network.
 
-Check that IPv4 forwarding is disabled using the following command:
+    The sysctl --system command will load settings from all system configuration files.
 
-$ sudo sysctl net.ipv4.conf.all.forwarding
+    All configuration files are sorted by their filename in lexicographic order, regardless
+    of which of the directories they reside in. If multiple files specify the same option,
+    the entry in the file with the lexicographically latest name will take precedence.
 
-net.ipv4.conf.all.forwarding = 0
-If the IPv4 forwarding value is not "0" and is not documented with the Information System Security Officer (ISSO) as an operational requirement, this is a finding.
+    Files are read from directories in the following list from top to bottom. Once a file of a
+    given filename is loaded, any file of the same name in subsequent directories is ignored.
 
-Check that the configuration files are present to enable this network parameter.
+    /etc/sysctl.d/*.conf
+    /run/sysctl.d/*.conf
+    /usr/local/lib/sysctl.d/*.conf
+    /usr/lib/sysctl.d/*.conf
+    /lib/sysctl.d/*.conf
+    /etc/sysctl.conf"
 
-$ sudo grep -r net.ipv4.conf.all.forwarding /run/sysctl.d/*.conf /usr/local/lib/sysctl.d/*.conf /usr/lib/sysctl.d/*.conf /lib/sysctl.d/*.conf /etc/sysctl.conf /etc/sysctl.d/*.conf
+  desc 'check', 'Verify RHEL 8 is not performing IPv4 packet forwarding, unless the system
+    is a router.
 
-/etc/sysctl.d/99-sysctl.conf: net.ipv4.conf.all.forwarding = 0
+    Check that IPv4 forwarding is disabled using the following command:
 
-If "net.ipv4.conf.all.forwarding" is not set to "0", is missing or commented out, this is a finding.
+    $ sudo sysctl net.ipv4.conf.all.forwarding
 
-If conflicting results are returned, this is a finding.'
+    net.ipv4.conf.all.forwarding = 0
+
+    If the IPv4 forwarding value is not "0" and is not documented with the Information System
+    Security Officer (ISSO) as an operational requirement, this is a finding.
+
+    Check that the configuration files are present to enable this network parameter.
+
+    $ sudo grep -sr net.ipv4.conf.all.forwarding /run/sysctl.d/*.conf /usr/local/lib/sysctl.d/*.conf /usr/lib/sysctl.d/*.conf /lib/sysctl.d/*.conf /etc/sysctl.conf /etc/sysctl.d/*.conf
+
+    /etc/sysctl.d/99-sysctl.conf: net.ipv4.conf.all.forwarding = 0
+
+    If "net.ipv4.conf.all.forwarding" is not set to "0", is missing or commented out, this is a finding.
+
+    If conflicting results are returned, this is a finding.'
+
   desc 'fix', 'Configure RHEL 8 to not allow IPv4 packet forwarding, unless the system is a router.
 
-Add or edit the following line in a system configuration file, in the "/etc/sysctl.d/" directory:
+    Add or edit the following line in a system configuration file, in the "/etc/sysctl.d/" directory:
 
-net.ipv4.conf.all.forwarding=0
+    net.ipv4.conf.all.forwarding=0
 
-Remove any configurations that conflict with the above from the following locations:
-/run/sysctl.d/*.conf
-/usr/local/lib/sysctl.d/*.conf
-/usr/lib/sysctl.d/*.conf
-/lib/sysctl.d/*.conf
-/etc/sysctl.conf
-/etc/sysctl.d/*.conf
+    Remove any configurations that conflict with the above from the following locations:
+    /run/sysctl.d/*.conf
+    /usr/local/lib/sysctl.d/*.conf
+    /usr/lib/sysctl.d/*.conf
+    /lib/sysctl.d/*.conf
+    /etc/sysctl.conf
+    /etc/sysctl.d/*.conf
 
-Load settings from all system configuration files with the following command:
+    Load settings from all system configuration files with the following command:
 
-$ sudo sysctl --system'
+    $ sudo sysctl --system'
+
   impact 0.5
   tag check_id: 'C-53751r833382_chk'
   tag severity: 'medium'
@@ -55,4 +74,42 @@ $ sudo sysctl --system'
   tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+
+  only_if('This system is acting as a router on the network, this control is Not Applicable', impact: 0.0) {
+    !input('network_router')
+  }
+
+  forwarding = kernel_parameter('net.ipv4.conf.all.forwarding')
+  describe 'IPv4 packet forwarding' do
+    it 'is disabled in sysctl -a' do
+      expect(forwarding.value).to cmp 0
+      expect(forwarding.value).not_to be_nil
+    end
+  end
+
+  sysctl_directory_blobs = input('sysctl_conf_files').map(&:strip).join(' ')
+  cmd_results = command("grep -r net.ipv4.conf.all.forwarding #{sysctl_directory_blobs} {} \;").stdout.split("\n")
+  results_hash = cmd_results.each_with_object({}) do |item, results|
+    file, setting = item.split(':')
+    results[file] ||= []
+    results[file] << setting.split('=').last
+  end
+  # Now `results_hash` is:
+  describe 'Configuration files' do
+    if cmd_results.empty?
+      it 'do not have `net.ipv4.conf.all.forwarding` disabled directly' do
+        expect(results_hash).not_to be_empty, 'Add the line `net.ipv4.conf.all.forwarding=0` to a file in the `/etc/sysctl.d/` directory'
+      end
+    else
+      describe 'for IPv4 packet forwarding' do
+        it 'have a single unique entry' do
+          expect(results_hash.values.flatten.count).to eq(1), "Expected one unique configuration, but got #{results_hash}"
+        end
+
+        it 'do not have more then one IPv4 packet forwarding value' do
+          expect(results_hash.values.flatten.all? { |v| v == '0' }).to be true
+        end
+      end
+    end
+  end
 end

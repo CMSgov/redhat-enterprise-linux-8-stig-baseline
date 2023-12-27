@@ -2,6 +2,11 @@ AllCops:
   Exclude:
     - "libraries/**/*"
 
+Layout/LineLength:
+  Max: 80
+  AllowURI: true
+  IgnoreCopDirectives: true
+
 Naming/FileName:
   Enabled: false
 
