@@ -94,7 +94,7 @@ control 'SV-250317' do
     end
   else
     # Check if IPv4 packet forwarding is disabled
-    describe "#{action}" do
+    describe action.to_s do
       it 'is disabled in sysctl -a' do
         expect(current_value.value).to cmp 0
         expect(current_value.value).not_to be_nil
@@ -117,7 +117,7 @@ control 'SV-250317' do
     # Check the configuration files
     describe 'Configuration files' do
       if search_results.empty?
-        it 'do not have `#{parameter}` disabled directly' do
+        it "do not have `#{parameter}` disabled directly" do
           expect(config_values).not_to be_empty, "Add the line `#{parameter}=0` to a file in the `/etc/sysctl.d/` directory"
         end
       else
