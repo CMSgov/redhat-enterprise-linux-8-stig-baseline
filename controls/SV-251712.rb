@@ -32,4 +32,15 @@ Remove any occurrences of "pam_succeed_if" in the file.'
   tag 'documentable'
   tag cci: ['CCI-002038']
   tag nist: ['IA-11']
+
+  if virtualization.system.eql?('docker') && !command('sudo').exist?
+    impact 0.0
+    describe 'Control not applicable within a container without sudo enabled' do
+      skip 'Control not applicable within a container without sudo enabled'
+    end
+  else
+    describe parse_config_file('/etc/pam.d/sudo') do
+      its('content') { should_not match /pam_succeed_if/ }
+    end
+  end
 end
