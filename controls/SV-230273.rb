@@ -50,19 +50,18 @@ installing the required package with the following command:
   tag cci: ['CCI-001948']
   tag nist: ['IA-2 (11)']
 
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
+  only_if('This control is does not apply to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  if input('smart_card_status')
+    describe package('openssl-pkcs11') do
+      it { should be_installed }
     end
-  elsif input('smart_card_status').eql?('disabled')
+  else
     impact 0.0
     describe 'The system is not smartcard enabled thus this control is Not Applicable' do
       skip 'The system is not using Smartcards / PIVs to fulfil the MFA requirement, this control is Not Applicable.'
-    end
-  else
-    describe package('openssl-pkcs11') do
-      it { should be_installed }
     end
   end
 end

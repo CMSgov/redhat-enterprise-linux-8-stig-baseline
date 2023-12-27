@@ -41,23 +41,21 @@ $ sudo yum install opensc'
   tag cci: ['CCI-001953']
   tag nist: ['IA-2 (12)']
 
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
-    end
-  elsif input('smart_card_status')
-    impact 0.0
-    describe 'The system is not utilizing smart card authentication' do
-      skip 'The system is not utilizing smart card authentication, this control is Not Applicable.'
-    end
-  else
+  only_if('This control is does not apply to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  if input('smart_card_status')
     describe package('opensc') do
       it { should be_installed }
     end
-
     describe command('opensc-tool --list-drivers | grep -i piv') do
       its('stdout') { should match(/PIV-II/) }
+    end
+  else
+    impact 0.0
+    describe 'The system is not utilizing smart card authentication' do
+      skip 'The system is not utilizing smart card authentication, this control is Not Applicable.'
     end
   end
 end

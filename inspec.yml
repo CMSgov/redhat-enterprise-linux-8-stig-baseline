@@ -107,7 +107,7 @@ inputs:
     value: 15
 
   # SV-250315, SV-250316
-  - name: 'faillock_tally'
+  - name: "faillock_tally"
     description: The default SELinux security context type of the non-default tally directory
     type: String
     value: "faillog_t"
@@ -123,12 +123,12 @@ inputs:
     description: The system files that have sysctl configuration information
     type: Array
     value:
-      - '/etc/sysctl.d/*.conf'
-      - '/run/sysctl.d/*.conf'
-      - '/usr/local/lib/sysctl.d/*.conf'
-      - '/usr/lib/sysctl.d/*.conf'
-      - '/lib/sysctl.d/*.conf'
-      - '/etc/sysctl.conf'
+      - "/etc/sysctl.d/*.conf"
+      - "/run/sysctl.d/*.conf"
+      - "/usr/local/lib/sysctl.d/*.conf"
+      - "/usr/lib/sysctl.d/*.conf"
+      - "/lib/sysctl.d/*.conf"
+      - "/etc/sysctl.conf"
 
   # SV-230234
   - name: grub_uefi_main_cfg
@@ -247,8 +247,8 @@ inputs:
   # SV-230273, SV-230275, SV-230351, SV-230376
   - name: smart_card_status
     description: Smart card status (enabled or disabled)
-    type: String
-    value: "enabled"
+    type: Boolean
+    value: false
 
   # SV-230263
   - name: file_integrity_tool
@@ -480,7 +480,7 @@ inputs:
       default_umask: "077"
       bashrc_umask: "077"
       cshrc_umask: "077"
-  
+
   # SV-251707
   - name: permissions_for_libs
     description: Define default permissions for system libraries
@@ -596,7 +596,7 @@ inputs:
     description: rhel_08_010001 - The RHEL 8 operating system must implement the Endpoint Security for Linux Threat Prevention tool.
     type: Boolean
     value: false
-  
+
   # SV-250315
   - name: non_default_tally_dir
     description: The directory used by pam_faillock
