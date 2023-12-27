@@ -246,7 +246,7 @@ inputs:
 
   # SV-230273, SV-230275, SV-230351, SV-230376
   - name: smart_card_status
-    description: Smart card status (enabled or disabled)
+    description: Smart card status of the system
     type: Boolean
     value: false
 
