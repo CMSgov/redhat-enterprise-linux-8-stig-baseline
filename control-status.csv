@@ -1,5 +1,5 @@
 ﻿Control,Priority,Reviewed,Tested,V1R12,Needs Resource(s),Uses Input(s)
- SV-230221 ,Y          , Y        , Y      , Y     , ---               , None                                                                         
+ SV-230221 ,Y,Y,Y,Y,---,None
  SV-230222 ,          , Y        , Y      , Y     , ---               , `disable_slow_controls`                                                      
  SV-230223 ,          , Y        , Y      , Y     , ---               , `use_fips`                                                                   
  SV-230224 ,          , Y        , Y      , Y     , ---               , `data_at_rest_exempt`                                                        
@@ -30,7 +30,7 @@
  SV-230250 ,          ,          ,        ,       ,                   ,                                                                              
  SV-230251 ,          ,          ,        ,       ,                   ,                                                                              
  SV-230252 ,          ,          ,        ,       ,                   ,                                                                              
- SV-230253 ,          ,          ,        ,       ,                   ,                                                                              
+ SV-230253 ,          ,          ,        ,       ,                   ,                                    
  SV-230254 ,          ,          ,        ,       ,                   ,                                                                              
  SV-230255 ,          ,          ,        ,       ,                   ,                                                                              
  SV-230256 ,          ,          ,        ,       ,                   ,                                                                              
