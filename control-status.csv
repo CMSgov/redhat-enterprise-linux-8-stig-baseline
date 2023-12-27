@@ -7,7 +7,7 @@
  SV-230226 ,          ,          ,        ,       ,                   ,                                                                              
  SV-230227 ,          ,          ,        ,       ,                   ,                                                                              
  SV-230228 ,          ,          ,        ,       ,                   ,                                                                              
- SV-230229 ,          , Y        , Y      , Y     , Y                 , "`root_ca_location`<br>`root_ca_file`"                                       
+ SV-230229 ,          , Y        , Y      , Y     , Y                 , `root_ca_location``root_ca_file`"                                       
  SV-230230 ,          ,          ,        ,       ,                   ,                                                                              
  SV-230231 ,          ,          ,        ,       ,                   ,                                                                              
  SV-230232 ,          ,          ,        ,       ,                   ,                                                                              
