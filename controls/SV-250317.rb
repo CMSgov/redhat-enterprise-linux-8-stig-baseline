@@ -94,7 +94,7 @@ control 'SV-250317' do
     end
   else
     # Check if IPv4 packet forwarding is disabled
-    describe action.to_s do
+    describe kernel_parameter(parameter) do
       it 'is disabled in sysctl -a' do
         expect(current_value.value).to cmp 0
         expect(current_value.value).not_to be_nil
