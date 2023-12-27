@@ -68,4 +68,19 @@ Done."
   tag 'documentable'
   tag cci: ['CCI-002696']
   tag nist: ['SI-6 a']
+
+  file_integrity_tool = input('file_integrity_tool')
+
+  if virtualization.system.eql?('docker')
+    impact 0.0
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
+    end
+  else
+    describe package(file_integrity_tool) do
+      it { should be_installed }
+      it { should be_enabled }
+      it { should be_running }
+    end
+  end
 end
