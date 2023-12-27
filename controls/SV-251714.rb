@@ -36,4 +36,11 @@ Add the following line to the "/etc/pam.d/system-auth" file (or modify the line 
   tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  pam_auth_files = input('pam_auth_files')
+
+  [pam_auth_files['password-auth'], pam_auth_files['system-auth']].each do |path|
+    describe pam(path) do
+      its('lines') { should match_pam_rule('.* .* pam_pwquality.so').any_with_integer_arg('retry', '>=', input('min_retry')) }
+    end
+  end
 end
