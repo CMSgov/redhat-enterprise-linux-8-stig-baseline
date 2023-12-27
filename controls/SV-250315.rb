@@ -62,8 +62,10 @@ $ sudo restorecon -R -v /var/log/faillock'
     its('dir') { should cmp input('non_default_tally_dir') }
   end
 
+  faillock_tally = input('faillock_tally')
+
   describe "The selected non-default tally directory for PAM: #{input('non_default_tally_dir')}" do
     subject( file(input('non_default_tally_dir')) )
-    its('selinux_label') { should match /#{input(faillock_tally)}/ }
+    its('selinux_label') { should match /#{faillock_tally}/ }
   end
 end
