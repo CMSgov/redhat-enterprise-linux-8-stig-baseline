@@ -33,7 +33,11 @@ Add the following line to the "/etc/pam.d/system-auth" file (or modify the line 
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
 
-  describe pam('/etc/pam.d/system-auth') do
-    its('lines') { should match_pam_rule('.* .* pam_pwquality.so') }  
-  end  
+  pam_auth_files = input('pam_auth_files')
+
+  [pam_auth_files['password-auth'], pam_auth_files['system-auth']].each do |path|
+    describe pam(path) do
+      its('lines') { should match_pam_rule('.* .* pam_pwquality.so') }
+    end
+  end
 end
