@@ -24,4 +24,17 @@ $ sudo chmod 755 [DIRECTORY]'
   tag 'documentable'
   tag cci: ['CCI-001499']
   tag nist: ['CM-5 (6)']
+
+  permissions_for_libs = input('permissions_for_libs')
+
+  overly_permissive_libs = input('system_libraries').select { |lib|
+     file(lib).more_permissive_than?(permissions_for_libs)
+  }
+
+  describe "System libraries" do
+    it "should not have permissions set higher than #{input('permissions_for_libs')}" do
+      fail_msg = "Overly permissive system libraries:\n\t-#{overly_permissive_libs.join("\n\t-")}"
+      expect(overly_permissive_libs).to be_empty, fail_msg
+    end
+  end
 end

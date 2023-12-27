@@ -474,6 +474,23 @@ inputs:
       default_umask: "077"
       bashrc_umask: "077"
       cshrc_umask: "077"
+  
+  # SV-251707
+  - name: permissions_for_libs
+    description: Define default permissions for system libraries
+    type: String
+    value: "0755"
+
+  # SV-251707
+  - name: system_libraries
+    description: Define system libraries which should have strict permissions enforced
+    type: Array
+    value:
+      - /lib
+      - /lib64
+      - /usr/lib
+      - /usr/lib64
+
 
   # SV-230247
   - name: var_log_messages_group
