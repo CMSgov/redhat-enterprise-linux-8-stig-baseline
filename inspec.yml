@@ -256,6 +256,12 @@ inputs:
     type: String
     value: "aide"
 
+  # SV-230263
+  - name: file_integrity_service
+    description: Name of service
+    type: String
+    value: "aide"
+
   # SV-230484
   - name: authoritative_timeserver
     description: Timeserver used in /etc/chrony.conf
