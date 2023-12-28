@@ -1,82 +1,68 @@
 # frozen_string_literal: true
 
 control 'SV-251710' do
-  title 'The RHEL 8 operating system must use a file integrity tool to verify ' \
-     'correct operation of all security functions.'
+  title 'The RHEL 8 operating system must use a file integrity tool to verify correct operation of all security functions.'
+  desc 'Without verification of the security functions, security functions may not operate correctly, and the failure may go unnoticed.
+        Security function is defined as the hardware, software, and/or firmware of the information system responsible for enforcing the
+        system security policy and supporting the isolation of code and data on which the protection is based. Security functionality
+        includes, but is not limited to, establishing system accounts, configuring access authorizations (i.e., permissions, privileges),
+        setting events to be audited, and setting intrusion detection parameters.
 
-  desc 'Without verification of the security functions, security functions may ' \
-    'not operate correctly, and the failure may go unnoticed. Security ' \
-    'function is defined as the hardware, software, and/or firmware of the ' \
-    'information system responsible for enforcing the system security policy ' \
-    'and supporting the isolation of code and data on which the protection ' \
-    'is based. Security functionality includes, but is not limited to, ' \
-    'establishing system accounts, configuring access authorizations (i.e., ' \
-    'permissions, privileges), setting events to be audited, and setting ' \
-    'intrusion detection parameters.
+        This requirement applies to the RHEL 8 operating system performing security function verification/testing and/or systems and
+        environments that require this functionality.'
+  desc 'check', 'Verify that Advanced Intrusion Detection Environment (AIDE) is installed and verifies the correct operation of all
+        security functions.
 
-    This requirement applies to the RHEL 8 operating system performing ' \
-    'security function verification/testing and/or systems and environments ' \
-    'that require this functionality.'
+        Check that the AIDE package is installed with the following command:
+          $ sudo rpm -q aide
 
-  desc 'check', %q(Verify that Advanced Intrusion Detection Environment (AIDE) is
-  installed and verifies the correct operation of all security functions.
+          aide-0.16-14.el8_5.1.x86_64
 
-  Check that the AIDE package is installed with the following command:
-    $ sudo rpm -q aide
+        If AIDE is not installed, ask the System Administrator how file integrity checks are performed on the system.
 
-    aide-0.16-14.el8_5.1.x86_64
+        If there is no application installed to perform integrity checks, this is a finding.
 
-  If AIDE is not installed, ask the System Administrator how file integrity
-  checks are performed on the system.
+        If AIDE is installed, check if it has been initialized with the following command:
+          $ sudo /usr/sbin/aide --check
 
-  If there is no application installed to perform integrity checks, this is a
-  finding.
+        If the output is "Couldn\'t open file /var/lib/aide/aide.db.gz for reading", this is a finding.'
+  desc 'fix', 'Install AIDE, initialize it, and perform a manual check.
 
-  If AIDE is installed, check if it has been initialized with the following
-  command:
-    $ sudo /usr/sbin/aide --check
+        Install AIDE:
+          $ sudo yum install aide
 
-  If the output is "Couldn't open file /var/lib/aide/aide.db.gz for reading",
-  this is a finding.)
+        Initialize it:
+          $ sudo /usr/sbin/aide --init
 
-  desc 'fix', "Install AIDE, initialize it, and perform a manual check.
+        Example output:
+          Number of entries:      48623
 
-  Install AIDE:
-    $ sudo yum install aide
+          ---------------------------------------------------
+          The attributes of the (uncompressed) database(s):
+          ---------------------------------------------------
 
-  Initialize it:
-    $ sudo /usr/sbin/aide --init
+          /var/lib/aide/aide.db.new.gz
+            SHA1     : LTAVQ8tFJthsrf4m9gfRpnf1vyc=
+            SHA256   : NJ9+uzRQKSwmLQ8A6IpKNvYjVKGbhSjt
+              BeJBVcmOVrI=
+            SHA512   : 7d8I/F6A1b07E4ZuGeilZjefRgJJ/F20
+              eC2xoag1OsOVpctt3Mi7Jjjf3vFW4xoY
+              5mdS6/ImQpm0xtlTLOPeQQ==
 
-  Example output:
-    Number of entries:      48623
+          End timestamp: 2022-10-20 10:50:52 -0700 (run time: 0m 46s)
 
-    ---------------------------------------------------
-    The attributes of the (uncompressed) database(s):
-    ---------------------------------------------------
+        The new database will need to be renamed to be read by AIDE:
+          $ sudo mv /var/lib/aide/aide.db.new.gz /var/lib/aide/aide.db.gz
 
-    /var/lib/aide/aide.db.new.gz
-      SHA1     : LTAVQ8tFJthsrf4m9gfRpnf1vyc=
-      SHA256   : NJ9+uzRQKSwmLQ8A6IpKNvYjVKGbhSjt
-        BeJBVcmOVrI=
-      SHA512   : 7d8I/F6A1b07E4ZuGeilZjefRgJJ/F20
-        eC2xoag1OsOVpctt3Mi7Jjjf3vFW4xoY
-        5mdS6/ImQpm0xtlTLOPeQQ==
+        Perform a manual check:
+          $ sudo /usr/sbin/aide --check
 
-    End timestamp: 2022-10-20 10:50:52 -0700 (run time: 0m 46s)
+        Example output:
+          Start timestamp: 2022-10-20 11:03:16 -0700 (AIDE 0.16)
+          AIDE found differences between database and filesystem!!
+          ...
 
-  The new database will need to be renamed to be read by AIDE:
-    $ sudo mv /var/lib/aide/aide.db.new.gz /var/lib/aide/aide.db.gz
-
-  Perform a manual check:
-    $ sudo /usr/sbin/aide --check
-
-  Example output:
-    Start timestamp: 2022-10-20 11:03:16 -0700 (AIDE 0.16)
-    AIDE found differences between database and filesystem!!
-    ...
-
-  Done."
-
+        Done.'
   impact 0.5
   tag check_id: 'C-55147r880728_chk'
   tag severity: 'medium'

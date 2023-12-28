@@ -27,4 +27,16 @@ A reboot is required for the changes to take effect."
   tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+
+  only_if('This requirement is Not Applicable inside the container', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+  
+  only_if("A GUI is indicated as a requirement for this system. This control is Not Applicable.", impact: 0.0) { !input('gui_required') } 
+
+  get_default = command('systemctl get-default').stdout.strip
+
+  describe get_default do
+    it { should cmp "multi-user.target" }
+  end
 end

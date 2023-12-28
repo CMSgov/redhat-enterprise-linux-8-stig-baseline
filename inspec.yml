@@ -448,6 +448,12 @@ inputs:
       - xorg-x11-server-utils
       - xorg-x11-server-Xwayland
 
+  # SV-251718
+  - name: gui_required
+    description: Set to true if there is a documented requirement for the target system to have a graphical user interface enabled
+    type: Boolean
+    value: false
+
   # SV-230390
   - name: disk_error_action
     description: Must take appropriate action when an audit processing failure occurs.

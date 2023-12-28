@@ -42,6 +42,8 @@ control 'SV-251706' do
 
   users_with_blank_passwords = shadow.where { password.blank? }.users - input('users_allowed_blank_passwords')
 
+  # TODO: is this an NA in containers?
+
   describe 'All users' do
     it 'should have a password set' do
       fail_msg = "Users with blank passwords:\n\t- " + users_with_blank_passwords.join("\n\t- ").to_s
