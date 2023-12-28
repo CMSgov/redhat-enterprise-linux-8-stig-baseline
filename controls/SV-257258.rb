@@ -28,4 +28,8 @@ The "logind" service must be restarted for the changes to take effect. To restar
   tag 'documentable'
   tag cci: ['CCI-001133']
   tag nist: ['SC-10']
+
+  describe parse_config_file('/etc/systemd/logind.conf') do
+    its('StopIdleSessionSec') { should cmp '900' }
+  end
 end

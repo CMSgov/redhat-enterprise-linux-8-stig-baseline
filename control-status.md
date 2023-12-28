@@ -374,4 +374,7 @@
 | SV-255924 |          |          |        |       |                   |                                              |
 | SV-256973 |          |          |        |       |                   |                                              |
 | SV-256974 |          |          |        |       |                   |                                              |
-| SV-257258 |          |          |        |       |                   |                                              |
+| SV-257258 |          | Y        | Y      | Y     | N                 |                                              |
+<!--
+| Control   | Priority | Reviewed | Tested | V1R12 | Needs Resource(s) | Inputs                                       |
+-->
