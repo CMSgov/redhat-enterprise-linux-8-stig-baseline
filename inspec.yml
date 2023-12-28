@@ -614,3 +614,9 @@ inputs:
     description: Users allowed to not have a password set\
     type: Array
     value: []
+
+  # SV-256974
+  - name: mail_package
+    description: Command that is used to send email messages
+    type: String
+    value: mailx
