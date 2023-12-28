@@ -30,6 +30,6 @@ The "logind" service must be restarted for the changes to take effect. To restar
   tag nist: ['SC-10']
 
   describe parse_config_file('/etc/systemd/logind.conf') do
-    its('StopIdleSessionSec') { should cmp '900' }
+    its('Login') { should include('StopIdleSessionSec' => '900') }
   end
 end
