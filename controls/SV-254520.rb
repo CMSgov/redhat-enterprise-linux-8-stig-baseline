@@ -73,8 +73,7 @@ This must be documented with the information system security officer (ISSO) as a
     allowed_admin_selinux_roles = input('allowed_admin_selinux_roles')
     allowed_non_admin_selinux_roles = input('allowed_non_admin_selinux_roles')
 
-    users = {}
-    se_login.each_with_object({}) do |line, users|
+    users = se_login.each_with_object({}) do |line, users|
        login_name, selinux_user = line.split[0..1]
        users[login_name] = selinux_user
     end
