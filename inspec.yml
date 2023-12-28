@@ -629,14 +629,13 @@ inputs:
 
   # SV-256973
   - name: rpm_gpg_file
-    description:
+    description: Red Hat uses GPG keys labels defined in file
     type: String
-    value: '/etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-release'
-
+    value: /etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-release
 
   # SV-256973
   - name: rpm_gpg_keys
-    description:
+    description: Red Hat uses GPG keys labels with matching fingerprints
     type: Hash
     value:
       'release key 2': '567E 347A D004 4ADE 55BA  8A5F 199E 2F91 FD43 1D51'

@@ -62,7 +62,6 @@ Using the steps listed in the Check Text, confirm the newly imported keys show a
   tag cci: ['CCI-001749']
   tag nist: ['CM-5 (3)']
 
-
      rpm_gpg_file = input('rpm_gpg_file')
      rpm_gpg_keys = input('rpm_gpg_keys')
 
@@ -79,6 +78,4 @@ Using the steps listed in the Check Text, confirm the newly imported keys show a
                end
           end
      end
-
-
 end
