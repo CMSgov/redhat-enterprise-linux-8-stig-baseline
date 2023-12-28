@@ -626,3 +626,18 @@ inputs:
     description: Command that is used to send email messages
     type: String
     value: mailx
+
+  # SV-256973
+  - name: rpm_gpg_file
+    description:
+    type: String
+    value: '/etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-release'
+
+
+  # SV-256973
+  - name: rpm_gpg_keys
+    description:
+    type: Hash
+    value:
+      'release key 2': '567E 347A D004 4ADE 55BA  8A5F 199E 2F91 FD43 1D51'
+      'auxiliary key': '6A6A A7C9 7C88 90AE C6AE  BFE2 F76F 66C3 D408 2792'

@@ -63,26 +63,22 @@ Using the steps listed in the Check Text, confirm the newly imported keys show a
   tag nist: ['CM-5 (3)']
 
 
-     rpm_gpg_file = '/etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-release'
+     rpm_gpg_file = input('rpm_gpg_file')
+     rpm_gpg_keys = input('rpm_gpg_keys')
 
-     rpm_gpg_keys = {
-          'release key 2': '567E 347A D004 4ADE 55BA  8A5F 199E 2F91 FD43 1D51',
-          'auxiliary key': '6A6A A7C9 7C88 90AE C6AE  BFE2 F76F 66C3 D408 2792'
-     }
-
-     rpm_gpg_keys.keys.each do |k|
-          describe command('rpm -q --queryformat "%{SUMMARY}\\n" gpg-pubkey | grep -i "red hat"') do
-               its('stdout') { should include k.to_s }
-          end
-     end
      describe file(rpm_gpg_file) do
           it { should exist }
      end
-     if file(rpm_gpg_file).exist?
-          rpm_gpg_keys.values.each do |v|
+     rpm_gpg_keys.each do |k, v|
+          describe command('rpm -q --queryformat "%{SUMMARY}\\n" gpg-pubkey | grep -i "red hat"') do
+               its('stdout') { should include k.to_s }
+          end
+          if file(rpm_gpg_file).exist?
                describe command("gpg -q --keyid-format short --with-fingerprint #{rpm_gpg_file}") do
                     its('stdout') { should include v }
                end
           end
      end
+
+
 end
