@@ -36,11 +36,12 @@ Add the following line to the "/etc/pam.d/system-auth" file (or modify the line 
   tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+
   pam_auth_files = input('pam_auth_files')
 
-  only_if("This requirement only applies to RHEL 8 versions below 8.4", impact: 0.0) {
-    if os.release.to_f < 8.4
-  }
+  only_if('This requirement only applies to RHEL 8 versions below 8.4', impact: 0.0) do
+    !(os.release.to_f >= 8.4)
+  end
 
   describe pam_auth_files['system-auth'] do
     its('lines') { should match_pam_rule('.* .* pam_pwquality.so').any_with_integer_arg('retry', '>=', input('min_retry')) }

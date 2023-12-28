@@ -69,9 +69,8 @@ control 'SV-250316' do
   tag cci: ['CCI-000044', 'CCI-002238']
   tag nist: ['AC-7 a', 'AC-7 b']
 
-  only_if('This check applies to RHEL version 8.2 and later. If the system is
-  not RHEL version 8.2 or newer, this check is Not Applicable.', impact: 0.0) {
-    os.release.to_f >= 8.2
+  only_if('This check applies to RHEL versions 8.0 and 8.1. If the system is RHEL version 8.2 or newer, this check is Not Applicable.', impact: 0.0) {
+    !(os.release.to_f >= 8.2)
   }
 
   describe selinux do
