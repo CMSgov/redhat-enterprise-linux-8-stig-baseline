@@ -372,7 +372,7 @@
 | SV-251718 | Y        |          |        |       |                   |                                              |
 | SV-254520 |          |          |        |       |                   |                                              |
 | SV-255924 | Y        |          |        |       |                   |                                              |
-| SV-256973 |          |          |        |       |                   |                                              |
+| SV-256973 |          | Y        | Y      | Y     | N                 | `rpm_gpg_file`<br>`rpm_gpg_keys`             |
 | SV-256974 |          | Y        | Y      | Y     | N                 | `mail_package`                               |
 | SV-257258 |          | Y        | Y      | Y     | N                 |                                              |
 <!--
