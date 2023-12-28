@@ -60,10 +60,6 @@ control 'SV-251711' do
     virtualization.system.eql?('docker') && !command('sudo').exist?
   end
 
-  only_if('This requirement is not applicable as "include" and "includedir" directives are not present in the /etc/sudoers file', impact: 0.0) do
-    command('grep include /etc/sudoers').stdout.empty?
-  end
-
   if command('grep include /etc/sudoers').stdout.empty?
     impact 0.0
     describe 'This requirement is not applicable as "include" and "includedir" directives are not present in the /etc/sudoers file' do

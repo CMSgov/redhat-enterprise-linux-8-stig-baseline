@@ -355,19 +355,19 @@
 | SV-244554 |          |          |        |       |                   |                                              |
 | SV-245540 | Y        |          |        |       |                   |                                              |
 | SV-250315 |          | Y        | Y      | Y     | N                 | `faillock_tally`<br>`non_default_tally_dir`  |
-| SV-250316 |          | Y        | Y      | Y     |                   | `faillock_tally`<br>`non_default_tally_dir`  |
-| SV-250317 |          |          |        |       |                   | `sysctl_conf_files`                          |
-| SV-251706 |          | Y        | Y      | Y     |                   | `users_allowed_blank_passwords`              |
-| SV-251707 |          | Y        | Y      | Y     |                   | `permissions_for_libs`<br>`system_libraries` |
-| SV-251708 |          | Y        | Y      | Y     |                   | `system_libraries`                           |
-| SV-251709 |          | Y        | Y      | Y     |                   | `system_libraries`                           |
-| SV-251710 |          | Y        | Y      | Y     |                   |                                              |
-| SV-251711 |          | Y        | Y      | Y     |                   |                                              |
-| SV-251712 |          | Y        | Y      | Y     |                   |                                              |
-| SV-251713 |          | Y        | Y      | Y     |                   |                                              |
-| SV-251714 |          | Y        | Y      | Y     |                   |                                              |
-| SV-251715 |          | Y        | Y      | Y     |                   |                                              |
-| SV-251716 |          | Y        | Y      | Y     |                   |                                              |
+| SV-250316 |          | Y        | Y      | Y     | N                 | `faillock_tally`<br>`non_default_tally_dir`  |
+| SV-250317 |          | -        | -      | -     | N                 | `sysctl_conf_files`                          |
+| SV-251706 |          | Y        | Y      | Y     | N                 | `users_allowed_blank_passwords`              |
+| SV-251707 |          | Y        | Y      | Y     | N                 | `permissions_for_libs`<br>`system_libraries` |
+| SV-251708 |          | Y        | Y      | Y     | N                 | `system_libraries`                           |
+| SV-251709 |          | Y        | Y      | Y     | N                 | `system_libraries`                           |
+| SV-251710 |          | Y        | Y      | Y     | N                 | `file_integrity_tool`                        |
+| SV-251711 |          | Y        | Y      | Y     | N                 | None                                         |
+| SV-251712 |          | Y        | Y      | Y     | N                 |                                              |
+| SV-251713 |          | Y        | Y      | Y     | N                 |                                              |
+| SV-251714 |          | Y        | Y      | Y     | N                 |                                              |
+| SV-251715 |          | Y        | Y      | Y     | N                 |                                              |
+| SV-251716 |          | Y        | Y      | Y     | N                 |                                              |
 | SV-251717 | Y        |          |        |       |                   |                                              |
 | SV-251718 | Y        |          |        |       |                   |                                              |
 | SV-254520 |          |          |        |       |                   |                                              |

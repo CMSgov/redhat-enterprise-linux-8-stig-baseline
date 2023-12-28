@@ -45,6 +45,8 @@ control 'SV-251708' do
 
   non_root_owned_libs = input('system_libraries').select { |lib| !file(lib).owned_by?('root') }
 
+  #TODO: is this NA in continers?
+
   describe 'System libraries' do
     it 'should be owned by root' do
       fail_msg = "Libs not owned by root:\n\t- #{non_root_owned_libs.join("\n\t- ")}"
