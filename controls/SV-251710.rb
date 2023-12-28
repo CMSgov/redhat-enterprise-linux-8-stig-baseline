@@ -89,14 +89,24 @@ control 'SV-251710' do
   tag cci: ['CCI-002696']
   tag nist: ['SI-6 a']
 
-  file_integrity_tool = input('file_integrity_tool')
+  file_integrity_tool_package = input('file_integrity_tool_package')
+  file_integrity_tool_service = input('file_integrity_tool_service')
 
   only_if('Control not applicable within a container', impact: 0.0) do
     !virtualization.system.eql?('docker')
   end
 
-  describe package(file_integrity_tool) do
+  if file_integrity_tool_package == 'aide'
+    describe command('/usr/sbin/aide --check') do
+      its('exit_status') { should cmp 0 }
+      its('stdout') { should_not include "Couldn't open file"}
+    end
+  end
+
+  describe package(file_integrity_tool_package) do
     it { should be_installed }
+  end
+  describe service(file_integrity_tool_service) do
     it { should be_enabled }
     it { should be_running }
   end
