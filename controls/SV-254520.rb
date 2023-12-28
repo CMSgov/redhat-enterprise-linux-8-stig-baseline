@@ -68,32 +68,36 @@ This must be documented with the information system security officer (ISSO) as a
   tag cci: ['CCI-002265']
   tag nist: ['AC-16 b']
 
-  #   se_login = command('semanage login -ln').stdout.lines.map(&:strip)
+    users = {}
+    se_login = command('semanage login -ln').stdout.lines.map(&:strip)
+    allowed_admin_selinux_roles = input('allowed_admin_selinux_roles')
+    allowed_non_admin_selinux_roles = input('allowed_non_admin_selinux_roles')
 
-  #   se_login.each_with_object({}) do |line, users|
-  #      login_name, selinux_user = line.split[0..1]
-  #      users[login_name] = selinux_user
-  #   end
+    users = {}
+    se_login.each_with_object({}) do |line, users|
+       login_name, selinux_user = line.split[0..1]
+       users[login_name] = selinux_user
+    end
 
-  #   misconfigured_admins = users.select{ |login_name, selinux_user|
-  #      input('administrators').include?(login_name) &&
-  #      !input('allowed_admin_selinux_roles').include?(selinux_user)
-  #   }
+    misconfigured_admins = users.select{ |login_name, selinux_user|
+       input('administrator_users').include?(login_name) &&
+       !allowed_admin_selinux_roles.include?(selinux_user)
+    }
 
-  #   misconfigured_non_admins = users.select{ |login_name, selinux_user|
-  #      !input('administrators').include?(login_name) &&
-  #      !input('allowed_non_admin_selinux_roles').include?(selinux_user)
-  #   }
+    misconfigured_non_admins = users.select{ |login_name, selinux_user|
+       !input('administrator_users').include?(login_name) &&
+       !allowed_non_admin_selinux_roles.include?(selinux_user)
+    }
 
-  #   describe "All administrators" do
-  #      it "must be mapped to the an appropriate role (allowed admin roles: #{input(allowed_admin_selinux_roles).join(', ')})" do
-  #           expect(misconfigured_admins).to be_empty, "Misconfigured admins:\n\t- #{misconfigured_admins.join("\n\t- ")}"
-  #      end
-  #   end
+    describe "All administrators" do
+       it "must be mapped to the an appropriate role (allowed admin roles: #{allowed_admin_selinux_roles.join(', ')})" do
+            expect(misconfigured_admins.keys).to be_empty, "Misconfigured admins:\n\t- #{misconfigured_admins.keys.join("\n\t- ")}"
+       end
+    end
 
-  #   describe "All non-administrator users" do
-  #      it "must be mapped to the an appropriate role (allowed non-admin user roles: #{input(allowed_non_admin_selinux_roles).join(', ')})" do
-  #           expect(misconfigured_admins).to be_empty, "Misconfigured non-admin users:\n\t- #{misconfigured_non_admins.join("\n\t- ")}"
-  #      end
-  #   end
+    describe "All non-administrator users" do
+       it "must be mapped to the an appropriate role (allowed non-admin user roles: #{allowed_non_admin_selinux_roles.join(', ')})" do
+            expect(misconfigured_non_admins.keys).to be_empty, "Misconfigured non-admin users:\n\t- #{misconfigured_non_admins.keys.join("\n\t- ")}"
+       end
+    end
 end

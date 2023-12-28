@@ -640,3 +640,27 @@ inputs:
     value:
       'release key 2': '567E 347A D004 4ADE 55BA  8A5F 199E 2F91 FD43 1D51'
       'auxiliary key': '6A6A A7C9 7C88 90AE C6AE  BFE2 F76F 66C3 D408 2792'
+  
+  # SV-254520
+  - name: administrator_users
+    description: List of users who are allowed to have an administrator-level SELinux role
+    type: Array
+    value:
+      - root
+
+  # SV-254520
+  - name: allowed_admin_selinux_roles
+    description: List of SELinux roles that administrator users are allowed to have (as defined by the organization)
+    type: Array
+    value:
+      - foobar
+      # - sysadm_u
+      # - staff_u
+
+  # SV-254520
+  - name: allowed_non_admin_selinux_roles
+    description: List of SELinux roles that regular, non-administrator users are allowed to have (as defined by the organization)
+    type: Array
+    value:
+      - user_u
+
