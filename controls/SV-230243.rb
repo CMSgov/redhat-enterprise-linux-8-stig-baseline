@@ -48,17 +48,19 @@ sticky bit:
   tag cci: ['CCI-001090']
   tag nist: ['SC-4']
 
-  world_writable_dirs = command('find / -type d \\( -perm -0002 -a ! -perm -1000 \\) -print 2>/dev/null').stdout.split("\n")
+  ww_dirs = command('find / -type d \\( -perm -0002 -a ! -perm -1000 \\) -print 2>/dev/null').stdout.split("\n")
 
-  if world_writable_dirs.empty?
+  if ww_dirs.empty?
     describe 'List of world-writable directories on the target' do
-      subject { world_writable_dirs }
+      subject { ww_dirs }
       it { should be_empty }
     end
   else
-    world_writable_dirs.each do |dir|
-      describe file(dir) do
-        it { should be_sticky }
+    non_sticky_ww_dir = ww_dir.reject { |dir| file(dir).sticky? }
+    describe "All public directories" do
+      it "should have the sticky bit set" do
+        fail_msg = "Public directories without sticky bit:\n\t- #{non_sticky_ww_dir.join("\n\t- ")}"
+        expect(non_sticky_ww_dir).to be_empty, fail_msg
       end
     end
   end
