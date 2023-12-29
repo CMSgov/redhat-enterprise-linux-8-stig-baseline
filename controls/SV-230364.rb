@@ -35,7 +35,7 @@ password lifetime:
   in_scope_users = bad_users - input('exempt_home_users')
 
   describe 'Users should not' do
-    it 'be able to change their password more then once a 24 hour peroid' do
+    it 'be able to change their password more then once a 24 hour period' do
       failure_message = "The following users can update their password more then once a day: #{in_scope_users.join(', ')}"
       expect(in_scope_users).to be_empty, failure_message
     end
