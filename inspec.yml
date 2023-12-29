@@ -441,12 +441,16 @@ inputs:
     value: 1
 
   # SV-245540
-  - name: linux_threat_prevention_tool
-    description: Endpoint Security Linux Threat Prevention Tool
-    type: Hash
-    value:
-      package: mcafeetp
-      process: mfetpd
+  - name: linux_threat_prevention_package
+    description: Endpoint Security Linux Threat Prevention Tool Package
+    type: String
+    value: mcafeetp
+
+    # SV-245540
+  - name: linux_threat_prevention_service
+    description: Endpoint Security Linux Threat Prevention Tool Service
+    type: String
+    value: mfetpd
 
   # SV-230553
   - name: remove_xorg_x11_server_packages

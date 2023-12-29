@@ -34,23 +34,23 @@ Security for Linux (ENSL) in conjunction with SELinux.
   tag cci: ['CCI-001233']
   tag nist: ['SI-2 (2)']
 
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
-    end
-  elsif input('skip_endpoint_security_tool')
+  only_if('Control not applicable within a container', impact: 0.0) do
+    !virtualization.system.eql?('docker')
+  end
+
+  if input('skip_endpoint_security_tool')
     impact 0.0
     describe 'We do not want to implement the Endpoint Security for Linux Threat Prevention tool' do
       skip 'We do not want to implement the Endpoint Security for Linux Threat Prevention tool'
     end
   else
-    tool = input('linux_threat_prevention_tool')
-    describe package(tool['package']) do
+    linux_threat_prevention_package = input('linux_threat_prevention_package')
+    linux_threat_prevention_service = input('linux_threat_prevention_service')
+    describe package(linux_threat_prevention_package) do
       it { should be_installed }
     end
 
-    describe processes(tool['process']) do
+    describe processes(linux_threat_prevention_service) do
       it { should exist }
     end
   end
