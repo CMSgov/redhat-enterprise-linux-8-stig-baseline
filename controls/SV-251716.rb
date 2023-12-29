@@ -52,6 +52,6 @@ Remove any configurations that conflict with the above value.'
 
   describe 'System pwquality setting' do
     subject { parse_config(command('grep -rh retry /etc/security/pwquality.conf*').stdout.strip) }
-    its('retry') { should be >= input('min_retry') }
+    its('retry') { should cmp >= input('min_retry') }
   end
 end
