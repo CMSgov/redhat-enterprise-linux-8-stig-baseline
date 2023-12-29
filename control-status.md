@@ -354,27 +354,27 @@
 | SV-244553 |          |          |        |       |                                  |                                                |
 | SV-244554 |          |          |        |       |                                  |                                                |
 | SV-245540 | Y        |          |        |       |                                  |                                                |
-| SV-250315 |          | Y        | Y      | Y     | N                                | `faillock_tally<br>``non_default_tally_dir`  |
-| SV-250316 |          | Y        | Y      | Y     | N                                | `faillock_tally<br>``non_default_tally_dir`  |
-| SV-250317 |          | -        | -      | -     | N                                | `sysctl_conf_files`                          |
-| SV-251706 |          | Y        | Y      | Y     | N                                | `users_allowed_blank_passwords`              |
-| SV-251707 |          | Y        | Y      | Y     | N                                | `permissions_for_libs<br>``system_libraries` |
-| SV-251708 |          | Y        | Y      | Y     | N                                | `system_libraries`                           |
-| SV-251709 |          | Y        | Y      | Y     | N                                | `system_libraries`                           |
-| SV-251710 |          | Y        | Y      | Y     | N                                | `file_integrity_tool`                        |
+| SV-250315 |          | Y        | Y      | Y     | N                                | `faillock_tally<br>``non_default_tally_dir`    |
+| SV-250316 |          | Y        | Y      | Y     | N                                | `faillock_tally<br>``non_default_tally_dir`    |
+| SV-250317 |          | -        | -      | -     | N                                | `sysctl_conf_files`                            |
+| SV-251706 |          | Y        | Y      | Y     | N                                | `users_allowed_blank_passwords`                |
+| SV-251707 |          | Y        | Y      | Y     | N                                | `permissions_for_libs<br>``system_libraries`   |
+| SV-251708 |          | Y        | Y      | Y     | N                                | `system_libraries`                             |
+| SV-251709 |          | Y        | Y      | Y     | N                                | `system_libraries`                             |
+| SV-251710 |          | Y        | Y      | Y     | N                                | `file_integrity_tool`                          |
 | SV-251711 |          | Y        | Y      | Y     | N                                | None                                           |
 | SV-251712 |          | Y        | Y      | Y     | N                                | None                                           |
 | SV-251713 |          | Y        | Y      | Y     | N                                | `pam_auth_files`                               |
-| SV-251714 |          | Y        | Y      | Y     | N                                | `pam_auth_files<br>``max_retry`                 |
+| SV-251714 |          | Y        | Y      | Y     | N                                | `pam_auth_files<br>``max_retry`                |
 | SV-251715 |          | Y        | Y      | Y     | N                                | `pam_auth_files<br>``max_retry`                |
 | SV-251716 |          | Y        | Y      | Y     | N                                | `min_retry`                                    |
 | SV-251717 |          | Y        | Y      | Y     | N                                | `pam_auth_files<br>``min_reuse_generations`    |
 | SV-251718 |          | Y        | Y      | Y     | N                                | `gui_required`                                 |
 | SV-254520 |          |          |        |       |                                  | `administrator_users<br>``allowed_admin_selinux_roles<br>``allowed_non_admin_selinux_roles<br>` |
 | SV-255924 |          | Y        | Y      | Y     | N                                | None                                           |
-| SV-256973 |          | Y        | Y      | Y     | N                                | `rpm_gpg_file<br>``rpm_gpg_keys`             |
-| SV-256974 |          | Y        | Y      | Y     | N                                | `mail_package`                               |
-| SV-257258 |          | Y        | Y      | Y     | N                                |                                                |
+| SV-256973 |          | Y        | Y      | Y     | N                                | `rpm_gpg_file<br>``rpm_gpg_keys`               |
+| SV-256974 |          | Y        | Y      | Y     | N                                | `mail_package`                                 |
+| SV-257258 |          | Y        | Y      | Y     | N                                | `stop_idle_session_sec`                        |
 
 <!--
 | Control   | Priority | Reviewed | Tested | V1R12 | Needs Resource(s) | Inputs                                       |

@@ -663,9 +663,8 @@ inputs:
     description: List of SELinux roles that administrator users are allowed to have (as defined by the organization)
     type: Array
     value:
-      - foobar
-      # - sysadm_u
-      # - staff_u
+      - sysadm_u
+      - staff_u
 
   # SV-254520
   - name: allowed_non_admin_selinux_roles
@@ -673,3 +672,9 @@ inputs:
     type: Array
     value:
       - user_u
+
+  # SV-257258
+  - name: stop_idle_session_sec
+    description: Number of seconds the system can be idle before session timeout
+    type: Numeric
+    value: 900

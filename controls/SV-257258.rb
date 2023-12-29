@@ -29,7 +29,9 @@ The "logind" service must be restarted for the changes to take effect. To restar
   tag cci: ['CCI-001133']
   tag nist: ['SC-10']
 
+  stop_idle_session_sec = input('stop_idle_session_sec')
+
   describe parse_config_file('/etc/systemd/logind.conf') do
-    its('Login') { should include('StopIdleSessionSec' => '900') }
+    its('Login') { should include('StopIdleSessionSec' => stop_idle_session_sec.to_s) }
   end
 end
