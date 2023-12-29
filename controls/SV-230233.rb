@@ -32,7 +32,7 @@ SHA_CRYPT_MIN_ROUNDS 5000'
   tag nist: ['IA-5 (1) (c)']
 
   describe login_defs do
-    its('SHAH_CRYPT_MIN_ROUNDS') { should cmp >= input('shah_crypt_min_rounds') }
-    its('SHAH_CRYPT_MAX_ROUNDS') { should cmp >= input('shah_crypt_max_rounds') }
+    its('SHA_CRYPT_MIN_ROUNDS') { should cmp >= input('sha_crypt_min_rounds') }
+    its('SHA_CRYPT_MAX_ROUNDS') { should cmp >= input('sha_crypt_max_rounds') }
   end
 end
