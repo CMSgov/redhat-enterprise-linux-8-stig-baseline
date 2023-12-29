@@ -1,3 +1,5 @@
+.DS_Store
+do-not-merge
 *.gem
 *.rbc
 /.config
