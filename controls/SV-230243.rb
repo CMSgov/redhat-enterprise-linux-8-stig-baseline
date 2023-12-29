@@ -56,11 +56,11 @@ sticky bit:
       it { should be_empty }
     end
   else
-    non_sticky_ww_dir = ww_dir.reject { |dir| file(dir).sticky? }
+    non_sticky_ww_dirs = ww_dirs.reject { |dir| file(dir).sticky? }
     describe "All public directories" do
       it "should have the sticky bit set" do
-        fail_msg = "Public directories without sticky bit:\n\t- #{non_sticky_ww_dir.join("\n\t- ")}"
-        expect(non_sticky_ww_dir).to be_empty, fail_msg
+        fail_msg = "Public directories without sticky bit:\n\t- #{non_sticky_ww_dirs.join("\n\t- ")}"
+        expect(non_sticky_ww_dirs).to be_empty, fail_msg
       end
     end
   end
