@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-control 'SV-254520' do
-  title 'RHEL 8 must prevent nonprivileged users from executing privileged functions, including disabling, circumventing, or altering implemented security safeguards/countermeasures.'
+control "SV-254520" do
+  title "RHEL 8 must prevent nonprivileged users from executing privileged functions, including disabling, circumventing, or altering implemented security safeguards/countermeasures."
   desc "Preventing nonprivileged users from executing privileged functions mitigates the risk that unauthorized individuals or processes may gain unnecessary access to information or privileges.
 
 Privileged functions include, for example, establishing accounts, performing system integrity checks, or administering cryptographic key management activities. Nonprivileged users are individuals who do not possess appropriate authorizations. Circumventing intrusion detection and prevention mechanisms or malicious code protection mechanisms are examples of privileged functions that require protection from nonprivileged users."
-  desc 'check', 'Verify the operating system prevents nonprivileged users from executing privileged functions, including disabling, circumventing, or altering implemented security safeguards/countermeasures.
+  desc "check", 'Verify the operating system prevents nonprivileged users from executing privileged functions, including disabling, circumventing, or altering implemented security safeguards/countermeasures.
 
 Obtain a list of authorized users (other than system administrator and guest accounts) for the system.
 
@@ -25,7 +25,7 @@ All administrators must be mapped to the "sysadm_u", "staff_u", or an appropriat
 All authorized nonadministrative users must be mapped to the "user_u" role.
 
 If they are not mapped in this way, this is a finding.'
-  desc 'fix', 'Configure RHEL 8 to prevent nonprivileged users from executing privileged functions, including disabling, circumventing, or altering implemented security safeguards/countermeasures.
+  desc "fix", 'Configure RHEL 8 to prevent nonprivileged users from executing privileged functions, including disabling, circumventing, or altering implemented security safeguards/countermeasures.
 
 Use the following command to map a new user to the "sysadm_u" role:
 
@@ -57,46 +57,47 @@ Note: SELinux confined users mapped to sysadm_u are not allowed to log in to the
 
 This must be documented with the information system security officer (ISSO) as an operational requirement.'
   impact 0.5
-  tag check_id: 'C-58004r928594_chk'
-  tag severity: 'medium'
-  tag gid: 'V-254520'
-  tag rid: 'SV-254520r928805_rule'
-  tag stig_id: 'RHEL-08-040400'
-  tag gtitle: 'SRG-OS-000324-GPOS-00125'
-  tag fix_id: 'F-57953r928805_fix'
-  tag 'documentable'
-  tag cci: ['CCI-002265']
-  tag nist: ['AC-16 b']
+  tag check_id: "C-58004r928594_chk"
+  tag severity: "medium"
+  tag gid: "V-254520"
+  tag rid: "SV-254520r928805_rule"
+  tag stig_id: "RHEL-08-040400"
+  tag gtitle: "SRG-OS-000324-GPOS-00125"
+  tag fix_id: "F-57953r928805_fix"
+  tag "documentable"
+  tag cci: ["CCI-002265"]
+  tag nist: ["AC-16 b"]
 
-    users = {}
-    se_login = command('semanage login -ln').stdout.lines.map(&:strip)
-    allowed_admin_selinux_roles = input('allowed_admin_selinux_roles')
-    allowed_non_admin_selinux_roles = input('allowed_non_admin_selinux_roles')
+  users = {}
+  se_login = command("semanage login -ln").stdout.lines.map(&:strip)
+  allowed_admin_selinux_roles = input("allowed_admin_selinux_roles")
+  allowed_non_admin_selinux_roles = input("allowed_non_admin_selinux_roles")
 
-    users = se_login.each_with_object({}) do |line, users|
-       login_name, selinux_user = line.split[0..1]
-       users[login_name] = selinux_user
+  users = {}
+  se_login.each_with_object({}) do |line, users|
+    login_name, selinux_user = line.split[0..1]
+    users[login_name] = selinux_user
+  end
+
+  misconfigured_admins = users.select { |login_name, selinux_user|
+    input("administrator_users").include?(login_name) &&
+    !allowed_admin_selinux_roles.include?(selinux_user)
+  }
+
+  misconfigured_non_admins = users.select { |login_name, selinux_user|
+    !input("administrator_users").include?(login_name) &&
+    !allowed_non_admin_selinux_roles.include?(selinux_user)
+  }
+
+  describe "All administrators" do
+    it "must be mapped to the an appropriate role (allowed admin roles: #{allowed_admin_selinux_roles.join(", ")})" do
+      expect(misconfigured_admins.keys).to be_empty, "Misconfigured admins:\n\t- #{misconfigured_admins.keys.join("\n\t- ")}"
     end
+  end
 
-    misconfigured_admins = users.select{ |login_name, selinux_user|
-       input('administrator_users').include?(login_name) &&
-       !allowed_admin_selinux_roles.include?(selinux_user)
-    }
-
-    misconfigured_non_admins = users.select{ |login_name, selinux_user|
-       !input('administrator_users').include?(login_name) &&
-       !allowed_non_admin_selinux_roles.include?(selinux_user)
-    }
-
-    describe "All administrators" do
-       it "must be mapped to the an appropriate role (allowed admin roles: #{allowed_admin_selinux_roles.join(', ')})" do
-            expect(misconfigured_admins.keys).to be_empty, "Misconfigured admins:\n\t- #{misconfigured_admins.keys.join("\n\t- ")}"
-       end
+  describe "All non-administrator users" do
+    it "must be mapped to the an appropriate role (allowed non-admin user roles: #{allowed_non_admin_selinux_roles.join(", ")})" do
+      expect(misconfigured_non_admins.keys).to be_empty, "Misconfigured non-admin users:\n\t- #{misconfigured_non_admins.keys.join("\n\t- ")}"
     end
-
-    describe "All non-administrator users" do
-       it "must be mapped to the an appropriate role (allowed non-admin user roles: #{allowed_non_admin_selinux_roles.join(', ')})" do
-            expect(misconfigured_non_admins.keys).to be_empty, "Misconfigured non-admin users:\n\t- #{misconfigured_non_admins.keys.join("\n\t- ")}"
-       end
-    end
+  end
 end

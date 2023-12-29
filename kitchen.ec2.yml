@@ -13,7 +13,6 @@ driver:
   interface: public
   skip_cost_warning: true
   privileged: true
-  instance_initiated_shutdown_behavior: stop
   tags:
     CreatedBy: test-kitchen
     # BuiltBy: "tk-%{platform}_%{suite}"

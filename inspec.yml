@@ -280,6 +280,16 @@ inputs:
     type: Array
     value: []
 
+  # SV-230251
+  - name: openssh_server_required_algorithms
+    description: List of MACs employing FIPS 140-2-approved algorithms (order matters)
+    type: Array
+    value:
+      - "hmac-sha2-512"
+      - "hmac-sha2-256"
+      - "hmac-sha2-512-etm@openssh.com"
+      - "hmac-sha2-256-etm@openssh.com"
+
   # SV-230229
   - name: root_ca_location
     description: Path to an location fo the DoD trust anchor certificate file (DoD)
@@ -638,9 +648,9 @@ inputs:
     description: Red Hat uses GPG keys labels with matching fingerprints
     type: Hash
     value:
-      'release key 2': '567E 347A D004 4ADE 55BA  8A5F 199E 2F91 FD43 1D51'
-      'auxiliary key': '6A6A A7C9 7C88 90AE C6AE  BFE2 F76F 66C3 D408 2792'
-  
+      "release key 2": "567E 347A D004 4ADE 55BA  8A5F 199E 2F91 FD43 1D51"
+      "auxiliary key": "6A6A A7C9 7C88 90AE C6AE  BFE2 F76F 66C3 D408 2792"
+
   # SV-254520
   - name: administrator_users
     description: List of users who are allowed to have an administrator-level SELinux role
@@ -663,4 +673,3 @@ inputs:
     type: Array
     value:
       - user_u
-
