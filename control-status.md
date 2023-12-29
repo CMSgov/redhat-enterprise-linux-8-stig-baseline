@@ -363,15 +363,15 @@
 | SV-251709 |          | Y        | Y      | Y     | N                                | `system_libraries`                           |
 | SV-251710 |          | Y        | Y      | Y     | N                                | `file_integrity_tool`                        |
 | SV-251711 |          | Y        | Y      | Y     | N                                | None                                           |
-| SV-251712 |          | Y        | Y      | Y     | N                                |                                                |
-| SV-251713 |          | Y        | Y      | Y     | N                                |                                                |
-| SV-251714 |          | Y        | Y      | Y     | N                                |                                                |
-| SV-251715 |          | Y        | Y      | Y     | N                                |                                                |
-| SV-251716 |          | Y        | Y      | Y     | N                                |                                                |
-| SV-251717 | Y        |          |        |       |                                  |                                                |
-| SV-251718 | Y        |          |        |       |                                  |                                                |
-| SV-254520 |          |          |        |       |                                  |                                                |
-| SV-255924 | Y        |          |        |       |                                  |                                                |
+| SV-251712 |          | Y        | Y      | Y     | N                                | None                                           |
+| SV-251713 |          | Y        | Y      | Y     | N                                | `pam_auth_files`                               |
+| SV-251714 |          | Y        | Y      | Y     | N                                | `pam_auth_files<br>``max_retry`                 |
+| SV-251715 |          | Y        | Y      | Y     | N                                | `pam_auth_files<br>``max_retry`                |
+| SV-251716 |          | Y        | Y      | Y     | N                                | `min_retry`                                    |
+| SV-251717 |          | Y        | Y      | Y     | N                                | `pam_auth_files<br>``min_reuse_generations`    |
+| SV-251718 |          | Y        | Y      | Y     | N                                | `gui_required`                                 |
+| SV-254520 |          |          |        |       |                                  | `administrator_users<br>``allowed_admin_selinux_roles<br>``allowed_non_admin_selinux_roles<br>` |
+| SV-255924 |          | Y        | Y      | Y     | N                                | None                                           |
 | SV-256973 |          | Y        | Y      | Y     | N                                | `rpm_gpg_file<br>``rpm_gpg_keys`             |
 | SV-256974 |          | Y        | Y      | Y     | N                                | `mail_package`                               |
 | SV-257258 |          | Y        | Y      | Y     | N                                |                                                |
