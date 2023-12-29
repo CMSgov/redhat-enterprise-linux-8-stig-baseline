@@ -45,7 +45,7 @@ If the MACs entries in the "opensshserver.config" file have any hashes other tha
   # Define the required algorithms
   required_algorithms = input('openssh_server_required_algorithms')
 
-  # TODO: make a simple resource for this based off 'login_defs' as a model
+  # TODO: make a simple resource for this based off 'login_defs' or 'yum' as a model
 
   # Parse the configuration file to get the value of "CRYPTO_POLICY"
   crypto_policy = parse_config_file("/etc/crypto-policies/back-ends/opensshserver.config")["CRYPTO_POLICY"]
