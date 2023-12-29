@@ -678,3 +678,15 @@ inputs:
     description: Number of seconds the system can be idle before session timeout
     type: Numeric
     value: 900
+
+  # SV-230233
+  - name: shah_crypt_min_rounds
+    description: Minimum rounds of hashing during password encryption
+    type: Numeric
+    value: 5000
+  
+  # SV-230233
+  - name: shah_crypt_max_rounds
+    description: Maximum rounds of hashing during password encryption
+    type: Numeric
+    value: 5000
