@@ -1,4 +1,4 @@
-| Control   | Priority | Reviewed | Tested | V1R12 | Needs Resource(s)                | Inputs                                         |
+| Control   | Priority | Reviewed | Tested | V1R12 | Needs New Resource(s)?           | Inputs                                         |
 | --------- | -------- | -------- | ------ | ----- | -------------------------------- | ---------------------------------------------- |
 | SV-230221 |          | Y        | Y      | Y     | N                                | None                                           |
 | SV-230222 | Y        | Y        | Y      | Y     | N                                | `disable_slow_controls`                      |

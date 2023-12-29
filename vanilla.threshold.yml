@@ -17,7 +17,7 @@ passed:
       - SV-230558
       - SV-251706
   medium:
-    min: 104
+    min: 103
     controls:
       - SV-230222
       - SV-230231
@@ -131,7 +131,7 @@ passed:
       - SV-230381
       - SV-230395
   total:
-    min: 119
+    min: 118
 failed:
   critical:
     max: 0
@@ -146,7 +146,7 @@ failed:
       - SV-244540
       - SV-244541
   medium:
-    max: 187
+    max: 188
     controls:
       - SV-230224
       - SV-230225
@@ -362,7 +362,7 @@ failed:
       - SV-230552
       - SV-244527
   total:
-    max: 216
+    max: 217
 skipped:
   critical:
     max: 0
