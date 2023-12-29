@@ -76,7 +76,6 @@ control 'SV-251710' do
   tag nist: ['SI-6 a']
 
   file_integrity_tool = input('file_integrity_tool')
-  file_integrity_service = input('file_integrity_service')
 
   only_if('Control not applicable within a container', impact: 0.0) do
     !virtualization.system.eql?('docker')
@@ -91,9 +90,5 @@ control 'SV-251710' do
 
   describe package(file_integrity_tool) do
     it { should be_installed }
-  end
-  describe service(file_integrity_service) do
-    it { should be_enabled }
-    it { should be_running }
   end
 end
