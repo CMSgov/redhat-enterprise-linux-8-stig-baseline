@@ -1,10 +1,8 @@
 name: UBI8 Testing Matrix
-
 on:
   workflow_run:
-    workflows: ["Lint & Check the Profile"]
-    types: 
-      - completed
+    workflows: [Lint]
+    types: [completed]
 
 jobs:
   validate:
