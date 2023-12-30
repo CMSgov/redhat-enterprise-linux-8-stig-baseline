@@ -1,10 +1,10 @@
 name: UBI8 Testing Matrix
 
 on:
-  push:
-    branches:
-      - main
-  pull_request:
+  workflow_run:
+    workflows: ["Lint & Check the Profile"]
+    types: 
+      - completed
 
 jobs:
   validate:
