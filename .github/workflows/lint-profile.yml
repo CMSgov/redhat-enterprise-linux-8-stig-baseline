@@ -1,4 +1,4 @@
-name: EC2 Testing Matrix
+name: Lint & Check the Profile
 
 on:
   push:
@@ -8,7 +8,7 @@ on:
 
 jobs:
   validate:
-    name: Validate my profile
+    name: Lint & Check the Profile
     runs-on: ubuntu-latest
     env:
       CHEF_LICENSE: accept-silent
