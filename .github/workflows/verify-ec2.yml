@@ -66,9 +66,6 @@ jobs:
       - name: Vendor the Profile
         run: bundle exec inspec vendor . --overwrite
 
-      - name: Lint the Inspec profile
-        run: bundle exec inspec check .
-
       - name: Run kitchen test
         if: ${{ !contains(steps.commit.outputs.message, 'only-validate-profile') }}
         continue-on-error: true

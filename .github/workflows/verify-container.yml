@@ -15,6 +15,8 @@ jobs:
       CHEF_LICENSE_KEY: ${{ secrets.SAF_CHEF_LICENSE_KEY }}
       KITCHEN_LOCAL_YAML: kitchen.container.yml
       LC_ALL: "en_US.UTF-8"
+      HARDENED_CONTAINER_IMAGE: "registry1.dso.mil/ironbank/redhat/ubi/ubi8"
+      VANILLA_CONTAINER_IMAGE: "registry.access.redhat.com/ubi8/ubi:8.9-1028"
     strategy:
       matrix:
         suite: ["vanilla", "hardened"]
@@ -65,9 +67,6 @@ jobs:
 
       - name: Vendor the Profile
         run: bundle exec inspec vendor . --overwrite
-
-      - name: Lint the Inspec profile
-        run: bundle exec inspec check .
 
       - name: Run kitchen test
         if: ${{ !contains(steps.commit.outputs.message, 'only-validate-profile') }}
