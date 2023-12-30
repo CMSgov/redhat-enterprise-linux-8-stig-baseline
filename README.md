@@ -14,17 +14,30 @@ The RHEL8 STIG Profile uses the [InSpec](https://github.com/inspec/inspec) open-
 Table of Contents
 =================
 
-* [RedHat Enterprise Linux 8.x Security Technical Implementation Guide InSpec Profile](#redhat-enterprise-linux-8x-security-technical-implementation-guide-inspec-profile)
-   * [RedHat 8.x Enterprise Linux Security Technical Implementation Guide (RHEL8 STIG)](#redhat-8x-enterprise-linux-security-technical-implementation-guide-rhel8-stig)
-* [Getting Started and Intended Usage](#getting-started-and-intended-usage)
-   * [Intended Usage - main vs releases](#intended-usage---main-vs-releases)
-   * [Environment Aware Testing](#environment-aware-testing)
-   * [Tailoring to Your Environment](#tailoring-to-your-environment)
-* [Running the Profile](#running-the-profile)
-   * [(connected) Running the Profile Directly](#connected-running-the-profile-directly)
-   * [(disconnected) Running the profile from a local archive copy](#disconnected-running-the-profile-from-a-local-archive-copy)
-   * [Different Run Options](#different-run-options)
-* [Using Heimdall for Viewing Test Results and Exporting for Checklist and eMASS](#using-heimdall-for-viewing-test-results-and-exporting-for-checklist-and-emass)
+- [RedHat Enterprise Linux 8.x Security Technical Implementation Guide InSpec Profile](#redhat-enterprise-linux-8x-security-technical-implementation-guide-inspec-profile)
+- [Table of Contents](#table-of-contents)
+  - [RedHat 8.x Enterprise Linux Security Technical Implementation Guide (RHEL8 STIG)](#redhat-8x-enterprise-linux-security-technical-implementation-guide-rhel8-stig)
+    - [Source Guidance](#source-guidance)
+    - [Current Profile Statistics](#current-profile-statistics)
+- [Getting Started and Intended Usage](#getting-started-and-intended-usage)
+  - [Intended Usage - `main` vs `releases`](#intended-usage-main-vs-releases)
+  - [Environment Aware Testing](#environment-aware-testing)
+  - [Tailoring to Your Environment](#tailoring-to-your-environment)
+    - [Profile Inputs (see `inspec.yml` file)](#profile-inputs-see-inspecyml-file)
+      - [**_Do not change the inputs in the `inspec.yml` file_**](#do-not-change-the-inputs-in-the-inspecyml-file)
+      - [Update Profile Inputs from the CLI or Local File](#update-profile-inputs-from-the-cli-or-local-file)
+      - [Expected versus max/min input values](#expected-versus-maxmin-input-values)
+      - [The following inputs may be configured in an inputs ".yml" file for the profile to run correctly for your specific environment.](#the-following-inputs-may-be-configured-in-an-inputs-yml-file-for-the-profile-to-run-correctly-for-your-specific-environment)
+- [Running the Profile](#running-the-profile)
+  - [(connected) Running the Profile Directly from Github](#connected-running-the-profile-directly-from-github)
+  - [(disconnected) Running the profile from a local archive copy](#disconnected-running-the-profile-from-a-local-archive-copy)
+  - [Different Run Options](#different-run-options)
+- [Using Heimdall for Viewing Test Results and Exporting for Checklist and eMASS](#using-heimdall-for-viewing-test-results-and-exporting-for-checklist-and-emass)
+- [Authors](#authors)
+    - [NOTICE](#notice)
+    - [NOTICE](#notice-1)
+    - [NOTICE](#notice-2)
+    - [NOTICE](#notice-3)
 
 ## RedHat 8.x Enterprise Linux Security Technical Implementation Guide (RHEL8 STIG)
 
@@ -100,133 +113,76 @@ The `inspec.yml` file has been written such that numerical inputs (inputs where 
 
 The profile is written this way so that programs can easily configure the ranges used by the checks, in case the program wants to check against different values than the STIG defaults (such as programs with more stringent requirements than the baseline STIG). The `expected`, `max` and `min` values are all set to the STIG defaults in `inspec.yml`. If the organization wants to be directly compliant with the baseline STIG, _these values should not be changed!_
 
-#### The following inputs may be configured in an inputs ".yml" file for the profile to run correctly for your specific environment.
+#### The following inputs may be configured in an inputs ".yml" file for the profile to run correctly for your specific environment. 
 
 ```yaml
 # InSpec Tests that are known to consistently have long run times can be disabled with this attribute
-
-# OS versions for min and max bounds
-os_versions:
-   min:
-   max:
-
 # Acceptable values: false, true
 # (default: false)
 disable_slow_controls: true
-
+ 
 # Flag to designate if the target is a container host. (true or false)
 container_host: false
-
-# Main grub boot config file (String)
+ 
+# Main grub boot config file (String) 
 grub_uefi_main_cfg:
-
+ 
 # Grub boot config files (Array of strings)
 grub_uefi_user_boot_files:
-
+ 
 # Users exempt from home directory-based controls in array format
 exempt_home_users: []
-
+ 
 # These shells do not allow a user to login
 non_interactive_shells: []
-
+ 
 # System accounts that support approved system activities. (Array) (defaults shown below)
 known_system_accounts: []
-
+ 
 # Accounts of known managed users (Array)
 user_accounts: []
-
+ 
 # Main grub boot config file (String)
 grub_main_cfg:
-
+ 
 # Grub boot config files (Array of Strings)
 grub_user_boot_files:
-
+ 
 # Set to 'true' if IPv4 is enabled on the system. (default true)
 ipv4_enabled:
-
+ 
 # Set to 'true' if IPv6 is enabled on the system.(default true)
 ipv6_enabled:
-
+ 
 # Device or system does not have a camera installed. (default true)
 camera_installed:
-
+ 
 # Device or operating system has a Bluetooth adapter installed. (default true)
 bluetooth_installed:
-
+ 
 # Smart card status (enabled or disabled) default: 'enabled'
 smart_card_status:
-
+ 
 # Name of tool
 file_integrity_tool: 'aide'
-
+ 
 # Timeserver used in /etc/chromy.conf (String)
 authoritative_timeserver:
-
+ 
 # File systems that don't correspond to removable media
 non_removable_media_fs: []
-
+ 
 # List of full paths to private key files on the system (Array)
 private_key_files:
-
+ 
 # Path to an accepted trust anchor certificate file (DoD) (String)
 root_ca_file:
-
+ 
 # Temporary user accounts (Array)
 temporary_accounts:
-
+ 
 # Documented tally log directory (String)
 log_directory:
-
-# All network connections associated with SSH traffic are terminated at the end of the session or after 10 minutes of inactivity (Numeric)
-sshd_client_alive_count_max:
-
-# Endpoint Security Linux Threat Prevention Tool (Hash - package,process)
-linux_threat_prevention_tool:
-
-# Graphical Display Manager must not be installed (Array)
-remove_xorg_x11_server_packages:
-
-# Must take appropriate action when an audit processing failure occurs. (Array)
-disk_error_action:
-
-# Must be alerted when the audit storage volume is full. (String)
-max_log_file_action:
-
-# Audit system must take appropriate action when the audit storage volume is full. (Array)
-disk_full_action:
-
-# Whether to permit direct logons to the root account using remote access via SSH (String)
-permit_root_login:
-
-# Define default permissions for logon and non-logon shells. (Hash - bashrc_umask, cshrc_umask)
-permissions_for_shells:
-
-# Certificate status checking for multifactor authentication. (String)
-sssd_certificate_verification:
-
-# Path of sssd_conf file (String)
-sssd_conf_path:
-
-# Group owner of /var/log/audit/audit.log (Array)
-var_log_audit_group:
-
-# Whether to use fapolicyd, similar to SELinux whitelisting (Boolean)
-use_fapolicyd:
-
-# The key of the /etc/passwd file in /etc/audit/rules.d.* (String)
-audit_passwd_key:
-
-# The key of the /etc/group file in /etc/audit/rules.d.* (String)
-audit_group_key:
-
-# The pam.d auth paths (Hash - system-auth, password-auth)
-pam_auth_files:
-
-# The security faillock configuration file
-security_faillock_conf:
-
-# Firewall properties to check (Hash - default_zone, ports, protocols, services)
-firewalld_properties:
 ```
 
 # Running the Profile
@@ -238,12 +194,12 @@ inspec exec https://github.com/mitre/redhat-enterprise-linux-8-stig-baseline/arc
 ```
 Against a remote target using a pem key with escalated privileges (i.e., inspec installed on a separate runner host)
 ```bash
-inspec exec https://github.com/mitre/redhat-enterprise-linux-8-stig-baseline/archive/main.tar.gz -t ssh://TARGET_USERNAME@TARGET_IP:TARGET_PORT --sudo -i <your_PEM_KEY> --input-file <path_to_your_input_file/name_of_your_input_file.yml> --reporter json:<path_to_your_output_file/name_of_your_output_file.json>
+inspec exec https://github.com/mitre/redhat-enterprise-linux-8-stig-baseline/archive/main.tar.gz -t ssh://TARGET_USERNAME@TARGET_IP:TARGET_PORT --sudo -i <your_PEM_KEY> --input-file <path_to_your_input_file/name_of_your_input_file.yml> --reporter json:<path_to_your_output_file/name_of_your_output_file.json>  
 ```
 
 Against a local Red Hat host with escalated privileges (i.e., inspec installed on the target)
 ```bash
-sudo inspec exec https://github.com/mitre/redhat-enterprise-linux-8-stig-baseline/archive/main.tar.gz --input-file <path_to_your_input_file/name_of_your_input_file.yml> --reporter json:<path_to_your_output_file/name_of_your_output_file.json>
+sudo inspec exec https://github.com/mitre/redhat-enterprise-linux-8-stig-baseline/archive/main.tar.gz --input-file <path_to_your_input_file/name_of_your_input_file.yml> --reporter json:<path_to_your_output_file/name_of_your_output_file.json> 
 ```
 ## (disconnected) Running the profile from a local archive copy
 
@@ -300,7 +256,7 @@ MITRE Security Automation Framework Team https://saf.mitre.org
 
 ### NOTICE
 
-© 2018-2022 The MITRE Corporation.
+© 2018-2023 The MITRE Corporation.
 
 Approved for Public Release; Distribution Unlimited. Case Number 18-3678.
 

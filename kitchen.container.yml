@@ -1,0 +1,29 @@
+---
+# see: https://kitchen.ci/docs/drivers/dokken/
+provisioner:
+  name: dummy
+
+platforms:
+  - name: ubi8
+
+driver:
+  name: dokken
+  pull_platform_image: false
+
+transport:
+  name: dokken
+
+suites:
+  - name: vanilla
+    driver:
+      image: <%= ENV['VANILLA_CONTAINER_IMAGE'] %>
+    verifier:
+      input_files:
+        - container.vanilla.inputs.yml
+  - name: hardened
+    driver:
+      image: <%= ENV['HARDENED_CONTAINER_IMAGE'] %>
+    verifier:
+      input_files:
+        - container.hardened.inputs.yml
+      # creds_file: './creds.json'
