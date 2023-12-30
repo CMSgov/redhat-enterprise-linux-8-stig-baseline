@@ -55,8 +55,5 @@ jobs:
       - name: Vendor the Profile
         run: bundle exec inspec vendor . --overwrite
 
-        - name: Lint the Inspec profile
-        run: bundle exec i
-
-        - name: Lint the Inspec profile
+      - name: Lint the Inspec profile
         run: bundle exec inspec check .
