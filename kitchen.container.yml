@@ -1,10 +1,8 @@
 ---
 # see: https://kitchen.ci/docs/drivers/dokken/
+
 provisioner:
   name: dummy
-
-platforms:
-  - name: ubi8
 
 driver:
   name: dokken
@@ -12,6 +10,9 @@ driver:
 
 transport:
   name: dokken
+
+platforms:
+  - name: ubi8
 
 suites:
   - name: vanilla

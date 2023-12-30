@@ -1,4 +1,7 @@
 ---
+platforms:
+  - name: rhel-8
+
 driver:
   name: ec2
   # subnet_filter:

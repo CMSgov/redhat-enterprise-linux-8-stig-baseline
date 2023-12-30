@@ -16,9 +16,6 @@ verifier:
   <% end %>
   load_plugins: true
 
-platforms:
-  - name: rhel-8
-
 suites:
   - name: vanilla
     provisioner:
