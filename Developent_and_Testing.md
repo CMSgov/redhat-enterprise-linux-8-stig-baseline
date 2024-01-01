@@ -384,7 +384,7 @@ Here is an example of various indices in a profile's control:
 
 When updating Benchmark Profiles, adhere to these key principles to maintain alignment with the original Guidance Documents:
 
-1. **Maintain Version Integrity:** ***Never Merge*** new requirements into older benchmark branches. This will create a 'mixed baseline' that doesn't align with any specific guidance document. Benchmarks, STIGs, and Guidance Documents form a 'proper subset' - they should be treated as 'all or nothing'. Mixing requirements from different versions can invalidate the concept of 'testing to a known benchmark'.
+1. **Maintain Version Integrity:** **Never Merge** new requirements into older benchmark branches. This will create a 'mixed baseline' that doesn't align with any specific guidance document. Benchmarks, STIGs, and Guidance Documents form a 'proper subset' - they should be treated as 'all or nothing'. Mixing requirements from different versions can invalidate the concept of 'testing to a known benchmark'.
 2. **Benchmarks are a Complete Set of Requirements:** A Security Benchmark is 'complete and valid' only when all requirements for a specific Release or Major Version are met. Unlike traditional software projects, features and capabilities cannot be incrementally added. A Security Benchmark and its corresponding InSpec Profile are valid only within the scope of a specific 'Release' of that Benchmark.
 3. **Release Readiness Is Predefined:** A Benchmark is considered 'ready for release' when it meets the expected thresholds, hardening, and validation results. Don't be overwhelmed by the multitude of changes across the files. Instead, focus on the specific requirement you are working on. Understand its expected failure and success states on each of the target testing platforms. This approach prevents you from being overwhelmed and provides solid pivot points as you work through the implementation of the automated tests for each requirement and its 'contexts'.
 
@@ -430,7 +430,7 @@ The good news is that **these improvements are within reach**. We can leverage t
 
 Once the 'old controls' and 'new controls' are aligned across 'Rule IDs', you can migrate the InSpec / Ruby code into their respective places.
 
-Then, you follow the same setup, CI/CD organization, and control update process as in the `Release Update` process.
+Then, you follow the same setup, CI/CD organization, and control update process as in the `Release Update` process and hopfully finding that the actual InSpec code from the previous benchmark is very close to the needed InSpec code for the same 'requirement' in the new Benchmark.
 
 ## InSpec, Ruby, and Test Kitchen: Testing and Debugging Tips
 
@@ -554,9 +554,105 @@ This action is similar to the `verify-ec2` workflow, but instead of using a remo
 
 # InSpec Delta
 
-To create a release update for a profile, follow the steps outlined in the [Running MITRE SAF Delta](https://github.com/mitre/saf/wiki/Delta-(WIP)) guide. This guide provides detailed instructions on how to create a release update.
+## Preparing the Profile Before Running Delta
 
-laksdjfalksdjflakdsfja
+Before running Delta, it's beneficial to format the profile to match the format Delta will use. This minimizes changes to only those necessary based on the guidance update. Follow these steps:
+
+1. **Run Cookstyle:** Install the Cookstyle gem and use it to lint the controls into Cookstyle format. Verify the gem installation with `gem list cookstyle`. Create a `.rubocop.yml` file with the provided example settings or modify these settings via the command line. Run `cookstyle -a ./controls` and any tests you have for your profile.
+
+```shell
+AllCops:
+  Exclude:
+    - "libraries/**/*"
+
+Layout/LineLength:
+  Max: 1000
+  AllowURI: true
+  IgnoreCopDirectives: true
+
+Naming/FileName:
+  Enabled: false
+
+Metrics/BlockLength:
+  Max: 400
+
+Lint/ConstantDefinitionInBlock:
+  Enabled: false
+
+# Required for Profiles as it can introduce profile errors
+Style/NumericPredicate:
+  Enabled: false
+
+Style/WordArray:
+  Description: "Use %w or %W for an array of words. (https://rubystyle.guide#percent-w)"
+  Enabled: false
+
+Style/RedundantPercentQ:
+  Enabled: true
+
+Style/NestedParenthesizedCalls:
+  Enabled: false
+
+Style/TrailingCommaInHashLiteral:
+  Description: "https://docs.rubocop.org/rubocop/cops_style.html#styletrailingcommainhashliteral"
+  Enabled: true
+  EnforcedStyleForMultiline: no_comma
+
+Style/TrailingCommaInArrayLiteral:
+  Enabled: true
+  EnforcedStyleForMultiline: no_comma
+
+Style/BlockDelimiters:
+  Enabled: false
+
+Lint/AmbiguousBlockAssociation:
+  Enabled: false
+```
+
+2. **Run the SAF CLI Command:** Use `saf generate update_controls4delta` to check and update the control IDs with the provided XCCDF guidance. This process checks if the new guidance changes the control numbers and updates them if necessary. This minimizes the Delta output content and improves the visualization of the modifications provided by the Delta process.
+
+## Preparing Your Environment
+
+- **Download New Guidance:** Download the appropriate profile from the [DISA Document Library](https://public.cyber.mil/stigs/downloads/). Unzip the downloaded folder and identify the `<name>xccdf.xml` file.
+- **Create the InSpec Profile JSON File:** Clone or download the InSpec profile locally. Run the `inspec json` command to create the InSpec Profile JSON file to be used in the `saf generate delta` command.
+
+## Delta Workflow Process
+
+![Delta Workflow Process](https://user-images.githubusercontent.com/13986875/228628448-ad6b9fd9-d165-4e65-95e2-a951031d19e2.png "Delta Workflow Process Image")
+
+## Using Delta
+
+The SAF InSpec Delta workflow typically involves two phases, `preformatting` and `delta`.
+
+Before starting, ensure you have the latest SAF-CLI, the InSpec Profile JSON file, and the updated guidance file.
+
+1. **Preformat the Source Profile:** Before running the Delta command, preformat your source profile (usually the Patch Release profile) using the `saf generate update_controls4delta` command. This prepares the profile for the Delta process.
+2. **Run the Delta Command:** Execute `saf generate delta [arguments]` to start the Delta process.
+
+For more information on these commands, refer to the following documentation:
+
+- [update_controls4delta](https://saf-cli.mitre.org/#delta-supporting-options)
+- [saf generate delta](https://saf-cli.mitre.org/#delta)
+
+## Scope of Changes by Delta
+
+Delta focuses on specific modifications migrating the changes from the XCCDF Benchmark Rules to the Profiles controls, and updating the 'metadata' of each of thosin the `control ID`, `title`, `default desc`, `check text`, and `fix text`, between the XCCDF Benchmark Rules and the Profile Controls.
+
+If the XCCDF Guidance Document introduces a new 'Rule' or `inspec control` that is not in the current profile's `controls` directory, Delta will add it to the controls directory, populating the metadata from the XCCDF Benchmark data, similar to the [xccdf-benchmark-to-inspec-stubs](https://saf-cli.mitre.org/#xccdf-benchmark-to-inspec-stub) tool.
+
+It also adjusts the `tags` and introduces a `ref` between the `impact` and `tags`.
+
+Delta does not modify the Ruby/InSpec code within the control, leaving it intact. Instead, it updates the 'control metadata' using the information from the supplied XCCDF guidance document. This applies to 'matched controls' between the XCCDF Guidance Document and the InSpec profile.
+
+## Other Notes
+
+- The original Delta branch can be found [here](https://github.com/mitre/saf/pull/485).
+- Delta moves lines not labeled with 'desc' to the bottom, between tags and InSpec code.
+- Consider adjusting the formatting to have two runs:
+  - Formatting the files in a way that Delta likes, and,
+  - The second run being Delta.
+- Whether the controls are formatted to be 80 lines or not, Delta exhibits the same behavior with the extra text.
+- Parameterizing should be considered.
 
 # Background and Definitions
 
@@ -596,8 +692,5 @@ It was later realized that since the structure of these data elements was 'stati
 - **SRG_ID**: This is the unique identifier of the SRG requirement. These indexes, like the STIG Rule IDs, also show their parent-child relationship. For example: 'SRG-OS-000480-GPOS-00227'.
 - **[Common Correlation Identifier](https://public.cyber.mil/stigs/cci/) (CCI)**: The Control Correlation Identifier (CCI) provides a standard identifier and description for each of the singular, actionable statements that comprise an IA control or IA best practice. For example: 'CCI-000366'.
 - **Rule ID (rid)**: The Rule ID has two parts separated by the `r` in the string - ('SV-230221) and (r858734_rule)'. The first part remains unique within the major version of a Benchmark document, while the latter part of the string is updated each time the 'Rule' is updated 'release to release' of the Benchmark. For example: 'SV-230221r858734_rule'.
-- **STIG ID (stig_id)**: Many testing tools and testing results tools use this ID - vs the Rule ID - to display each of the individual results of a Benchmark validation run. For example: 'RHEL-08-010000'.
-
-Examples are the DISA STIG Viewer, Nessus Audit Scans and Open SCAP client.
-
+- **STIG ID (stig_id)**: Many testing tools and testing results tools use this ID - vs the Rule ID - to display each of the individual results of a Benchmark validation run. For example: 'RHEL-08-010000'. Examples include: DISA STIG Viewer, Nessus Audit Scans and the Open SCAP client.
 - **Group Title (gtitle)**: This is essentially the SRG ID but is a holdover data value from the old Vulnerability Management System. For example:  'SRG-OS-000480-GPOS-00227'.
