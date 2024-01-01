@@ -157,7 +157,7 @@ For example, after releasing `v1.12.0`, we will point `v1.12` to that patch rele
 
 You can either use standard AWS Profiles to configure your environment or use the standard AWS Environment variables to run the test suite. See: [AWS CLI Installation &amp; Configuration](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html "AWS CLI Install Guide")
 
-- Use the `AWS_PROFILE` environment variable and AWS Credential Profiles to simplify testing on multiple AWS environments or segments. This will allow you to easily manage multiple sets of AWS Secrets and Access Keys with adjustments to a single variable. (See: docs for this)
+- Use the `AWS_PROFILE` environment variable and AWS Credential Profiles to simplify testing on multiple AWS environments or segments. This will allow you to easily manage multiple sets of AWS Secrets and Access Keys with adjustments to a single variable. (See: [AWS CLI and Profile Setup](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html "AWS CLI Profiles Setup"))
 
 ## 1.6. Setting Up Your Environment
 
@@ -184,14 +184,16 @@ You can either use standard AWS Profiles to configure your environment or use th
 
 ## 1.7. Running The Profile
 
-With all the necessary tools in place, you can now run the profile. First, you need to decide which testing environment you will be using. Test-Kitchen determines the testing environment through a collection of environment variables (see: Environment Variables).
+Once you've set up the necessary tools, you're ready to run the profile. The testing environment is determined by Test-Kitchen using environment variables.
 
-The test suite offers four choices:
+There are four testing environments to choose from:
 
-1. AWS VPC Testing
-2. Docker Testing
-3. Vagrant Testing
-4. Local Testing
+1. AWS VPC Testing: This environment uses an AWS VPC for testing.
+2. Docker Testing: This environment uses Docker containers for testing.
+3. Vagrant Testing: This environment uses Vagrant virtual machines for testing.
+4. Local Testing: This environment uses your local machine for testing.
+
+The specifics of each environment's configuration are detailed in the following sections.
 
 ### 1.7.1. Getting Your First Test Kitchen (TK) Run
 
@@ -294,7 +296,7 @@ You can also isolate which of the 'target suites' - either `vanilla` or `hardene
 ```
 
 10. Destroy the kitchen instance: `bundle exec kitchen destroy vanilla`.
-11. For steps that apply to making updates, patches, and updates to the profile, see the next section, [Updating the Profile](#updating-the-profile).
+11. For steps that apply to making updates, patches, and updates to the profile, see the next section, [Updating the Profile](#18-updating-the-profile).
 12. Your InSpec scan results are located in the `./spec/results/` directory, nameed `./spec/results/rhel-8_*`.
 13. Use [Heimdall Lite](https://heimdall-lite.mitre.org "MITRE Heimdall Lite") to load both the `hardened` and `vanilla` results to ensure your changes and updates, "failed as expected and passed as expected and covered your courner cases."
 
@@ -378,7 +380,7 @@ The error below is just Test Kitchen telling you that not all of the Contrls in 
 >>>>>> Also try running `kitchen diagnose --all` for configuration
 ```
 
-14. For steps that apply to making updates, patches, and updates to the profile, see the next section, [Updating the Profile](#updating-the-profile).
+14. For steps that apply to making updates, patches, and updates to the profile, see the next section, [Updating the Profile](#18-updating-the-profile).
 15. Your InSpec scan results are located in the `./spec/results/` directory, nameed `./spec/results/ubi-8_*`.
 16. Use [Heimdall Lite](https://heimdall-lite.mitre.org) to load both the `hardened` and `vanilla` results to ensure your changes and updates, "failed as expected and passed as expected and covered your courner cases."
 
@@ -484,7 +486,7 @@ A patch update involves making minor changes to a profile to fix issues or impro
 
 ### 1.8.7. Creating a `Release Update`
 
-A `Release Update` involves creating a new branch, `v#{x}R#{x+1}`, from the current main or latest patch release branch. The `saf generate delta` workflow is then run, which updates the metadata of the `controls`, `inspec.yml`, `README.md`, and other profile elements, while preserving the `describe` and `ruby code logic`. This workflow is detailed in the [Inspec Delta](#inspec-delta) section. After the initial commit of the new release branch, follow these steps to keep your work organized:
+A `Release Update` involves creating a new branch, `v#{x}R#{x+1}`, from the current main or latest patch release branch. The `saf generate delta` workflow is then run, which updates the metadata of the `controls`, `inspec.yml`, `README.md`, and other profile elements, while preserving the `describe` and `ruby code logic`. This workflow is detailed in the [Inspec Delta](#2-inspec-delta) section. After the initial commit of the new release branch, follow these steps to keep your work organized:
 
 1. **Track Control IDs:** Create a table of all new `control ids` in the updated benchmark. This can be in CSV, Markdown Table, or in the PR overview information section. This helps track completed and pending work. PRs off the `v#{x}r#{x+1}` can also be linked in the table, especially if using a `micro` vs `massive` PR approach.
 2. **Ensure Consistency:** Add 'check box columns' to your tracking table to ensure each requirement of the updated Benchmark receives the same level of scrutiny.
@@ -562,7 +564,7 @@ journey
 
 ### 1.9.3. The `.kitchen/` Directory
 
-The [`.kitchen/`](/.kitchen/) directory contains the state file for Test Kitchen, which is automatically generated when you first run Test Kitchen. Refer to the [Finding Your Test Target Login Details](#finding-your-test-target-login-details) section to see how you can use the `.kitchen/` directory.
+The [`.kitchen/`](/.kitchen/) directory contains the state file for Test Kitchen, which is automatically generated when you first run Test Kitchen. Refer to the [Finding Your Test Target Login Details](#311-locating-test-target-login-details) section to see how you can use the `.kitchen/` directory.
 
 ### 1.9.4. The `kitchen.yml` File
 
@@ -660,7 +662,7 @@ The workflow of Test Kitchen involves the following steps:
 
 The `kitchen.ec2.yml` file is instrumental in setting up our testing targets within the AWS environment. It outlines the configuration details for these targets, including their VPC assignments and the specific settings for each VPC.
 
-This file leverages the ` AWS CLI and AWS Credentials` configured as described in the previous [Required Software](#required-software) section.
+This file leverages the ` AWS CLI and AWS Credentials` configured as described in the previous [Required Software](#13-required-software) section.
 
 Alternatively, if you've set up AWS Environment Variables, the file will use those for AWS interactions.
 
@@ -1057,7 +1059,7 @@ When developing InSpec controls, it's beneficial to use the `kitchen-test` suite
 
 ### 3.2.2. Streamlining Your Testing with `inspec shell`
 
-The `inspec shell` command allows you to test your full control update on your test target directly. To do this, you'll need to retrieve the IP address and SSH PEM key for your target instance from the Test Kitchen `.kitchen` directory. For more details on this, refer to the [Finding Your Test Target Login Details](#finding-your-test-target-login-details) section.
+The `inspec shell` command allows you to test your full control update on your test target directly. To do this, you'll need to retrieve the IP address and SSH PEM key for your target instance from the Test Kitchen `.kitchen` directory. For more details on this, refer to the [Finding Your Test Target Login Details](#311-locating-test-target-login-details) section.
 
 Once you have your IP address and SSH PEM key (for AWS target instances), or the container ID (for Docker test instances), you can use the following commands:
 
