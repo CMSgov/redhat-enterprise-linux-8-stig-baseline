@@ -94,7 +94,7 @@ You can either use standard AWS Profiles to configure your environment or use th
 9. Use the command `docker login -u {PI USER NAME} -p '{HARBOR CLI SECRET}' registry1.dso.mil`.
 10. Run `bundle install` in your isolated Ruby environment.
 
-### Useful Prechecks
+### Prechecks
 
 - Verify your newly installed Ruby environment by running `ruby --version`.
 - Confirm that InSpec was installed by running `bundle exec inspec --version`.
@@ -432,95 +432,377 @@ Once the 'old controls' and 'new controls' are aligned across 'Rule IDs', you ca
 
 Then, you follow the same setup, CI/CD organization, and control update process as in the `Release Update` process and hopfully finding that the actual InSpec code from the previous benchmark is very close to the needed InSpec code for the same 'requirement' in the new Benchmark.
 
-## InSpec, Ruby, and Test Kitchen: Testing and Debugging Tips
-
-### Test Kitchen Notes
-
-#### Locating Test Target Login Details
-
-Test Kitchen stores the current host details of your provisioned test targets in the `.kitchen/` directory. Here, you'll find a `yml` file containing your target's `hostname`, `ip address`, `host details`, and login credentials, which could be an `ssh pem key` or another type of credential.
-
-```shell
-.kitchen
-├── .kitchen/hardened-container.yml
-├── .kitchen/hardened-rhel-8.pem
-├── .kitchen/hardened-rhel-8.yml
-├── .kitchen/logs
-├── .kitchen/vanilla-container.yml
-├── .kitchen/vanilla-rhel-8.pem
-├── .kitchen/vanilla-rhel-8.yml
-└── .kitchen/vanilla-ubi8.yml
-```
-
-#### Restoring Access to a Halted or Restarted Test Target
-
-If your test target reboots or updates its network information, you don't need to execute bundle exec kitchen destroy. Instead, update the corresponding .kitchen/#{suite}-#{target}.yml file with the updated information. This will ensure that your kitchen login, kitchen validate, and other kitchen commands function correctly, as they'll be connecting to the correct location instead of using outdated data.
-
-#### AWS Console and EC2 Oddities
-
-Since we're using the free-tier for our AWS testing resources instead of a dedicated host, your test targets might shut down or 'reboot in the background' if you stop interacting with them, halt them, put them in a stop state, or leave them overnight. To regain access, edit the .kitchen/#{suite}-#{target}.yml file. As mentioned above, there's no need to recreate your testing targets if you can simply point Test Kitchen to the correct IP address.
-
-### Using `pry` and `pry-byebug` for Debugging Controls
-
-When developing InSpec controls, it's beneficial to use the `kitchen-test` suite, the `INSPEC_CONTROL` environment variable, and `pry` or `pry-byebug`. This combination allows you to quickly debug, update, and experiment with your fixes in the context of the InSpec code, without having to run the full test suite.
-
-`pry` and `pry-byebug` are powerful tools for debugging Ruby code, including InSpec controls. Here's how you can use them:
-
-1. First, add `require 'pry'` or `require 'pry-byebug'` at the top of your control file.
-2. Then, insert `binding.pry` at the point in your code where you want to start debugging.
-3. When you run your tests, execution will stop at the `binding.pry` line, and you can inspect variables, step through the code, and more.
-
-#### !Pro Tip!
-
-- Remember to remove or comment out the `binding.pry` lines when you're done debugging or you won't have a good 'linting' down the road.
-
-### Streamlining Your Testing with `inspec shell`
-
-The `inspec shell` command allows you to test your full control update on your test target directly. To do this, you'll need to retrieve the IP address and SSH PEM key for your target instance from the Test Kitchen `.kitchen` directory. For more details on this, refer to the [Finding Your Test Target Login Details](#finding-your-test-target-login-details) section.
-
-Once you have your IP address and SSH PEM key (for AWS target instances), or the container ID (for Docker test instances), you can use the following commands:
-
-- For AWS test targets: `bundle exec inspec shell -i #{pem-key} -t ssh://ec2-user@#{ipaddress} --sudo`
-- For Docker test instances: `bundle exec inspec shell -t docker://#{container-id}`
-
-### Using `kitchen login` for Easy Test Review and Modification
-
-The `kitchen login` command provides an easy way to review and modify your test target. This tool is particularly useful for introducing test cases, exploring corner cases, and validating both positive and negative test scenarios.
 
 ## Test Kitchen
 
-Test Kitchen is a powerful tool for testing infrastructure code and software on isolated platforms. For more information about Test Kitchen, visit the [official website](http://kitchen.ci) and their comprehensive [documentation](http://kitchen.ci/docs/getting-started/).
+[Test Kitchen](http://kitchen.ci) is a robust tool for testing infrastructure code and software on isolated platforms. It provides a consistent, reliable environment for developing and testing infrastructure code.
+
+### Test Kitchen's Modifications to Targets
+
+Test Kitchen makes minor modifications to the system to facilitate initialization and access. It adds a 'private ssh key' for the default user and sets up primary access to the system for this user using the generated key. Test Kitchen uses the 'platform standard' for access - SSH for Unix/Linux systems and WinRM for Windows systems.
 
 ### Workflow Defined by our Test Kitchen Files
 
-### Test Kitchen Environment Variables
+Test Kitchen's workflow involves building out suites and platforms using its drivers and provisioners. It follows a create, converge, verify, and destroy cycle:
 
-- `KITCHEN_LOCAL_YAML`: This variable defines the target testing environment for running and validating the profile.
+1. **Create:** Test Kitchen creates an instance of the platform.
+2. **Converge:** It applies the infrastructure code to the instance.
+3. **Verify:** It checks if the instance is in the desired state.
+4. **Destroy:** It destroys the instance after testing.
+
+In our testing workflow, we have defined four test suites to test different deployment patterns in two configurations - `vanilla` and `hardened`.
+
+- `vanilla`: This represents a completely stock installation of the testing target, as provided by the product vendor, with no configuration updates beyond what is 'shipped' by the vendor. Apart from the standard Test Kitchen initialization, the system is considered 'stock'.
+- `hardened`: This configuration is set up using the `driver` section of the Test Kitchen suite and is executed during the `converge` phase. The `hardened` configuration represents the final `target configuration state` of our test instance, adhering to the recommended configuration of the Benchmark we are working on. For example, it aligns as closely as possible with the Red Hat Enterprise Linux V1R12 recommendations.
+
+For more details on Test Kitchen's workflow, refer to the [official documentation](http://kitchen.ci/docs/getting-started/).
+
+<!-- ```mermaid
+journey
+    title Test Kitchen Workflow
+    section Setup
+      Checkout  Repo: 3:  
+      Install Tools: 3:
+      Setup Runner: 3:
+    section Configure
+      Setup Vanilla Instance: 3: 
+      Setup Hardened Instance: 3: 
+    section Run Test Suite
+      Run Tests on Vanilla: 3: 
+      Run Tests on Hardened: 3: 
+    section Record Results 
+      Save Tests in Pipeline: 3: 
+      Upload Tests to Heimdall Server: 3: 
+    section Validate Aginst Threshold
+      Validate the 'vanilla' threshold: 4: 
+      Validate the 'hardened' threshold: 4: 
+    section Pass/Fail the Run
+      Threshold Met: 5: 
+      Threshold Not Met: :1 
+``` -->
+![test](./kitchen-workflow-dark.svg)
 
 ### The `.kitchen/` Directory
 
-The [`.kitchen/`](/.kitchen/) directory contains the state file for Test Kitchen, which is automatically generated when you first run Test Kitchen.
+The [`.kitchen/`](/.kitchen/) directory contains the state file for Test Kitchen, which is automatically generated when you first run Test Kitchen. Refer to the [Finding Your Test Target Login Details](#finding-your-test-target-login-details) section to see how you can use the `.kitchen/` directory.
 
 ### The `kitchen.yml` File
 
-The [`kitchen.yml`](./kitchen.yml) file is the primary configuration file for Test Kitchen. It outlines the testing environments, platforms, and the testing framework to be used.
+The [`kitchen.yml`](./kitchen.yml) file is the primary configuration file for Test Kitchen. It outlines the shared configuration for all your testing environments, platforms, and the testing framework to be used.
+
+Each of the subsequent kitchen files will inherit the shared settings from this file automatlly and merge them with the setting in the child kitchen file.
+
+#### Example `kitchen.yml` file
+
+```yaml
+---
+verifier:
+  name: inspec
+  sudo: true
+  reporter:
+    - cli
+    - json:spec/results/%{platform}_%{suite}.json
+  inspec_tests:
+    - name: RedHat 8 STIG v1r12
+      path: .
+  input_files:
+    - kitchen.inputs.yml
+  <% if ENV['INSPEC_CONTROL'] %>
+  controls:
+    - "<%= ENV['INSPEC_CONTROL'] %>"
+  <% end %>
+  load_plugins: true
+
+suites:
+  - name: vanilla
+    provisioner:
+      playbook: spec/ansible/roles/ansible-role-rhel-vanilla.yml
+  - name: hardened
+    provisioner:
+      playbook: spec/ansible/roles/ansible-role-rhel-hardened.yml
+```
+
+#### Breakdown of the `kitchen.yml` file:
+
+```yaml
+verifier:
+  name: inspec
+  sudo: true
+  reporter:
+    - cli
+    - json:spec/results/%{platform}_%{suite}.json
+  inspec_tests:
+    - name: RedHat 8 STIG v1r12
+      path: .
+  input_files:
+    - kitchen.inputs.yml
+  <% if ENV['INSPEC_CONTROL'] %>
+  controls:
+    - "<%= ENV['INSPEC_CONTROL'] %>"
+  <% end %>
+  load_plugins: true
+```
+
+This first section configures the verifier, which is the tool that checks if your system is in the desired state. Here, it's using InSpec.
+
+- `sudo: true` means that InSpec will run with sudo privileges.
+- `reporter` specifies the formats in which the test results will be reported. Here, it's set to report in the command-line interface (`cli`) and in a JSON file (`json:spec/results/%{platform}_%{suite}.json`).
+- `inspec_tests` specifies the InSpec profiles to run. Here, it's running the "RedHat 8 STIG v1r12" profile located in the current directory (`path: .`).
+- `input_files` specifies files that contain input variables for the InSpec profile. Here, it's using the `kitchen.inputs.yml` file.
+- The `controls` section is dynamically set based on the `INSPEC_CONTROL` environment variable. If the variable is set, only the specified control will be run.
+- `load_plugins: true` means that InSpec will load any available plugins.
+
+```yaml
+suites:
+  - name: vanilla
+    provisioner:
+      playbook: spec/ansible/roles/ansible-role-rhel-vanilla.yml
+  - name: hardened
+    provisioner:
+      playbook: spec/ansible/roles/ansible-role-rhel-hardened.yml
+```
+
+This section defines the test suites. Each suite represents a different configuration to test.
+
+- Each suite has a `name` and a `provisioner`.
+- The `provisioner` section specifies the Ansible playbook to use for the suite. Here, it's using the `ansible-role-rhel-vanilla.yml` playbook for the "vanilla" suite and the `ansible-role-rhel-hardened.yml` playbook for the "hardened" suite.
+
+The workflow of Test Kitchen involves the following steps:
+
+1. **Create:** Test Kitchen uses the driver (not shown in your file) to create an instance of the platform (also not shown in your file).
+2. **Converge:** Test Kitchen uses the provisioner to apply the infrastructure code to the instance. In this case, it's using Ansible playbooks.
+3. **Verify:** Test Kitchen uses the verifier to check if the instance is in the desired state.
+4. **Destroy:** Test Kitchen uses the driver to destroy the instance after testing. This is not shown in your file.
 
 #### Environment Variables in `kitchen.yml`
 
 - `INSPEC_CONTROL`: This variable allows you to specify a single control to run during the `bundle exec kitchen verify` phase. This is particularly useful for testing or debugging a specific requirement.
 
-### Organization of [`kitchen.ec2.yml`](./kitchen.ec2.yml)
+### Understanding the `kitchen.ec2.yml` File
 
-### Organization of [`kitchen.container.yml`](./kitchen.container.yml)
+The `kitchen.ec2.yml` file is instrumental in setting up our testing targets within the AWS environment. It outlines the configuration details for these targets, including their VPC assignments and the specific settings for each VPC.
+
+This file leverages the ` AWS CLI and AWS Credentials` configured as described in the previous [Required Software](#required-software) section.
+
+Alternatively, if you've set up AWS Environment Variables, the file will use those for AWS interactions.
+
+#### Example `kitchen.ec2.yml` file
+
+```yaml
+---
+platforms:
+  - name: rhel-8
+
+driver:
+  name: ec2
+  metadata_options:
+    http_tokens: required
+    http_put_response_hop_limit: 1
+    instance_metadata_tags: enabled
+  instance_type: m5.large
+  associate_public_ip: true
+  interface: public
+  skip_cost_warning: true
+  privileged: true
+  tags:
+    CreatedBy: test-kitchen
+
+provisioner:
+  name: ansible_playbook
+  hosts: all
+  require_chef_for_busser: false
+  require_ruby_for_busser: false
+  ansible_binary_path: /usr/local/bin
+  require_pip3: true
+  ansible_verbose: true
+  roles_path: spec/ansible/roles
+  galaxy_ignore_certs: true
+  requirements_path: spec/ansible/roles/requirements.yml
+  ansible_extra_flags: <%= ENV['ANSIBLE_EXTRA_FLAGS'] %>
+
+lifecycle:
+  pre_converge:
+    - remote: |
+        echo "NOTICE - Installing needed packages"
+        sudo dnf -y clean all
+        sudo dnf -y install --nogpgcheck bc bind-utils redhat-lsb-core vim
+        echo "updating system packages"
+        sudo dnf -y update --nogpgcheck --nobest
+        sudo dnf -y distro-sync
+        echo "NOTICE - Updating the ec2-user to keep sudo working"
+        sudo chage -d $(( $( date +%s ) / 86400 )) ec2-user
+        echo "NOTICE - updating ec2-user sudo config"
+        sudo chmod 600 /etc/sudoers && sudo sed -i'' "/ec2-user/d" /etc/sudoers && sudo chmod 400 /etc/sudoers
+
+transport:
+  name: ssh
+  max_ssh_sessions: 2
+```
+
+#### Breakdown of the `kitchen.ec2.yml` file
+
+```yaml
+platforms:
+  - name: rhel-8
+```
+
+This section defines the platforms on which your tests will run. In this case, it's Red Hat Enterprise Linux 8.
+
+```yaml
+driver:
+  name: ec2
+  ...
+```
+
+This section configures the driver, which is responsible for creating and managing the instances. Here, it's set to use Amazon EC2 instances. The various options configure the EC2 instances, such as instance type (`m5.large`), whether to associate a public IP address (`associate_public_ip: true`), and various metadata options.
+
+```yaml
+provisioner:
+  name: ansible_playbook
+  ...
+```
+
+This section configures the provisioner, which is the tool that brings your system to the desired state. Here, it's using Ansible playbooks. The various options configure how Ansible is run, such as the path to the Ansible binary (`ansible_binary_path: /usr/local/bin`), whether to require pip3 (`require_pip3: true`), and the path to the roles and requirements files.
+
+```yaml
+lifecycle:
+  pre_converge:
+    - remote: |
+        ...
+```
+
+This section defines lifecycle hooks, which are commands that run at certain points in the Test Kitchen run. Here, it's running a series of commands before the converge phase (i.e., before applying the infrastructure code). These commands install necessary packages, update system packages, and update the `ec2-user` configuration.
+
+```yaml
+transport:
+  name: ssh
+  max_ssh_sessions: 2
+```
+
+This section configures the transport, which is the method Test Kitchen uses to communicate with the instance. Here, it's using SSH and allowing a maximum of 2 SSH sessions.
+
+The workflow of Test Kitchen involves the following steps:
+
+1. **Create:** Test Kitchen uses the driver to create an instance of the platform.
+2. **Converge:** Test Kitchen uses the provisioner to apply the infrastructure code to the instance. Before this phase, it runs the commands defined in the `pre_converge` lifecycle hook.
+3. **Verify:** Test Kitchen checks if the instance is in the desired state. This is not shown in your file, but it would be configured in the `verifier` section.
+4. **Destroy:** Test Kitchen uses the driver to destroy the instance after testing. This is not shown in your file, but it would be configured in the `driver` section.
+
+The `transport` is used in all these steps to communicate with the instance.
+
+### Understanding the [`kitchen.container.yml`](./kitchen.container.yml)
+
+The `kitchen.container.yml` file orchestrates our container-based test suite. It defines two types of containers, hardened and vanilla, and specifies the inspec_tests to run against them. It also configures the generation and storage of test reports.
+
+Unlike other test suites, the container suite skips the 'provisioner' stage for the vanilla and hardened targets. Instead, during the create stage, it simply downloads and starts the specified images. This is due to the use of the [dummy Test Kitchen driver](https://github.com/test-kitchen/test-kitchen/blob/main/lib/kitchen/driver/dummy.rb), which is ideal for interacting with pre-configured or immutable targets like containers.
+
+This approach allows for the evaluation of existing containers, even those created by other workflows. It can be leveraged to build a generalized workflow for validating any container against our Benchmark requirements, providing a comprehensive assessment of its security posture.
+
+#### Example `kitchen.container.yml` file
+
+```yaml
+---
+# see: https://kitchen.ci/docs/drivers/dokken/
+
+provisioner:
+  name: dummy
+
+driver:
+  name: dokken
+  pull_platform_image: false
+
+transport:
+  name: dokken
+
+platforms:
+  - name: ubi8
+
+suites:
+  - name: vanilla
+    driver:
+      image: <%= ENV['VANILLA_CONTAINER_IMAGE'] || "registry.access.redhat.com/ubi8/ubi:8.9-1028" %>
+    verifier:
+      input_files:
+        - container.vanilla.inputs.yml
+  - name: hardened
+    driver:
+      image: <%= ENV['HARDENED_CONTAINER_IMAGE'] || "registry1.dso.mil/ironbank/redhat/ubi/ubi8" %>
+    verifier:
+      input_files:
+        - container.hardened.inputs.yml
+      # creds_file: './creds.json'
+```
+
+#### Breakdown of the `kitchen.container.yml` file:
+
+```yaml
+provisioner:
+  name: dummy
+```
+
+This section configures the provisioner, which is the tool that brings your system to the desired state. Here, it's using a dummy provisioner, which means no provisioning will be done.
+
+```yaml
+driver:
+  name: dokken
+  pull_platform_image: false
+```
+
+This section configures the driver, which is responsible for creating and managing the instances. Here, it's set to use the Dokken driver, which is designed for running tests in Docker containers. The `pull_platform_image: false` option means that it won't automatically pull the Docker image for the platform; it will use the image specified in the suite.
+
+```yaml
+transport:
+  name: dokken
+```
+
+This section configures the transport, which is the method Test Kitchen uses to communicate with the instance. Here, it's using the Dokken transport, which communicates with the Docker container.
+
+```yaml
+platforms:
+  - name: ubi8
+```
+
+This section defines the platforms on which your tests will run. In this case, it's UBI 8 (Red Hat's Universal Base Image 8).
+
+```yaml
+suites:
+  - name: vanilla
+    driver:
+      image: <%= ENV['VANILLA_CONTAINER_IMAGE'] || "registry.access.redhat.com/ubi8/ubi:8.9-1028" %>
+    verifier:
+      input_files:
+        - container.vanilla.inputs.yml
+  - name: hardened
+    driver:
+      image: <%= ENV['HARDENED_CONTAINER_IMAGE'] || "registry1.dso.mil/ironbank/redhat/ubi/ubi8" %>
+    verifier:
+      input_files:
+        - container.hardened.inputs.yml
+```
+
+This section defines the test suites. Each suite represents a different configuration to test.
+
+- Each suite has a `name`, a `driver`, and a `verifier`.
+- The `driver` section specifies the Docker image to use for the suite. It's dynamically set based on the `VANILLA_CONTAINER_IMAGE` or `HARDENED_CONTAINER_IMAGE` environment variable, with a default value if the variable is not set.
+- The `verifier` section specifies files that contain input variables for the InSpec profile.
+
+The workflow of Test Kitchen involves the following steps:
+
+1. **Create:** Test Kitchen uses the driver to create a Docker container of the platform.
+2. **Converge:** Test Kitchen uses the provisioner to apply the infrastructure code to the container. In this case, no provisioning is done.
+3. **Verify:** Test Kitchen checks if the container is in the desired state. This is not shown in your file, but it would be configured in the `verifier` section.
+4. **Destroy:** Test Kitchen uses the driver to destroy the container after testing. This is not shown in your file, but it would be configured in the `driver` section.
+
+The `transport` is used in all these steps to communicate with the container.
 
 #### Environment Variables in `kitchen.container.yml`
 
 The `kitchen.container.yml` file uses the following environment variables to select the containers used during its `hardened` and `vanilla` testing runs. You can test any container using these environment variables, even though standard defaults are set.
 
 - `VANILLA_CONTAINER_IMAGE`: This variable specifies the Docker container image considered 'not hardened'.
-  - Default: `registry.access.redhat.com/ubi8/ubi:8.9-1028`
+  - default: `registry.access.redhat.com/ubi8/ubi:8.9-1028`
 - `HARDENED_CONTAINER_IMAGE`: This variable specifies the Docker container image considered 'hardened'.
-  - Default: `registry1.dso.mil/ironbank/redhat/ubi/ubi8`
+  - default: `registry1.dso.mil/ironbank/redhat/ubi/ubi8`
 
 ## GitHub Actions
 
@@ -644,15 +926,69 @@ It also adjusts the `tags` and introduces a `ref` between the `impact` and `tags
 
 Delta does not modify the Ruby/InSpec code within the control, leaving it intact. Instead, it updates the 'control metadata' using the information from the supplied XCCDF guidance document. This applies to 'matched controls' between the XCCDF Guidance Document and the InSpec profile.
 
-## Other Notes
+### Further InSpec Delta Information and Background
 
 - The original Delta branch can be found [here](https://github.com/mitre/saf/pull/485).
 - Delta moves lines not labeled with 'desc' to the bottom, between tags and InSpec code.
-- Consider adjusting the formatting to have two runs:
-  - Formatting the files in a way that Delta likes, and,
-  - The second run being Delta.
 - Whether the controls are formatted to be 80 lines or not, Delta exhibits the same behavior with the extra text.
 - Parameterizing should be considered.
+
+# Tips, Tricks and Troubleshooting
+
+## Test Kitchen
+
+### Locating Test Target Login Details
+
+Test Kitchen stores the current host details of your provisioned test targets in the `.kitchen/` directory. Here, you'll find a `yml` file containing your target's `hostname`, `ip address`, `host details`, and login credentials, which could be an `ssh pem key` or another type of credential.
+
+```shell
+.kitchen
+├── .kitchen/hardened-container.yml
+├── .kitchen/hardened-rhel-8.pem
+├── .kitchen/hardened-rhel-8.yml
+├── .kitchen/logs
+├── .kitchen/vanilla-container.yml
+├── .kitchen/vanilla-rhel-8.pem
+├── .kitchen/vanilla-rhel-8.yml
+└── .kitchen/vanilla-ubi8.yml
+```
+
+### Restoring Access to a Halted or Restarted Test Target
+
+If your test target reboots or updates its network information, you don't need to execute bundle exec kitchen destroy. Instead, update the corresponding .kitchen/#{suite}-#{target}.yml file with the updated information. This will ensure that your kitchen login, kitchen validate, and other kitchen commands function correctly, as they'll be connecting to the correct location instead of using outdated data.
+
+### AWS Console and EC2 Oddities
+
+Since we're using the free-tier for our AWS testing resources instead of a dedicated host, your test targets might shut down or 'reboot in the background' if you stop interacting with them, halt them, put them in a stop state, or leave them overnight. To regain access, edit the .kitchen/#{suite}-#{target}.yml file. As mentioned above, there's no need to recreate your testing targets if you can simply point Test Kitchen to the correct IP address.
+
+## InSpec / Ruby
+
+### Using `pry` and `pry-byebug` for Debugging Controls
+
+When developing InSpec controls, it's beneficial to use the `kitchen-test` suite, the `INSPEC_CONTROL` environment variable, and `pry` or `pry-byebug`. This combination allows you to quickly debug, update, and experiment with your fixes in the context of the InSpec code, without having to run the full test suite.
+
+`pry` and `pry-byebug` are powerful tools for debugging Ruby code, including InSpec controls. Here's how you can use them:
+
+1. First, add `require 'pry'` or `require 'pry-byebug'` at the top of your control file.
+2. Then, insert `binding.pry` at the point in your code where you want to start debugging.
+3. When you run your tests, execution will stop at the `binding.pry` line, and you can inspect variables, step through the code, and more.
+
+***!Pro Tip!***
+
+- Remember to remove or comment out the `binding.pry` lines when you're done debugging or you won't have a good 'linting' down the road.
+
+### Streamlining Your Testing with `inspec shell`
+
+The `inspec shell` command allows you to test your full control update on your test target directly. To do this, you'll need to retrieve the IP address and SSH PEM key for your target instance from the Test Kitchen `.kitchen` directory. For more details on this, refer to the [Finding Your Test Target Login Details](#finding-your-test-target-login-details) section.
+
+Once you have your IP address and SSH PEM key (for AWS target instances), or the container ID (for Docker test instances), you can use the following commands:
+
+- For AWS test targets: `bundle exec inspec shell -i #{pem-key} -t ssh://ec2-user@#{ipaddress} --sudo`
+- For Docker test instances: `bundle exec inspec shell -t docker://#{container-id}`
+
+### Using `kitchen login` for Easy Test Review and Modification
+
+The `kitchen login` command provides an easy way to review and modify your test target. This tool is particularly useful for introducing test cases, exploring corner cases, and validating both positive and negative test scenarios.
 
 # Background and Definitions
 
