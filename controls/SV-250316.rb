@@ -70,7 +70,7 @@ control 'SV-250316' do
   tag nist: ['AC-7 a', 'AC-7 b']
 
   only_if('This check applies to RHEL versions 8.0 and 8.1. If the system is RHEL version 8.2 or newer, this check is Not Applicable.', impact: 0.0) {
-    !(os.release.to_f >= 8.2)
+    os.release.to_f < 8.2
   }
 
   describe selinux do

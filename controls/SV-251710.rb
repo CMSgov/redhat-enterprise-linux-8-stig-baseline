@@ -84,7 +84,7 @@ control 'SV-251710' do
   if file_integrity_tool == 'aide'
     describe command('/usr/sbin/aide --check') do
       its('exit_status') { should cmp 0 }
-      its('stdout') { should_not include "Couldn't open file"}
+      its('stdout') { should_not include "Couldn't open file" }
     end
   end
 

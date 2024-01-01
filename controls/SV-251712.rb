@@ -40,7 +40,7 @@ Remove any occurrences of "pam_succeed_if" in the file.'
     end
   else
     describe parse_config_file('/etc/pam.d/sudo') do
-      its('content') { should_not match /pam_succeed_if/ }
+      its('content') { should_not match(/pam_succeed_if/) }
     end
   end
 end

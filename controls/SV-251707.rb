@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 control 'SV-251707' do
-
   title 'RHEL 8 library directories must have mode 755 or less permissive.'
 
   desc "If RHEL 8 were to allow any user to make changes to software libraries,

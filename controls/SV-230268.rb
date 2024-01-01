@@ -149,7 +149,7 @@ control 'SV-230268' do
     # Check the configuration files
     describe 'Configuration files' do
       if search_results.empty?
-        it 'do not have `#{parameter}` disabled directly' do
+        it "do not have `#{parameter}` disabled directly" do
           expect(config_values).not_to be_empty, "Add the line `#{parameter}=0` to a file in the `/etc/sysctl.d/` directory"
         end
       else

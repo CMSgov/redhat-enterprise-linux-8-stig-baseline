@@ -43,9 +43,9 @@ control 'SV-251708' do
   tag cci: ['CCI-001499']
   tag nist: ['CM-5 (6)']
 
-  non_root_owned_libs = input('system_libraries').select { |lib| !file(lib).owned_by?('root') }
+  non_root_owned_libs = input('system_libraries').reject { |lib| file(lib).owned_by?('root') }
 
-  #TODO: is this NA in continers?
+  # TODO: is this NA in continers?
 
   describe 'System libraries' do
     it 'should be owned by root' do

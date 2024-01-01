@@ -3,7 +3,7 @@ AllCops:
     - "libraries/**/*"
 
 Layout/LineLength:
-  Max: 80
+  Max: 800
   AllowURI: true
   IgnoreCopDirectives: true
 
@@ -12,9 +12,6 @@ Naming/FileName:
 
 Metrics/BlockLength:
   Max: 300
-
-Layout/LineLength:
-  Max: 750
 
 Lint/ConstantDefinitionInBlock:
   Enabled: false

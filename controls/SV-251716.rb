@@ -47,7 +47,7 @@ Remove any configurations that conflict with the above value.'
   tag nist: ['CM-6 b']
 
   only_if('This requirement only applies to RHEL 8 versions above 8.4', impact: 0.0) {
-    !(os.release.to_f < 8.4)
+    os.release.to_f >= 8.4
   }
 
   describe 'System pwquality setting' do

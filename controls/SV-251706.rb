@@ -46,7 +46,7 @@ control 'SV-251706' do
 
   describe 'All users' do
     it 'should have a password set' do
-      fail_msg = "Users with blank passwords:\n\t- " + users_with_blank_passwords.join("\n\t- ").to_s
+      fail_msg = "Users with blank passwords:\n\t- #{users_with_blank_passwords.join("\n\t- ")}"
       expect(users_with_blank_passwords).to be_empty, fail_msg
     end
   end

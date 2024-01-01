@@ -17,13 +17,13 @@ platforms:
 suites:
   - name: vanilla
     driver:
-      image: <%= ENV['VANILLA_CONTAINER_IMAGE'] %>
+      image: <%= ENV['VANILLA_CONTAINER_IMAGE'] || "registry.access.redhat.com/ubi8/ubi:8.9-1028" %>
     verifier:
       input_files:
         - container.vanilla.inputs.yml
   - name: hardened
     driver:
-      image: <%= ENV['HARDENED_CONTAINER_IMAGE'] %>
+      image: <%= ENV['HARDENED_CONTAINER_IMAGE'] || "registry1.dso.mil/ironbank/redhat/ubi/ubi8" %>
     verifier:
       input_files:
         - container.hardened.inputs.yml

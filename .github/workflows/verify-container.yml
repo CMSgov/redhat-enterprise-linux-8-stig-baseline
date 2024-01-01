@@ -1,8 +1,9 @@
 name: UBI8 Testing Matrix
 on:
-  workflow_run:
-    workflows: [Lint]
-    types: [completed]
+  push:
+    branches:
+      - main
+  pull_request:
 
 jobs:
   validate:

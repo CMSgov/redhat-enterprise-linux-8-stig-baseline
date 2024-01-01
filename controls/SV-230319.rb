@@ -44,8 +44,8 @@ group."
 
   ww_dirs = ww_dirs.to_a
 
-  describe "World-writeable directories across all partitions" do
-    it "should be group-owned by system accounts " do
+  describe 'World-writeable directories across all partitions' do
+    it 'should be group-owned by system accounts ' do
       expect(ww_dirs).to be_empty, "World-writeable directories non group-owned by system accounts:\n\t- #{ww_dirs.join("\n\t- ")}"
     end
   end

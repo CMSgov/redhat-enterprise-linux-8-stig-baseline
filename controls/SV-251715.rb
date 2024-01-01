@@ -38,7 +38,7 @@ Add the following line to the "/etc/pam.d/password-auth" file (or modify the lin
   tag nist: ['CM-6 b']
 
   only_if('This requirement only applies to RHEL 8 versions below 8.4', impact: 0.0) {
-    !(os.release.to_f >= 8.4)
+    os.release.to_f < 8.4
   }
 
   pam_auth_files = input('pam_auth_files')

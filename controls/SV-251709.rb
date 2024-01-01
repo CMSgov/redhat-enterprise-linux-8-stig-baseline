@@ -14,12 +14,12 @@ control 'SV-251709' do
        'system components for purposes of initiating changes, including ' \
        'upgrades and modifications.'
 
-  desc 'check', %q(Verify the system-wide shared library directories are group-owned 
+  desc 'check', %q(Verify the system-wide shared library directories are group-owned
   by "root" with the following command:
 
   $ sudo find /lib /lib64 /usr/lib /usr/lib64 ! -group root -type d -exec stat -c "%n %G" '{}' \;
 
-  If any system-wide shared library directory is returned and is not group-owned 
+  If any system-wide shared library directory is returned and is not group-owned
   by a required system account, this is a finding.)
 
   desc 'fix', 'Configure the system-wide shared library directories (/lib, /lib64, ' \
@@ -44,7 +44,7 @@ control 'SV-251709' do
     !input('required_system_accounts').include?(file(lib).group)
   }
 
-  #TODO: is this NA in containers
+  # TODO: is this NA in containers
 
   describe 'System libraries' do
     it 'should be owned by a required system account' do
