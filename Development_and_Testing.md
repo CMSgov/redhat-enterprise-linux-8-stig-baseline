@@ -1,130 +1,55 @@
-# 1. Development and Testing the Profile
+# Development and Testing of the Profile
 
-- [1. Development and Testing the Profile](#1-development-and-testing-the-profile)
-  - [1.1. Overview](#11-overview)
-  - [1.2. Repository Organization](#12-repository-organization)
-    - [1.2.1. Branches](#121-branches)
-      - [1.2.1.1. `main` branch](#1211-main-branch)
-      - [1.2.1.2. `v{x}r{xx}` branches](#1212-vxrxx-branches)
-    - [1.2.2. Releases](#122-releases)
-    - [1.2.3. Tags](#123-tags)
-      - [1.2.3.1. Current Tag](#1231-current-tag)
-      - [1.2.3.2. Major Tags](#1232-major-tags)
-      - [1.2.3.3. Patch Releases](#1233-patch-releases)
-  - [1.3. Required Software](#13-required-software)
-  - [1.4. Required Accounts](#14-required-accounts)
-  - [1.5. Test Suite Environment Variables](#15-test-suite-environment-variables)
-  - [1.6. Setting Up Your Environment](#16-setting-up-your-environment)
-    - [1.6.1. Prechecks](#161-prechecks)
-  - [1.7. Running The Profile](#17-running-the-profile)
-    - [1.7.1. Getting Your First Test Kitchen (TK) Run](#171-getting-your-first-test-kitchen-tk-run)
-      - [1.7.1.1. Kitchen Stages](#1711-kitchen-stages)
-      - [1.7.1.2. Useful TK Commands](#1712-useful-tk-commands)
-      - [1.7.1.3. AWS Testing](#1713-aws-testing)
-      - [1.7.1.4. Running Through the AWS Test Suite](#1714-running-through-the-aws-test-suite)
-      - [1.7.1.5. Docker Testing](#1715-docker-testing)
-      - [1.7.1.6. Running Through the Docker Test Suite](#1716-running-through-the-docker-test-suite)
-        - [1.7.1.6.1. This error is just fine](#17161-this-error-is-just-fine)
-  - [1.8. Updating the Profile](#18-updating-the-profile)
-    - [1.8.1. Micro vs Massive Pull Requests (PRs)](#181-micro-vs-massive-pull-requests-prs)
-      - [1.8.1.1. Micro PRs](#1811-micro-prs)
-      - [1.8.1.2. Massive PRs](#1812-massive-prs)
-      - [1.8.1.3. PR Strategies for Different Update Scenarios](#1813-pr-strategies-for-different-update-scenarios)
-    - [1.8.2. Differences Between Security Benchmark Code and Traditional Software Projects](#182-differences-between-security-benchmark-code-and-traditional-software-projects)
-    - [1.8.3. Workflow Patterns for `Patch Update`, `Release Update`, and `Major Version Update`](#183-workflow-patterns-for-patch-update-release-update-and-major-version-update)
-    - [1.8.4. Scope of the Update Patterns](#184-scope-of-the-update-patterns)
-    - [1.8.5. Guidelines for Updating Benchmark Profiles](#185-guidelines-for-updating-benchmark-profiles)
-    - [1.8.6. Creating a `Patch Update`](#186-creating-a-patch-update)
-    - [1.8.7. Creating a `Release Update`](#187-creating-a-release-update)
-    - [1.8.8. Creating a `Major Version Update`](#188-creating-a-major-version-update)
-  - [1.9. Test Kitchen](#19-test-kitchen)
-    - [1.9.1. Test Kitchen's Modifications to Targets](#191-test-kitchens-modifications-to-targets)
-    - [1.9.2. Workflow Defined by our Test Kitchen Files](#192-workflow-defined-by-our-test-kitchen-files)
-    - [1.9.3. The `.kitchen/` Directory](#193-the-kitchen-directory)
-    - [1.9.4. The `kitchen.yml` File](#194-the-kitchenyml-file)
-      - [1.9.4.1. Example `kitchen.yml` file](#1941-example-kitchenyml-file)
-      - [1.9.4.2. Breakdown of the `kitchen.yml` file:](#1942-breakdown-of-the-kitchenyml-file)
-      - [1.9.4.3. Environment Variables in `kitchen.yml`](#1943-environment-variables-in-kitchenyml)
-    - [1.9.5. Understanding the `kitchen.ec2.yml` File](#195-understanding-the-kitchenec2yml-file)
-      - [1.9.5.1. Example `kitchen.ec2.yml` file](#1951-example-kitchenec2yml-file)
-      - [1.9.5.2. Breakdown of the `kitchen.ec2.yml` file](#1952-breakdown-of-the-kitchenec2yml-file)
-    - [1.9.6. Understanding the `kitchen.container.yml`](#196-understanding-the-kitchencontaineryml)
-      - [1.9.6.1. Example `kitchen.container.yml` file](#1961-example-kitchencontaineryml-file)
-      - [1.9.6.2. Breakdown of the `kitchen.container.yml` file:](#1962-breakdown-of-the-kitchencontaineryml-file)
-      - [1.9.6.3. Environment Variables in `kitchen.container.yml`](#1963-environment-variables-in-kitchencontaineryml)
-  - [1.10. GitHub Actions](#110-github-actions)
-    - [1.10.1. `lint-profile.yml`](#1101-lint-profileyml)
-    - [1.10.2. `verify-ec2.yml`](#1102-verify-ec2yml)
-    - [1.10.3. `verify-container.yml`](#1103-verify-containeryml)
-    - [1.10.4. `verify-vagrant.yml.example`](#1104-verify-vagrantymlexample)
-- [2. InSpec Delta](#2-inspec-delta)
-  - [2.1. Preparing the Profile Before Running Delta](#21-preparing-the-profile-before-running-delta)
-  - [2.2. Preparing Your Environment](#22-preparing-your-environment)
-  - [2.3. Delta Workflow Process](#23-delta-workflow-process)
-  - [2.4. Using Delta](#24-using-delta)
-  - [2.5. Scope of Changes by Delta](#25-scope-of-changes-by-delta)
-    - [2.5.1. Further InSpec Delta Information and Background](#251-further-inspec-delta-information-and-background)
-- [3. Tips, Tricks and Troubleshooting](#3-tips-tricks-and-troubleshooting)
-  - [3.1. Test Kitchen](#31-test-kitchen)
-    - [3.1.1. Locating Test Target Login Details](#311-locating-test-target-login-details)
-    - [3.1.2. Restoring Access to a Halted or Restarted Test Target](#312-restoring-access-to-a-halted-or-restarted-test-target)
-    - [3.1.3. AWS Console and EC2 Oddities](#313-aws-console-and-ec2-oddities)
-  - [3.2. InSpec / Ruby](#32-inspec-ruby)
-    - [3.2.1. Using `pry` and `pry-byebug` for Debugging Controls](#321-using-pry-and-pry-byebug-for-debugging-controls)
-    - [3.2.2. Streamlining Your Testing with `inspec shell`](#322-streamlining-your-testing-with-inspec-shell)
-    - [3.2.3. Using `kitchen login` for Easy Test Review and Modification](#323-using-kitchen-login-for-easy-test-review-and-modification)
-- [4. Background and Definitions](#4-background-and-definitions)
-  - [4.1. Background](#41-background)
-    - [4.1.1. Evolution of STIGs and Security Benchmarks](#411-evolution-of-stigs-and-security-benchmarks)
-  - [4.2. Definitions and Terms](#42-definitions-and-terms)
+## Overview
 
-## 1.1. Overview
-
-This profile utilizes a variety of open-source tools including Ruby, the Test-Kitchen suite, InSpec compliance language, Ansible, Docker, and shell scripting (bash/zsh). To contribute with Pull Requests and fixes, you'll need to set up your local test suite following the instructions provided below.
+This profile utilizes a variety of open-source tools including Ruby, the Test Kitchen suite, InSpec compliance language, Ansible, Docker, and shell scripting (bash/zsh). To contribute with Pull Requests and fixes, you'll need to set up your local test suite following the instructions provided below.
 
 Our development and testing workflow is managed by Test Kitchen. This tool is integral to our GitHub Actions CI/CD Pipelines and is also used for local development, testing, and releasing updates, patches, and full releases of the profile.
 
-Test Kitchen uses Docker (or Podman, if preferred) and AWS (using free-tier resources) for testing. We provide example files for testing on a local Vagrant RedHat (or other RHEL variant) box in the repository.
+Test Kitchen uses Docker (or Podman, if preferred) and AWS (using free-tier resources) for testing. We provide example files for testing on a local Vagrant Red Hat (or other RHEL variant) box in the repository.
 
-Additionally, Test Kitchen uses the RedHat hardened `ubi8 base container` from Platform One for testing. To test the hardened container portion of the testing suite, you'll need to set up and log in to your P1 Free account, then obtain a CLI token to pull the Platform One Iron Bank RedHat Enterprise Linux 8 Universal Base Image (P1 IB UBI8) image into the test suite.
+Additionally, Test Kitchen uses the Red Hat hardened `ubi8 base container` from Platform One for testing. To test the hardened container portion of the testing suite, you'll need to set up and log in to your P1 Free account, then obtain a CLI token to pull the Platform One Iron Bank Red Hat Enterprise Linux 8 Universal Base Image (P1 IB UBI8) image into the test suite.
 
-## 1.2. Repository Organization
+## Repository Organization
 
-The repository and profile are organized into two primary branches: `main` and `TBD`. The repository has a set of `tags` representing iterative releases of the STIG from one Benchmark major version to the next. It will also have a set of Releases for fixes and updates to the profile between STIG Benchmark Releases.
+The repository and profile are organized into two primary branches: `main` and `TBD`. The repository has a set of `tags` representing iterative releases of the STIG from one Benchmark major version to the next. It also has a set of releases for fixes and updates to the profile between STIG Benchmark Releases.
 
-### 1.2.1. Branches
+### Branches
 
-#### 1.2.1.1. `main` branch
+#### `main` branch
 
-The `main` branch contains the most recent code for the profile. It may include bugs and is typically aligned with the latest patch release for the profile. This branch is primarily used for development and testing workflows. For production validation, use the latest stable patch release.
+The `main` branch contains the most recent code for the profile. It may include bugs and is typically aligned with the latest patch release for the profile. This branch is primarily used for development and testing workflows for the various testing targets. For production validation, use the latest stable patch release.
 
-#### 1.2.1.2. `v{x}r{xx}` branches
+#### `v{x}r{xx}` branches
 
 The `v{x}r{xx}` branches represent the changes between releases of the benchmark. They align with the STIG releases for the Benchmark found at the DISA STIG [Document Library](https://public.cyber.mil/stigs/downloads/).
 
-### 1.2.2. Releases
+### Releases
 
-Releases use Semantic Versioning (SemVer), aligning with the STIG Benchmark versioning system of Major Version and Release. The SemVer patch number is used for updates, bug fixes, and code files between STIG Benchmark Releases for the given product. STIG Benchmarks use a Version and Release tagging pattern `v{x}r{xx}` - like V1R12 - and we will mirror that pattern in our SemVer releases.
+Releases use Semantic Versioning (SemVer), aligning with the STIG Benchmark versioning system of Major Version and Release. The SemVer patch number is used for updates, bug fixes, and code changes between STIG Benchmark Releases for the given product. STIG Benchmarks use a Version and Release tagging pattern `v{x}r{xx}` - like V1R12 - and we mirror that pattern in our SemVer releases.
 
-### 1.2.3. Tags
+### Tags
 
-#### 1.2.3.1. Current Tag
+#### Current Tag
 
 We don't use a specific `current` or `latest` tag. The `current`/`latest` tag for the profile and repository will always be the latest major tag of the benchmark. For example, if `v1.12.3` is the latest Benchmark release from the STIG author, then the tag `v1.12` will point to the `v1.12.3` release of the code.
 
 To use the current `main`, point directly to the GitHub repo.
 
-#### 1.2.3.2. Major Tags
+#### Major Tags
 
-Major Tags point to the latest Patch Release of the benchmark. For example, `v1.3` and `v1.3.0` represent the first release of the Red Hat Enterprise Linux 8 STIG V1R3 Benchmark. The `v1.12.xx` tag(s) would represent the V1R12 Benchmark releases as we find bugs, fixes, or general improvements to the testing profile. This tag will point to its `v{x}r{xx}` counterpart.
+Major tags point to the latest patch release of the benchmark. For example, `v1.3` and `v1.3.0` represent the first release of the Red Hat Enterprise Linux 8 STIG V1R3 Benchmark. The `v1.12.xx` tag(s) would represent the V1R12 Benchmark releases as we find bugs, fixes, or general improvements to the testing profile. This tag will point to its `v{x}r{xx}` counterpart.
 
-#### 1.2.3.3. Patch Releases
+#### Patch Releases
 
-The latest Patch Release always points to the Major Release for the profile.
+The latest patch release always points to the major release for the profile.
 
 For example, after releasing `v1.12.0`, we will point `v1.12` to that patch release: `v1.12.0`. When an issue is found, we will fix, tag, and release `v1.12.1`. We will then 'move' the `v1.12` tag so that it points to tag `v1.12.1`. This way, your pipelines can choose if they want to pin on a specific release of the InSpec profile or always run 'current'.
 
-## 1.3. Required Software
+From the file: Development_and_Testing.md
+
+```markdown
+## Required Software
 
 - RVM, or another Ruby Management Tool
 - Ruby v3 or higher
@@ -134,13 +59,13 @@ For example, after releasing `v1.12.0`, we will point `v1.12` to that patch rele
 - AWS CLI
 - AWS Account
 
-## 1.4. Required Accounts
+## Required Accounts
 
 1. [AWS Console Account](https://aws.amazon.com/console/ "AWS Console Account")
 2. [Platform One Account](https://login.dso.mil/register "Platform One Account") (used for container testing)
 3. [P1 Harbor Token](https://login.dso.mil/auth/realms/baby-yoda/protocol/openid-connect/auth?client_id=harbor&redirect_uri=https%3A%2F%2Fregistry1.dso.mil%2Fc%2Foidc%2Fcallback&response_type=code&scope=openid+profile+email+offline_access&state=WS3BsNb5JevECV4aiy3irfegFETBHfRd "DSO Harbor Login") (used for container testing)
 
-## 1.5. Test Suite Environment Variables
+## Test Suite Environment Variables
 
 1. Environment Variables used by Test Kitchen
 
@@ -155,15 +80,15 @@ For example, after releasing `v1.12.0`, we will point `v1.12` to that patch rele
 
 2. AWS Environment
 
-You can either use standard AWS Profiles to configure your environment or use the standard AWS Environment variables to run the test suite. See: [AWS CLI Installation &amp; Configuration](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html "AWS CLI Install Guide")
+You can either use standard AWS Profiles to configure your environment or use the standard AWS Environment variables to run the test suite. See: [AWS CLI Installation & Configuration](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html "AWS CLI Install Guide")
 
-- Use the `AWS_PROFILE` environment variable and AWS Credential Profiles to simplify testing on multiple AWS environments or segments. This will allow you to easily manage multiple sets of AWS Secrets and Access Keys with adjustments to a single variable. (See: [AWS CLI and Profile Setup](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html "AWS CLI Profiles Setup"))
+- Use the `AWS_PROFILE` environment variable and AWS Credential Profiles to simplify testing on multiple AWS environments or segments. This will allow you to easily manage multiple sets of AWS secrets and access keys with adjustments to a single variable. (See: [AWS CLI and Profile Setup](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html "AWS CLI Profiles Setup"))
 
-## 1.6. Setting Up Your Environment
+## Setting Up Your Environment
 
 1. Set up your Ruby Version Management system.
 2. Install Ruby 3.1 or higher.
-3. Configure OpenSSL, Organization Certs, etc. for your environment and tooling.
+3. Configure OpenSSL, organization certificates, etc., for your environment and tooling.
 4. Set up your AWS CLI.
 5. Clone the repository.
 6. Obtain your [Harbor CLI Secret](https://registry1.dso.mil/harbor/projects "DSO Harbor Projects Page").
@@ -172,7 +97,7 @@ You can either use standard AWS Profiles to configure your environment or use th
 9. Use the command `docker login -u {PI USER NAME} -p '{HARBOR CLI SECRET}' registry1.dso.mil`.
 10. Run `bundle install` in your isolated Ruby environment.
 
-### 1.6.1. Prechecks
+### Prechecks
 
 - Verify your newly installed Ruby environment by running `ruby --version`.
 - Confirm that InSpec was installed by running `bundle exec inspec --version`.
@@ -182,9 +107,9 @@ You can either use standard AWS Profiles to configure your environment or use th
 - Verify you can pull from RepoOne by running `docker pull https://repo1.dso.mil/dsop/redhat/ubi/ubi8`.
 - Celebrate 🎉️ if everything went well.
 
-## 1.7. Running The Profile
+## Running The Profile
 
-Once you've set up the necessary tools, you're ready to run the profile. The testing environment is determined by Test-Kitchen using environment variables.
+Once you've set up the necessary tools, you're ready to run the profile. The testing environment is determined by Test Kitchen using environment variables.
 
 There are four testing environments to choose from:
 
@@ -195,45 +120,45 @@ There are four testing environments to choose from:
 
 The specifics of each environment's configuration are detailed in the following sections.
 
-### 1.7.1. Getting Your First Test Kitchen (TK) Run
+### Getting Your First Test Kitchen (TK) Run
 
 For each of these examples, you need to update the `KITCHEN_LOCAL_YAML` environment variable to point to the correct `kitchen.<TEST-TARGET>.yaml` file. Ensure that any required supporting environment settings, environment variables, profiles, etc., are in place. See Environment Variables and Testing Target Environments for more information.
 
-Learn more about the Test Kitchen project at: [kitchen.ci](https://kitchen.ci/ "Test Kichen Project Homepage")
+Learn more about the Test Kitchen project at: [kitchen.ci](https://kitchen.ci/ "Test Kitchen Project Homepage")
 
-#### 1.7.1.1. Kitchen Stages
+#### Kitchen Stages
 
-TK has four major stages: `create`, `converge`, `verify`, and `destroy`. Use these stages to create, configure, run tests, and destroy your testing target. When starting your testing, it's useful to run each of these in turn to ensure your environment, Test Kitchen, and credentials are set up and working correctly.
+Test Kitchen has four major steps: `create`, `converge`, `verify`, and `destroy`. Use these stages to create, configure, run tests, and destroy your testing target. When starting your testing, it's useful to run each of these in turn to ensure your environment, Test Kitchen, and credentials are set up and working correctly.
 
 1. `create`:
-   The `create` stage sets up your testing instance and prepares the necessary login credentials and other components so you can use your testing target.
+  The `create` stage sets up your testing instance and prepares the necessary login credentials and other components so you can use your testing target.
 2. `converge`:
-   The `converge` stage runs the Test Kitchen suite's provisioner - the configuration management code set up in the test suite. This could be any configuration management script, such as Ansible, Chef, Puppet, Terraform, Shell, etc., that you and your team use.
+  The `converge` stage runs the provisioner of the Test Kitchen suite - the configuration management code set up in the test suite. This could be any configuration management script, such as Ansible, Chef, Puppet, Terraform, Shell, etc., that you and your team use.
 3. `verify`:
-   The `verify` stage runs the actual InSpec profile against your testing target. TK supports multiple testing frameworks, which are well documented on the project website.
+  The `verify` stage runs the actual InSpec profile against your testing target. Test Kitchen supports multiple testing frameworks, which are well documented on the project website.
 4. `destroy`:
-   The `destroy` stage tears down your test target - like an EC2 instance, Docker container, or Vagrant Box.
+  The `destroy` stage tears down your test target - like an EC2 instance, Docker container, or Vagrant Box.
 
-During your testing, you will use each of these stages to run the full profile, run individual controls (using the `INSPEC_CONTROL` environment variable), and manage your test instances. You will also use other TK commands, such as `login`, `test`, and others, which are documented on the [Test Kitchen Project](https://kitchen.ci "Test Kitchen Project Homepage") page.
+During your testing, you will use each of these steps to run the full profile, run individual controls (using the `INSPEC_CONTROL` environment variable), and manage your test instances. You will also use other Test Kitchen commands, such as `login`, `test`, and others, which are documented on the [Test Kitchen Project](https://kitchen.ci "Test Kitchen Project Homepage") page.
 
-You can also isolate which of the 'target suites' - either `vanilla` or `hardened` in our case - to run by appending either `hardened` or `vanilla` to the end of your TK command. For example, `bundle exec kitchen verify` will run the TK stages all the way through `verify` on _both_ the `hardened` and `vanilla` suites. However, if you say, `bundle exec kitchen verify vanilla`, it will only run it on the `vanilla` test target.
+You can also isolate which of the 'target suites' - either `vanilla` or `hardened` in our case - to run by appending either `hardened` or `vanilla` to the end of your Test Kitchen command. For example, `bundle exec kitchen verify` will run the Test Kitchen stages all the way through `verify` on _both_ the `hardened` and `vanilla` suites. However, if you say, `bundle exec kitchen verify vanilla`, it will only run it on the `vanilla` test target.
 
-#### 1.7.1.2. Useful TK Commands
+#### Useful Test Kitchen Commands
 
-- `login` : Allows you to easily log in using the TK created credentials when you ran `bundle exec kitchen create`.
-- `test`: Runs all the TK stages starting with create through destroy to easily allow you to go through a full clean test run.
+- `login`: Allows you to easily log in using the credentials created when you ran `bundle exec kitchen create`.
+- `test`: Runs all the Test Kitchen stages starting with create through destroy to easily allow you to go through a full clean test run.
 
-#### 1.7.1.3. AWS Testing
+#### AWS Testing
 
 1. Configure your AWS CLI and set up your AWS Credentials.
 2. Test your AWS CLI access by running: `aws s3 ls`.
 3. Clone the repository.
 4. Navigate to the profile repository root directory.
 5. Set the environment variable for the kitchen configuration file: `export KITCHEN_LOCAL_YAML=kitchen.ec2.yml`.
-   1. This uses the [kitchen-ec2 driver](https://kitchen.ci/docs/drivers/aws/ "Test Kitchen AWS EC2 Driver Documentation").
-6. (Optional) Set a specific control to run: export INSPEC_CONTROL='SV-230222'.
+  1. This uses the [kitchen-ec2 driver](https://kitchen.ci/docs/drivers/aws/ "Test Kitchen AWS EC2 Driver Documentation").
+6. (Optional) Set a specific control to run: `export INSPEC_CONTROL='SV-230222'`.
 
-#### 1.7.1.4. Running Through the AWS Test Suite
+#### Running Through the AWS Test Suite
 
 6. List the kitchen instances with: `bundle exec kitchen list`. You should see something like this:
 
@@ -300,9 +225,9 @@ You can also isolate which of the 'target suites' - either `vanilla` or `hardene
 12. Your InSpec scan results are located in the `./spec/results/` directory, nameed `./spec/results/rhel-8_*`.
 13. Use [Heimdall Lite](https://heimdall-lite.mitre.org "MITRE Heimdall Lite") to load both the `hardened` and `vanilla` results to ensure your changes and updates, "failed as expected and passed as expected and covered your courner cases."
 
-#### 1.7.1.5. Docker Testing
+#### Docker Testing
 
-1. Start Docker or Podman in your enviroment
+1. Make sure Docker or Podman is running
 2. Login to your docker registry
 3. Clone the repository
 4. Go into the profile repository root dir
@@ -312,7 +237,7 @@ You can also isolate which of the 'target suites' - either `vanilla` or `hardene
 8. `export HARDENED_CONTAINER_IMAGE=registry1.dso.mil/ironbank/redhat/ubi/ubi8`
 9. (optional) `export INSPEC_CONTROL='SV-230222'`
 
-#### 1.7.1.6. Running Through the Docker Test Suite
+#### Running Through the Docker Test Suite
 
 10. List the kitchen instances with: `bundle exec kitchen list`
 
@@ -366,7 +291,7 @@ Profile Summary: 0 successful controls, 1 control failure, 0 controls skipped
 Test Summary: 0 successful, 4 failures, 0 skipped
 ```
 
-##### 1.7.1.6.1. This error is just fine
+##### This error is just fine
 
 The error below is just Test Kitchen telling you that not all of the Contrls in the profile passed.
 
@@ -380,19 +305,19 @@ The error below is just Test Kitchen telling you that not all of the Contrls in 
 >>>>>> Also try running `kitchen diagnose --all` for configuration
 ```
 
-14. For steps that apply to making updates, patches, and updates to the profile, see the next section, [Updating the Profile](#18-updating-the-profile).
-15. Your InSpec scan results are located in the `./spec/results/` directory, nameed `./spec/results/ubi-8_*`.
-16. Use [Heimdall Lite](https://heimdall-lite.mitre.org) to load both the `hardened` and `vanilla` results to ensure your changes and updates, "failed as expected and passed as expected and covered your courner cases."
+14. For steps that apply to making updates, patches, and updates to the profile, see the next section, [Updating the Profile](#updating-the-profile).
+15. Your InSpec scan results are located in the `./spec/results/` directory, named `./spec/results/ubi-8_*.`
+16. Use Heimdall Lite to load both the `hardened` and `vanilla` results to ensure your changes and updates, "failed as expected and passed as expected and covered your corner cases."
 
-## 1.8. Updating the Profile
+## Updating the Profile
 
 This project follows the [GitFlow model](https://docs.github.com/en/get-started/quickstart/github-flow "GitFlow Announcement Blog") for managing the repository, accepting pull requests (PRs), and merging changes into the profile.
 
-### 1.8.1. Micro vs Massive Pull Requests (PRs)
+### Micro vs Massive Pull Requests (PRs)
 
 In software development, the decision between making many small pull requests (micro PRs) or fewer, larger pull requests (massive PRs) often depends on the context. Both approaches have their benefits and challenges.
 
-#### 1.8.1.1. Micro PRs
+#### Micro PRs
 
 Micro PRs involve making frequent, small changes to the codebase. Each PR is focused on a single task or feature.
 
@@ -407,7 +332,7 @@ Micro PRs involve making frequent, small changes to the codebase. Each PR is foc
 - **Overhead:** Each PR requires its own review and merge process, which can be time-consuming.
 - **Context switching:** Frequent changes can disrupt the flow of work, especially if developers have to switch between different tasks.
 
-#### 1.8.1.2. Massive PRs
+#### Massive PRs
 
 Massive PRs involve making larger, more comprehensive changes to the codebase. Each PR may encompass multiple tasks or features.
 
@@ -422,7 +347,7 @@ Massive PRs involve making larger, more comprehensive changes to the codebase. E
 - **Higher risk:** If a problem arises, it can be more difficult to identify and fix because it could be anywhere in the large set of changes.
 - **Delayed feedback:** With fewer PRs, there are fewer opportunities for feedback.
 
-#### 1.8.1.3. PR Strategies for Different Update Scenarios
+#### PR Strategies for Different Update Scenarios
 
 The choice between micro and massive PRs can significantly impact the workflows in our `Patch Update`, `Release Update`, and `Major Version Update`.
 
@@ -431,13 +356,13 @@ The choice between micro and massive PRs can significantly impact the workflows 
 
 In conclusion, the choice between micro and massive PRs depends on the specific needs and circumstances of your project. It's important to strike a balance that maximizes efficiency while minimizing risk, and fosters effective collaboration within your team.
 
-### 1.8.2. Differences Between Security Benchmark Code and Traditional Software Projects
+### Differences Between Security Benchmark Code and Traditional Software Projects
 
 When planning your team's approach, remember that a Security Benchmark is only considered 'complete and valid' when all requirements for that specific Release or Major Version are met. This differs from traditional software projects where features and capabilities can be incrementally added.
 
 A Security Benchmark and its corresponding InSpec Profile are only valid within the scope of a specific 'Release' of that Benchmark. Therefore, whether your team chooses a `micro` or `massive` approach is more about work style preference. The final release of the Benchmark will look the same regardless of the approach, and the expected thresholds, hardening, and validation results will ultimately determine whether it's 'ready for release'.
 
-### 1.8.3. Workflow Patterns for `Patch Update`, `Release Update`, and `Major Version Update`
+### Workflow Patterns for `Patch Update`, `Release Update`, and `Major Version Update`
 
 When updating the profile, you'll be making one of three types of changes:
 
@@ -445,7 +370,7 @@ When updating the profile, you'll be making one of three types of changes:
 2. **Release Update:** These updates occur when the STIG Benchmark owner releases an updated version of the STIG, for example, going from Red Hat Enterprise Linux V1R12 to V1R13.
 3. **Major Version Update:** These updates occur when a software vendor releases a new major version of their product's STIG. For example, when RedHat releases version 9 of Red Hat Enterprise Linux or Microsoft releases a new major version of Windows, such as Windows 2024 or Windows 12.
 
-### 1.8.4. Scope of the Update Patterns
+### Scope of the Update Patterns
 
 The STIGs and CIS Benchmarks are scoped within the Major Version of the software products they represent. Updates or amendments to a Benchmark's requirements are tracked within the 'Releases' of the Benchmark. There is no concept of 'back-patching'; it is a 'forward-only' process. Each requirement is indexed from their source SRG document, aligned to a CCI, and then given a unique `Rule ID` and `STIG ID` in the respective XCCDF Benchmark document.
 
@@ -460,17 +385,18 @@ Here is an example of various indices in a profile's control:
   tag cci: ['CCI-000366']
 ```
 
-### 1.8.5. Guidelines for Updating Benchmark Profiles
+### Guidelines for Updating Benchmark Profiles
 
 When updating Benchmark Profiles, adhere to these key principles to maintain alignment with the original Guidance Documents:
 
 1. **Maintain Version Integrity:** **Never Merge** new requirements into older benchmark branches. This will create a 'mixed baseline' that doesn't align with any specific guidance document. Benchmarks, STIGs, and Guidance Documents form a 'proper subset' - they should be treated as 'all or nothing'. Mixing requirements from different versions can invalidate the concept of 'testing to a known benchmark'.
 2. **Benchmarks are a Complete Set of Requirements:** A Security Benchmark is 'complete and valid' only when all requirements for a specific Release or Major Version are met. Unlike traditional software projects, features and capabilities cannot be incrementally added. A Security Benchmark and its corresponding InSpec Profile are valid only within the scope of a specific 'Release' of that Benchmark.
 3. **Release Readiness Is Predefined:** A Benchmark is considered 'ready for release' when it meets the expected thresholds, hardening, and validation results. Don't be overwhelmed by the multitude of changes across the files. Instead, focus on the specific requirement you are working on. Understand its expected failure and success states on each of the target testing platforms. This approach prevents you from being overwhelmed and provides solid pivot points as you work through the implementation of the automated tests for each requirement and its 'contexts'.
+4. **Use Vendor-Managed Standard Releases:** When setting up a test suite, prioritize using vendor-managed standard releases for software installations and baseline configurations. This should be the starting point for both 'vanilla' and 'hardening' workflows. This approach ensures that your initial and ongoing testing, hardening, and validation closely mirror the real-world usage scenarios of your end-users.
 
 By adhering to these principles, you ensure that your updates to Benchmark Profiles are consistent, accurate, and aligned with the original guidance documents.
 
-### 1.8.6. Creating a `Patch Update`
+### Creating a `Patch Update`
 
 A patch update involves making minor changes to a profile to fix issues or improve functionality. Here's a step-by-step guide:
 
@@ -484,7 +410,7 @@ A patch update involves making minor changes to a profile to fix issues or impro
 8. **Open a PR:** Open a PR on the project repository from your fork.
 9. **Check Test Suite:** Ensure the GitHub Action test suite on the project side passes. You can check this at [our actions page](https://github.com/mitre/redhat-enterprise-linux-8-stig-baseline/actions).
 
-### 1.8.7. Creating a `Release Update`
+### Creating a `Release Update`
 
 A `Release Update` involves creating a new branch, `v#{x}R#{x+1}`, from the current main or latest patch release branch. The `saf generate delta` workflow is then run, which updates the metadata of the `controls`, `inspec.yml`, `README.md`, and other profile elements, while preserving the `describe` and `ruby code logic`. This workflow is detailed in the [Inspec Delta](#2-inspec-delta) section. After the initial commit of the new release branch, follow these steps to keep your work organized:
 
@@ -496,7 +422,7 @@ A `Release Update` involves creating a new branch, `v#{x}R#{x+1}`, from the curr
 6. **Follow Patch Update Workflow:** With the above in place, follow the 'Patch Update' process, but expect a larger number of requirements to revalidate or update.
 7. **Identify Potential Code Changes:** Controls with changes to the `check text` or `fix text` are likely to require `inspec code changes`. If the `check text` and `fix text` of a control remain unchanged, it's likely only a cosmetic update, with no change in the security requirement or validation code.
 
-### 1.8.8. Creating a `Major Version Update`
+### Creating a `Major Version Update`
 
 A `Major Version Update` involves transitioning to a new STIG Benchmark, which introduces a new Rule ID index. This process is more complex than a `Release Update` due to the need for aligning old requirements (Rule IDs) with the new ones.
 
@@ -512,16 +438,15 @@ Once the 'old controls' and 'new controls' are aligned across 'Rule IDs', you ca
 
 Then, you follow the same setup, CI/CD organization, and control update process as in the `Release Update` process and hopfully finding that the actual InSpec code from the previous benchmark is very close to the needed InSpec code for the same 'requirement' in the new Benchmark.
 
-
-## 1.9. Test Kitchen
+# Test Kitchen
 
 [Test Kitchen](http://kitchen.ci) is a robust tool for testing infrastructure code and software on isolated platforms. It provides a consistent, reliable environment for developing and testing infrastructure code.
 
-### 1.9.1. Test Kitchen's Modifications to Targets
+## Test Kitchen's Modifications to Targets
 
 Test Kitchen makes minor modifications to the system to facilitate initialization and access. It adds a 'private ssh key' for the default user and sets up primary access to the system for this user using the generated key. Test Kitchen uses the 'platform standard' for access - SSH for Unix/Linux systems and WinRM for Windows systems.
 
-### 1.9.2. Workflow Defined by our Test Kitchen Files
+## Workflow Defined by our Test Kitchen Files
 
 Test Kitchen's workflow involves building out suites and platforms using its drivers and provisioners. It follows a create, converge, verify, and destroy cycle:
 
@@ -560,19 +485,75 @@ journey
       Threshold Met: 5: 
       Threshold Not Met: :1 
 ``` -->
+
 ![test](./kitchen-workflow-dark.svg)
 
-### 1.9.3. The `.kitchen/` Directory
+## Test Kitchen Create Stage
+
+The `create` stage in Test Kitchen sets up testing environments. It uses standard and patched images from AWS and Red Hat, including AMI EC2 images, Docker containers, and Vagrant boxes.
+
+Test Kitchen automatically fetches the latest images from sources like Amazon Marketplace, DockerHub, Vagrant Marketplace, and Bento Hub. You can customize this to use different images, private repositories (like Platform One's Iron Bank), or local images.
+
+For more details on how Test Kitchen manages images, visit the [Test Kitchen website](https://kitchen.ci). You can also refer to the GitHub documentation for the `kitchen-ec2`, `kitchen-vagrant`, `kitchen-sync`, and  [`kitchen-inspec`](https://github.com/inspec/kitchen-inspec) project on GitHub.
+
+## Test Kitchen Converge Stage
+
+The `converge` stage uses Ansible Playbooks from the Ansible Lockdown project to apply hardening configurations, specifically the RHEL8-STIG playbook, and RedHat managed containers.
+
+### EC2 and Vagrant Converge
+
+For EC2 and Vagrant, we use 'wrapper playbooks' for the 'vanilla' and 'hardened' suites.
+
+- The 'vanilla' playbook establishes a basic test environment.
+- The 'hardened' playbook applies the 'vanilla role' and the Ansible Lockdown RHEL8-STIG role to the 'hardened' target, using Ansible Galaxy, a `requirements.txt`, and Ansible Roles.
+
+Some tasks in the hardening role were disabled for automated testing, but this doesn't significantly impact our security posture. We can still meet our validation and thresholds.
+
+For more on using these playbooks, running Ansible, or modifying the playbooks, roles, and tasks, see the Ansible Project Website.
+
+Find these roles and 'wrapper playbooks' in the [spec/](./spec/) directory.
+
+### Container Converge
+
+We use RedHat vendor images for both the `vanilla` and `hardened` containers.
+
+- **`vanilla`:** This container uses the `registry.access.redhat.com/ubi8/ubi:8.9-1028` image from RedHat's community repositories.
+- **`hardened`:** This container uses the `registry1.dso.mil/ironbank/redhat/ubi/ubi8` image from Red Hat's Platform One Iron Bank project.
+
+The Iron Bank UBI8 image is regularly patched, updated, and hardened according to STIG requirements.
+
+## Test Kitchen Validate Stage
+
+The `verify` stage uses the `kitchen-inspec` verifier from Test Kitchen to run the profile against the test targets.
+
+For this stage, the profile receives a set of tailored `input` YAML files. These files adjust the testing for each target, ensuring accurate validation against the expected state and minimizing false results.
+
+There are also specific `threshold` files for each target environment platform (EC2, container, and Vagrant) in both the `vanilla` and `hardened` suites.
+
+The following sections provide a detailed breakdown of these files, their structure, and the workflow organization.
+
+## Test Kitchen Destroy Stage
+
+The `destroy` stage terminates the EC2 instances, Vagrant boxes, or containers that Test Kitchen created for testing.
+
+Occasionally, the `destroy` stage may encounter issues if the hosting platforms have altered the state of the provisioned instance during your writing, testing, or debugging sessions. If you face any problems with the `destroy` stage or any other Test Kitchen commands, verify the following:
+
+- The test target's login, hostname, and IP address are still accurate.
+- The test instance is still running on the hosting platforms.
+
+Sometimes, the solution can be as simple as checking if the instance is still active.
+
+## The `.kitchen/` Directory
 
 The [`.kitchen/`](/.kitchen/) directory contains the state file for Test Kitchen, which is automatically generated when you first run Test Kitchen. Refer to the [Finding Your Test Target Login Details](#311-locating-test-target-login-details) section to see how you can use the `.kitchen/` directory.
 
-### 1.9.4. The `kitchen.yml` File
+## Understanding the `kitchen.yml` File
 
 The [`kitchen.yml`](./kitchen.yml) file is the primary configuration file for Test Kitchen. It outlines the shared configuration for all your testing environments, platforms, and the testing framework to be used.
 
 Each of the subsequent kitchen files will inherit the shared settings from this file automatlly and merge them with the setting in the child kitchen file.
 
-#### 1.9.4.1. Example `kitchen.yml` file
+### Example `kitchen.yml` file
 
 ```yaml
 ---
@@ -602,7 +583,7 @@ suites:
       playbook: spec/ansible/roles/ansible-role-rhel-hardened.yml
 ```
 
-#### 1.9.4.2. Breakdown of the `kitchen.yml` file:
+### Breakdown of the `kitchen.yml` file:
 
 ```yaml
 verifier:
@@ -654,11 +635,11 @@ The workflow of Test Kitchen involves the following steps:
 3. **Verify:** Test Kitchen uses the verifier to check if the instance is in the desired state.
 4. **Destroy:** Test Kitchen uses the driver to destroy the instance after testing. This is not shown in your file.
 
-#### 1.9.4.3. Environment Variables in `kitchen.yml`
+### Environment Variables in `kitchen.yml`
 
 - `INSPEC_CONTROL`: This variable allows you to specify a single control to run during the `bundle exec kitchen verify` phase. This is particularly useful for testing or debugging a specific requirement.
 
-### 1.9.5. Understanding the `kitchen.ec2.yml` File
+## Understanding the `kitchen.ec2.yml` File
 
 The `kitchen.ec2.yml` file is instrumental in setting up our testing targets within the AWS environment. It outlines the configuration details for these targets, including their VPC assignments and the specific settings for each VPC.
 
@@ -666,7 +647,7 @@ This file leverages the ` AWS CLI and AWS Credentials` configured as described i
 
 Alternatively, if you've set up AWS Environment Variables, the file will use those for AWS interactions.
 
-#### 1.9.5.1. Example `kitchen.ec2.yml` file
+### Example `kitchen.ec2.yml` file
 
 ```yaml
 ---
@@ -719,7 +700,7 @@ transport:
   max_ssh_sessions: 2
 ```
 
-#### 1.9.5.2. Breakdown of the `kitchen.ec2.yml` file
+### Breakdown of the `kitchen.ec2.yml` file
 
 ```yaml
 platforms:
@@ -770,7 +751,7 @@ The workflow of Test Kitchen involves the following steps:
 
 The `transport` is used in all these steps to communicate with the instance.
 
-### 1.9.6. Understanding the [`kitchen.container.yml`](./kitchen.container.yml)
+## Understanding the [`kitchen.container.yml`](./kitchen.container.yml)
 
 The `kitchen.container.yml` file orchestrates our container-based test suite. It defines two types of containers, hardened and vanilla, and specifies the inspec_tests to run against them. It also configures the generation and storage of test reports.
 
@@ -778,7 +759,7 @@ Unlike other test suites, the container suite skips the 'provisioner' stage for 
 
 This approach allows for the evaluation of existing containers, even those created by other workflows. It can be leveraged to build a generalized workflow for validating any container against our Benchmark requirements, providing a comprehensive assessment of its security posture.
 
-#### 1.9.6.1. Example `kitchen.container.yml` file
+### Example `kitchen.container.yml` file
 
 ```yaml
 ---
@@ -813,7 +794,7 @@ suites:
       # creds_file: './creds.json'
 ```
 
-#### 1.9.6.2. Breakdown of the `kitchen.container.yml` file:
+### Breakdown of the `kitchen.container.yml` file:
 
 ```yaml
 provisioner:
@@ -875,7 +856,7 @@ The workflow of Test Kitchen involves the following steps:
 
 The `transport` is used in all these steps to communicate with the container.
 
-#### 1.9.6.3. Environment Variables in `kitchen.container.yml`
+### Environment Variables in `kitchen.container.yml`
 
 The `kitchen.container.yml` file uses the following environment variables to select the containers used during its `hardened` and `vanilla` testing runs. You can test any container using these environment variables, even though standard defaults are set.
 
@@ -884,13 +865,13 @@ The `kitchen.container.yml` file uses the following environment variables to sel
 - `HARDENED_CONTAINER_IMAGE`: This variable specifies the Docker container image considered 'hardened'.
   - default: `registry1.dso.mil/ironbank/redhat/ubi/ubi8`
 
-## 1.10. GitHub Actions
+# GitHub Actions
 
-### 1.10.1. [`lint-profile.yml`](.github/workflows/lint-profile.yml)
+## [`lint-profile.yml`](.github/workflows/lint-profile.yml)
 
 This action checks out the repository, installs Ruby and InSpec, then runs `bundle exec inspec check .` to validate the structure and syntax of the InSpec profile and its Ruby code.
 
-### 1.10.2. [`verify-ec2.yml`](.github/workflows/verify-ec2.yml)
+## [`verify-ec2.yml`](.github/workflows/verify-ec2.yml)
 
 This action performs the following steps:
 
@@ -904,19 +885,19 @@ This action performs the following steps:
 8. Uploads the results to our Heimdall Demo server.
 9. Determines the success or failure of the test run based on the validation of the test suite results against the `threshold.yml` files for each test suite (`hardened` and `vanilla`).
 
-### 1.10.3. [`verify-container.yml`](.github/workflows/verify-container.yml)
+## [`verify-container.yml`](.github/workflows/verify-container.yml)
 
 This action performs similar steps to `verify-ec2.yml`, but with some differences:
 
 1. It configures access to the required container registries - Platform One and Red Hat.
 
-### 1.10.4. [`verify-vagrant.yml.example`](.github/workflows/verify-vagrant.yml.example)
+## [`verify-vagrant.yml.example`](.github/workflows/verify-vagrant.yml.example)
 
 This action is similar to the `verify-ec2` workflow, but instead of using a remote AWS EC2 instance in a VPC, it uses a local Vagrant virtual machine as the test target. The user can configure whether to upload the results to our Heimdall Demo server or not by modifing the Github Action.
 
-# 2. InSpec Delta
+# InSpec Delta
 
-## 2.1. Preparing the Profile Before Running Delta
+## Preparing the Profile Before Running Delta
 
 Before running Delta, it's beneficial to format the profile to match the format Delta will use. This minimizes changes to only those necessary based on the guidance update. Follow these steps:
 
@@ -973,16 +954,16 @@ Lint/AmbiguousBlockAssociation:
 
 2. **Run the SAF CLI Command:** Use `saf generate update_controls4delta` to check and update the control IDs with the provided XCCDF guidance. This process checks if the new guidance changes the control numbers and updates them if necessary. This minimizes the Delta output content and improves the visualization of the modifications provided by the Delta process.
 
-## 2.2. Preparing Your Environment
+## Preparing Your Environment
 
 - **Download New Guidance:** Download the appropriate profile from the [DISA Document Library](https://public.cyber.mil/stigs/downloads/). Unzip the downloaded folder and identify the `<name>xccdf.xml` file.
 - **Create the InSpec Profile JSON File:** Clone or download the InSpec profile locally. Run the `inspec json` command to create the InSpec Profile JSON file to be used in the `saf generate delta` command.
 
-## 2.3. Delta Workflow Process
+## Delta Workflow Process
 
 ![Delta Workflow Process](https://user-images.githubusercontent.com/13986875/228628448-ad6b9fd9-d165-4e65-95e2-a951031d19e2.png "Delta Workflow Process Image")
 
-## 2.4. Using Delta
+## Using Delta
 
 The SAF InSpec Delta workflow typically involves two phases, `preformatting` and `delta`.
 
@@ -996,7 +977,7 @@ For more information on these commands, refer to the following documentation:
 - [update_controls4delta](https://saf-cli.mitre.org/#delta-supporting-options)
 - [saf generate delta](https://saf-cli.mitre.org/#delta)
 
-## 2.5. Scope of Changes by Delta
+## Scope of Changes by Delta
 
 Delta focuses on specific modifications migrating the changes from the XCCDF Benchmark Rules to the Profiles controls, and updating the 'metadata' of each of thosin the `control ID`, `title`, `default desc`, `check text`, and `fix text`, between the XCCDF Benchmark Rules and the Profile Controls.
 
@@ -1006,18 +987,18 @@ It also adjusts the `tags` and introduces a `ref` between the `impact` and `tags
 
 Delta does not modify the Ruby/InSpec code within the control, leaving it intact. Instead, it updates the 'control metadata' using the information from the supplied XCCDF guidance document. This applies to 'matched controls' between the XCCDF Guidance Document and the InSpec profile.
 
-### 2.5.1. Further InSpec Delta Information and Background
+### Further InSpec Delta Information and Background
 
 - The original Delta branch can be found [here](https://github.com/mitre/saf/pull/485).
 - Delta moves lines not labeled with 'desc' to the bottom, between tags and InSpec code.
 - Whether the controls are formatted to be 80 lines or not, Delta exhibits the same behavior with the extra text.
 - Parameterizing should be considered.
 
-# 3. Tips, Tricks and Troubleshooting
+# Tips, Tricks and Troubleshooting
 
-## 3.1. Test Kitchen
+## Test Kitchen
 
-### 3.1.1. Locating Test Target Login Details
+### Locating Test Target Login Details
 
 Test Kitchen stores the current host details of your provisioned test targets in the `.kitchen/` directory. Here, you'll find a `yml` file containing your target's `hostname`, `ip address`, `host details`, and login credentials, which could be an `ssh pem key` or another type of credential.
 
@@ -1033,17 +1014,17 @@ Test Kitchen stores the current host details of your provisioned test targets in
 └── .kitchen/vanilla-ubi8.yml
 ```
 
-### 3.1.2. Restoring Access to a Halted or Restarted Test Target
+### Restoring Access to a Halted or Restarted Test Target
 
 If your test target reboots or updates its network information, you don't need to execute bundle exec kitchen destroy. Instead, update the corresponding .kitchen/#{suite}-#{target}.yml file with the updated information. This will ensure that your kitchen login, kitchen validate, and other kitchen commands function correctly, as they'll be connecting to the correct location instead of using outdated data.
 
-### 3.1.3. AWS Console and EC2 Oddities
+### AWS Console and EC2 Oddities
 
 Since we're using the free-tier for our AWS testing resources instead of a dedicated host, your test targets might shut down or 'reboot in the background' if you stop interacting with them, halt them, put them in a stop state, or leave them overnight. To regain access, edit the .kitchen/#{suite}-#{target}.yml file. As mentioned above, there's no need to recreate your testing targets if you can simply point Test Kitchen to the correct IP address.
 
-## 3.2. InSpec / Ruby
+## InSpec / Ruby
 
-### 3.2.1. Using `pry` and `pry-byebug` for Debugging Controls
+### Using `pry` and `pry-byebug` for Debugging Controls
 
 When developing InSpec controls, it's beneficial to use the `kitchen-test` suite, the `INSPEC_CONTROL` environment variable, and `pry` or `pry-byebug`. This combination allows you to quickly debug, update, and experiment with your fixes in the context of the InSpec code, without having to run the full test suite.
 
@@ -1057,7 +1038,7 @@ When developing InSpec controls, it's beneficial to use the `kitchen-test` suite
 
 - Remember to remove or comment out the `binding.pry` lines when you're done debugging or you won't have a good 'linting' down the road.
 
-### 3.2.2. Streamlining Your Testing with `inspec shell`
+### Streamlining Your Testing with `inspec shell`
 
 The `inspec shell` command allows you to test your full control update on your test target directly. To do this, you'll need to retrieve the IP address and SSH PEM key for your target instance from the Test Kitchen `.kitchen` directory. For more details on this, refer to the [Finding Your Test Target Login Details](#311-locating-test-target-login-details) section.
 
@@ -1066,15 +1047,15 @@ Once you have your IP address and SSH PEM key (for AWS target instances), or the
 - For AWS test targets: `bundle exec inspec shell -i #{pem-key} -t ssh://ec2-user@#{ipaddress} --sudo`
 - For Docker test instances: `bundle exec inspec shell -t docker://#{container-id}`
 
-### 3.2.3. Using `kitchen login` for Easy Test Review and Modification
+### Using `kitchen login` for Easy Test Review and Modification
 
 The `kitchen login` command provides an easy way to review and modify your test target. This tool is particularly useful for introducing test cases, exploring corner cases, and validating both positive and negative test scenarios.
 
-# 4. Background and Definitions
+# Background and Definitions
 
-## 4.1. Background
+## Background
 
-### 4.1.1. Evolution of STIGs and Security Benchmarks
+### Evolution of STIGs and Security Benchmarks
 
 The Department of Defense (DOD) has continually updated its databases that track rules and Security Technical Implementation Guides (STIGs) that house those rules.
 
@@ -1094,7 +1075,7 @@ In our modern profiles, some data from the XCCDF Benchmarks still exist in the d
 
 It was later realized that since the structure of these data elements was 'static', they could be easily reintroduced when converting back to an XCCDF Benchmark. Therefore, rendering them in the profile was deemed unnecessary.
 
-## 4.2. Definitions and Terms
+## Definitions and Terms
 
 - **Baseline**: This refers to a set of relevant security controls, such as NIST 800-53 controls or Center for Internet Security Controls. These controls offer high-level security best practices, grouped into common areas of concern.
 - **Benchmark**: This is a set of security controls tailored to a specific type of application or product. These controls are typically categorized into 'high', 'medium', and 'low' levels based on Confidentiality, Integrity, and Availability (C.I.A).
