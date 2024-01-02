@@ -9,13 +9,6 @@ version: 1.12.0
 inspec_version: ">= 5.0"
 
 inputs:
-  - name: os_versions
-    description: List the constaints of the correct OS
-    type: Hash
-    value:
-      min: 8.2
-      max: 8.2
-
   # SV-230360
   - name: maxclassrepeat
     description: "The maximum number of repeating characters of the same character class for passwords"

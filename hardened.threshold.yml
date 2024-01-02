@@ -22,7 +22,7 @@ passed:
       - SV-244541
       - SV-251706
   medium:
-    min: 251
+    min: 252
     controls:
       - SV-230222
       - SV-230225
@@ -265,6 +265,7 @@ passed:
       - SV-251707
       - SV-251708
       - SV-251709
+      - SV-251710
       - SV-251712
       - SV-251713
       - SV-251716
@@ -314,7 +315,7 @@ failed:
       - SV-230235
       - SV-230380
   medium:
-    max: 42
+    max: 41
     controls:
       - SV-230224
       - SV-230229
@@ -357,7 +358,6 @@ failed:
       - SV-244529
       - SV-244546
       - SV-244553
-      - SV-251710
   low:
     max: 4
     controls:

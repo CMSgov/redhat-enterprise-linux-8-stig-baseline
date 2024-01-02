@@ -54,19 +54,16 @@ to match the following lines:
   tag cci: ['CCI-000044']
   tag nist: ['AC-7 a']
 
-  os_version_max = input('os_versions')['max']
+  only_if('This check applies to RHEL versions 8.2 or newer, if the system is
+    RHEL version 8.0 or 8.1, this check is not applicable.', impact: 0.0) {
+    (os.release.to_f) >= 8.2
+  }
+
   pam_auth_files = input('pam_auth_files')
 
-  if os.release.to_f <= os_version_max
-    impact 0.5
-    describe "The release is #{os.release}" do
-      skip "The release is lower than #{os_version_max}; Currently on release #{os.release}, this control is Not Applicable."
-    end
-  else
-    describe pam(pam_auth_files['system-auth']) do
-      its('lines') { should match_pam_rule('auth required pam_faillock.so preauth') }
-      its('lines') { should match_pam_rule('auth required pam_faillock.so authfail') }
-      its('lines') { should match_pam_rule('account required pam_faillock.so') }
-    end
+  describe pam(pam_auth_files['system-auth']) do
+    its('lines') { should match_pam_rule('auth required pam_faillock.so preauth') }
+    its('lines') { should match_pam_rule('auth required pam_faillock.so authfail') }
+    its('lines') { should match_pam_rule('account required pam_faillock.so') }
   end
 end

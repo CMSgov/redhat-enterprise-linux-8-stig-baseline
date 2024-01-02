@@ -44,16 +44,12 @@ line:
   tag cci: ['CCI-000044']
   tag nist: ['AC-7 a']
 
-  os_version_max = input('os_versions')['max']
+  only_if('This check applies to RHEL versions 8.2 or newer. If the system is
+  RHEL version 8.0 or 8.1, this check is not applicable.', impact: 0.0) {
+    (os.release.to_f) >= 8.2
+  }
 
-  if os.release.to_f <= os_version_max
-    impact 0.0
-    describe "The release is #{os.release}" do
-      skip "The release is lower than #{os_version_max}; Currently on release #{os.release}, this control is Not Applicable."
-    end
-  else
-    describe parse_config_file('/etc/security/faillock.conf') do
-      its('dir') { should cmp input('log_directory') }
-    end
+  describe parse_config_file('/etc/security/faillock.conf') do
+    its('dir') { should cmp input('log_directory') }
   end
 end

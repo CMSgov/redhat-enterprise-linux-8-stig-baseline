@@ -73,32 +73,29 @@ restart the "sssd" service, run the following command:
   tag cci: ['CCI-000044']
   tag nist: ['AC-7 a']
 
-  os_version_min = input('os_versions')['min']
+  only_if('This check applies to RHEL version 8.2 and later. If the system is
+  not RHEL version 8.2 or newer, this check is Not Applicable.', impact: 0.0) {
+    (os.release.to_f) >= 8.2
+  }
+
   pam_auth_files = input('pam_auth_files')
 
-  if os.release.to_f >= os_version_min
-    impact 0.0
-    describe "The release is #{os.release}" do
-      skip "The release is #{os_version_min} or newer; Currently on release #{os.release}, this control is Not Applicable."
+  describe pam(pam_auth_files['password-auth']) do
+    its('lines') do
+      should match_pam_rule('auth [default=die]|required pam_faillock.so').all_with_args('unlock_time=(0|never)').or \
+        (match_pam_rule('auth [default=die]|required pam_faillock.so').all_with_integer_arg('unlock_time', '<=',
+                                                                                            604_800).and \
+                                                                                              match_pam_rule('auth [default=die]|required pam_faillock.so').all_with_integer_arg('unlock_time', '>=',
+                                                                                                                                                                                  input('lockout_time')))
     end
-  else
-    describe pam(pam_auth_files['password-auth']) do
-      its('lines') do
-        should match_pam_rule('auth [default=die]|required pam_faillock.so').all_with_args('unlock_time=(0|never)').or \
-          (match_pam_rule('auth [default=die]|required pam_faillock.so').all_with_integer_arg('unlock_time', '<=',
-                                                                                              604_800).and \
-                                                                                                match_pam_rule('auth [default=die]|required pam_faillock.so').all_with_integer_arg('unlock_time', '>=',
-                                                                                                                                                                                   input('lockout_time')))
-      end
-    end
-    describe pam(pam_auth_files['system-auth']) do
-      its('lines') do
-        should match_pam_rule('auth [default=die]|required pam_faillock.so').all_with_args('unlock_time=(0|never)').or \
-          (match_pam_rule('auth [default=die]|required pam_faillock.so').all_with_integer_arg('unlock_time', '<=',
-                                                                                              604_800).and \
-                                                                                                match_pam_rule('auth [default=die]|required pam_faillock.so').all_with_integer_arg('unlock_time', '>=',
-                                                                                                                                                                                   input('lockout_time')))
-      end
+  end
+  describe pam(pam_auth_files['system-auth']) do
+    its('lines') do
+      should match_pam_rule('auth [default=die]|required pam_faillock.so').all_with_args('unlock_time=(0|never)').or \
+        (match_pam_rule('auth [default=die]|required pam_faillock.so').all_with_integer_arg('unlock_time', '<=',
+                                                                                            604_800).and \
+                                                                                              match_pam_rule('auth [default=die]|required pam_faillock.so').all_with_integer_arg('unlock_time', '>=',
+                                                                                                                                                                                  input('lockout_time')))
     end
   end
 end
