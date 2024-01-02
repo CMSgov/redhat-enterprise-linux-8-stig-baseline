@@ -1,8 +1,6 @@
-# frozen_string_literal: true
-
 control 'SV-230354' do
-  title "RHEL 8 must prevent a user from overriding the session lock-delay
-setting for the graphical user interface."
+  title 'RHEL 8 must prevent a user from overriding the session lock-delay
+setting for the graphical user interface.'
   desc "A session time-out lock is a temporary action taken when a user stops
 work and moves away from the immediate physical vicinity of the information
 system but does not log out because of the temporary nature of the absence.

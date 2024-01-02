@@ -1,11 +1,9 @@
-# frozen_string_literal: true
-
 control 'SV-244528' do
-  title "The RHEL 8 SSH daemon must not allow GSSAPI authentication, except to
-fulfill documented and validated mission requirements."
-  desc "Configuring this setting for the SSH daemon provides additional
+  title 'The RHEL 8 SSH daemon must not allow GSSAPI authentication, except to
+fulfill documented and validated mission requirements.'
+  desc 'Configuring this setting for the SSH daemon provides additional
 assurance that remote logon via SSH will require a password, even in the event
-of misconfiguration elsewhere."
+of misconfiguration elsewhere.'
   desc 'check', 'Verify the SSH daemon does not allow GSSAPI authentication with the following command:
 
 $ sudo grep -ir GSSAPIAuthentication  /etc/ssh/sshd_config*

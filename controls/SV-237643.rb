@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 control 'SV-237643' do
   title 'RHEL 8 must require re-authentication when using the "sudo" command.'
   desc %q(Without re-authentication, users may access resources or perform tasks

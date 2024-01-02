@@ -1,9 +1,7 @@
-# frozen_string_literal: true
-
 control 'SV-230280' do
-  title "RHEL 8 must implement address space layout randomization (ASLR) to
-protect its memory from unauthorized code execution."
-  desc "Some adversaries launch attacks with the intent of executing code in non-executable regions of memory or in memory locations that are prohibited. Security safeguards employed to protect memory include, for example, data execution prevention and address space layout randomization. Data execution prevention safeguards can be either hardware-enforced or software-enforced with hardware providing the greater strength of mechanism.
+  title 'RHEL 8 must implement address space layout randomization (ASLR) to
+protect its memory from unauthorized code execution.'
+  desc 'Some adversaries launch attacks with the intent of executing code in non-executable regions of memory or in memory locations that are prohibited. Security safeguards employed to protect memory include, for example, data execution prevention and address space layout randomization. Data execution prevention safeguards can be either hardware-enforced or software-enforced with hardware providing the greater strength of mechanism.
 
 Examples of attacks are buffer overflow attacks.
 
@@ -13,7 +11,7 @@ The sysctl --system command will load settings from all system configuration fil
 /usr/local/lib/sysctl.d/*.conf
 /usr/lib/sysctl.d/*.conf
 /lib/sysctl.d/*.conf
-/etc/sysctl.conf"
+/etc/sysctl.conf'
   desc 'check', 'Verify RHEL 8 implements ASLR with the following command:
 
 $ sudo sysctl kernel.randomize_va_space

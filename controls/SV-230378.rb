@@ -1,9 +1,7 @@
-# frozen_string_literal: true
-
 control 'SV-230378' do
-  title "RHEL 8 must enforce a delay of at least four seconds between logon
-prompts following a failed logon attempt."
-  desc "Configuring the operating system to implement organization-wide
+  title 'RHEL 8 must enforce a delay of at least four seconds between logon
+prompts following a failed logon attempt.'
+  desc 'Configuring the operating system to implement organization-wide
 security implementation guides and security checklists verifies compliance with
 federal standards and establishes a common security baseline across the DoD
 that reflects the most restrictive security posture consistent with operational
@@ -16,7 +14,7 @@ parameters are those parameters impacting the security state of the system,
 including the parameters required to satisfy other security control
 requirements. Security-related parameters include, for example, registry
 settings; account, file, and directory permission settings; and settings for
-functions, ports, protocols, services, and remote connections."
+functions, ports, protocols, services, and remote connections.'
   desc 'check', 'Verify the operating system enforces a delay of at least four seconds
 between console logon prompts following a failed logon attempt with the
 following command:

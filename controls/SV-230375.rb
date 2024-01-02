@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 control 'SV-230375' do
   title 'All RHEL 8 passwords must contain at least one special character.'
   desc 'Use of a complex password helps to increase the time and resources

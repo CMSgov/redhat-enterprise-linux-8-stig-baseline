@@ -1,15 +1,13 @@
-# frozen_string_literal: true
-
 control 'SV-230386' do
-  title "The RHEL 8 audit system must be configured to audit the execution of
+  title 'The RHEL 8 audit system must be configured to audit the execution of
 privileged functions and prevent all software from executing at higher
-privilege levels than users executing the software."
-  desc "Misuse of privileged functions, either intentionally or
+privilege levels than users executing the software.'
+  desc 'Misuse of privileged functions, either intentionally or
 unintentionally by authorized users, or by unauthorized external entities that
 have compromised information system accounts, is a serious and ongoing concern
 and can have significant adverse impacts on organizations. Auditing the use of
 privileged functions is one way to detect such misuse and identify the risk
-from insider threats and the advanced persistent threat."
+from insider threats and the advanced persistent threat.'
   desc 'check', 'Verify RHEL 8 audits the execution of privileged functions.
 
     Check if RHEL 8 is configured to audit the execution of the "execve"

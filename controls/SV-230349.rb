@@ -1,8 +1,6 @@
-# frozen_string_literal: true
-
 control 'SV-230349' do
-  title "RHEL 8 must ensure session control is automatically started at shell
-initialization."
+  title 'RHEL 8 must ensure session control is automatically started at shell
+initialization.'
   desc 'Tmux is a terminal multiplexer that enables a number of terminals to be created, accessed, and controlled from a single screen. Red Hat endorses tmux as the recommended session controlling package.'
   desc 'check', 'Verify the operating system shell initialization file is configured to start each shell with the tmux terminal multiplexer with the following commands:
 

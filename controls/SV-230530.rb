@@ -1,14 +1,12 @@
-# frozen_string_literal: true
-
 control 'SV-230530' do
-  title "The x86 Ctrl-Alt-Delete key sequence in RHEL 8 must be disabled if a
-graphical user interface is installed."
-  desc "A locally logged-on user, who presses Ctrl-Alt-Delete, when at the
+  title 'The x86 Ctrl-Alt-Delete key sequence in RHEL 8 must be disabled if a
+graphical user interface is installed.'
+  desc 'A locally logged-on user, who presses Ctrl-Alt-Delete, when at the
 console, can reboot the system. If accidentally pressed, as could happen in the
 case of a mixed OS environment, this can create the risk of short-term loss of
 availability of systems due to unintentional reboot. In a graphical user
 environment, risk of unintentional reboot from the Ctrl-Alt-Delete sequence is
-reduced because the user will be prompted before any action is taken."
+reduced because the user will be prompted before any action is taken.'
   desc 'check', %q(Verify RHEL 8 is not configured to reboot the system when Ctrl-Alt-Delete
 is pressed when using a graphical user interface with the following command:
 

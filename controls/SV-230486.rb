@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 control 'SV-230486' do
   title 'RHEL 8 must disable network management of the chrony daemon.'
   desc 'Inaccurate time stamps make it more difficult to correlate events and can lead to an inaccurate analysis. Determining the correct time a particular event occurred on a system is critical when conducting forensic analysis and investigating system events. Sources outside the configured acceptable allowance (drift) may be inaccurate.

@@ -1,9 +1,7 @@
-# frozen_string_literal: true
-
 control 'SV-230503' do
   title 'RHEL 8 must be configured to disable USB mass storage.'
-  desc "USB mass storage permits easy introduction of unknown devices, thereby
-facilitating malicious activity."
+  desc 'USB mass storage permits easy introduction of unknown devices, thereby
+facilitating malicious activity.'
   desc 'check', 'Verify the operating system disables the ability to load the USB Storage kernel module.
 
 $ sudo grep -r usb-storage /etc/modprobe.d/* | grep -i "/bin/true"

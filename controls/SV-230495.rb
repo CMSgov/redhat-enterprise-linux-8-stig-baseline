@@ -1,8 +1,6 @@
-# frozen_string_literal: true
-
 control 'SV-230495' do
   title 'RHEL 8 must disable the controller area network (CAN) protocol.'
-  desc "It is detrimental for operating systems to provide, or install by
+  desc 'It is detrimental for operating systems to provide, or install by
 default, functionality exceeding requirements or mission objectives. These
 unnecessary capabilities or services are often overlooked and therefore may
 remain unsecured. They increase the risk to the platform by providing
@@ -13,7 +11,7 @@ additional attack vectors.
     The Controller Area Network (CAN) is a serial communications protocol,
 which was initially developed for automotive and is now also used in marine,
 industrial, and medical applications. Disabling CAN protects the system against
-exploitation of any flaws in its implementation."
+exploitation of any flaws in its implementation.'
   desc 'check', 'Verify the operating system disables the ability to load the CAN protocol kernel module.
 
 $ sudo grep -r can /etc/modprobe.d/* | grep "/bin/true"

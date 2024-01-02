@@ -1,9 +1,7 @@
-# frozen_string_literal: true
-
 control 'SV-244546' do
-  title "The RHEL 8 fapolicy module must be configured to employ a deny-all,
+  title 'The RHEL 8 fapolicy module must be configured to employ a deny-all,
 permit-by-exception policy to allow the execution of authorized software
-programs."
+programs.'
   desc 'The organization must identify authorized software programs and permit
 execution of authorized software. The process used to identify software
 programs that are authorized to execute on organizational information systems
@@ -66,11 +64,7 @@ permissive = 0'
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000368-GPOS-00154'
-  tag satisfies: [
-    'SRG-OS-000368-GPOS-00154',
-    'SRG-OS-000370-GPOS-00155',
-    'SRG-OS-000480-GPOS-00232'
-  ]
+  tag satisfies: ['SRG-OS-000368-GPOS-00154', 'SRG-OS-000370-GPOS-00155', 'SRG-OS-000480-GPOS-00232']
   tag gid: 'V-244546'
   tag rid: 'SV-244546r858730_rule'
   tag stig_id: 'RHEL-08-040137'

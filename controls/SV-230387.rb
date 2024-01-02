@@ -1,10 +1,8 @@
-# frozen_string_literal: true
-
 control 'SV-230387' do
   title 'Cron logging must be implemented in RHEL 8.'
-  desc "Cron logging can be used to trace the successful or unsuccessful
+  desc 'Cron logging can be used to trace the successful or unsuccessful
 execution of cron jobs. It can also be used to spot intrusions into the use of
-the cron facility by unauthorized and malicious users."
+the cron facility by unauthorized and malicious users.'
   desc 'check', 'Verify that "rsyslog" is configured to log cron events with the following
 command:
 

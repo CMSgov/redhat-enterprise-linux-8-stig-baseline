@@ -1,9 +1,7 @@
-# frozen_string_literal: true
-
 control 'SV-230287' do
   title 'The RHEL 8 SSH private host key files must have mode 0640 or less permissive.'
-  desc "If an unauthorized user obtains the private SSH host key file, the
-host could be impersonated."
+  desc 'If an unauthorized user obtains the private SSH host key file, the
+host could be impersonated.'
   desc 'check', 'Verify the SSH private host key files have mode "0640" or less permissive with the following command:
 
      $ sudo ls -l /etc/ssh/ssh_host*key

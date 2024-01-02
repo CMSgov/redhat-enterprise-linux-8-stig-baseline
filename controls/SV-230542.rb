@@ -1,9 +1,7 @@
-# frozen_string_literal: true
-
 control 'SV-230542' do
-  title "RHEL 8 must not accept router advertisements on all IPv6 interfaces by
-default."
-  desc "Routing protocol daemons are typically used on routers to exchange network topology information with other routers. If this software is used when not required, system network information may be unnecessarily transmitted across the network.
+  title 'RHEL 8 must not accept router advertisements on all IPv6 interfaces by
+default.'
+  desc 'Routing protocol daemons are typically used on routers to exchange network topology information with other routers. If this software is used when not required, system network information may be unnecessarily transmitted across the network.
 
 An illicit router advertisement message could result in a man-in-the-middle attack.
 
@@ -13,7 +11,7 @@ The sysctl --system command will load settings from all system configuration fil
 /usr/local/lib/sysctl.d/*.conf
 /usr/lib/sysctl.d/*.conf
 /lib/sysctl.d/*.conf
-/etc/sysctl.conf"
+/etc/sysctl.conf'
   desc 'check', 'Verify RHEL 8 does not accept router advertisements on all IPv6 interfaces by default, unless the system is a router.
 
 Note: If IPv6 is disabled on the system, this requirement is not applicable.

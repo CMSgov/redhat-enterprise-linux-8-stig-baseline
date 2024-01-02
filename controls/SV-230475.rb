@@ -1,9 +1,7 @@
-# frozen_string_literal: true
-
 control 'SV-230475' do
-  title "RHEL 8 must use cryptographic mechanisms to protect the integrity of
-audit tools."
-  desc "Protecting the integrity of the tools used for auditing purposes is a
+  title 'RHEL 8 must use cryptographic mechanisms to protect the integrity of
+audit tools.'
+  desc 'Protecting the integrity of the tools used for auditing purposes is a
 critical step toward ensuring the integrity of audit information. Audit
 information includes all information (e.g., audit records, audit settings, and
 audit reports) needed to successfully audit information system activity.
@@ -19,7 +17,7 @@ erase system activity from the audit logs.
 
     To address this risk, audit tools must be cryptographically signed to
 provide the capability to identify when the audit tools have been modified,
-manipulated, or replaced. An example is a checksum hash of the file or files."
+manipulated, or replaced. An example is a checksum hash of the file or files.'
   desc 'check', "Verify that Advanced Intrusion Detection Environment (AIDE) is properly configured to use cryptographic mechanisms to protect the integrity of audit tools.
 
 If AIDE is not installed, ask the System Administrator how file integrity checks are performed on the system.

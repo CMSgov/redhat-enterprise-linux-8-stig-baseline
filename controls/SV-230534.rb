@@ -1,8 +1,6 @@
-# frozen_string_literal: true
-
 control 'SV-230534' do
-  title "The root account must be the only account having unrestricted access
-to the RHEL 8 system."
+  title 'The root account must be the only account having unrestricted access
+to the RHEL 8 system.'
   desc 'If an account other than root also has a User Identifier (UID) of
 "0", it has root authority, giving that account unrestricted access to the
 entire operating system. Multiple accounts with a UID of "0" afford an

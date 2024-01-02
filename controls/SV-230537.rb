@@ -1,8 +1,6 @@
-# frozen_string_literal: true
-
 control 'SV-230537' do
-  title "RHEL 8 must not respond to Internet Control Message Protocol (ICMP)
-echoes sent to a broadcast address."
+  title 'RHEL 8 must not respond to Internet Control Message Protocol (ICMP)
+echoes sent to a broadcast address.'
   desc 'Responding to broadcast ICMP echoes facilitates network mapping and provides a vector for amplification attacks.
 
 There are notable differences between Internet Protocol version 4 (IPv4) and Internet Protocol version 6 (IPv6). IPv6 does not implement the same method of broadcast as IPv4. Instead, IPv6 uses multicast addressing to the all-hosts multicast group. Refer to RFC4294 for an explanation of "IPv6 Node Requirements", which resulted in this difference between IPv4 and IPv6.

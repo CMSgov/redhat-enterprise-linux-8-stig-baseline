@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 control 'SV-230374' do
   title 'RHEL 8 must automatically expire temporary accounts within 72 hours.'
   desc 'Temporary accounts are privileged or nonprivileged accounts that are
@@ -24,7 +22,6 @@ control 'SV-230374' do
     the circumstances but it must not be extended indefinitely. A documented
     permanent account should be established for privileged users who need long-term
     maintenance accounts.'
-
   desc 'check', 'Verify temporary accounts have been provisioned with an
     expiration date of 72 hours.
 
@@ -37,12 +34,10 @@ control 'SV-230374' do
 
     If any temporary accounts have no expiration date set or do not expire within
     72 hours, this is a finding.'
-
-  desc 'fix', "Configure the operating system to expire temporary accounts after
+  desc 'fix', 'Configure the operating system to expire temporary accounts after
     72 hours with the following command:
 
-    $ sudo chage -E $(date -d +3days +%Y-%m-%d) <temporary_account_name>"
-
+    $ sudo chage -E $(date -d +3days +%Y-%m-%d) <temporary_account_name>'
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000123-GPOS-00064'

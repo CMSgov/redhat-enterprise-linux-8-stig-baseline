@@ -1,10 +1,8 @@
-# frozen_string_literal: true
-
 control 'SV-230286' do
-  title "The RHEL 8 SSH public host key files must have mode 0644 or less
-permissive."
-  desc "If a public host key file is modified by an unauthorized user, the SSH
-service may be compromised."
+  title 'The RHEL 8 SSH public host key files must have mode 0644 or less
+permissive.'
+  desc 'If a public host key file is modified by an unauthorized user, the SSH
+service may be compromised.'
   desc 'check', 'Verify the SSH public host key files have mode "0644" or less permissive
 with the following command:
 

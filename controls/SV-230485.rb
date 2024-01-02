@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 control 'SV-230485' do
   title 'RHEL 8 must disable the chrony daemon from acting as a server.'
   desc 'Inaccurate time stamps make it more difficult to correlate events and can lead to an inaccurate analysis. Determining the correct time a particular event occurred on a system is critical when conducting forensic analysis and investigating system events. Sources outside the configured acceptable allowance (drift) may be inaccurate.

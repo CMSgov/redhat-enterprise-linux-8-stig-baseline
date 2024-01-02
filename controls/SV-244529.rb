@@ -1,9 +1,7 @@
-# frozen_string_literal: true
-
 control 'SV-244529' do
   title 'RHEL 8 must use a separate file system for /var/tmp.'
-  desc "The use of separate file systems for different paths can protect the
-system from failures resulting from a file system becoming full or failing."
+  desc 'The use of separate file systems for different paths can protect the
+system from failures resulting from a file system becoming full or failing.'
   desc 'check', 'Verify that a separate file system has been created for "/var/tmp".
 
 Check that a file system has been created for "/var/tmp" with the following command:

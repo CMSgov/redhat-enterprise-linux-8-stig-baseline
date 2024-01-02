@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 control 'SV-244544' do
   title 'A firewall must be active on RHEL 8.'
   desc '"Firewalld" provides an easy and effective way to block/limit remote

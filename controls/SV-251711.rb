@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 control 'SV-251711' do
   title 'RHEL 8 must specify the default "include" directory for the /etc/sudoers file.'
   desc 'The "sudo" command allows authorized users to run programs (including shells) as other users,
@@ -33,18 +31,15 @@ control 'SV-251711' do
         $ sudo grep -r include /etc/sudoers.d
 
         If results are returned, this is a finding.'
-
-  desc 'fix', "Configure the /etc/sudoers file to only include the /etc/sudoers.d directory.
+  desc 'fix', 'Configure the /etc/sudoers file to only include the /etc/sudoers.d directory.
 
         Edit the /etc/sudoers file with the following command:
 
         $ sudo visudo
 
         Add or modify the following line:
-        #includedir /etc/sudoers.d"
-
+        #includedir /etc/sudoers.d'
   impact 0.5
-
   tag check_id: 'C-55148r833384_chk'
   tag severity: 'medium'
   tag gid: 'V-251711'

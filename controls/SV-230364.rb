@@ -1,8 +1,6 @@
-# frozen_string_literal: true
-
 control 'SV-230364' do
-  title "RHEL 8 passwords must have a 24 hours/1 day minimum password lifetime
-restriction in /etc/shadow."
+  title 'RHEL 8 passwords must have a 24 hours/1 day minimum password lifetime
+restriction in /etc/shadow.'
   desc "Enforcing a minimum password lifetime helps to prevent repeated
 password changes to defeat the password reuse or history enforcement
 requirement. If users are allowed to immediately and continually change their
@@ -15,10 +13,10 @@ user account is one day or greater.
 
     If any results are returned that are not associated with a system account,
 this is a finding.)
-  desc 'fix', "Configure non-compliant accounts to enforce a 24 hours/1 day minimum
+  desc 'fix', 'Configure non-compliant accounts to enforce a 24 hours/1 day minimum
 password lifetime:
 
-    $ sudo chage -m 1 [user]"
+    $ sudo chage -m 1 [user]'
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000075-GPOS-00043'

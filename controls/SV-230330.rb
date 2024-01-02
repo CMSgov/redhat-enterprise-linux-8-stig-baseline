@@ -1,9 +1,7 @@
-# frozen_string_literal: true
-
 control 'SV-230330' do
   title 'RHEL 8 must not allow users to override SSH environment variables.'
-  desc "SSH environment options potentially allow users to bypass access
-restriction in some configurations."
+  desc 'SSH environment options potentially allow users to bypass access
+restriction in some configurations.'
   desc 'check', 'Verify that unattended or automatic logon via ssh is disabled with the following command:
 
 $ sudo grep -ir PermitUserEnvironment /etc/ssh/sshd_config*

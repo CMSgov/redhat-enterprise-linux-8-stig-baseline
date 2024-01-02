@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 control 'SV-230523' do
   title 'The RHEL 8 fapolicy module must be installed.'
   desc 'The organization must identify authorized software programs and permit

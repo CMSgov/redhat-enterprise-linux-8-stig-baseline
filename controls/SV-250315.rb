@@ -1,9 +1,6 @@
-# frozen_string_literal: true
-
 control 'SV-250315' do
   title 'RHEL 8 systems, versions 8.2 and above, must configure SELinux context
   type to allow the use of a non-default faillock tally directory.'
-
   desc %q(By limiting the number of failed logon attempts, the risk of
   unauthorized system access via user password guessing, otherwise known as
   brute-force attacks, is reduced. Limits are imposed by locking the account.
@@ -17,7 +14,6 @@ control 'SV-250315' do
   directory's security context type to match the default directory's security
   context type. Without updating the security context type, the pam_faillock
   module will not write failed login attempts to the non-default tally directory.)
-
   desc 'check', 'If the system does not have SELinux enabled and enforcing a
   targeted policy, or if the pam_faillock module is not configured for use,
   this requirement is not applicable.
@@ -41,7 +37,6 @@ control 'SV-250315' do
 
   If the security context type of the non-default tally directory is not
   "faillog_t", this is a finding.'
-
   desc 'fix', 'Configure RHEL 8 to allow the use of a non-default faillock tally
   directory while SELinux enforces a targeted policy.
 
@@ -60,7 +55,6 @@ control 'SV-250315' do
   and files with the following command:
 
   $ sudo restorecon -R -v /var/log/faillock'
-
   impact 0.5
   tag check_id: 'C-53749r793000_chk'
   tag severity: 'medium'

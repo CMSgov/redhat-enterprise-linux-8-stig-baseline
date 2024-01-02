@@ -1,11 +1,9 @@
-# frozen_string_literal: true
-
 control 'SV-244523' do
-  title "RHEL 8 operating systems must require authentication upon booting into
-emergency mode."
-  desc "If the system does not require valid root authentication before it
+  title 'RHEL 8 operating systems must require authentication upon booting into
+emergency mode.'
+  desc 'If the system does not require valid root authentication before it
 boots into emergency or rescue mode, anyone who invokes emergency or rescue
-mode is granted privileged access to all files on the system."
+mode is granted privileged access to all files on the system.'
   desc 'check', 'Check to see if the system requires authentication for emergency mode with
 the following command:
 

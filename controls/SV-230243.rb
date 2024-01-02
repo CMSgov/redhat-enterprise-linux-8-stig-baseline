@@ -1,10 +1,8 @@
-# frozen_string_literal: true
-
 control 'SV-230243' do
-  title "A sticky bit must be set on all RHEL 8 public directories to prevent
+  title 'A sticky bit must be set on all RHEL 8 public directories to prevent
 unauthorized and unintended information transferred via shared system
-resources."
-  desc "Preventing unauthorized information transfers mitigates the risk of
+resources.'
+  desc 'Preventing unauthorized information transfers mitigates the risk of
 information, including encrypted representations of information, produced by
 the actions of prior users/roles (or the actions of processes acting on behalf
 of prior users/roles) from being available to any current users/roles (or
@@ -19,7 +17,7 @@ information system components that are, or use, such products. This can be
 verified by acceptance/validation processes in DoD or other government agencies.
 
     There may be shared resources with configurable protections (e.g., files in
-storage) that may be assessed on specific information system components."
+storage) that may be assessed on specific information system components.'
   desc 'check', 'Verify that all world-writable directories have the sticky bit set.
 
 Check to see that all world-writable directories have the sticky bit set by running the following command:

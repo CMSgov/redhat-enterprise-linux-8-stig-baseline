@@ -1,8 +1,6 @@
-# frozen_string_literal: true
-
 control 'SV-230313' do
   title 'RHEL 8 must disable core dumps for all users.'
-  desc "It is detrimental for operating systems to provide, or install by
+  desc 'It is detrimental for operating systems to provide, or install by
 default, functionality exceeding requirements or mission objectives. These
 unnecessary capabilities or services are often overlooked and therefore may
 remain unsecured. They increase the risk to the platform by providing
@@ -10,7 +8,7 @@ additional attack vectors.
 
     A core dump includes a memory image taken at the time the operating system
 terminates an application. The memory image could contain sensitive data and is
-generally useful only for developers trying to debug problems."
+generally useful only for developers trying to debug problems.'
   desc 'check', %q(Verify the operating system disables core dumps for all users by issuing
 the following command:
 

@@ -1,8 +1,6 @@
-# frozen_string_literal: true
-
 control 'SV-230228' do
   title 'All RHEL 8 remote access methods must be monitored.'
-  desc "Remote access services, such as those providing remote access to
+  desc 'Remote access services, such as those providing remote access to
 network devices and information systems, which lack automated monitoring
 capabilities, increase risk and make remote user access management difficult at
 best.
@@ -16,7 +14,7 @@ example, dial-up, broadband, and wireless.
 detect cyber attacks and ensure ongoing compliance with remote access policies
 by auditing connection activities of remote access capabilities, such as Remote
 Desktop Protocol (RDP), on a variety of information system components (e.g.,
-servers, workstations, notebook computers, smartphones, and tablets)."
+servers, workstations, notebook computers, smartphones, and tablets).'
   desc 'check', %q(Verify that RHEL 8 monitors all remote access methods.
 
     Check that remote access methods are being logged by running the following

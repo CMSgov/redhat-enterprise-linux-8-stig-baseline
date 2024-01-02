@@ -1,12 +1,10 @@
-# frozen_string_literal: true
-
 control 'SV-230366' do
-  title "RHEL 8 user account passwords must have a 60-day maximum password
-lifetime restriction."
-  desc "Any password, no matter how complex, can eventually be cracked.
+  title 'RHEL 8 user account passwords must have a 60-day maximum password
+lifetime restriction.'
+  desc 'Any password, no matter how complex, can eventually be cracked.
 Therefore, passwords need to be changed periodically. If RHEL 8 does not limit
 the lifetime of passwords and force users to change their passwords, there is
-the risk that RHEL 8 passwords could be compromised."
+the risk that RHEL 8 passwords could be compromised.'
   desc 'check', 'Verify that RHEL 8 enforces a 60-day maximum password lifetime for new user
 accounts by running the following command:
 

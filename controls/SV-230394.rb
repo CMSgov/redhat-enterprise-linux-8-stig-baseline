@@ -1,9 +1,7 @@
-# frozen_string_literal: true
-
 control 'SV-230394' do
-  title "RHEL 8 must label all off-loaded audit logs before sending them to the
-central log server."
-  desc "Without establishing what type of events occurred, the source of
+  title 'RHEL 8 must label all off-loaded audit logs before sending them to the
+central log server.'
+  desc 'Without establishing what type of events occurred, the source of
 events, where events occurred, and the outcome of events, it would be difficult
 to establish, correlate, and investigate the events leading up to an outage or
 attack.
@@ -19,7 +17,7 @@ difficult.
 
     When audit logs are not labeled before they are sent to a central log
 server, the audit data will not be able to be analyzed and tied back to the
-correct system."
+correct system.'
   desc 'check', 'Verify the RHEL 8 Audit Daemon is configured to label all off-loaded audit
 logs, with the following command:
 

@@ -1,31 +1,11 @@
-# frozen_string_literal: true
-
 control 'SV-230221' do
   title 'RHEL 8 must be a vendor-supported release.'
+  desc 'An operating system release is considered "supported" if the vendor continues to provide security patches for the product. With an unsupported release, it will not be possible to resolve security issues discovered in the system software.
 
-  desc 'An operating system release is considered "supported" if the vendor '\
-  'continues to provide security patches for the product. With an '\
-  'unsupported release, it will not be possible to resolve security '\
-  'issues discovered in the system software.
-
-  Red Hat offers the Extended Update Support (EUS) add-on to a Red Hat '\
-  'Enterprise Linux subscription, for a fee, for those customers who wish to '\
-  'standardize on a specific minor release for an extended period. The RHEL 8 '\
-  'minor releases eligible for EUS are 8.1, 8.2, 8.4, 8.6, and 8.8. Each RHEL 8 '\
-  'EUS stream is available for 24 months from the availability of the minor '\
-  'release. RHEL 8.10 will be the final minor release overall. For more details '\
-  'on the Red Hat Enterprise Linux Life Cycle  visit '\
-  'https://access.redhat.com/support/policy/updates/errata/.
+  Red Hat offers the Extended Update Support (EUS) add-on to a Red Hat Enterprise Linux subscription, for a fee, for those customers who wish to standardize on a specific minor release for an extended period. The RHEL 8 minor releases eligible for EUS are 8.1, 8.2, 8.4, 8.6, and 8.8. Each RHEL 8 EUS stream is available for 24 months from the availability of the minor release. RHEL 8.10 will be the final minor release overall. For more details on the Red Hat Enterprise Linux Life Cycle  visit https://access.redhat.com/support/policy/updates/errata/.
 
   Note: The life-cycle time spans and dates are subject to adjustment.'
-
-  desc 'check', "Verify the version of the operating system is vendor supported.
-
-  Note: The lifecycle time spans and dates are subject to adjustment.
-
-  Check the version of the operating system with the following command:"
-
-  desc 'check', "Verify the version of the operating system is vendor supported.
+  desc 'check', 'Verify the version of the operating system is vendor supported.
 
   Note: The lifecycle time spans and dates are subject to adjustment.
 
@@ -50,12 +30,9 @@ control 'SV-230221' do
 
   Current End of Maintenance Support for RHEL 8.10 is 31 May 2029.
 
-  If the release is not supported by the vendor, this is a finding."
-
+  If the release is not supported by the vendor, this is a finding.'
   desc 'fix', 'Upgrade to a supported version of RHEL 8.'
-
   impact 0.7
-  ref 'DPMS Target Red Hat Enterprise Linux 8'
   tag severity: 'high'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-230221'

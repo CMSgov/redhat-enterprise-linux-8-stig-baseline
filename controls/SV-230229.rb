@@ -1,13 +1,7 @@
-# frozen_string_literal: true
-
-# ALL: reviewed
-# Tested, @R1V12
-
 control 'SV-230229' do
-  title "RHEL 8, for PKI-based authentication, must validate certificates by
+  title 'RHEL 8, for PKI-based authentication, must validate certificates by
     constructing a certification path (which includes status information) to an
-    accepted trust anchor."
-
+    accepted trust anchor.'
   desc "Without path validation, an informed trust decision by the relying
     party cannot be made when presented with any certificate not already explicitly
     trusted.
@@ -58,7 +52,6 @@ Obtain a valid copy of the DoD root CA file from the PKI CA certificate bundle a
 
 /etc/sssd/pki/sssd_auth_ca_db.pem"
   impact 0.5
-
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000066-GPOS-00034'
   tag satisfies: ['SRG-OS-000066-GPOS-00034', 'SRG-OS-000384-GPOS-00167']

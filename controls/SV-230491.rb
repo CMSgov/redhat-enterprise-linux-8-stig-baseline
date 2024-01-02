@@ -1,9 +1,7 @@
-# frozen_string_literal: true
-
 control 'SV-230491' do
-  title "RHEL 8 must enable mitigations against processor-based
-vulnerabilities."
-  desc "It is detrimental for operating systems to provide, or install by
+  title 'RHEL 8 must enable mitigations against processor-based
+vulnerabilities.'
+  desc 'It is detrimental for operating systems to provide, or install by
 default, functionality exceeding requirements or mission objectives. These
 unnecessary capabilities or services are often overlooked and therefore may
 remain unsecured. They increase the risk to the platform by providing
@@ -25,7 +23,7 @@ disabled is to not have the capability installed.
 
     Kernel page-table isolation is a kernel feature that mitigates the Meltdown
 security vulnerability and hardens the kernel against attempts to bypass kernel
-address space layout randomization (KASLR)."
+address space layout randomization (KASLR).'
   desc 'check', 'Verify RHEL 8 enables kernel page-table isolation with the following commands:
 
 $ sudo grub2-editenv list | grep pti

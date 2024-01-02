@@ -1,9 +1,7 @@
-# frozen_string_literal: true
-
 control 'SV-230402' do
-  title "RHEL 8 audit system must protect auditing rules from unauthorized
-change."
-  desc "Unauthorized disclosure of audit records can reveal system and
+  title 'RHEL 8 audit system must protect auditing rules from unauthorized
+change.'
+  desc 'Unauthorized disclosure of audit records can reveal system and
 configuration data to attackers, thus compromising its confidentiality.
 
     Audit information includes all information (e.g., audit records, audit
@@ -12,7 +10,7 @@ settings, audit reports) needed to successfully audit RHEL 8 system activity.
     In immutable mode, unauthorized users cannot execute changes to the audit
 system to potentially hide malicious activity and then put the audit rules
 back.  A system reboot would be noticeable and a system administrator could
-then investigate the unauthorized changes."
+then investigate the unauthorized changes.'
   desc 'check', 'Verify the audit system prevents unauthorized changes with the following
 command:
 

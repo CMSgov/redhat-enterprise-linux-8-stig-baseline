@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 control 'SV-230339' do
   title 'RHEL 8 must ensure account lockouts persist.'
   desc 'By limiting the number of failed logon attempts, the risk of

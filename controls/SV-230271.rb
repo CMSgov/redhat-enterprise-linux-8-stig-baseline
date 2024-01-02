@@ -1,13 +1,11 @@
-# frozen_string_literal: true
-
 control 'SV-230271' do
-  title "RHEL 8 must require users to provide a password for privilege
-escalation."
-  desc "Without reauthentication, users may access resources or perform tasks
+  title 'RHEL 8 must require users to provide a password for privilege
+escalation.'
+  desc 'Without reauthentication, users may access resources or perform tasks
 for which they do not have authorization.
 
     When operating systems provide the capability to escalate a functional
-capability, it is critical the user reauthenticate."
+capability, it is critical the user reauthenticate.'
   desc 'check', 'Verify that "/etc/sudoers" has no occurrences of "NOPASSWD".
 
     Check that the "/etc/sudoers" file has no occurrences of "NOPASSWD" by

@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 control 'SV-256973' do
   title 'RHEL 8 must ensure cryptographic verification of vendor software packages.'
   desc 'Cryptographic verification of vendor software packages ensures that all software packages are obtained from a valid source and protects against spoofing that could lead to installation of malware on the system. Red Hat cryptographically signs all software packages, which includes updates, with a GPG key to verify that they are valid.'

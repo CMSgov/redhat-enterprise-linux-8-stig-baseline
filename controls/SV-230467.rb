@@ -1,9 +1,7 @@
-# frozen_string_literal: true
-
 control 'SV-230467' do
-  title "Successful/unsuccessful modifications to the lastlog file in RHEL 8
-must generate an audit record."
-  desc "Without the capability to generate audit records, it would be
+  title 'Successful/unsuccessful modifications to the lastlog file in RHEL 8
+must generate an audit record.'
+  desc 'Without the capability to generate audit records, it would be
 difficult to establish, correlate, and investigate the events relating to an
 incident or identify those responsible for one.
 
@@ -29,7 +27,7 @@ all direct access to the information system;
 
     3) All account creations, modifications, disabling, and terminations; and
 
-    4) All kernel module load, unload, and restart actions."
+    4) All kernel module load, unload, and restart actions.'
   desc 'check', 'Verify RHEL 8 generates an audit record when successful/unsuccessful
 modifications to the "lastlog" file by performing the following command to
 check the file system rules in "/etc/audit/audit.rules":
@@ -50,8 +48,7 @@ updating the following rules in the "/etc/audit/rules.d/audit.rules" file:
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000062-GPOS-00031'
-  tag satisfies: ['SRG-OS-000062-GPOS-00031', 'SRG-OS-000037-GPOS-00015', 'SRG-OS-000042-GPOS-00020',
-                  'SRG-OS-000062-GPOS-00031', 'SRG-OS-000392-GPOS-00172', 'SRG-OS-000462-GPOS-00206', 'SRG-OS-000471-GPOS-00215', 'SRG-OS-000473-GPOS-00218']
+  tag satisfies: ['SRG-OS-000062-GPOS-00031', 'SRG-OS-000037-GPOS-00015', 'SRG-OS-000042-GPOS-00020', 'SRG-OS-000062-GPOS-00031', 'SRG-OS-000392-GPOS-00172', 'SRG-OS-000462-GPOS-00206', 'SRG-OS-000471-GPOS-00215', 'SRG-OS-000473-GPOS-00218']
   tag gid: 'V-230467'
   tag rid: 'SV-230467r627750_rule'
   tag stig_id: 'RHEL-08-030600'

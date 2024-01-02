@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 control 'SV-237641' do
   title 'RHEL 8 must restrict privilege elevation to authorized personnel.'
   desc 'The sudo command allows a user to execute programs with elevated
@@ -13,9 +11,9 @@ $ sudo grep -iw 'ALL' /etc/sudoers /etc/sudoers.d/*
 If the either of the following entries are returned, this is a finding:
 ALL     ALL=(ALL) ALL
 ALL     ALL=(ALL:ALL) ALL)
-  desc 'fix', "Remove the following entries from the sudoers file:
+  desc 'fix', 'Remove the following entries from the sudoers file:
 ALL     ALL=(ALL) ALL
-ALL     ALL=(ALL:ALL) ALL"
+ALL     ALL=(ALL:ALL) ALL'
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'

@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 control 'SV-230455' do
   title 'Successful/unsuccessful uses of the chown, fchown, fchownat, and lchown system calls in RHEL 8 must generate an audit record.'
   desc 'Without generating audit records that are specific to the security and mission needs of the organization, it would be difficult to establish, correlate, and investigate the events relating to an incident or identify those responsible for one.

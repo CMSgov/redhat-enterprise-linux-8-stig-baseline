@@ -1,8 +1,6 @@
-# frozen_string_literal: true
-
 control 'SV-230282' do
   title 'RHEL 8 must enable the SELinux targeted policy.'
-  desc "Without verification of the security functions, security functions may
+  desc 'Without verification of the security functions, security functions may
 not operate correctly and the failure may go unnoticed. Security function is
 defined as the hardware, software, and/or firmware of the information system
 responsible for enforcing the system security policy and supporting the
@@ -13,7 +11,7 @@ events to be audited, and setting intrusion detection parameters.
 
     This requirement applies to operating systems performing security function
 verification/testing and/or systems and environments that require this
-functionality."
+functionality.'
   desc 'check', %q(Ensure the operating system verifies correct operation of all security
 functions.
 

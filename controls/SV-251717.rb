@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 control 'SV-251717' do
   title 'RHEL 8 must be configured in the system-auth file to prohibit password reuse for a minimum of five generations.'
   desc 'Password complexity, or strength, is a measure of the effectiveness of a password in resisting attempts at guessing and brute-force attacks. If the information system or application allows the user to reuse their password consecutively when that password has exceeded its defined lifetime, the end result is a password that is not changed per policy requirements.

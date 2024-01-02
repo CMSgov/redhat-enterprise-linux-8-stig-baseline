@@ -1,11 +1,9 @@
-# frozen_string_literal: true
-
 control 'SV-230382' do
-  title "RHEL 8 must display the date and time of the last successful account
-logon upon an SSH logon."
-  desc "Providing users with feedback on when account accesses via SSH last
+  title 'RHEL 8 must display the date and time of the last successful account
+logon upon an SSH logon.'
+  desc 'Providing users with feedback on when account accesses via SSH last
 occurred facilitates user recognition and reporting of unauthorized account
-use."
+use.'
   desc 'check', 'Verify SSH provides users with feedback on when account accesses last occurred with the following command:
 
 $ sudo grep -ir printlastlog /etc/ssh/sshd_config*

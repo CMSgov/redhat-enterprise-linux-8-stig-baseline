@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 control 'SV-230518' do
   title 'RHEL 8 must mount /var/log/audit with the nosuid option.'
   desc 'The organization must identify authorized software programs and permit

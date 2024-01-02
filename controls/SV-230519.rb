@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 control 'SV-230519' do
   title 'RHEL 8 must mount /var/log/audit with the noexec option.'
   desc 'The organization must identify authorized software programs and permit

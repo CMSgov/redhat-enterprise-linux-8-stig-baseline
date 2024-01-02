@@ -1,9 +1,7 @@
-# frozen_string_literal: true
-
 control 'SV-230468' do
-  title "RHEL 8 must enable auditing of processes that start prior to the audit
-daemon."
-  desc "Without the capability to generate audit records, it would be
+  title 'RHEL 8 must enable auditing of processes that start prior to the audit
+daemon.'
+  desc 'Without the capability to generate audit records, it would be
 difficult to establish, correlate, and investigate the events relating to an
 incident or identify those responsible for one.
 
@@ -34,7 +32,7 @@ all direct access to the information system;
 
     3) All account creations, modifications, disabling, and terminations; and
 
-    4) All kernel module load, unload, and restart actions."
+    4) All kernel module load, unload, and restart actions.'
   desc 'check', 'Verify RHEL 8 enables auditing of processes that start prior to the audit daemon with the following commands:
 
 $ sudo grub2-editenv list | grep audit
@@ -62,8 +60,7 @@ configuration survives kernel updates:
   impact 0.3
   tag severity: 'low'
   tag gtitle: 'SRG-OS-000062-GPOS-00031'
-  tag satisfies: ['SRG-OS-000062-GPOS-00031', 'SRG-OS-000037-GPOS-00015', 'SRG-OS-000042-GPOS-00020',
-                  'SRG-OS-000062-GPOS-00031', 'SRG-OS-000392-GPOS-00172', 'SRG-OS-000462-GPOS-00206', 'SRG-OS-000471-GPOS-00215', 'SRG-OS-000473-GPOS-00218']
+  tag satisfies: ['SRG-OS-000062-GPOS-00031', 'SRG-OS-000037-GPOS-00015', 'SRG-OS-000042-GPOS-00020', 'SRG-OS-000062-GPOS-00031', 'SRG-OS-000392-GPOS-00172', 'SRG-OS-000462-GPOS-00206', 'SRG-OS-000471-GPOS-00215', 'SRG-OS-000473-GPOS-00218']
   tag gid: 'V-230468'
   tag rid: 'SV-230468r792904_rule'
   tag stig_id: 'RHEL-08-030601'

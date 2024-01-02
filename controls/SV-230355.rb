@@ -1,9 +1,7 @@
-# frozen_string_literal: true
-
 control 'SV-230355' do
-  title "RHEL 8 must map the authenticated identity to the user or group
-account for PKI-based authentication."
-  desc "Without mapping the certificate used to authenticate to the user
+  title 'RHEL 8 must map the authenticated identity to the user or group
+account for PKI-based authentication.'
+  desc 'Without mapping the certificate used to authenticate to the user
 account, the ability to determine the identity of the individual user or group
 will not be available for forensic analysis.
 
@@ -11,14 +9,8 @@ will not be available for forensic analysis.
 for RHEL 8. For the purposes of this requirement, the check and fix will
 account for Active Directory mapping. Some of the other possible methods
 include joining the system to a domain and utilizing a Red Hat idM server, or a
-<<<<<<< HEAD
-local system mapping, where the system is not part of a domain."
-  desc 'check', 'Verify the certificate of the user or group is mapped to the corresponding
-user or group in the "sssd.conf" file with the following command:
-=======
 local system mapping, where the system is not part of a domain.'
   desc 'check', 'Verify the certificate of the user or group is mapped to the corresponding user or group in the "sssd.conf" file with the following command:
->>>>>>> 87a05e3c31795238f35c7bb155a9770db9a9c15c
 
 Note: If the System Administrator demonstrates the use of an approved alternate multifactor authentication method, this requirement is not applicable.
 

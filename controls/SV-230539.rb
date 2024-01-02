@@ -1,8 +1,6 @@
-# frozen_string_literal: true
-
 control 'SV-230539' do
   title 'RHEL 8 must not forward IPv6 source-routed packets by default.'
-  desc "Source-routed packets allow the source of the packet to suggest that routers forward the packet along a different path than configured on the router, which can be used to bypass network security measures. This requirement applies only to the forwarding of source-routed traffic, such as when forwarding is enabled and the system is functioning as a router.
+  desc 'Source-routed packets allow the source of the packet to suggest that routers forward the packet along a different path than configured on the router, which can be used to bypass network security measures. This requirement applies only to the forwarding of source-routed traffic, such as when forwarding is enabled and the system is functioning as a router.
 
 The sysctl --system command will load settings from all system configuration files. All configuration files are sorted by their filename in lexicographic order, regardless of which of the directories they reside in. If multiple files specify the same option, the entry in the file with the lexicographically latest name will take precedence. Files are read from directories in the following list from top to bottom. Once a file of a given filename is loaded, any file of the same name in subsequent directories is ignored.
 /etc/sysctl.d/*.conf
@@ -10,7 +8,7 @@ The sysctl --system command will load settings from all system configuration fil
 /usr/local/lib/sysctl.d/*.conf
 /usr/lib/sysctl.d/*.conf
 /lib/sysctl.d/*.conf
-/etc/sysctl.conf"
+/etc/sysctl.conf'
   desc 'check', 'Verify RHEL 8 does not accept IPv6 source-routed packets by default.
 
 Note: If IPv6 is disabled on the system, this requirement is Not Applicable.

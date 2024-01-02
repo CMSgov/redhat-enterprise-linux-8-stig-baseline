@@ -1,8 +1,6 @@
-# frozen_string_literal: true
-
 control 'SV-230395' do
   title 'RHEL 8 must resolve audit information before writing to disk.'
-  desc "Without establishing what type of events occurred, the source of
+  desc 'Without establishing what type of events occurred, the source of
 events, where events occurred, and the outcome of events, it would be difficult
 to establish, correlate, and investigate the events leading up to an outage or
 attack.
@@ -14,7 +12,7 @@ filenames involved, and access control or flow control rules invoked.
 
     Enriched logging aids in making sense of who, what, and when events occur
 on a system.  Without this, determining root cause of an event will be much
-more difficult."
+more difficult.'
   desc 'check', 'Verify the RHEL 8 Audit Daemon is configured to resolve audit information
 before writing to disk, with the following command:
 

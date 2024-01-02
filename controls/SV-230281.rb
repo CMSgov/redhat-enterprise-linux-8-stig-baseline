@@ -1,12 +1,10 @@
-# frozen_string_literal: true
-
 control 'SV-230281' do
-  title "YUM must remove all software components after updated versions have
-been installed on RHEL 8."
-  desc "Previous versions of software components that are not removed from the
+  title 'YUM must remove all software components after updated versions have
+been installed on RHEL 8.'
+  desc 'Previous versions of software components that are not removed from the
 information system after updates have been installed may be exploited by
 adversaries. Some information technology products may remove older versions of
-software automatically from the information system."
+software automatically from the information system.'
   desc 'check', 'Verify the operating system removes all software components after updated
 versions have been installed.
 

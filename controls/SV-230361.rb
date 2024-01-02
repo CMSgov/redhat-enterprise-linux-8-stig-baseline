@@ -1,8 +1,6 @@
-# frozen_string_literal: true
-
 control 'SV-230361' do
-  title "RHEL 8 must require the maximum number of repeating characters be
-limited to three when passwords are changed."
+  title 'RHEL 8 must require the maximum number of repeating characters be
+limited to three when passwords are changed.'
   desc 'Use of a complex password helps to increase the time and resources
 required to compromise the password. Password complexity, or strength, is a
 measure of the effectiveness of a password in resisting attempts at guessing

@@ -1,8 +1,6 @@
-# frozen_string_literal: true
-
 control 'SV-230252' do
-  title "The RHEL 8 operating system must implement DoD-approved encryption to
-protect the confidentiality of SSH server connections."
+  title 'The RHEL 8 operating system must implement DoD-approved encryption to
+protect the confidentiality of SSH server connections.'
   desc 'Without cryptographic integrity protections, information can be
 altered by unauthorized users without detection.
 
@@ -40,8 +38,7 @@ A reboot is required for the changes to take effect.'
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000250-GPOS-00093'
-  tag satisfies: ['SRG-OS-000250-GPOS-00093', 'SRG-OS-000393-GPOS-00173', 'SRG-OS-000394-GPOS-00174',
-                  'SRG-OS-000125-GPOS-00065']
+  tag satisfies: ['SRG-OS-000250-GPOS-00093', 'SRG-OS-000393-GPOS-00173', 'SRG-OS-000394-GPOS-00174', 'SRG-OS-000125-GPOS-00065']
   tag gid: 'V-230252'
   tag rid: 'SV-230252r917873_rule'
   tag stig_id: 'RHEL-08-010291'

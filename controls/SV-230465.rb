@@ -1,8 +1,6 @@
-# frozen_string_literal: true
-
 control 'SV-230465' do
-  title "Successful/unsuccessful uses of the kmod command in RHEL 8 must
-generate an audit record."
+  title 'Successful/unsuccessful uses of the kmod command in RHEL 8 must
+generate an audit record.'
   desc 'Without the capability to generate audit records, it would be
 difficult to establish, correlate, and investigate the events relating to an
 incident or identify those responsible for one.
@@ -52,8 +50,7 @@ is a finding.'
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000062-GPOS-00031'
-  tag satisfies: ['SRG-OS-000062-GPOS-00031', 'SRG-OS-000037-GPOS-00015', 'SRG-OS-000042-GPOS-00020',
-                  'SRG-OS-000062-GPOS-00031', 'SRG-OS-000392-GPOS-00172', 'SRG-OS-000462-GPOS-00206', 'SRG-OS-000471-GPOS-00215', 'SRG-OS-000471-GPOS-00216', 'SRG-OS-000477-GPOS-00222']
+  tag satisfies: ['SRG-OS-000062-GPOS-00031', 'SRG-OS-000037-GPOS-00015', 'SRG-OS-000042-GPOS-00020', 'SRG-OS-000062-GPOS-00031', 'SRG-OS-000392-GPOS-00172', 'SRG-OS-000462-GPOS-00206', 'SRG-OS-000471-GPOS-00215', 'SRG-OS-000471-GPOS-00216', 'SRG-OS-000477-GPOS-00222']
   tag gid: 'V-230465'
   tag rid: 'SV-230465r627750_rule'
   tag stig_id: 'RHEL-08-030580'

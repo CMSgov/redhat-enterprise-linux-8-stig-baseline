@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 control 'SV-230270' do
   title 'RHEL 8 must prevent kernel profiling by unprivileged users.'
   desc 'Preventing unauthorized information transfers mitigates the risk of information, including encrypted representations of information, produced by the actions of prior users/roles (or the actions of processes acting on behalf of prior users/roles) from being available to any current users/roles (or current processes) that obtain access to shared system resources (e.g., registers, main memory, hard disks) after those resources have been released back to information systems. The control of information in shared resources is also commonly referred to as object reuse and residual information protection.

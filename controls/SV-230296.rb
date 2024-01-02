@@ -1,12 +1,10 @@
-# frozen_string_literal: true
-
 control 'SV-230296' do
-  title "RHEL 8 must not permit direct logons to the root account using remote
-access via SSH."
-  desc "Even though the communications channel may be encrypted, an additional
+  title 'RHEL 8 must not permit direct logons to the root account using remote
+access via SSH.'
+  desc 'Even though the communications channel may be encrypted, an additional
 layer of security is gained by extending the policy of not logging on directly
 as root. In addition, logging on with a user-specific account provides
-individual accountability of actions performed on the system."
+individual accountability of actions performed on the system.'
   desc 'check', 'Verify remote access using SSH prevents users from logging on directly as "root".
 
 Check that SSH prevents users from logging on directly as "root" with the following command:

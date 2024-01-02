@@ -1,10 +1,6 @@
-# frozen_string_literal: true
-
-# TODO: Add this to the course content as a teaching example
-
 control 'SV-230357' do
-  title "RHEL 8 must enforce password complexity by requiring that at least one
-uppercase character be used."
+  title 'RHEL 8 must enforce password complexity by requiring that at least one
+uppercase character be used.'
   desc 'Use of a complex password helps to increase the time and resources
 required to compromise the password. Password complexity, or strength, is a
 measure of the effectiveness of a password in resisting attempts at guessing
@@ -35,7 +31,6 @@ ucredit = -1
 
 Remove any configurations that conflict with the above value.'
   impact 0.5
-
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000069-GPOS-00037'
   tag gid: 'V-230357'
@@ -63,47 +58,3 @@ Remove any configurations that conflict with the above value.'
     end
   end
 end
-
-## More Elegant but complicated Approach
-#
-#   describe 'pwquality.conf:' do
-#     let(:config) { parse_config_file('/etc/security/pwquality.conf', multiple_values: true) }
-#     let(:setting) { 'ucredit' }
-#     let(:values) { Array(config.params[setting]) }
-#     let(:count) { values.length }
-
-#     it 'only sets `ucredit` once' do
-#       expect(count).to eq(1), 'ucredit is not set or set multiple times in pwquality.conf'
-#     end
-
-#     context 'when `ucredit` is set,' do
-#       before { raise 'ucredit is not configured or commented out in pwquality.conf' if count.zero? }
-
-#       it 'does not set `ucredit` to a positive value' do
-#         expect(values.first.to_i).to be < 0, 'ucredit is not set to a negative value in pwquality.conf'
-#       end
-#     end
-#   end
-# end
-
-# - The Array() function is used to ensure that values is always an array.
-#   If config.params[setting] is nil, Array(nil) will return an empty array.
-#
-# - If config.params[setting] is a single value, Array(value) will return an array with
-#   that value as its only element.
-#
-# - The count variable is set to the length of the values array. If ucredit is not set,
-#   values will be an empty array and count will be 0.
-#
-# - The values.first.to_i in the last it block is used to convert the first value of
-#   ucredit to an integer before comparing it to 0. If ucredit is not set, values.first
-#   will be nil, and nil.to_i will return 0, causing the test to fail.
-
-# - The & operator is used to safely call the length and first methods on value.
-#   If value is nil, &.length and &.first will also return nil, and the tests will
-#   fail with the message 'ucredit is not set in pwquality.conf'.
-#
-# - The to_i method is called on value&.first to convert the first value of ucredit
-#   to an integer before comparing it to 0. If ucredit is not set, value&.first will
-#   be nil, and nil.to_i will return 0, causing the test to fail.
-#

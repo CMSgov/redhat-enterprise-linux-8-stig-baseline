@@ -1,8 +1,6 @@
-# frozen_string_literal: true
-
 control 'SV-230279' do
   title 'RHEL 8 must clear SLUB/SLAB objects to prevent use-after-free attacks.'
-  desc "Some adversaries launch attacks with the intent of executing code in
+  desc 'Some adversaries launch attacks with the intent of executing code in
 non-executable regions of memory or in memory locations that are prohibited.
 Security safeguards employed to protect memory include, for example, data
 execution prevention and address space layout randomization. Data execution
@@ -16,7 +14,7 @@ vulnerabilities at little performance cost. Also prevents leak of data and
 detection of corrupted memory.
 
     SLAB objects are blocks of physically-contiguous memory.  SLUB is the
-unqueued SLAB allocator."
+unqueued SLAB allocator.'
   desc 'check', 'Verify that GRUB 2 is configured to enable poisoning of SLUB/SLAB objects to mitigate use-after-free vulnerabilities with the following commands:
 
 Check that the current GRUB 2 configuration has poisoning of SLUB/SLAB objects enabled:

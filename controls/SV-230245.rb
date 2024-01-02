@@ -1,8 +1,6 @@
-# frozen_string_literal: true
-
 control 'SV-230245' do
-  title "The RHEL 8 /var/log/messages file must have mode 0640 or less
-permissive."
+  title 'The RHEL 8 /var/log/messages file must have mode 0640 or less
+permissive.'
   desc "Only authorized personnel should be aware of errors and the details of
 the errors. Error messages are an indicator of an organization's operational
 state or can identify the RHEL 8 system or platform. Additionally, Personally

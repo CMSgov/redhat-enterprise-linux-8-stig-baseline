@@ -1,12 +1,10 @@
-# frozen_string_literal: true
-
 control 'SV-230272' do
   title 'RHEL 8 must require users to reauthenticate for privilege escalation.'
-  desc "Without reauthentication, users may access resources or perform tasks
+  desc 'Without reauthentication, users may access resources or perform tasks
 for which they do not have authorization.
 
     When operating systems provide the capability to escalate a functional
-capability, it is critical the user reauthenticate."
+capability, it is critical the user reauthenticate.'
   desc 'check', 'Verify that "/etc/sudoers" has no occurrences of "!authenticate".
 
     Check that the "/etc/sudoers" file has no occurrences of

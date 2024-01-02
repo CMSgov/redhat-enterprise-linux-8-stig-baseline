@@ -1,8 +1,6 @@
-# frozen_string_literal: true
-
 control 'SV-230340' do
-  title "RHEL 8 must prevent system messages from being presented when three
-unsuccessful logon attempts occur."
+  title 'RHEL 8 must prevent system messages from being presented when three
+unsuccessful logon attempts occur.'
   desc 'By limiting the number of failed logon attempts, the risk of
 unauthorized system access via user password guessing, otherwise known as
 brute-force attacks, is reduced. Limits are imposed by locking the account.

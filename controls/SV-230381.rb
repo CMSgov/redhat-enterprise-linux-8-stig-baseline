@@ -1,10 +1,8 @@
-# frozen_string_literal: true
-
 control 'SV-230381' do
-  title "RHEL 8 must display the date and time of the last successful account
-logon upon logon."
-  desc "Providing users with feedback on when account accesses last occurred
-facilitates user recognition and reporting of unauthorized account use."
+  title 'RHEL 8 must display the date and time of the last successful account
+logon upon logon.'
+  desc 'Providing users with feedback on when account accesses last occurred
+facilitates user recognition and reporting of unauthorized account use.'
   desc 'check', 'Verify users are provided with feedback on when account accesses last
 occurred with the following command:
 
@@ -14,7 +12,6 @@ occurred with the following command:
 
     If "pam_lastlog" is missing from "/etc/pam.d/postlogin" file, or the
 silent option is present, this is a finding.'
-
   desc 'fix', 'Configure the operating system to provide users with feedback on when
 account accesses last occurred by setting the required configuration options in
 "/etc/pam.d/postlogin".

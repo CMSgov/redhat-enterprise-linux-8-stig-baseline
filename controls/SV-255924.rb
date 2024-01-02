@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 control 'SV-255924' do
   title 'RHEL 8 SSH server must be configured to use only FIPS-validated key exchange algorithms.'
   desc 'Without cryptographic integrity protections provided by FIPS-validated cryptographic algorithms, information can be viewed and altered by unauthorized users without detection.

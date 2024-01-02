@@ -1,8 +1,6 @@
-# frozen_string_literal: true
-
 control 'SV-230472' do
   title 'RHEL 8 audit tools must have a mode of 0755 or less permissive.'
-  desc "Protecting audit information also includes identifying and protecting
+  desc 'Protecting audit information also includes identifying and protecting
 the tools used to view and manipulate log data. Therefore, protecting audit
 tools is necessary to prevent unauthorized operation on audit information.
 
@@ -14,7 +12,7 @@ regarding the access to audit tools.
     Audit tools include, but are not limited to, vendor-provided and open
 source audit tools needed to successfully view and manipulate audit information
 system activity and records. Audit tools include custom queries and report
-generators."
+generators.'
   desc 'check', 'Verify the audit tools are protected from unauthorized access, deletion, or
 modification by checking the permissive mode.
 

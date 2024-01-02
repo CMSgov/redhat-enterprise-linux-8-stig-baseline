@@ -1,8 +1,6 @@
-# frozen_string_literal: true
-
 control 'SV-230498' do
   title 'RHEL 8 must disable mounting of cramfs.'
-  desc "It is detrimental for operating systems to provide, or install by
+  desc 'It is detrimental for operating systems to provide, or install by
 default, functionality exceeding requirements or mission objectives. These
 unnecessary capabilities or services are often overlooked and therefore may
 remain unsecured. They increase the risk to the platform by providing
@@ -13,7 +11,7 @@ surface of the server.
 
     Compressed ROM/RAM file system (or cramfs) is a read-only file system
 designed for simplicity and space-efficiency.  It is mainly used in embedded
-and small-footprint systems."
+and small-footprint systems.'
   desc 'check', 'Verify the operating system disables the ability to load the cramfs kernel module.
 
 $ sudo grep -r cramfs /etc/modprobe.d/* | grep "/bin/true"

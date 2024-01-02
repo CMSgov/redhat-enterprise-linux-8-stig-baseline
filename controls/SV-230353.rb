@@ -1,9 +1,7 @@
-# frozen_string_literal: true
-
 control 'SV-230353' do
-  title "RHEL 8 must automatically lock command line user sessions after 15
-minutes of inactivity."
-  desc "Terminating an idle session within a short time period reduces the
+  title 'RHEL 8 must automatically lock command line user sessions after 15
+minutes of inactivity.'
+  desc 'Terminating an idle session within a short time period reduces the
 window of opportunity for unauthorized personnel to take control of a
 management session enabled on the console or console port that has been left
 unattended. In addition, quickly terminating an idle session will also free up
@@ -15,7 +13,7 @@ the operating system level and de-allocating networking assignments at the
 application level if multiple application sessions are using a single operating
 system-level network connection. This does not mean the operating system
 terminates all sessions or network access; it only ends the inactive session
-and releases the resources associated with that session."
+and releases the resources associated with that session.'
   desc 'check', 'Verify the operating system initiates a session lock after 15 minutes of
 inactivity.
 

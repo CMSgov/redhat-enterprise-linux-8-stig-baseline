@@ -1,8 +1,6 @@
-# frozen_string_literal: true
-
 control 'SV-230430' do
-  title "Successful/unsuccessful uses of setfiles in RHEL 8 must generate an
-audit record."
+  title 'Successful/unsuccessful uses of setfiles in RHEL 8 must generate an
+audit record.'
   desc 'Reconstruction of harmful events or forensic analysis is not possible
 if audit records do not contain enough information.
 
@@ -41,8 +39,7 @@ auid!=unset -k privileged-unix-update
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000062-GPOS-00031'
-  tag satisfies: ['SRG-OS-000062-GPOS-00031', 'SRG-OS-000037-GPOS-00015', 'SRG-OS-000042-GPOS-00020',
-                  'SRG-OS-000062-GPOS-00031', 'SRG-OS-000392-GPOS-00172', 'SRG-OS-000462-GPOS-00206', 'SRG-OS-000471-GPOS-00215']
+  tag satisfies: ['SRG-OS-000062-GPOS-00031', 'SRG-OS-000037-GPOS-00015', 'SRG-OS-000042-GPOS-00020', 'SRG-OS-000062-GPOS-00031', 'SRG-OS-000392-GPOS-00172', 'SRG-OS-000462-GPOS-00206', 'SRG-OS-000471-GPOS-00215']
   tag gid: 'V-230430'
   tag rid: 'SV-230430r627750_rule'
   tag stig_id: 'RHEL-08-030314'

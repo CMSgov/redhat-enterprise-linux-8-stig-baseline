@@ -1,8 +1,6 @@
-# frozen_string_literal: true
-
 control 'SV-230494' do
   title 'RHEL 8 must disable the asynchronous transfer mode (ATM) protocol.'
-  desc "It is detrimental for operating systems to provide, or install by
+  desc 'It is detrimental for operating systems to provide, or install by
 default, functionality exceeding requirements or mission objectives. These
 unnecessary capabilities or services are often overlooked and therefore may
 remain unsecured. They increase the risk to the platform by providing
@@ -13,7 +11,7 @@ additional attack vectors.
     The Asynchronous Transfer Mode (ATM) is a protocol operating on network,
 data link, and physical layers, based on virtual circuits and virtual paths.
 Disabling ATM protects the system against exploitation of any laws in its
-implementation."
+implementation.'
   desc 'check', 'Verify the operating system disables the ability to load the ATM protocol kernel module.
 
 $ sudo grep -r atm /etc/modprobe.d/* | grep "/bin/true"

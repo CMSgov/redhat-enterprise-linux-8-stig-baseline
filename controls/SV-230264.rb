@@ -1,12 +1,10 @@
-# frozen_string_literal: true
-
 control 'SV-230264' do
-  title "RHEL 8 must prevent the installation of software, patches, service
+  title 'RHEL 8 must prevent the installation of software, patches, service
 packs, device drivers, or operating system components from a repository without
 verification they have been digitally signed using a certificate that is issued
 by a Certificate Authority (CA) that is recognized and approved by the
-organization."
-  desc "Changes to any software components can have significant effects on the
+organization.'
+  desc 'Changes to any software components can have significant effects on the
 overall security of the operating system. This requirement ensures the software
 has not been tampered with and that it has been provided by a trusted vendor.
 
@@ -20,7 +18,7 @@ software has not been tampered with and that it has been provided by a trusted
 vendor. Self-signed certificates are disallowed by this requirement. The
 operating system should not have to verify the software again. This requirement
 does not mandate DoD certificates for this purpose; however, the certificate
-used to verify the software must be from an approved CA."
+used to verify the software must be from an approved CA.'
   desc 'check', %q(Verify the operating system prevents the installation of patches, service packs, device drivers, or operating system components from a repository without verification that they have been digitally signed using a certificate that is recognized and approved by the organization.
 
 Check that YUM verifies the signature of packages from a repository prior to install with the following command:

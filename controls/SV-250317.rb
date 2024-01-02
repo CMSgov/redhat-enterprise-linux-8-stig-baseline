@@ -1,9 +1,6 @@
-# frozen_string_literal: true
-
 control 'SV-250317' do
   title 'RHEL 8 must not enable IPv4 packet forwarding unless the system is a router.'
-
-  desc "Routing protocol daemons are typically used on routers to exchange network
+  desc 'Routing protocol daemons are typically used on routers to exchange network
     topology information with other routers. If this software is used when not required,
     system network information may be unnecessarily transmitted across the network.
 
@@ -21,8 +18,7 @@ control 'SV-250317' do
     /usr/local/lib/sysctl.d/*.conf
     /usr/lib/sysctl.d/*.conf
     /lib/sysctl.d/*.conf
-    /etc/sysctl.conf"
-
+    /etc/sysctl.conf'
   desc 'check', 'Verify RHEL 8 is not performing IPv4 packet forwarding, unless the system
     is a router.
 
@@ -44,7 +40,6 @@ control 'SV-250317' do
     If "net.ipv4.conf.all.forwarding" is not set to "0", is missing or commented out, this is a finding.
 
     If conflicting results are returned, this is a finding.'
-
   desc 'fix', 'Configure RHEL 8 to not allow IPv4 packet forwarding, unless the system is a router.
 
     Add or edit the following line in a system configuration file, in the "/etc/sysctl.d/" directory:
@@ -62,7 +57,6 @@ control 'SV-250317' do
     Load settings from all system configuration files with the following command:
 
     $ sudo sysctl --system'
-
   impact 0.5
   tag check_id: 'C-53751r833382_chk'
   tag severity: 'medium'

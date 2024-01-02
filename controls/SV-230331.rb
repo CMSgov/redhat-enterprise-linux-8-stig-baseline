@@ -1,9 +1,7 @@
-# frozen_string_literal: true
-
 control 'SV-230331' do
-  title "RHEL 8 temporary user accounts must be provisioned with an expiration
-time of 72 hours or less."
-  desc "If temporary user accounts remain active when no longer needed or for
+  title 'RHEL 8 temporary user accounts must be provisioned with an expiration
+time of 72 hours or less.'
+  desc 'If temporary user accounts remain active when no longer needed or for
 an excessive period, these accounts may be used to gain unauthorized access. To
 mitigate this risk, automated termination of all temporary accounts must be set
 upon account creation.
@@ -17,8 +15,8 @@ terminate these types of accounts after a DoD-defined time period of 72 hours.
 
     To address access requirements, many RHEL 8 operating systems may be
 integrated with enterprise-level authentication/access mechanisms that meet or
-exceed access control policy requirements."
-  desc 'check', "Verify that temporary accounts have been provisioned with an expiration
+exceed access control policy requirements.'
+  desc 'check', 'Verify that temporary accounts have been provisioned with an expiration
 date of 72 hours.
 
     For every existing temporary account, run the following command to obtain
@@ -29,7 +27,7 @@ its account expiration information.
     Verify each of these accounts has an expiration date set within 72 hours.
 
     If any temporary accounts have no expiration date set or do not expire
-within 72 hours, this is a finding."
+within 72 hours, this is a finding.'
   desc 'fix', 'If a temporary account must be created configure the system to terminate
 the account after a 72 hour time period with the following command to set an
 expiration date on it. Substitute "system_account_name" with the account to

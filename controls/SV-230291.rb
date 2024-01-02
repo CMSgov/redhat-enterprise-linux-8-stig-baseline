@@ -1,11 +1,9 @@
-# frozen_string_literal: true
-
 control 'SV-230291' do
-  title "The RHEL 8 SSH daemon must not allow Kerberos authentication, except
-to fulfill documented and validated mission requirements."
-  desc "Configuring these settings for the SSH daemon provides additional
+  title 'The RHEL 8 SSH daemon must not allow Kerberos authentication, except
+to fulfill documented and validated mission requirements.'
+  desc 'Configuring these settings for the SSH daemon provides additional
 assurance that remote logon via SSH will not use unused methods of
-authentication, even in the event of misconfiguration elsewhere."
+authentication, even in the event of misconfiguration elsewhere.'
   desc 'check', 'Verify the SSH daemon does not allow Kerberos authentication with the following command:
 
 $ sudo grep -ir KerberosAuthentication  /etc/ssh/sshd_config*

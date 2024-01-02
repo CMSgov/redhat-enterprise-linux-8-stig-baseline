@@ -1,8 +1,6 @@
-# frozen_string_literal: true
-
 control 'SV-230506' do
   title 'RHEL 8 wireless network adapters must be disabled.'
-  desc "Without protection of communications with wireless peripherals,
+  desc 'Without protection of communications with wireless peripherals,
 confidentiality and integrity may be compromised because unprotected
 communications can be intercepted and either read, altered, or used to
 compromise the RHEL 8 operating system.
@@ -26,8 +24,8 @@ physical barriers to wireless radio frequencies) or by logical means (e.g.,
 employing cryptographic techniques). If physical means of protection are
 employed, then logical means (cryptography) do not have to be employed, and
 vice versa. If the wireless peripheral is only passing telemetry data,
-encryption of the data may not be required."
-  desc 'check', "Verify there are no wireless interfaces configured on the system with the
+encryption of the data may not be required.'
+  desc 'check', 'Verify there are no wireless interfaces configured on the system with the
 following command:
 
     Note: This requirement is Not Applicable for systems that do not have
@@ -45,11 +43,11 @@ CONNECTION
     virbr0-nic                tun              unmanaged          --
 
     If a wireless interface is configured and has not been documented and
-approved by the Information System Security Officer (ISSO), this is a finding."
-  desc 'fix', "Configure the system to disable all wireless network interfaces with the
+approved by the Information System Security Officer (ISSO), this is a finding.'
+  desc 'fix', 'Configure the system to disable all wireless network interfaces with the
 following command:
 
-    $ sudo nmcli radio all off"
+    $ sudo nmcli radio all off'
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000299-GPOS-00117'

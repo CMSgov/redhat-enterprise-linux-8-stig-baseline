@@ -1,9 +1,7 @@
-# frozen_string_literal: true
-
 control 'SV-230527' do
-  title "RHEL 8 must force a frequent session key renegotiation for SSH
-connections to the server."
-  desc "Without protection of the transmitted information, confidentiality and
+  title 'RHEL 8 must force a frequent session key renegotiation for SSH
+connections to the server.'
+  desc 'Without protection of the transmitted information, confidentiality and
 integrity may be compromised because unprotected communications can be
 intercepted and either read or altered.
 
@@ -21,7 +19,7 @@ physical means of protection are employed, then logical means (cryptography) do
 not have to be employed, and vice versa.
 
     Session key regeneration limits the chances of a session key becoming
-compromised."
+compromised.'
   desc 'check', 'Verify the SSH server is configured to force frequent session key renegotiation with the following command:
 
 $ sudo grep -ir RekeyLimit /etc/ssh/sshd_config*

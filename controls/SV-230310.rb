@@ -1,14 +1,12 @@
-# frozen_string_literal: true
-
 control 'SV-230310' do
   title 'RHEL 8 must disable kernel dumps unless needed.'
-  desc "Kernel core dumps may contain the full contents of system memory at
+  desc 'Kernel core dumps may contain the full contents of system memory at
 the time of the crash. Kernel core dumps may consume a considerable amount of
 disk space and may result in denial of service by exhausting the available
 space on the target file system partition.
 
     RHEL 8 installation media presents the option to enable or disable the
-kdump service at the time of system installation."
+kdump service at the time of system installation.'
   desc 'check', 'Verify that kernel core dumps are disabled unless needed with the following
 command:
 

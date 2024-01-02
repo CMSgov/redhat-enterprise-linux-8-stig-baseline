@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 control 'SV-230505' do
   title 'A firewall must be installed on RHEL 8.'
   desc '"Firewalld" provides an easy and effective way to block/limit remote

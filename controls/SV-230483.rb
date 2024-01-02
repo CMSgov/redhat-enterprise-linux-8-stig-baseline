@@ -1,13 +1,9 @@
-# frozen_string_literal: true
-
 control 'SV-230483' do
-  title "RHEL 8 must take action when allocated audit record storage volume
-    reaches 75 percent of the repository maximum audit record storage capacity."
-
-  desc "If security personnel are not notified immediately when storage volume
+  title 'RHEL 8 must take action when allocated audit record storage volume
+    reaches 75 percent of the repository maximum audit record storage capacity.'
+  desc 'If security personnel are not notified immediately when storage volume
     reaches 75 percent utilization, they are unable to plan for audit record
-    storage capacity expansion."
-
+    storage capacity expansion.'
   desc 'check', 'Verify RHEL 8 takes action when allocated audit record storage
     volume reaches 75 percent of the repository maximum audit record storage
     capacity with the following commands:
@@ -22,18 +18,15 @@ control 'SV-230483' do
 
     If there is no evidence that real-time alerts are configured on the system,
     this is a finding.'
-
-  desc 'fix', "Configure the operating system to initiate an action to notify the
+  desc 'fix', 'Configure the operating system to initiate an action to notify the
     SA and ISSO (at a minimum) when allocated audit record storage volume reaches
     75 percent of the repository maximum audit record storage capacity by
     adding/modifying the following line in the /etc/audit/auditd.conf file.
 
     space_left = 25%
 
-    Note: Option names and values in the auditd.conf file are case insensitive."
-
+    Note: Option names and values in the auditd.conf file are case insensitive.'
   impact 0.5
-
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000343-GPOS-00134'
   tag gid: 'V-230483'

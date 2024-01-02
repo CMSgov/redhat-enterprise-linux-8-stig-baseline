@@ -1,8 +1,3 @@
-# frozen_string_literal: true
-
-# reviewed: ALL
-# Tested @R1V12
-
 control 'SV-230223' do
   title 'RHEL 8 must implement NIST FIPS-validated cryptography for the following: To provision digital signatures, to generate cryptographic hashes, and to protect data requiring data-at-rest protections in accordance with applicable federal laws, Executive Orders, directives, policies, regulations, and standards.'
   desc 'Use of weak or untested encryption algorithms undermines the purposes of using encryption to protect data. The operating system must implement cryptographic modules adhering to the higher standards approved by the federal government since this provides assurance they have been tested and validated.
@@ -28,7 +23,7 @@ If the kernel boot parameter is configured to use FIPS mode, check to see if the
      1
 
 If FIPS mode is not "on", the kernel boot parameter is not configured for FIPS mode, or the system does not have a value of "1" for "fips_enabled" in "/proc/sys/crypto", this is a finding.'
-  desc 'fix', "Configure the operating system to implement DOD-approved encryption by following the steps below:
+  desc 'fix', 'Configure the operating system to implement DOD-approved encryption by following the steps below:
 
 To enable strict FIPS compliance, the fips=1 kernel option needs to be added to the kernel boot parameters during system installation so key generation is done with FIPS-approved algorithms and continuous monitoring tests in place.
 
@@ -36,17 +31,11 @@ Enable FIPS mode after installation (not strict FIPS-compliant) with the followi
 
      $ sudo fips-mode-setup --enable
 
-Reboot the system for the changes to take effect."
+Reboot the system for the changes to take effect.'
   impact 0.7
   tag severity: 'high'
   tag gtitle: 'SRG-OS-000033-GPOS-00014'
-  tag satisfies: [
-    'SRG-OS-000033-GPOS-00014',
-    'SRG-OS-000125-GPOS-00065',
-    'SRG-OS-000396-GPOS-00176',
-    'SRG-OS-000423-GPOS-00187',
-    'SRG-OS-000478-GPOS-00223'
-  ]
+  tag satisfies: ['SRG-OS-000033-GPOS-00014', 'SRG-OS-000125-GPOS-00065', 'SRG-OS-000396-GPOS-00176', 'SRG-OS-000423-GPOS-00187', 'SRG-OS-000478-GPOS-00223']
   tag gid: 'V-230223'
   tag rid: 'SV-230223r928585_rule'
   tag stig_id: 'RHEL-08-010020'

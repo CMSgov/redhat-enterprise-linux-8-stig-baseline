@@ -1,10 +1,8 @@
-# frozen_string_literal: true
-
 control 'SV-230329' do
-  title "Unattended or automatic logon via the RHEL 8 graphical user interface
-must not be allowed."
-  desc "Failure to restrict system access to authenticated users negatively
-impacts operating system security."
+  title 'Unattended or automatic logon via the RHEL 8 graphical user interface
+must not be allowed.'
+  desc 'Failure to restrict system access to authenticated users negatively
+impacts operating system security.'
   desc 'check', 'Verify the operating system does not allow an unattended or automatic logon
 to the system via a graphical user interface.
 

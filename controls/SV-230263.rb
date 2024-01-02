@@ -1,9 +1,7 @@
-# frozen_string_literal: true
-
 control 'SV-230263' do
-  title "The RHEL 8 file integrity tool must notify the system administrator
+  title 'The RHEL 8 file integrity tool must notify the system administrator
 when changes to the baseline configuration or anomalies in the operation of any
-security functions are discovered within an organizationally defined frequency."
+security functions are discovered within an organizationally defined frequency.'
   desc "Unauthorized changes to the baseline configuration could make the system vulnerable to various attacks or allow unauthorized access to the operating system. Changes to operating system configurations can have unintended side effects, some of which may be relevant to security.
 
 Detecting such changes and providing an automated response can help avoid unintended, negative consequences that could ultimately affect the security state of the operating system. The operating system's Information System Security Manager (ISSM)/Information System Security Officer (ISSO) and System Administrators (SAs) must be notified via email and/or monitoring system trap when there is an unauthorized modification of a configuration item.

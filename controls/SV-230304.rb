@@ -1,8 +1,6 @@
-# frozen_string_literal: true
-
 control 'SV-230304' do
-  title "RHEL 8 must prevent code from being executed on file systems that are
-used with removable media."
+  title 'RHEL 8 must prevent code from being executed on file systems that are
+used with removable media.'
   desc 'The "noexec" mount option causes the system not to execute binary
 files. This option must be used for mounting any file system not containing
 approved binary files, as they may be incompatible. Executing files from

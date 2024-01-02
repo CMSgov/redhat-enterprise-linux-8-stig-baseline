@@ -1,9 +1,7 @@
-# frozen_string_literal: true
-
 control 'SV-230471' do
-  title "RHEL 8 must allow only the Information System Security Manager (ISSM)
+  title 'RHEL 8 must allow only the Information System Security Manager (ISSM)
 (or individuals or roles appointed by the ISSM) to select which auditable
-events are to be audited."
+events are to be audited.'
   desc "Without the capability to restrict the roles and individuals that can
 select which events are audited, unauthorized personnel may be able to prevent
 the auditing of critical events. Misconfigured audits may degrade the system's

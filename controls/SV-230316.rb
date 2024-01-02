@@ -1,12 +1,10 @@
-# frozen_string_literal: true
-
 control 'SV-230316' do
-  title "For RHEL 8 systems using Domain Name Servers (DNS) resolution, at
-least two name servers must be configured."
-  desc "To provide availability for name resolution services, multiple
+  title 'For RHEL 8 systems using Domain Name Servers (DNS) resolution, at
+least two name servers must be configured.'
+  desc 'To provide availability for name resolution services, multiple
 redundant name servers are mandated. A failure in name resolution could lead to
 the failure of security functions requiring name resolution, which may include
-time synchronization, centralized authentication, and remote system logging."
+time synchronization, centralized authentication, and remote system logging.'
   desc 'check', %q(Determine whether the system is using local or DNS name resolution with the
 following command:
 

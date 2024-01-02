@@ -1,10 +1,8 @@
-# frozen_string_literal: true
-
 control 'SV-230557' do
-  title "If the Trivial File Transfer Protocol (TFTP) server is required, the
-RHEL 8 TFTP daemon must be configured to operate in secure mode."
-  desc "Restricting TFTP to a specific directory prevents remote users from
-copying, transferring, or overwriting system files."
+  title 'If the Trivial File Transfer Protocol (TFTP) server is required, the
+RHEL 8 TFTP daemon must be configured to operate in secure mode.'
+  desc 'Restricting TFTP to a specific directory prevents remote users from
+copying, transferring, or overwriting system files.'
   desc 'check', 'Verify the TFTP daemon is configured to operate in secure mode with the
 following commands:
 

@@ -1,9 +1,7 @@
-# frozen_string_literal: true
-
 control 'SV-230469' do
-  title "RHEL 8 must allocate an audit_backlog_limit of sufficient size to
-capture processes that start prior to the audit daemon."
-  desc "Without the capability to generate audit records, it would be
+  title 'RHEL 8 must allocate an audit_backlog_limit of sufficient size to
+capture processes that start prior to the audit daemon.'
+  desc 'Without the capability to generate audit records, it would be
 difficult to establish, correlate, and investigate the events relating to an
 incident or identify those responsible for one.
 
@@ -17,7 +15,7 @@ information system (e.g., module or policy filter).
 
     Allocating an audit_backlog_limit of sufficient size is critical in
 maintaining a stable boot process.  With an insufficient limit allocated, the
-system is susceptible to boot failures and crashes."
+system is susceptible to boot failures and crashes.'
   desc 'check', 'Verify RHEL 8 allocates a sufficient audit_backlog_limit to capture processes that start prior to the audit daemon with the following commands:
 
 $ sudo grub2-editenv list | grep audit

@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 control 'SV-230246' do
   title 'The RHEL 8 /var/log/messages file must be owned by root.'
   desc "Only authorized personnel should be aware of errors and the details of
@@ -21,10 +19,10 @@ command:
     root
 
     If "root" is not returned as a result, this is a finding.'
-  desc 'fix', "Change the owner of the file /var/log/messages to root by running the
+  desc 'fix', 'Change the owner of the file /var/log/messages to root by running the
 following command:
 
-    $ sudo chown root /var/log/messages"
+    $ sudo chown root /var/log/messages'
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000206-GPOS-00084'

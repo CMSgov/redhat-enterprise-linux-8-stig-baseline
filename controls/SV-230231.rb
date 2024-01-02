@@ -1,9 +1,7 @@
-# frozen_string_literal: true
-
 control 'SV-230231' do
-  title "RHEL 8 must encrypt all stored passwords with a FIPS 140-2 approved
-cryptographic hashing algorithm."
-  desc "Passwords need to be protected at all times, and encryption is the
+  title 'RHEL 8 must encrypt all stored passwords with a FIPS 140-2 approved
+cryptographic hashing algorithm.'
+  desc 'Passwords need to be protected at all times, and encryption is the
 standard method for protecting passwords. If passwords are not encrypted, they
 can be plainly read (i.e., clear text) and easily compromised.
 
@@ -12,7 +10,7 @@ module are not verified and therefore cannot be relied upon to provide
 confidentiality or integrity, and DoD data may be compromised.
 
     FIPS 140-2 is the current standard for validating that mechanisms used to
-access cryptographic modules utilize authentication that meets DoD requirements."
+access cryptographic modules utilize authentication that meets DoD requirements.'
   desc 'check', 'Verify that the shadow password suite configuration is set to encrypt
 password with a FIPS 140-2 approved cryptographic hashing algorithm.
 

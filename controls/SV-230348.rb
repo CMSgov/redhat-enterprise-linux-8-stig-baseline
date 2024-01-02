@@ -1,10 +1,8 @@
-# frozen_string_literal: true
-
 control 'SV-230348' do
-  title "RHEL 8 must enable a user session lock until that user re-establishes
+  title 'RHEL 8 must enable a user session lock until that user re-establishes
 access using established identification and authentication procedures for
-command line sessions."
-  desc "A session lock is a temporary action taken when a user stops work and
+command line sessions.'
+  desc 'A session lock is a temporary action taken when a user stops work and
 moves away from the immediate physical vicinity of the information system but
 does not want to log out because of the temporary nature of the absence.
 
@@ -16,7 +14,7 @@ necessary to temporarily vacate the immediate physical vicinity.
 
     Tmux is a terminal multiplexer that enables a number of terminals to be
 created, accessed, and controlled from a single screen.  Red Hat endorses tmux
-as the recommended session controlling package."
+as the recommended session controlling package.'
   desc 'check', %q(Verify the operating system enables the user to manually initiate a session lock with the following command:
 
      $ sudo grep -Ei 'lock-command|lock-session' /etc/tmux.conf

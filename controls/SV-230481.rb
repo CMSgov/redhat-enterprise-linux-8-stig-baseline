@@ -1,8 +1,6 @@
-# frozen_string_literal: true
-
 control 'SV-230481' do
-  title "RHEL 8 must encrypt the transfer of audit records off-loaded onto a
-different system or media from the system being audited."
+  title 'RHEL 8 must encrypt the transfer of audit records off-loaded onto a
+different system or media from the system being audited.'
   desc 'Information stored in one location is vulnerable to accidental or
 incidental deletion or alteration.
 

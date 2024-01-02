@@ -1,8 +1,6 @@
-# frozen_string_literal: true
-
 control 'SV-230370' do
   title 'RHEL 8 passwords for new users must have a minimum of 15 characters.'
-  desc "The shorter the password, the lower the number of possible
+  desc 'The shorter the password, the lower the number of possible
 combinations that need to be tested before the password is compromised.
 
     Password complexity, or strength, is a measure of the effectiveness of a
@@ -12,7 +10,7 @@ it takes to crack a password. Use of more characters in a password helps to
 increase exponentially the time and/or resources required to compromise the
 password.
 
-    The DoD minimum password requirement is 15 characters."
+    The DoD minimum password requirement is 15 characters.'
   desc 'check', 'Verify that RHEL 8 enforces a minimum 15-character password length for new
 user accounts by running the following command:
 

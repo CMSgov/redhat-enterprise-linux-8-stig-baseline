@@ -1,9 +1,7 @@
-# frozen_string_literal: true
-
 control 'SV-230351' do
-  title "RHEL 8 must be able to initiate directly a session lock for all
-    connection types using smartcard when the smartcard is removed."
-  desc "A session lock is a temporary action taken when a user stops work and
+  title 'RHEL 8 must be able to initiate directly a session lock for all
+    connection types using smartcard when the smartcard is removed.'
+  desc 'A session lock is a temporary action taken when a user stops work and
     moves away from the immediate physical vicinity of the information system but
     does not want to log out because of the temporary nature of the absence.
 
@@ -11,7 +9,7 @@ control 'SV-230351' do
     determined. Rather than be forced to wait for a period of time to expire before
     the user session can be locked, RHEL 8 needs to provide users with the ability
     to manually invoke a session lock so users can secure their session if it is
-    necessary to temporarily vacate the immediate physical vicinity."
+    necessary to temporarily vacate the immediate physical vicinity.'
   desc 'check', %q(Verify the operating system enables a user's session lock
     until that user re-establishes access using established identification and
     authentication procedures with the following command:
@@ -45,7 +43,6 @@ control 'SV-230351' do
     Update the system databases:
 
     $sudo dconf update)
-
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000028-GPOS-00009'

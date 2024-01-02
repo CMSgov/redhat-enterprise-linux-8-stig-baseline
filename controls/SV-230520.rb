@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 control 'SV-230520' do
   title 'RHEL 8 must mount /var/tmp with the nodev option.'
   desc 'The organization must identify authorized software programs and permit

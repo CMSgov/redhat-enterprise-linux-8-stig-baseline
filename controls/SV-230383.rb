@@ -1,10 +1,8 @@
-# frozen_string_literal: true
-
 control 'SV-230383' do
-  title "RHEL 8 must define default permissions for all authenticated users in
-such a way that the user can only read and modify their own files."
-  desc "Setting the most restrictive default permissions ensures that when new
-accounts are created, they do not have unnecessary access."
+  title 'RHEL 8 must define default permissions for all authenticated users in
+such a way that the user can only read and modify their own files.'
+  desc 'Setting the most restrictive default permissions ensures that when new
+accounts are created, they do not have unnecessary access.'
   desc 'check', 'Verify the operating system defines default permissions for all
 authenticated users in such a way that the user can only read and modify their
 own files.

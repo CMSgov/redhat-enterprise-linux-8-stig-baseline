@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 control 'SV-230369' do
   title 'RHEL 8 passwords must have a minimum of 15 characters.'
   desc 'The shorter the password, the lower the number of possible
@@ -40,7 +38,6 @@ minlen = 15
 
 Remove any configurations that conflict with the above value.'
   impact 0.5
-
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000078-GPOS-00046'
   tag gid: 'V-230369'

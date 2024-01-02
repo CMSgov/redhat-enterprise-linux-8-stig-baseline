@@ -1,8 +1,6 @@
-# frozen_string_literal: true
-
 control 'SV-230507' do
   title 'RHEL 8 Bluetooth must be disabled.'
-  desc "Without protection of communications with wireless peripherals,
+  desc 'Without protection of communications with wireless peripherals,
 confidentiality and integrity may be compromised because unprotected
 communications can be intercepted and either read, altered, or used to
 compromise the RHEL 8 operating system.
@@ -26,7 +24,7 @@ physical barriers to wireless radio frequencies) or by logical means (e.g.,
 employing cryptographic techniques). If physical means of protection are
 employed, then logical means (cryptography) do not have to be employed, and
 vice versa. If the wireless peripheral is only passing telemetry data,
-encryption of the data may not be required."
+encryption of the data may not be required.'
   desc 'check', 'If the device or operating system does not have a Bluetooth adapter installed, this requirement is not applicable.
 
 This requirement is not applicable to mobile devices (smartphones and tablets), where the use of Bluetooth is a local AO decision.

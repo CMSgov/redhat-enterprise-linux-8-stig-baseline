@@ -1,11 +1,9 @@
-# frozen_string_literal: true
-
 control 'SV-244536' do
-  title "RHEL 8 must disable the user list at logon for graphical user
-interfaces."
-  desc "Leaving the user list enabled is a security risk since it allows
+  title 'RHEL 8 must disable the user list at logon for graphical user
+interfaces.'
+  desc 'Leaving the user list enabled is a security risk since it allows
 anyone with physical access to the system to enumerate known user accounts
-without authenticated access to the system."
+without authenticated access to the system.'
   desc 'check', 'Verify the operating system disables the user logon list for graphical user
 interfaces with the following command:
     Note: This requirement assumes the use of the RHEL 8 default graphical user
