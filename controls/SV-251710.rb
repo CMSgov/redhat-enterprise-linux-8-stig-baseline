@@ -83,7 +83,7 @@ control 'SV-251710' do
 
   if file_integrity_tool == 'aide'
     describe command('/usr/sbin/aide --check') do
-      its('exit_status') { should cmp 0 }
+      # its('exit_status') { should cmp 0 } -> Only 0 when no differences in DB
       its('stdout') { should_not include "Couldn't open file" }
     end
   end
