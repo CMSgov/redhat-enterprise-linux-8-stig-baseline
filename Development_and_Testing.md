@@ -46,9 +46,6 @@ The latest patch release always points to the major release for the profile.
 
 For example, after releasing `v1.12.0`, we will point `v1.12` to that patch release: `v1.12.0`. When an issue is found, we will fix, tag, and release `v1.12.1`. We will then 'move' the `v1.12` tag so that it points to tag `v1.12.1`. This way, your pipelines can choose if they want to pin on a specific release of the InSpec profile or always run 'current'.
 
-From the file: Development_and_Testing.md
-
-```markdown
 ## Required Software
 
 - RVM, or another Ruby Management Tool
