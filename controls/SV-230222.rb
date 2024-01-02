@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 control 'SV-230222' do
   title 'RHEL 8 vendor packaged system security patches and updates must be installed and up to date.'
   desc 'Timely patching is critical for maintaining the operational

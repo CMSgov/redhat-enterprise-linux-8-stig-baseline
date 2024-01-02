@@ -68,7 +68,6 @@ This must be documented with the information system security officer (ISSO) as a
   tag cci: ['CCI-002265']
   tag nist: ['AC-16 b']
 
-  users = {}
   se_login = command('semanage login -ln').stdout.lines.map(&:strip)
   allowed_admin_selinux_roles = input('allowed_admin_selinux_roles')
   allowed_non_admin_selinux_roles = input('allowed_non_admin_selinux_roles')
