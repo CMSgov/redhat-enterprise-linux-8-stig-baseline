@@ -60,6 +60,7 @@ $ sudo systemctl restart sssd.service'
   end
 
   sssd_conf_file_contents = command('cat /etc/sssd/sssd.conf /etc/sssd/conf.d/*.conf').stdout.strip
+  sssd_certificate_verification = input('sssd_certificate_verification')
 
   if sssd_conf_file_contents.empty?
     describe 'Unable to verify the SSSD Configuration for OCSP MFA Validation' do
@@ -67,7 +68,7 @@ $ sudo systemctl restart sssd.service'
     end
   else
     describe ini({ command: 'cat /etc/sssd/sssd.conf /etc/sssd/conf.d/*.conf' }) do
-      its('sssd.certificate_verification') { should cmp 'ocsp_dgst=sha1' }
+      its('sssd.certificate_verification') { should cmp sssd_certificate_verification }
     end
   end
 end
