@@ -33,6 +33,15 @@ Table of Contents
   - [(disconnected) Running the profile from a local archive copy](#disconnected-running-the-profile-from-a-local-archive-copy)
   - [Different Run Options](#different-run-options)
 - [Using Heimdall for Viewing Test Results and Exporting for Checklist and eMASS](#using-heimdall-for-viewing-test-results-and-exporting-for-checklist-and-emass)
+  - [Organization of the Repository](#organization-of-the-repository)
+    - [`main` and `development` branch](#main-and-development-branch)
+    - [`#v{x}r{y}.{z}` branches](#vxryz-branches)
+    - [Releases](#releases)
+    - [Tags](#tags)
+      - [Major Version Tags](#major-version-tags)
+    - [Patch Releases](#patch-releases)
+  - [Updates, Releases \& Submitting PRs to the Profile](#updates-releases-submitting-prs-to-the-profile)
+    - [Submitting Bugs](#submitting-bugs)
 - [Authors](#authors)
     - [NOTICE](#notice)
     - [NOTICE](#notice-1)
@@ -194,7 +203,7 @@ inspec exec https://github.com/mitre/redhat-enterprise-linux-8-stig-baseline/arc
 ```
 Against a remote target using a pem key with escalated privileges (i.e., inspec installed on a separate runner host)
 ```bash
-inspec exec https://github.com/mitre/redhat-enterprise-linux-8-stig-baseline/archive/main.tar.gz -t ssh://TARGET_USERNAME@TARGET_IP:TARGET_PORT --sudo -i <your_PEM_KEY> --input-file <path_to_your_input_file/name_of_your_input_file.yml> --reporter json:<path_to_your_output_file/name_of_your_output_file.json>  
+inspec exec https://github.com/mitre/redhat-enterprise-linux-8-stig-baseline/archive/main.tar.gz -t ssh://TARGET_USERNAME@TARGET_IP:TARGET_PORT --sudo -i <your_PEM_KEY> --input-file <path_to_your_input_file/name_of_your_input_file.yml> --reporter json:<path_to_your_output_file/name_of_your_output_file.json> 
 ```
 
 Against a local Red Hat host with escalated privileges (i.e., inspec installed on the target)
@@ -246,6 +255,50 @@ The JSON results file may also be loaded into a **[full Heimdall Server](https:/
 
 You can deploy your own instances of Heimdall-Lite or Heimdall Server easily via docker, kurbernetes, or the installation packages.
 
+## Organization of the Repository
+
+### `main` and `development` branch
+
+The `main` and or `development` branch contains the most recent code for the profile. It may include bugs and is typically aligned with the latest patch release for the profile. ***The main branch is not meant for real scanning or production systems***
+
+This branch is primarily used for development and testing workflows for the various testing targets.
+
+For production validation, use the latest tagged patch release, such as `v1.12.1`.
+
+### `#v{x}r{y}.{z}` branches
+
+The `v{x}r{y}.{z}` branches represent the changes between releases of the benchmark. They align with the STIG releases for the Benchmark found at the DISA STIG Document Library. `{x}` aligns to the Version of the STIG Benchmark, `{y}` aligns to the Release of the Benchmark, and `{z}` aligns to the 'Release' of the tagged release of the profile as we fix or improve the tests.
+
+### Releases
+
+Releases use Semantic Versioning (SemVer), aligning with the STIG Benchmark versioning system of Major Version and Release. The SemVer patch number is used for updates, bug fixes, and code changes between STIG Benchmark Releases for the given product. STIG Benchmarks use a Version and Release tagging pattern `v{x}r{y}.{z}` - like V1R12 - and we mirror that pattern in our SemVer releases - and a patch release for any updates or fixes.
+
+### Tags
+
+We don't use a specific current or latest tag. The current/latest tag for the profile and repository will always be the latest major tag of the benchmark. For example, if `v1.12.3` is the latest Benchmark release from the STIG author, then the tag `v1.12` will point to the `v1.12.3` release of the code.
+
+#### Major Version Tags
+
+Major tags point to the latest patch release of the benchmark. For example, `v1.3` and `v1.3.0` represent the first release of the Red Hat Enterprise Linux 8 STIG V1R3 Benchmark. The `v1.12.{z}` tag(s) would represent the V1R12 Benchmark releases as we find bugs, fixes, or general improvements to the testing profile. This tag will point to its `v{x}r{y}.{z}` counterpart.
+
+### Patch Releases
+
+The latest patch release always points to the major release for the profile.
+
+For example, after releasing `v1.12.0`, we will point `v1.12` to that patch release: `v1.12.0`. When an issue is found, we will fix, tag, and release `v1.12.1`. We will then 'move' the `v1.12` tag so that it points to tag `v1.12.1`. This way, your pipelines can choose if they want to pin on a specific release of the InSpec profile or always run 'current'.
+
+## Updates, Releases & Submitting PRs to the Profile
+
+This profile is updated and managed using our standard MITRE SAF InSpec Profile Development and Update process. You can learn more about this and how to help us keep the profile up to date from release to release of the Red Hat Enterprise Linux 8 STIG Benchmark at [SAF Profile Maintenance](https://mitre.github.io/saf-training-current/courses/profile-dev "Profile Maintenance Process") Process.
+
+For example, `v1.12.2` would be the Red Hat Enterprise Linux 8 STIG Version 1 Release 12 with two 'patch' releases from the first `v1.12.0` release.
+
+### Submitting Bugs
+
+If you find an issue or a test that isn't operating as you expect, please submit an issue on the repository.
+
+If possible, after you remove any identifying information about who and where your target is deployed, please provide a way we can 'reproduce' the error, any specific configuration examples on the target that cause the issue, or examples of settings, strings or other configuration settings we might need to reproduce the issue.
+
 # Authors
 
 Defense Information Systems Agency (DISA) https://www.disa.mil/
@@ -273,4 +326,5 @@ No other use other than that granted to the U. S. Government, or to those acting
 For further information, please contact The MITRE Corporation, Contracts Management Office, 7515 Colshire Drive, McLean, VA 22102-7539, (703) 983-6000.
 
 ### NOTICE
+
 DISA STIGs are published by DISA IASE, see: https://iase.disa.mil/Pages/privacy_policy.aspx
