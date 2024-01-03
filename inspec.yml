@@ -307,12 +307,6 @@ inputs:
     type: Numeric
     value: 3
 
-  # SV-230363
-  - name: difok
-    description: Minimum number of characters that must be different from previous password
-    type: Numeric
-    value: 8
-
   # SV-230373
   - name: days_of_inactivity
     description: Maximum number of days if account inactivity before account lockout
