@@ -56,8 +56,8 @@ adding /modifying the /etc/fstab with the following line:
     end
   elsif input('skip_mount_tmp')['noexec']
     impact 0.0
-    describe 'We do not want to add noexec to the /tmp mount' do
-      skip 'We do not want to add noexec to the /tmp mount'
+    describe 'The requirement to add noexec to the /tmp mount is determined to be not applicable by the approval authority of the organization.' do
+      skip 'The requirement to add noexec to the /tmp mount is determined to be not applicable by the approval authority of the organization.'
     end
   else
     describe etc_fstab.where { mount_point == '/tmp' } do

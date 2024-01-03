@@ -612,7 +612,7 @@ inputs:
 
   # SV-250706
   - name: users_allowed_blank_passwords
-    description: Users allowed to not have a password set\
+    description: Users allowed to not have a password set
     type: Array
     value: []
 

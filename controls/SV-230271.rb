@@ -38,8 +38,8 @@ file or files in the "/etc/sudoers.d" directory.'
     end
   elsif input('skip_password_privilege_escalation')
     impact 0.0
-    describe 'We do not want require users to provide a password for privilege escalation' do
-      skip 'We do not want require users to provide a password for privilege escalation'
+    describe 'Users are not required to provide a password for privilege escalation as agreed to by the approval authority. This requirement is not applicable.' do
+      skip 'Users are not required to provide a password for privilege escalation as agreed to by the approval authority. This requirement is not applicable.'
     end
   else
     processed = []

@@ -38,8 +38,8 @@ Security for Linux (ENSL) in conjunction with SELinux.
 
   if input('skip_endpoint_security_tool')
     impact 0.0
-    describe 'We do not want to implement the Endpoint Security for Linux Threat Prevention tool' do
-      skip 'We do not want to implement the Endpoint Security for Linux Threat Prevention tool'
+    describe 'Implementing the Endpoint Security for Linux Threat Prevention tool is not applicable according to the approval authority of the organization.' do
+      skip 'Implementing the Endpoint Security for Linux Threat Prevention tool is not applicable according to the approval authority of the organization.'
     end
   else
     linux_threat_prevention_package = input('linux_threat_prevention_package')
