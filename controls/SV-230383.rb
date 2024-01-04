@@ -39,9 +39,7 @@ file to "077":
 
   permissions_for_shells = input('permissions_for_shells')
 
-  if login_defs.read_params['UMASK'].eql?('000')
-    impact 0.7
-  end
+  impact 0.7 if login_defs.read_params['UMASK'].eql?('000')
   describe login_defs do
     its('UMASK') { should cmp permissions_for_shells['default_umask'] }
   end

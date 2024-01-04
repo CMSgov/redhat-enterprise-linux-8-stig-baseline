@@ -1,5 +1,6 @@
 # frozen_string_literal: true
-#!/usr/bin/env rake
+
+# !/usr/bin/env rake
 
 require 'rake/testtask'
 require 'rubocop/rake_task'
