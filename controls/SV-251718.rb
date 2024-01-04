@@ -35,7 +35,7 @@ A reboot is required for the changes to take effect.'
     describe 'skip' do
       skip 'A GUI is indicated as a requirement for this system. This control is Not Applicable.'
     end
-  elsif
+  else
     get_default = command('systemctl get-default').stdout.strip
 
     describe get_default do
