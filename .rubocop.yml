@@ -53,3 +53,6 @@ Lint/ShadowingOuterLocalVariable:
 
 Style/FormatStringToken:
   Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: false

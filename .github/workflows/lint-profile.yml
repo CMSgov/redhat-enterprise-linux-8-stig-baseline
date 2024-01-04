@@ -1,4 +1,4 @@
-name: Lint
+name: Lint & Check the Profile
 
 on:
   push:
@@ -55,5 +55,8 @@ jobs:
       - name: Vendor the Profile
         run: bundle exec inspec vendor . --overwrite
 
-      - name: Lint the Inspec profile
-        run: bundle exec inspec check .
+      - name: Check the Inspec profile
+        run: bundle exec rake inspec:check
+
+      - name: Lint the Profile
+        run: bundle exec rake lint
