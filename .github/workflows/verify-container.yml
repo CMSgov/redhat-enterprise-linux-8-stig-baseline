@@ -87,7 +87,7 @@ jobs:
 
       - name: Display our ${{ matrix.suite }} results summary
         if: ${{ !contains(steps.commit.outputs.message, 'only-validate-profile') }}
-        uses: mitre/saf_action@v1.5.1
+        uses: mitre/saf_action@v1.5.0
         with:
           command_string: "view summary -i spec/results/ubi8_${{ matrix.suite }}.json"
 
