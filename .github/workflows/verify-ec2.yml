@@ -85,12 +85,12 @@ jobs:
 
       - name: Display our ${{ matrix.suite }} results summary
         if: ${{ !contains(steps.commit.outputs.message, 'only-validate-profile') }}
-        uses: mitre/saf_action@1.5.0
+        uses: mitre/saf_action@v1.5.0
         with:
           command_string: "view summary -i spec/results/rhel-8_${{ matrix.suite }}.json"
 
       - name: Ensure the scan meets our ${{ matrix.suite }} results threshold
         if: ${{ !contains(steps.commit.outputs.message, 'only-validate-profile') }}
-        uses: mitre/saf_action@1.5.0
+        uses: mitre/saf_action@v1.5.0
         with:
           command_string: "validate threshold -i spec/results/rhel-8_${{ matrix.suite }}.json -F ${{ matrix.suite }}.threshold.yml"

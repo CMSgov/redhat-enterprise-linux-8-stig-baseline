@@ -52,7 +52,7 @@ control 'SV-230273' do
     !virtualization.system.eql?('docker')
   }
 
-  if input('smart_card_status')
+  if input('smart_card_enabled')
     describe package('openssl-pkcs11') do
       it { should be_installed }
     end

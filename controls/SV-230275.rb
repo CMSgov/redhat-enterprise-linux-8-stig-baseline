@@ -43,7 +43,7 @@ control 'SV-230275' do
     !virtualization.system.eql?('docker')
   }
 
-  if input('smart_card_status')
+  if input('smart_card_enabled')
     describe package('opensc') do
       it { should be_installed }
     end

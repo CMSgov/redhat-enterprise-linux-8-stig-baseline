@@ -74,6 +74,11 @@ restart the "sssd" service, run the following command:
   tag cci: ['CCI-000765']
   tag nist: ['IA-2 (1)']
 
+  only_if('If the System Administrator demonstrates the use of an approved
+    alternate multifactor authentication method, this requirement is not applicable.') {
+    !input('smart_card_enabled')
+  }
+
   pam_auth_files = input('pam_auth_files')
 
   if virtualization.system.eql?('docker')
@@ -82,27 +87,19 @@ restart the "sssd" service, run the following command:
       skip 'Control not applicable within a container'
     end
   else
-    if file(input('sssd_conf_path')).exist?
-      describe parse_config_file(input('sssd_conf_path')) do
-        its('pam') { should include('pam_cert_auth' => 'True') }
-      end
-      describe service('sssd') do
-        it { should be_installed }
-        it { should be_enabled }
-        it { should be_running }
-      end
-    else
-      describe "The sssd.conf file was not found at: #{input('sssd_conf_path')}" do
-        skip "The sssd.conf file was not found at: #{input('sssd_conf_path')}"
-      end
+    describe parse_config_file(input('sssd_conf_path')) do
+      its('pam') { should include('pam_cert_auth' => 'True') }
     end
-    describe pam(pam_auth_files['system-auth']) do
-      its('lines') {
-        should match_pam_rule('auth   [success=done authinfo_unavail=ignore ignore=ignore default=die]   pam_sss.so try_cert_auth')
-      }
+    describe service('sssd') do
+      it { should be_installed }
+      it { should be_enabled }
+      it { should be_running }
     end
-    describe pam(pam_auth_files['smartcard-auth']) do
-      its('lines') { should match_pam_rule('auth   sufficient   pam_sss.so try_cert_auth') }
+
+    [pam_auth_files['system-auth'], pam_auth_files['smartcard-auth']].each do |path|
+      describe pam(path) do
+        its('lines') { should match_pam_rule('.* .* pam_sss.so [try_cert_auth|require_cert_auth]') }
+      end
     end
   end
 end

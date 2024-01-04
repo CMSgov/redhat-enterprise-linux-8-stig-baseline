@@ -58,7 +58,7 @@ control 'SV-230351' do
     !virtualization.system.eql?('docker')
   }
 
-  if !input('smart_card_status')
+  if !input('smart_card_enabled')
     impact 0.0
     describe "The system is not smartcard enabled thus this control is Not
     Applicable" do

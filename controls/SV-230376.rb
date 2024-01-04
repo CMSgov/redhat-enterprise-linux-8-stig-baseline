@@ -53,7 +53,7 @@ offline_credentials_expiration = 1'
     !virtualization.system.eql?('docker')
   }
 
-  if input('smart_card_status')
+  if input('smart_card_enabled')
     impact 0.0
     describe 'The system is not utilizing smart card authentication' do
       skip 'The system is not utilizing smart card authentication, this control

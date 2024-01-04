@@ -187,7 +187,7 @@ client_alive_interval: 600
 
 # V-71965, V-72417, V-72433
 # (enabled or disabled)
-smart_card_status: false
+smart_card_enabled: false
 
 # V-72051/V-72209
 # The path to the logging package

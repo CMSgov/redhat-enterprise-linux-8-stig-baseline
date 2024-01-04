@@ -10,4 +10,4 @@ skip_password_privilege_escalation: false
 skip_endpoint_security_tool: true
 network_router: false
 use_fapolicyd: true
-smart_card_status: false
+smart_card_enabled: false

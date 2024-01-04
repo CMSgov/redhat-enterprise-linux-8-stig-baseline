@@ -170,7 +170,7 @@ camera_installed:
 bluetooth_installed:
  
 # Smart card status (enabled or disabled) default: 'enabled'
-smart_card_status:
+smart_card_enabled:
  
 # Name of tool
 file_integrity_tool: 'aide'
