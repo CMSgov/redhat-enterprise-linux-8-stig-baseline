@@ -30,11 +30,16 @@ A reboot is required for the changes to take effect.'
     !virtualization.system.eql?('docker')
   }
 
-  only_if('A GUI is indicated as a requirement for this system. This control is Not Applicable.', impact: 0.0) { !input('gui_required') }
+  if input('gui_required')
+    impact 0.0
+    describe 'skip' do
+      skip 'A GUI is indicated as a requirement for this system. This control is Not Applicable.'
+    end
+  elsif
+    get_default = command('systemctl get-default').stdout.strip
 
-  get_default = command('systemctl get-default').stdout.strip
-
-  describe get_default do
-    it { should cmp 'multi-user.target' }
+    describe get_default do
+      it { should cmp 'multi-user.target' }
+    end
   end
 end

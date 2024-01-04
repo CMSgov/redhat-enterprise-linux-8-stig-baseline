@@ -458,12 +458,6 @@ inputs:
       - SINGLE
       - HALT
 
-  # SV-230391
-  - name: max_log_file_action
-    description: Must be alerted when the audit storage volume is full.
-    type: String
-    value: syslog
-
   # SV-230392
   - name: disk_full_action
     description: Audit system must take appropriate action when the audit storage volume is full.
@@ -604,7 +598,7 @@ inputs:
     type: Boolean
     value: false
 
-  # SV-250315
+  # SV-250315, SV-250316
   - name: non_default_tally_dir
     description: The directory used by pam_faillock
     type: String

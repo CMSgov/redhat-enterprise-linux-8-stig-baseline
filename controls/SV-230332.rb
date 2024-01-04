@@ -84,10 +84,6 @@ restart the "sssd" service, run the following command:
     !input('central_account_management')
   }
 
-  # NOTE: This check applies to RHEL versions 8.0 and 8.1,
-  # # if the system is RHEL version 8.2 or newer,
-  # this check is not applicable.
-
   if os.release.to_f >= 8.2
     impact 0.0
     describe 'This requirement only applies to RHEL 8 version(s) 8.0 and 8.1' do

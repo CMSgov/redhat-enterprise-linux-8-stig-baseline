@@ -54,8 +54,8 @@ adding /modifying the /etc/fstab with the following line:
     end
   elsif input('skip_mount_tmp')['nosuid']
     impact 0.0
-    describe 'The requirement to add nosuid to the /tmp mount is determined to be not applicable by the approval authority of the organization.' do
-      skip 'The requirement to add nosuid to the /tmp mount is determined to be not applicable by the approval authority of the organization.'
+    describe 'The requirement to add nosuid to the /tmp mount is determined to be not applicable by agreement with the approval authority of the organization.' do
+      skip 'The requirement to add nosuid to the /tmp mount is determined to be not applicable by by agreement with the approval authority of the organization.'
     end
   else
     describe etc_fstab.where { mount_point == '/tmp' } do

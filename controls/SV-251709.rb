@@ -25,8 +25,6 @@ control 'SV-251709' do
     !input('required_system_accounts').include?(file(lib).group)
   }
 
-  # TODO: is this NA in containers
-
   describe 'System libraries' do
     it 'should be owned by a required system account' do
       fail_msg = "Libs not group-owned by a system account:\n\t- #{non_root_owned_libs.join("\n\t- ")}"

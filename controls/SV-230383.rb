@@ -41,8 +41,6 @@ file to "077":
 
   if login_defs.read_params['UMASK'].eql?('000')
     impact 0.7
-  else
-    impact 0.5
   end
   describe login_defs do
     its('UMASK') { should cmp permissions_for_shells['default_umask'] }
