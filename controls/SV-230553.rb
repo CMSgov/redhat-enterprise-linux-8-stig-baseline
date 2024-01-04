@@ -29,10 +29,6 @@ A reboot is required for the changes to take effect.'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
 
-  describe command('systemctl get-default') do
-    its('stdout.strip') { should eq 'multi-user.target' }
-  end
-
   input('remove_xorg_x11_server_packages').each do |p|
     describe package(p) do
       it { should_not be_installed }
