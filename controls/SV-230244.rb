@@ -44,19 +44,15 @@ control 'SV-230244' do
 
   client_alive_count = input('sshd_client_alive_count_max')
 
-  if virtualization.system.eql?('docker') || !file('/etc/ssh/sshd_config').exist?
-    describe 'The requirement is Not Applicable' do
-      impact 0.0
-      describe 'This control' do
-        it 'does not apply inside containers' do
-          expect(true).to eq(true)
-        end
-      end
+  if virtualization.system.eql?('docker') && !file('/etc/ssh/sshd_config').exist?
+    impact 0.0
+    describe 'skip' do
+      skip 'SSH configuration does not apply inside containers. This control is Not Applicable.'
     end
   else
     describe 'SSH ClientAliveCountMax configuration' do
-      it 'should be set to 1' do
-        expect(sshd_config.ClientAliveCountMax).to(cmp(client_alive_count), 'SSH ClientAliveCountMax is commented out or not set to the expected value')
+      it "should be set to #{client_alive_count}" do
+        expect(sshd_config.ClientAliveCountMax).to(cmp(client_alive_count), "SSH ClientAliveCountMax is commented out or not set to the expected value (#{client_alive_count})")
       end
     end
   end
