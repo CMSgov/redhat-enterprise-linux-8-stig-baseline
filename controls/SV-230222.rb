@@ -53,7 +53,7 @@ control 'SV-230222' do
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
 
-  only_if("This control takes a long time to execute so it has been disabled through 'slow_controls'", impact: 0.0) {
+  only_if("This control takes a long time to execute so it has been disabled through 'slow_controls'") {
     !input('disable_slow_controls')
   }
 
