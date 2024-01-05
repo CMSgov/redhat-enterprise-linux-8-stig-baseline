@@ -98,7 +98,7 @@ restart the "sssd" service, run the following command:
 
     [pam_auth_files['system-auth'], pam_auth_files['smartcard-auth']].each do |path|
       describe pam(path) do
-        its('lines') { should match_pam_rule('.* .* pam_sss.so [try_cert_auth|require_cert_auth]') }
+        its('lines') { should match_pam_rule('.* .* pam_sss.so (try_cert_auth|require_cert_auth)') }
       end
     end
   end
