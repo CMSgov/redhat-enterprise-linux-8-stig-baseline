@@ -2,7 +2,7 @@ source "https://rubygems.org"
 
 gem "test-kitchen"
 gem "highline"
-gem "inspec"
+gem "inspec", ">= 6.6.0"
 gem "inspec-bin"
 gem "inspec-core"
 gem "kitchen-ansible"
