@@ -140,11 +140,11 @@ Agreement for details."
   next unless !banner_file.nil? && banner_file.match(/none/i).nil? && file(banner_file).exist?
 
   banner = file(banner_file).content.gsub(/[\r\n\s]/, '')
-  clean_banner = input('banner_message_text_ral').gsub(/[\r\n\s]/, '')
+  expected_banner = input('banner_message_text_ral').gsub(/[\r\n\s]/, '')
 
-  describe 'The SSHD Banner ' do
+  describe 'The SSHD Banner' do
     it "is set to the standard banner and has the correct text" do
-      expect(banner).to eq(clean_banner), "Banner does not match expected text"
+      expect(banner).to eq(expected_banner), "Banner does not match expected text"
     end
   end
 end
