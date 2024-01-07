@@ -8,8 +8,8 @@
 | W        | SV-230226 |          | Y        | Y      | Y     | N                              | `banner_message_text_gui`                                                                               |
 | W        | SV-230227 |          | Y        | Y      | Y     | N                              | `banner_message_text_cli`                                                                               |
 | W        | SV-230228 |          | Y        | Y      | Y     | N                              | None                                                                                                    |
-| W        | SV-230229 |          | Y        | Y      | Y     | Y                              | `root_ca_location`                                                                                      |
-| W        | SV-230230 |          |          |        | Y     |                                |                                                                                                         |
+| W        | SV-230229 |          | Y        | Y      | Y     | N                              | `root_ca_location`                                                                                      |
+| W        | SV-230230 |          | Y        | Y      | Y     | N                              | `private_key_files`                                                                                     |
 | W        | SV-230231 |          |          |        | Y     |                                |                                                                                                         |
 | W        | SV-230232 |          |          |        | Y     |                                |                                                                                                         |
 | W        | SV-230233 | Y        | Y        | Y      | Y     | N                              | `sha_crypt_min_rounds`<br>`sha_crypt_max_rounds`                                                        |

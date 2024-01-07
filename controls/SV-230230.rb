@@ -27,19 +27,26 @@ following command:
 
   if virtualization.system.eql?('docker')
     impact 0.0
-    describe 'Control not applicable within a container' do
+    describe 'N/A' do
       skip 'Control not applicable within a container'
     end
   elsif input('private_key_files').empty?
     impact 0.0
-    describe 'No private key files were given in the input, this control is Not Applicable' do
+    describe 'N/A' do
       skip 'No private key files were given in the input, this control is Not Applicable'
     end
+  elsif input('private_key_files').map { |kf| file(kf).exist? }.uniq.first == false
+    describe 'no files found' do
+      skip 'No private key files given in the input were found on the system; please check the input accurately lists all private keys on this system'
+    end
   else
-    input('private_key_files').each do |kf|
-      describe "Private key file #{kf} should have a passphrase" do
-        subject { inspec.command("ssh-keygen -y -P '' -f #{kf}").stderr }
-        it { should match 'incorrect passphrase supplied to decrypt private key' }
+    passwordless_keys = input('private_key_files').select { |kf|
+      file(kf).exist? &&
+      !inspec.command("ssh-keygen -y -P '' -f #{kf}").stderr.match('incorrect passphrase supplied to decrypt private key')
+    }
+    describe "Private key files" do
+      it "should all have passwords set" do
+        expect(passwordless_keys).to be_empty, "Passwordless key files:\n\t- #{passwordless_keys.join("\n\t- ")}"
       end
     end
   end
