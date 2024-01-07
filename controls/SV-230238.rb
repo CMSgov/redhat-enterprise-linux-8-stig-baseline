@@ -54,8 +54,11 @@ authentication.
       skip 'The system has krb5-workstation and server version 1.17-18 or higner, this requirement is Not Applicable.'
     end
   else
-    describe command('ls -al /etc/*.keytab') do
-      its('stdout') { should be_empty }
+    keytabs = command('ls /etc/*.keytab').stdout.split
+    describe 'The system' do
+      it 'should not have keytab files for Kerberos' do
+        expect(keytabs).to be_empty, "Keytab files:\n\t- #{keytabs.join("\n\t- ")}"
+      end
     end
   end
 end

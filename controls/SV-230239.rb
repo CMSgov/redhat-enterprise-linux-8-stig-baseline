@@ -41,13 +41,16 @@ requirement or remove it from the system with the following command:
   tag cci: ['CCI-000803']
   tag nist: ['IA-7']
 
-  describe.one do
-    describe package('krb5-workstation') do
-      it { should_not be_installed }
-    end
+  krb5_workstation = package('krb5-workstation')
 
-    describe package('krb5-workstation') do
-      its('version') { should cmp >= '1.17-9.el8' }
+  if krb5_workstation.installed? && krb5_workstation.version >= '1.17-18.el8'
+    impact 0.0
+    describe 'N/A' do
+      skip "Kerberos installation is at version 1.17-18.el8 or greater; this control is Not Applicable"
+    end
+  else
+    describe krb5_workstation do
+      it { should_not be_installed }
     end
   end
 end

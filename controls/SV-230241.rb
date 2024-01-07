@@ -36,14 +36,12 @@ installed with the following command:
   tag cci: ['CCI-001084']
   tag nist: ['SC-3']
 
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
-    end
-  else
-    describe package('policycoreutils') do
-      it { should be_installed }
-    end
+
+  only_if('Control not applicable within a container', impact: 0.0) do
+    !virtualization.system.eql?('docker')
+  end
+
+  describe package('policycoreutils') do
+    it { should be_installed }
   end
 end

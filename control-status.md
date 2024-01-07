@@ -17,10 +17,10 @@
 | W        | SV-230235 |          | Y        | Y      | Y     | N                              | `grub_user_boot_files`                                                                                  |
 | W        | SV-230236 |          | Y        | Y      | Y     | N                              | None                                                                                                    |
 | W        | SV-230237 |          | Y        | Y      | Y     | N                              | `pam_auth_files`                                                                                        |
-| W        | SV-230238 |          |          |        | Y     |                                |                                                                                                         |
-| W        | SV-230239 |          |          |        | Y     |                                |                                                                                                         |
-| W        | SV-230240 |          |          |        | Y     |                                |                                                                                                         |
-| W        | SV-230241 |          |          |        | Y     |                                |                                                                                                         |
+| W        | SV-230238 |          | Y        | Y      | Y     | N                              | None                                                                                                    |
+| W        | SV-230239 |          | Y        | Y      | Y     | N                              | None                                                                                                    |
+| W        | SV-230240 |          | Y        | Y      | Y     | N                              | None                                                                                                    |
+| W        | SV-230241 |          | Y        | Y      | Y     | N                              | None                                                                                                    |
 | W        | SV-230243 | Y        | Y        | Y      | Y     | N                              | None                                                                                                    |
 | W        | SV-230244 | Y        | Y        | Y      | Y     | N                              | `sshd_client_alive_count_max`                                                                           |
 | W        | SV-230245 |          |          |        | Y     |                                |                                                                                                         |
