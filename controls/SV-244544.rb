@@ -40,14 +40,21 @@ command:
   tag cci: ['CCI-002314']
   tag nist: ['AC-17 (1)']
 
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
+  only_if('This requirment is Not Applicable in the container, the container management platform manages the firewall service', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  if input('external_firewall')
+    message = 'This system uses an externally managed firewall service, verify with the system administrator that the firewall is configured to requirements'
+    describe message do
+      skip message
     end
   else
-    describe systemd_service('firewalld.service') do
-      it { should be_enabled }
+    describe package('firewalld') do
+      it { should be_installed }
+    end
+    describe firewalld do
+      it { should be_installed }
       it { should be_running }
     end
   end

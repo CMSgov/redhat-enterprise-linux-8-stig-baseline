@@ -4,7 +4,7 @@ source 'https://rubygems.org'
 
 gem 'cookstyle'
 gem 'highline'
-gem 'inspec', ">= 6.6.0"
+gem 'inspec', '>= 6.6.0'
 gem 'inspec-bin'
 gem 'inspec-core'
 gem 'kitchen-ansible'

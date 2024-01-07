@@ -9,6 +9,12 @@ version: 1.12.0
 inspec_version: ">= 5.0"
 
 inputs:
+  # SV-244549
+  - name: allow_openssh_server
+    description: "If the OpenSSH Server has been approved outside standard container guidance to default transprots"
+    type: Boolean
+    value: false
+
   # SV-230360
   - name: maxclassrepeat
     description: "The maximum number of repeating characters of the same character class for passwords"
@@ -563,6 +569,12 @@ inputs:
     description: The security faillock configuration file
     type: String
     value: /etc/security/faillock.conf
+
+  # SV-244544
+  - name: external_firewall
+    description: "The system use an external firewall or service vs a local firewall service"
+    type: Boolean
+    value: false
 
   # SV-230500
   - name: firewalld_properties

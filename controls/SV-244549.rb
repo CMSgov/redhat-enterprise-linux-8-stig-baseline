@@ -1,6 +1,6 @@
 control 'SV-244549' do
   title 'All RHEL 8 networked systems must have SSH installed.'
-  desc 'Without protection of the transmitted information, confidentiality and
+  desc "Without protection of the transmitted information, confidentiality and
 integrity may be compromised because unprotected communications can be
 intercepted and either read or altered.
 
@@ -15,7 +15,7 @@ interception and modification.
 can be accomplished by physical means (e.g., employing physical distribution
 systems) or by logical means (e.g., employing cryptographic techniques). If
 physical means of protection are employed, then logical means (cryptography) do
-not have to be employed, and vice versa.'
+not have to be employed, and vice versa."
   desc 'check', 'Verify SSH is installed with the following command:
 
 $ sudo yum list installed openssh-server
@@ -23,9 +23,9 @@ $ sudo yum list installed openssh-server
 openssh-server.x86_64                 8.0p1-5.el8          @anaconda
 
 If the "SSH server" package is not installed, this is a finding.'
-  desc 'fix', 'Install SSH packages onto the host with the following command:
+  desc 'fix', "Install SSH packages onto the host with the following command:
 
-$ sudo yum install openssh-server.x86_64'
+$ sudo yum install openssh-server.x86_64"
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000423-GPOS-00187'
@@ -38,13 +38,23 @@ $ sudo yum install openssh-server.x86_64'
   tag nist: ['SC-8']
 
   if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
+    if package('openssh-server').installed?
+      it 'OpenSSH Server should be installed when allowed in Docker environment' do
+        expect(input('allow_openssh_server')).to eq(true), 'OpenSSH Server is installed but not allowed in Docker environment'
+      end
+    else
+      impact 0.0
+      describe 'OpenSSH Server is not installed in Docker environment' do
+        skip 'This requirement is not applicable as the OpenSSH Server is not installed in the Docker environment.'
+      end
+    end
+  elsif input('allow_openssh_server') == false && package('openssh-server').installed?
+    it 'OpenSSH Server should not be installed when not allowed' do
+      expect(package('openssh-server').installed?).not_to eq(true), 'OpenSSH Server is installed but not approved for use'
     end
   else
-    describe package('openssh-server') do
-      it { should be_installed }
+    it 'OpenSSH Server should be installed' do
+      expect(package('openssh-server').installed?).to eq(true), 'OpenSSH Server is required to be installed'
     end
   end
 end
