@@ -37,24 +37,25 @@ $ sudo yum install openssh-server.x86_64"
   tag cci: ['CCI-002418']
   tag nist: ['SC-8']
 
+  impact 0.0 if (virtualization.system.eql?('docker') && !package('openssh-server').installed? )
+
   if virtualization.system.eql?('docker')
-    if package('openssh-server').installed?
-      it 'OpenSSH Server should be installed when allowed in Docker environment' do
-        expect(input('allow_openssh_server')).to eq(true), 'OpenSSH Server is installed but not allowed in Docker environment'
+    describe 'In a container Environment' do
+      if package('openssh-server').installed?
+        it 'the OpenSSH Server should be installed when allowed in Docker environment' do
+          expect(input('allow_container_openssh_server')).to eq(true), 'OpenSSH Server is installed but not approved for the Docker environment'
+        end
+      else
+        it 'OpenSSH Server is not installed in the container environment' do
+          skip 'This requirement is not applicable as the OpenSSH Server is not installed in the Docker environment.'
+        end
       end
-    else
-      impact 0.0
-      describe 'OpenSSH Server is not installed in Docker environment' do
-        skip 'This requirement is not applicable as the OpenSSH Server is not installed in the Docker environment.'
-      end
-    end
-  elsif input('allow_openssh_server') == false && package('openssh-server').installed?
-    it 'OpenSSH Server should not be installed when not allowed' do
-      expect(package('openssh-server').installed?).not_to eq(true), 'OpenSSH Server is installed but not approved for use'
     end
   else
-    it 'OpenSSH Server should be installed' do
-      expect(package('openssh-server').installed?).to eq(true), 'OpenSSH Server is required to be installed'
+    describe 'In a machine environment' do
+      it 'the OpenSSH Server should be installed' do
+        expect(package('openssh-server').installed?).to eq(true), 'the OpenSSH Server is not installed'
+      end
     end
   end
 end

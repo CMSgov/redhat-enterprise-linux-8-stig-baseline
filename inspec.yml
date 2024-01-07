@@ -10,7 +10,7 @@ inspec_version: ">= 5.0"
 
 inputs:
   # SV-244549
-  - name: allow_openssh_server
+  - name: allow_container_openssh_server
     description: "If the OpenSSH Server has been approved outside standard container guidance to default transprots"
     type: Boolean
     value: false

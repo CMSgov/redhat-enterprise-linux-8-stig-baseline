@@ -12,4 +12,4 @@ network_router: false
 use_fapolicyd: true
 smart_card_enabled: false
 external_firewall: false
-allow_openssh_server: true
+allow_container_openssh_server: false

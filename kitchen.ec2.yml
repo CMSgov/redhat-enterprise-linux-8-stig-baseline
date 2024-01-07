@@ -16,11 +16,6 @@ driver:
   interface: public
   skip_cost_warning: true
   privileged: true
-  tags:
-    CreatedBy: test-kitchen
-    # BuiltBy: "tk-%{platform}_%{suite}"
-    # ConfiguredTo: "tk-%{provisioner}, tk-%{provisioner.role}"
-    # ValidatedTo: tk-%{verifier.inspec_tests.name}
 
 provisioner:
   name: ansible_playbook
@@ -35,6 +30,23 @@ provisioner:
   requirements_path: spec/ansible/roles/requirements.yml
   ansible_extra_flags: <%= ENV['ANSIBLE_EXTRA_FLAGS'] %>
 
+suites:
+  - name: vanilla
+    provisioner:
+      playbook: spec/ansible/roles/ansible-role-rhel-vanilla.yml
+    driver:
+      tags:
+        Name: Vanilla-<%= ENV['USER'] %>
+        CreatedBy: test-kitchen
+
+  - name: hardened
+    provisioner:
+      playbook: spec/ansible/roles/ansible-role-rhel-hardened.yml
+    driver:
+      tags:
+        Name: Hardened-<%= ENV['USER'] %>
+        CreatedBy: test-kitchen
+
 lifecycle:
   pre_converge:
     - remote: |
@@ -48,8 +60,3 @@ lifecycle:
         sudo chage -d $(( $( date +%s ) / 86400 )) ec2-user
         echo "NOTICE - updating ec2-user sudo config"
         sudo chmod 600 /etc/sudoers && sudo sed -i'' "/ec2-user/d" /etc/sudoers && sudo chmod 400 /etc/sudoers
-
-transport:
-  name: ssh
-  #https://github.com/neillturner/kitchen-ansible/issues/295
-  max_ssh_sessions: 2
