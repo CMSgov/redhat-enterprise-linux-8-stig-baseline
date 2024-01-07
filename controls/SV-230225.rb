@@ -105,57 +105,45 @@ Agreement for details."
   tag cci: ['CCI-000048']
   tag nist: ['AC-8 a']
 
-  if virtualization.system.eql?('docker') && !file('/etc/ssh/sshd_config').exist?
-    impact 0.0
-    describe 'Control not applicable - SSH is not installed within containerized RHEL' do
-      skip 'Control not applicable - SSH is not installed within containerized RHEL'
+  only_if("Control not applicable - SSH is not installed within containerized RHEL", impact: 0.0) {
+    !virtualization.system.eql?('docker') || file('/etc/ssh/sshd_config').exist?
+  }
+
+  # When Banner is commented, not found, disabled, or the specified file does not exist, this is a finding.
+  banner_file = sshd_config.banner
+
+  # Banner property is commented out.
+  if banner_file.nil?
+    describe 'The SSHD Banner is not set' do
+      subject { banner_file.nil? }
+      it { should be false }
     end
-  else
-    # When Banner is commented, not found, disabled, or the specified file does not exist, this is a finding.
-    banner_files = [sshd_config.banner].flatten
+  end
 
-    describe 'Banner file entries in sshd_config' do
-      subject { banner_files }
-      it { should_not be_empty }
+  # Banner property is set to "none"
+  if !banner_file.nil? && !banner_file.match(/none/i).nil?
+    describe 'The SSHD Banner is disabled' do
+      subject { banner_file.match(/none/i).nil? }
+      it { should be true }
     end
+  end
 
-    banner_files.each do |banner_file|
-      # Banner property is commented out.
-      if banner_file.nil?
-        describe 'The SSHD Banner is not set' do
-          subject { banner_file.nil? }
-          it { should be false }
-        end
-      end
-
-      # Banner property is set to "none"
-      if !banner_file.nil? && !banner_file.match(/none/i).nil?
-        describe 'The SSHD Banner is disabled' do
-          subject { banner_file.match(/none/i).nil? }
-          it { should be true }
-        end
-      end
-
-      # Banner property provides a path to a file, however, it does not exist.
-      if !banner_file.nil? && banner_file.match(/none/i).nil? && !file(banner_file).exist?
-        describe 'The SSHD Banner is set, but, the file does not exist' do
-          subject { file(banner_file).exist? }
-          it { should be true }
-        end
-      end
-
-      # Banner property provides a path to a file and it exists.
-      next unless !banner_file.nil? && banner_file.match(/none/i).nil? && file(banner_file).exist?
-
-      describe.one do
-        banner = file(banner_file).content.gsub(/[\r\n\s]/, '')
-        clean_banner = input('banner_message_text_ral').gsub(/[\r\n\s]/, '')
-
-        describe 'The SSHD Banner is set to the standard banner and has the correct text' do
-          subject { banner }
-          it { should cmp clean_banner }
-        end
-      end
+  # Banner property provides a path to a file, however, it does not exist.
+  if !banner_file.nil? && banner_file.match(/none/i).nil? && !file(banner_file).exist?
+    describe 'The SSHD Banner is set, but, the file does not exist' do
+      subject { file(banner_file).exist? }
+      it { should be true }
     end
+  end
+
+  # Banner property provides a path to a file and it exists.
+  next unless !banner_file.nil? && banner_file.match(/none/i).nil? && file(banner_file).exist?
+
+  banner = file(banner_file).content.gsub(/[\r\n\s]/, '')
+  clean_banner = input('banner_message_text_ral').gsub(/[\r\n\s]/, '')
+
+  describe 'The SSHD Banner is set to the standard banner and has the correct text' do
+    subject { banner }
+    it { should cmp clean_banner }
   end
 end
