@@ -345,8 +345,8 @@
 | A        | SV-244544 | N        | Y        | Y      | Y     | N                              | `external_firewall`                                                                                     |
 | A        | SV-244545 |          |          |        | Y     |                                |                                                                                                         |
 | A        | SV-244546 | Y        |          |        | Y     |                                |                                                                                                         |
-| A        | SV-244547 |          |          |        | Y     |                                |                                                                                                         |
-| A        | SV-244548 |          | Y        | Y      | Y     | N                              | `peripherals_package`<br>`peripherals_service`                                                          |
+| A        | SV-244547 |          | Y        | Y      | Y     | N                              | `peripherals_package`                                                                                   |
+| A        | SV-244548 |          | Y        | Y      | Y     | N                              | `peripherals_service`                                                                                   |
 | A        | SV-244549 |          | Y        | Y      | Y     | N                              | `allow_openssh_server`                                                                                  |
 | A        | SV-244550 |          | Y        | Y      | Y     | `yet_to_be_nameed`             | `sysctl_conf_files`                                                                                     |
 | A        | SV-244551 | *        | Y        | Y      | Y     | `yet_to_be_named`              | `sysctl_conf_files`                                                                                     |

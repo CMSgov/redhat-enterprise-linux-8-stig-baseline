@@ -41,14 +41,15 @@ $ sudo yum install usbguard.x86_64'
   tag cci: ['CCI-001958']
   tag nist: ['IA-3']
 
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
-    end
-  else
-    describe package('usbguard') do
-      it { should be_installed }
+  only_if('This requirement is does not apply to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  peripherals_package = input('peripherals_package')
+
+  describe package(peripherals_package) do
+    it "is expected to be installed. \n\tPlease ensure to configure the service to ensure your devices function as expected." do
+      expect(subject.installed?).to be(true), "The #{peripherals_package} package is not installed"
     end
   end
 end

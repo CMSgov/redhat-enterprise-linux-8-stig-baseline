@@ -56,14 +56,7 @@ a keyboard or mouse'
     !virtualization.system.eql?('docker')
   }
 
-  peripherals_package = input('peripherals_package')
   peripherals_service = input('peripherals_service')
-
-  describe package(peripherals_package) do
-    it "is expected to be installed. \n\tPlease ensure to configure the service to ensure your devices function as expected." do
-      expect(subject.installed?).to be(true), "The #{peripherals_package} package is not installed"
-    end
-  end
 
   describe service(peripherals_service) do
     it "is expected to be running. \n\tPlease ensure to configure the service to ensure your devices function as expected." do
