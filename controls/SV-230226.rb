@@ -78,8 +78,8 @@ Run the following command to update the database:
   tag cci: ['CCI-000048']
   tag nist: ['AC-8 a']
 
-  only_if("The system does not have GNOME installed, or we are in a container, this requirement is Not
-        Applicable.", impact: 0.0) { package('gnome-desktop3').installed? && virtualization.system.eql?('docker') }
+  only_if("The system does not have GNOME installed; this requirement is Not
+        Applicable.", impact: 0.0) { package('gnome-desktop3').installed? }
 
   describe command('grep ^banner-message-text /etc/dconf/db/local.d/*') do
     its('stdout.strip') { should cmp input('banner_message_text_gui') }

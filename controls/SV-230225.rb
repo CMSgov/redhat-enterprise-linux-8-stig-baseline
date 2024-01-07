@@ -142,8 +142,9 @@ Agreement for details."
   banner = file(banner_file).content.gsub(/[\r\n\s]/, '')
   clean_banner = input('banner_message_text_ral').gsub(/[\r\n\s]/, '')
 
-  describe 'The SSHD Banner is set to the standard banner and has the correct text' do
-    subject { banner }
-    it { should cmp clean_banner }
+  describe 'The SSHD Banner ' do
+    it "is set to the standard banner and has the correct text" do
+      expect(banner).to eq(clean_banner), "Banner does not match expected text"
+    end
   end
 end

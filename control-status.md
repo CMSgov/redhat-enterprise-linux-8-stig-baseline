@@ -4,8 +4,8 @@
 | W        | SV-230222 | Y        | Y        | Y      | Y     | N                              | `disable_slow_controls`                                                                                 |
 | W        | SV-230223 | Y        | Y        | Y      | Y     | N                              | `use_fips`                                                                                              |
 | W        | SV-230224 | Y        | Y        | Y      | Y     | N                              | `data_at_rest_exempt`                                                                                   |
-| W        | SV-230225 |          |          |        | Y     |                                |                                                                                                         |
-| W        | SV-230226 |          |          |        | Y     |                                |                                                                                                         |
+| W        | SV-230225 |          | Y        | Y      | Y     | N                              | `banner_message_text_ral`                                                                               |
+| W        | SV-230226 |          | Y        | Y      | Y     | N                              | `banner_message_text_gui`                                                                               |
 | W        | SV-230227 |          |          |        | Y     |                                |                                                                                                         |
 | W        | SV-230228 |          |          |        | Y     |                                |                                                                                                         |
 | W        | SV-230229 |          | Y        | Y      | Y     | Y                              | `root_ca_location`                                                                                      |
