@@ -7,7 +7,7 @@
 | W        | SV-230225 |          | Y        | Y      | Y     | N                              | `banner_message_text_ral`                                                                               |
 | W        | SV-230226 |          | Y        | Y      | Y     | N                              | `banner_message_text_gui`                                                                               |
 | W        | SV-230227 |          | Y        | Y      | Y     | N                              | `banner_message_text_cli`                                                                               |
-| W        | SV-230228 |          |          |        | Y     |                                |                                                                                                         |
+| W        | SV-230228 |          | Y        | Y      | Y     | N                              | None                                                                                                    |
 | W        | SV-230229 |          | Y        | Y      | Y     | Y                              | `root_ca_location`                                                                                      |
 | W        | SV-230230 |          |          |        | Y     |                                |                                                                                                         |
 | W        | SV-230231 |          |          |        | Y     |                                |                                                                                                         |
