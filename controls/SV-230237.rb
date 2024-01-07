@@ -37,7 +37,9 @@ password sufficient pam_unix.so sha512'
   tag cci: ['CCI-000803']
   tag nist: ['IA-7']
 
-  describe pam('/etc/pam.d/password-auth') do
-    its('lines') { should match_pam_rule('password sufficient pam_unix.so sha512') }
+  pam_auth_files = input('pam_auth_files')
+
+  describe pam(pam_auth_files['password-auth']) do
+    its('lines') { should match_pam_rule('.* .* pam_unix.so sha512') }
   end
 end

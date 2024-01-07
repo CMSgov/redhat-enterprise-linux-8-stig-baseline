@@ -29,14 +29,10 @@ mode by adding the following line to the
   tag cci: ['CCI-000213']
   tag nist: ['AC-3']
 
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
-    end
-  else
-    describe service('rescue') do
-      its('params.ExecStart') { should include '/usr/lib/systemd/systemd-sulogin-shell rescue' }
-    end
+  only_if('Control not applicable within a container without sudo enabled', impact: 0.0) do
+    !virtualization.system.eql?('docker')
+  end
+  describe service('rescue') do
+    its('params.ExecStart') { should include '/usr/lib/systemd/systemd-sulogin-shell rescue' }
   end
 end

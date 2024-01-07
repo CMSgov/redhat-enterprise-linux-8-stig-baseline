@@ -39,7 +39,7 @@ the following command:
   tag nist: ['AC-3']
 
   only_if('Control not applicable within a container without sudo enabled', impact: 0.0) do
-    virtualization.system.eql?('docker')
+    !virtualization.system.eql?('docker')
   end
 
   if file('/sys/firmware/efi').exist?

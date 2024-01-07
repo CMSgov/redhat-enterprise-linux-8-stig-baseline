@@ -13,10 +13,10 @@
 | W        | SV-230231 |          | Y        | Y      | Y     | N                              | None                                                                                                    |
 | W        | SV-230232 |          | Y        | Y      | Y     | N                              | None                                                                                                    |
 | W        | SV-230233 | Y        | Y        | Y      | Y     | N                              | `sha_crypt_min_rounds`<br>`sha_crypt_max_rounds`                                                        |
-| W        | SV-230234 |          |          |        | Y     |                                |                                                                                                         |
-| W        | SV-230235 |          |          |        | Y     |                                |                                                                                                         |
-| W        | SV-230236 |          |          |        | Y     |                                |                                                                                                         |
-| W        | SV-230237 |          |          |        | Y     |                                |                                                                                                         |
+| W        | SV-230234 |          | Y        | Y      | Y     | N                              | `grub_uefi_user_boot_files`                                                                             |
+| W        | SV-230235 |          | Y        | Y      | Y     | N                              | `grub_user_boot_files`                                                                                  |
+| W        | SV-230236 |          | Y        | Y      | Y     | N                              | None                                                                                                    |
+| W        | SV-230237 |          | Y        | Y      | Y     | N                              | `pam_auth_files`                                                                                        |
 | W        | SV-230238 |          |          |        | Y     |                                |                                                                                                         |
 | W        | SV-230239 |          |          |        | Y     |                                |                                                                                                         |
 | W        | SV-230240 |          |          |        | Y     |                                |                                                                                                         |
