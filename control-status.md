@@ -1,4 +1,4 @@
-| Essignee | Control   | Priority | Reviewed | Tested | V1R12 | Needs New Resource(s)?         | Inputs                                                                                                  |
+| Assignee | Control   | Priority | Reviewed | Tested | V1R12 | Needs New Resource(s)?         | Inputs                                                                                                  |
 | -------- | --------- | -------- | -------- | ------ | ----- | ------------------------------ | ------------------------------------------------------------------------------------------------------- |
 | W        | SV-230221 |          | Y        | Y      | Y     | N                              | None                                                                                                    |
 | W        | SV-230222 | Y        | Y        | Y      | Y     | N                              | `disable_slow_controls`                                                                                 |
