@@ -42,10 +42,10 @@ following command:
   else
     passwordless_keys = input('private_key_files').select { |kf|
       file(kf).exist? &&
-      !inspec.command("ssh-keygen -y -P '' -f #{kf}").stderr.match('incorrect passphrase supplied to decrypt private key')
+        !inspec.command("ssh-keygen -y -P '' -f #{kf}").stderr.match('incorrect passphrase supplied to decrypt private key')
     }
-    describe "Private key files" do
-      it "should all have passwords set" do
+    describe 'Private key files' do
+      it 'should all have passwords set' do
         expect(passwordless_keys).to be_empty, "Passwordless key files:\n\t- #{passwordless_keys.join("\n\t- ")}"
       end
     end

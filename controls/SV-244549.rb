@@ -37,7 +37,7 @@ $ sudo yum install openssh-server.x86_64"
   tag cci: ['CCI-002418']
   tag nist: ['SC-8']
 
-  impact 0.0 if (virtualization.system.eql?('docker') && !package('openssh-server').installed? )
+  impact 0.0 if virtualization.system.eql?('docker') && !package('openssh-server').installed?
 
   if virtualization.system.eql?('docker')
     describe 'In a container Environment' do
