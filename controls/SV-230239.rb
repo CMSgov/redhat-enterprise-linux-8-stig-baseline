@@ -46,7 +46,7 @@ requirement or remove it from the system with the following command:
   if krb5_workstation.installed? && krb5_workstation.version >= '1.17-18.el8'
     impact 0.0
     describe 'N/A' do
-      skip "Kerberos installation is at version 1.17-18.el8 or greater; this control is Not Applicable"
+      skip 'Kerberos installation is at version 1.17-18.el8 or greater; this control is Not Applicable'
     end
   else
     describe krb5_workstation do

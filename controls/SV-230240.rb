@@ -43,11 +43,10 @@ functions.
   tag cci: ['CCI-001084']
   tag nist: ['SC-3']
 
-
   only_if('Control not applicable within a container', impact: 0.0) do
     !virtualization.system.eql?('docker')
   end
-  
+
   describe selinux do
     it { should be_enforcing }
   end

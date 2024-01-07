@@ -36,7 +36,6 @@ installed with the following command:
   tag cci: ['CCI-001084']
   tag nist: ['SC-3']
 
-
   only_if('Control not applicable within a container', impact: 0.0) do
     !virtualization.system.eql?('docker')
   end
