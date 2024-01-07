@@ -31,9 +31,9 @@ until the passwords can be regenerated with SHA-512.'
 
   weak_pw_hash_users = inspec.shadow.where { password !~ /^[*!]{1,2}.*$|^\$6\$.*$|^$/ }.users
 
-  describe weak_pw_hash_users do
-    it 'should only contain SHA512 hashes' do
-      message = "Users without SHA512 hashes: #{weak_pw_hash_users.join(', ')}"
+  describe 'All stored passwords' do
+    it 'should only be hashed with the SHA512 algorithm' do
+      message = "Users without SHA512 hashes:\n\t- #{weak_pw_hash_users.join("\n\t- ")}"
       expect(weak_pw_hash_users).to be_empty, message
     end
   end
