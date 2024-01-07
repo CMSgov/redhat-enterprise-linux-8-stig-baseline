@@ -122,28 +122,25 @@ Agreement for details."'
   tag cci: ['CCI-000048']
   tag nist: ['AC-8 a']
 
-  only_if("Control not applicable within a container", impact: 0.0) {
+  only_if('Control not applicable within a container', impact: 0.0) {
     !virtualization.system.eql?('docker')
   }
 
   banner_file = file('/etc/issue')
-  banner_missing = !banner_file.exist?
 
   describe banner_file do
     it { should exist }
   end
 
-  unless !banner_file.exist?
+  if banner_file.exist?
 
     banner = banner_file.content.gsub(/[\r\n\s]/, '')
     expected_banner = input('banner_message_text_cli').gsub(/[\r\n\s]/, '')
 
     describe 'The CLI Login Banner ' do
-      it "is set to the standard banner and has the correct text" do
-        expect(banner).to eq(expected_banner), "Banner does not match expected text"
+      it 'is set to the standard banner and has the correct text' do
+        expect(banner).to eq(expected_banner), 'Banner does not match expected text'
       end
     end
   end
 end
-
-

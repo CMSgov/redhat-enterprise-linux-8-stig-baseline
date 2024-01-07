@@ -105,7 +105,7 @@ Agreement for details."
   tag cci: ['CCI-000048']
   tag nist: ['AC-8 a']
 
-  only_if("Control not applicable - SSH is not installed within containerized RHEL", impact: 0.0) {
+  only_if('Control not applicable - SSH is not installed within containerized RHEL', impact: 0.0) {
     !virtualization.system.eql?('docker') || file('/etc/ssh/sshd_config').exist?
   }
 
@@ -143,8 +143,8 @@ Agreement for details."
   expected_banner = input('banner_message_text_ral').gsub(/[\r\n\s]/, '')
 
   describe 'The SSHD Banner' do
-    it "is set to the standard banner and has the correct text" do
-      expect(banner).to eq(expected_banner), "Banner does not match expected text"
+    it 'is set to the standard banner and has the correct text' do
+      expect(banner).to eq(expected_banner), 'Banner does not match expected text'
     end
   end
 end

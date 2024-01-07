@@ -85,8 +85,8 @@ Run the following command to update the database:
   expected_banner = input('banner_message_text_gui').gsub(/[\r\n\s]/, '')
 
   describe 'The GUI Banner ' do
-    it "is set to the standard banner and has the correct text" do
-      expect(banner).to eq(expected_banner), "Banner does not match expected text"
+    it 'is set to the standard banner and has the correct text' do
+      expect(banner).to eq(expected_banner), 'Banner does not match expected text'
     end
   end
 end
