@@ -52,15 +52,25 @@ a keyboard or mouse'
   tag cci: ['CCI-001958']
   tag nist: ['IA-3']
 
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
+  only_if('This requirement is does not apply to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  peripherals_package = input('peripherals_package')
+  peripherals_service = input('peripherals_service')
+
+  describe package(peripherals_package) do
+    it "is expected to be installed. \n\tPlease ensure to configure the service to ensure your devices function as expected." do
+      expect(subject.installed?).to be(true), "The #{peripherals_package} package is not installed"
     end
-  else
-    describe service('usbguard') do
-      it { should be_running }
-      it { should be_enabled }
+  end
+
+  describe service(peripherals_service) do
+    it "is expected to be running. \n\tPlease ensure to configure the service to ensure your devices function as expected." do
+      expect(subject.running?).to be(true), "The #{peripherals_service} service is not running"
+    end
+    it "is expected to be enabled. \n\tPlease ensure to configure the service to ensure your devices function as expected." do
+      expect(subject.enabled?).to be(true), "The #{peripherals_service} service is not enabled"
     end
   end
 end
