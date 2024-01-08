@@ -50,6 +50,7 @@ control 'SV-251711' do
   tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host', 'container-conditional'
 
   only_if('Control not applicable within a container without sudo enabled', impact: 0.0) do
     virtualization.system.eql?('docker') && !command('sudo').exist?

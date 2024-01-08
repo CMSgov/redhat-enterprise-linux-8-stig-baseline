@@ -21,6 +21,7 @@ If any system-wide shared library directory is returned, this is a finding.)
   tag 'documentable'
   tag cci: ['CCI-001499']
   tag nist: ['CM-5 (6)']
+  tag 'host', 'container', 'review'
 
   non_root_owned_libs = input('system_libraries').reject { |lib| file(lib).owned_by?('root') }
 

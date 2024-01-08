@@ -33,15 +33,13 @@ generator entropy gatherer service with the following command:
   tag fix_id: 'F-47759r743829_fix'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host'
 
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
-    end
-  else
-    describe package('rng-tools') do
-      it { should be_installed }
-    end
+  only_if('This requirement is Not Applicable in the container', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  describe package('rng-tools') do
+    it { should be_installed }
   end
 end

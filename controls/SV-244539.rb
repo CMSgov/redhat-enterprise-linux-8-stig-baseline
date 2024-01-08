@@ -69,20 +69,20 @@ file should be created under the appropriate subdirectory.
   tag fix_id: 'F-47771r743865_fix'
   tag cci: ['CCI-000057']
   tag nist: ['AC-11 a']
+  tag 'host'
 
-  if virtualization.system.eql?('docker')
+  only_if('This requirement is Not Applicable in the container', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  if !package('gnome-desktop3').installed?
     impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
-    end
-  elsif package('gnome-desktop3').installed?
-    describe command('grep -i lock-enabled /etc/dconf/db/local.d/locks/*') do
-      its('stdout.split') { should include '/org/gnome/desktop/screensaver/lock-enabled' }
+    describe 'The GNOME desktop is not installed, this control is Not Applicable.' do
+      skip 'The GNOME desktop is not installed, this control is Not Applicable.'
     end
   else
-    impact 0.0
-    describe 'The GNOME desktop is not installed' do
-      skip 'The GNOME desktop is not installed, this control is Not Applicable.'
+    describe command('grep -i lock-enabled /etc/dconf/db/local.d/locks/*') do
+      its('stdout.split') { should include '/org/gnome/desktop/screensaver/lock-enabled' }
     end
   end
 end

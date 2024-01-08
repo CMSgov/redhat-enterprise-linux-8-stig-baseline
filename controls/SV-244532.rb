@@ -45,6 +45,7 @@ local interactive user's files and directories, use the following command:
   tag fix_id: 'F-47764r743844_fix'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host', 'container'
 
   ignore_shells = input('non_interactive_shells').join('|')
   exempt_home_users = input('exempt_home_users').join('|')
@@ -53,7 +54,9 @@ local interactive user's files and directories, use the following command:
   users.where { !username.match(exempt_home_users) && !shell.match(ignore_shells) && (uid >= 1000 || uid.zero?) }.entries.each do |user_info|
     findings += command("find #{user_info.home} -xdev -not -gid #{user_info.gid}").stdout.split("\n")
   end
-  describe findings do
-    it { should be_empty }
+  describe 'All files in the users home directory' do
+    it 'are expected to be owned by the user' do
+      expect(findings).to be_empty, 'Some files in the users home directory are not owned by the user. Please ensure all files are owned by thier user.'
+    end
   end
 end

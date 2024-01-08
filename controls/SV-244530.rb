@@ -26,13 +26,13 @@ the /boot/efi directory.'
   tag fix_id: 'F-47762r743838_fix'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host'
 
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
-    end
-  elsif file('/sys/firmware/efi').exist?
+  only_if('This requirement is Not Applicable in the container', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  if file('/sys/firmware/efi').exist?
     describe mount('/boot/efi') do
       it { should be_mounted }
       its('options') { should include 'nosuid' }
@@ -40,7 +40,7 @@ the /boot/efi directory.'
   else
     impact 0.0
     describe 'System running BIOS' do
-      skip 'The System is running BIOS, this control is Not Applicable.'
+      skip 'The System is running a BIOS, this control is Not Applicable.'
     end
   end
 end

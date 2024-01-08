@@ -34,6 +34,7 @@ Add the following line to the "/etc/pam.d/password-auth" file (or modify the lin
   tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host', 'container'
 
   only_if('This requirement only applies to RHEL 8 versions below 8.4', impact: 0.0) {
     os.release.to_f < 8.4

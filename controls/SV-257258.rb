@@ -26,6 +26,7 @@ The "logind" service must be restarted for the changes to take effect. To restar
   tag 'documentable'
   tag cci: ['CCI-001133']
   tag nist: ['SC-10']
+  tag 'container', 'host'
 
   stop_idle_session_sec = input('stop_idle_session_sec')
 

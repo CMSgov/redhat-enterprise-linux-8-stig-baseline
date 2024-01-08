@@ -53,6 +53,7 @@ $ sudo sysctl --system'
   tag fix_id: 'F-47786r858831_fix'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host'
 
   # Define the kernel parameter to be checked
   parameter = 'net.core.bpf_jit_harden'

@@ -39,21 +39,22 @@ file should be created under the appropriate subdirectory.
   tag fix_id: 'F-47768r743856_fix'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host'
 
-  if virtualization.system.eql?('docker')
+  only_if('This requirement is Not Applicable in the container', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  no_gui = command('ls /usr/share/xsessions/*').stderr.match?(/No such file or directory/)
+
+  if no_gui
     impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
-    end
-  elsif package('gnome-desktop3').installed?
-    describe command('gsettings get org.gnome.login-screen disable-user-list') do
-      its('stdout.strip') { should cmp 'true' }
+    describe 'The system does not have a GUI installed, this requirement is Not Applicable.' do
+      skip 'The system does not have GNOME installed, this requirement is Not Applicable.'
     end
   else
-    impact 0.0
-    describe 'The system does not have GNOME installed' do
-      skip "The system does not have GNOME installed, this requirement is Not
-        Applicable."
+    describe command('gsettings get org.gnome.login-screen disable-user-list') do
+      its('stdout.strip') { should cmp 'true' }
     end
   end
 end

@@ -9,6 +9,20 @@ version: 1.12.0
 inspec_version: ">= 5.0"
 
 inputs:
+  # SV-244528, SV-244525
+  - name: sshd_config_values
+    decription: 'The agreed sshd server config values for the organization'
+    type: Hash
+    value:
+      GSSAPIAuthentication: 'no'
+      ClientAliveInterval: '600'
+
+  # SV-244543
+  - name: alert_method
+    description: 'The method used to provide real-time information to the ISSO or AO'
+    type: String
+    value: 'email'
+
   # SV-244547
   - name: peripherals_package
     description: "The name of the package used to managed connected peripherals"

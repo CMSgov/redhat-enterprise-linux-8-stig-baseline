@@ -40,8 +40,9 @@ $ sudo yum install usbguard.x86_64'
   tag fix_id: 'F-47779r743889_fix'
   tag cci: ['CCI-001958']
   tag nist: ['IA-3']
+  tag 'host'
 
-  only_if('This requirement is does not apply to containers', impact: 0.0) {
+  only_if('This requirement is Not Applicable in the container', impact: 0.0) {
     !virtualization.system.eql?('docker')
   }
 

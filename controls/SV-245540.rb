@@ -31,6 +31,7 @@ Security for Linux (ENSL) in conjunction with SELinux.
   tag fix_id: 'F-48770r754729_fix'
   tag cci: ['CCI-001233']
   tag nist: ['SI-2 (2)']
+  tag 'host'
 
   only_if('Control not applicable within a container', impact: 0.0) do
     !virtualization.system.eql?('docker')

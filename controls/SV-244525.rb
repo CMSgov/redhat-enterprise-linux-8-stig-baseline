@@ -37,15 +37,31 @@ For the changes to take effect, the SSH daemon must be restarted.
   tag fix_id: 'F-47757r917885_fix'
   tag cci: ['CCI-001133']
   tag nist: ['SC-10']
+  tag 'host', 'container-conditional'
 
-  if virtualization.system.eql?('docker') && !file('/etc/ssh/sshd_config').exist?
-    impact 0.0
-    describe 'Control not applicable - SSH is not installed within containerized RHEL' do
-      skip 'Control not applicable - SSH is not installed within containerized RHEL'
+  impact 0.0 if virtualization.system.eql?('docker') && !package('openssh-server').installed?
+
+  setting = 'ClientAliveInterval'
+  gssapi_authentication = input('sshd_config_values')
+  value = gssapi_authentication[setting]
+
+  if virtualization.system.eql?('docker')
+    describe 'In a container Environment' do
+      if package('openssh-server').installed?
+        it 'the OpenSSH Server should be installed when allowed in Docker environment' do
+          expect(input('allow_container_openssh_server')).to eq(true), 'OpenSSH Server is installed but not approved for the Docker environment'
+        end
+      else
+        it 'the OpenSSH Server is not installed' do
+          skip 'This requirement is not applicable as the OpenSSH Server is not installed in the Docker environment.'
+        end
+      end
     end
   else
-    describe sshd_config do
-      its('ClientAliveInterval') { should cmp <= '600' }
+    describe 'The OpenSSH Server configuration' do
+      it "has the correct #{setting} configuration" do
+        expect(sshd_config.params[setting.downcase]).to cmp(value), "The #{setting} setting in the SSHD config is not correct. Please ensure it set to '#{value}'."
+      end
     end
   end
 end

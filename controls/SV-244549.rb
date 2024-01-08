@@ -36,6 +36,7 @@ $ sudo yum install openssh-server.x86_64"
   tag fix_id: 'F-47781r743895_fix'
   tag cci: ['CCI-002418']
   tag nist: ['SC-8']
+  tag 'host', 'container-conditional'
 
   impact 0.0 if virtualization.system.eql?('docker') && !package('openssh-server').installed?
 

@@ -25,6 +25,7 @@ A reboot is required for the changes to take effect.'
   tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host'
 
   only_if('This requirement is Not Applicable inside the container', impact: 0.0) {
     !virtualization.system.eql?('docker')

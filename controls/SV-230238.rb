@@ -44,6 +44,7 @@ authentication.
   tag fix_id: 'F-32882r567461_fix'
   tag cci: ['CCI-000803']
   tag nist: ['IA-7']
+  tag 'host', 'container'
 
   krb5_server = package('krb5-server')
   krb5_workstation = package('krb5-workstation')

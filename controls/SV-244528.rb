@@ -1,9 +1,8 @@
 control 'SV-244528' do
-  title 'The RHEL 8 SSH daemon must not allow GSSAPI authentication, except to
-fulfill documented and validated mission requirements.'
-  desc 'Configuring this setting for the SSH daemon provides additional
+  title 'The RHEL 8 SSH daemon must not allow GSSAPI authentication, except to fulfill documented and validated mission requirements.'
+  desc "Configuring this setting for the SSH daemon provides additional
 assurance that remote logon via SSH will require a password, even in the event
-of misconfiguration elsewhere.'
+of misconfiguration elsewhere."
   desc 'check', 'Verify the SSH daemon does not allow GSSAPI authentication with the following command:
 
 $ sudo grep -ir GSSAPIAuthentication  /etc/ssh/sshd_config*
@@ -32,15 +31,31 @@ the SSH daemon, run the following command:
   tag fix_id: 'F-47760r743832_fix'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host', 'container-conditional'
 
-  if virtualization.system.eql?('docker') && !file('/etc/ssh/sshd_config').exist?
-    impact 0.0
-    describe 'Control not applicable - SSH is not installed within containerized RHEL' do
-      skip 'Control not applicable - SSH is not installed within containerized RHEL'
+  impact 0.0 if virtualization.system.eql?('docker') && !package('openssh-server').installed?
+
+  setting = 'GSSAPIAuthentication'
+  gssapi_authentication = input('sshd_config_values')
+  value = gssapi_authentication[setting]
+
+  if virtualization.system.eql?('docker')
+    describe 'In a container Environment' do
+      if package('openssh-server').installed?
+        it 'the OpenSSH Server should be installed when allowed in Docker environment' do
+          expect(input('allow_container_openssh_server')).to eq(true), 'OpenSSH Server is installed but not approved for the Docker environment'
+        end
+      else
+        it 'the OpenSSH Server is not installed' do
+          skip 'This requirement is not applicable as the OpenSSH Server is not installed in the Docker environment.'
+        end
+      end
     end
   else
-    describe sshd_config do
-      its('GSSAPIAuthentication') { should cmp 'no' }
+    describe 'The OpenSSH Server configuration' do
+      it "has the correct #{setting} configuration" do
+        expect(sshd_config.params[setting.downcase]).to cmp(value), "The #{setting} setting in the SSHD config is not correct. Please ensure it set to '#{value}'."
+      end
     end
   end
 end

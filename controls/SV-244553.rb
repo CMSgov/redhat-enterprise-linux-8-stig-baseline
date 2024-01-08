@@ -54,6 +54,7 @@ $ sudo sysctl --system'
   tag fix_id: 'F-47785r858817_fix'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host'
 
   # Define the kernel parameter to be checked
   parameter = 'net.ipv4.conf.all.accept_redirects'

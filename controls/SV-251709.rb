@@ -20,6 +20,7 @@ control 'SV-251709' do
   tag 'documentable'
   tag cci: ['CCI-001499']
   tag nist: ['CM-5 (6)']
+  tag 'host', 'container'
 
   non_root_owned_libs = input('system_libraries').filter { |lib|
     !input('required_system_accounts').include?(file(lib).group)

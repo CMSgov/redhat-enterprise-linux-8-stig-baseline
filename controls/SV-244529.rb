@@ -21,15 +21,13 @@ If a separate entry for "/var/tmp" is not in use, this is a finding.'
   tag fix_id: 'F-47761r743835_fix'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host'
 
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
-    end
-  else
-    describe etc_fstab.where { mount_point == '/var/tmp' } do
-      it { should exist }
-    end
+  only_if('This requirement is Not Applicable in the container', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  describe etc_fstab.where { mount_point == '/var/tmp' } do
+    it { should exist }
   end
 end

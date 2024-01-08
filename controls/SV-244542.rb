@@ -41,16 +41,14 @@ following commands:
   tag fix_id: 'F-47774r743874_fix'
   tag cci: ['CCI-000169']
   tag nist: ['AU-12 a']
+  tag 'host'
 
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
-    end
-  else
-    describe service('auditd') do
-      it { should be_enabled }
-      it { should be_running }
-    end
+  only_if('This requirement is Not Applicable in the container', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  describe service('auditd') do
+    it { should be_enabled }
+    it { should be_running }
   end
 end

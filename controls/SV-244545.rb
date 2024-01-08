@@ -47,16 +47,17 @@ $ sudo systemctl enable --now fapolicyd'
   tag fix_id: 'F-47777r743883_fix'
   tag cci: ['CCI-001764']
   tag nist: ['CM-7 (2)']
+  tag 'host'
 
-  if !input('use_fapolicyd')
+  if virtualization.system.eql?('docker')
     impact 0.0
-    describe 'The organization is not using the Fapolicyd service to manage firewall servies, this control is Not Applicable' do
-      skip 'The organization is not using the Fapolicyd service to manage firewall servies, this control is Not Applicable'
+    describe 'This requirement is Not Applicable in the container' do
+      skip 'This requirement is Not Applicable in the container'
     end
-  elsif virtualization.system.eql?('docker')
+  elsif !input('use_fapolicyd')
     impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
+    describe 'The organization does not use the Fapolicyd service to manage firewall services' do
+      skip 'The organization is not using the Fapolicyd service to manage firewall services, this control is Not Applicable'
     end
   else
     describe service('fapolicyd') do
