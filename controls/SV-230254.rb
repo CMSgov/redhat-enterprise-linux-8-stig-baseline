@@ -59,12 +59,12 @@ this is a finding.'
     !(virtualization.system.eql?('docker') && !file('/etc/pki/tls/openssl.cnf').exist?)
   }
 
-  describe "A line in the OpenSSL config file" do
+  describe 'A line in the OpenSSL config file' do
     subject { command('grep -i opensslcnf.config /etc/pki/tls/openssl.cnf').stdout.strip }
-    it { should match /^\.include.*opensslcnf.config$/ }
+    it { should match(/^\.include.*opensslcnf.config$/) }
   end
 
-  describe "System-wide crypto policy" do
+  describe 'System-wide crypto policy' do
     subject { command('update-crypto-policies --show').stdout.strip }
     it { should eq 'FIPS' }
   end
