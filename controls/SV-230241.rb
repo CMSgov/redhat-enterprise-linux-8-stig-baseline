@@ -35,6 +35,7 @@ installed with the following command:
   tag fix_id: 'F-32885r567470_fix'
   tag cci: ['CCI-001084']
   tag nist: ['SC-3']
+  tag 'host'
 
   only_if('Control not applicable within a container', impact: 0.0) do
     !virtualization.system.eql?('docker')

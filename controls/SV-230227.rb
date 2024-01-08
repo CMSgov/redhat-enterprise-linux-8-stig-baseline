@@ -121,6 +121,7 @@ Agreement for details."'
   tag fix_id: 'F-32871r567428_fix'
   tag cci: ['CCI-000048']
   tag nist: ['AC-8 a']
+  tag 'host'
 
   only_if('Control not applicable within a container', impact: 0.0) {
     !virtualization.system.eql?('docker')

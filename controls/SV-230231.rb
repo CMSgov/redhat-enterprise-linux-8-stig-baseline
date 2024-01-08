@@ -37,6 +37,7 @@ following command:
   tag fix_id: 'F-32875r567440_fix'
   tag cci: ['CCI-000196']
   tag nist: ['IA-5 (1) (c)']
+  tag 'host', 'container'
 
   describe login_defs do
     its('ENCRYPT_METHOD') { should cmp 'SHA512' }

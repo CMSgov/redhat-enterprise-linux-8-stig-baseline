@@ -104,6 +104,7 @@ Agreement for details."
   tag fix_id: 'F-32869r567422_fix'
   tag cci: ['CCI-000048']
   tag nist: ['AC-8 a']
+  tag 'host', 'container-conditional'
 
   only_if('Control not applicable - SSH is not installed within containerized RHEL', impact: 0.0) {
     !virtualization.system.eql?('docker') || file('/etc/ssh/sshd_config').exist?

@@ -61,6 +61,7 @@ Obtain a valid copy of the DoD root CA file from the PKI CA certificate bundle a
   tag fix_id: 'F-32873r809269_fix'
   tag cci: ['CCI-000185']
   tag nist: ['IA-5 (2) (a)', 'IA-5 (2) (b) (1)']
+  tag 'host', 'container'
 
   root_ca_loc = input('root_ca_location')
   root_ca_file = input('root_ca_file')

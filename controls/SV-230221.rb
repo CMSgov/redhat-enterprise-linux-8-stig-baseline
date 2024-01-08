@@ -41,6 +41,7 @@ control 'SV-230221' do
   tag fix_id: 'F-32865r567410_fix'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host', 'container'
 
   release = os.release
 

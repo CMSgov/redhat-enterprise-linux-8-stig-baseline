@@ -52,6 +52,7 @@ control 'SV-230222' do
   tag fix_id: 'F-32866r567413_fix'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host', 'container'
 
   only_if("This control takes a long time to execute so it has been disabled through 'slow_controls'") {
     !input('disable_slow_controls')

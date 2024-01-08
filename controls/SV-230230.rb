@@ -24,6 +24,7 @@ following command:
   tag fix_id: 'F-32874r567437_fix'
   tag cci: ['CCI-000186']
   tag nist: ['IA-5 (2) (b)', 'IA-5 (2) (a) (1)']
+  tag 'host'
 
   if virtualization.system.eql?('docker')
     impact 0.0

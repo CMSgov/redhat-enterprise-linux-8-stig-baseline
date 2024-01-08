@@ -28,6 +28,7 @@ SHA_CRYPT_MIN_ROUNDS 5000'
   tag fix_id: 'F-32877r809272_fix'
   tag cci: ['CCI-000196']
   tag nist: ['IA-5 (1) (c)']
+  tag 'host', 'container'
 
   describe login_defs do
     its('SHA_CRYPT_MIN_ROUNDS') { should cmp >= input('sha_crypt_min_rounds') }

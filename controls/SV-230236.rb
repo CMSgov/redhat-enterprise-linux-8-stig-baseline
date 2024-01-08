@@ -28,6 +28,7 @@ mode by adding the following line to the
   tag fix_id: 'F-32880r743927_fix'
   tag cci: ['CCI-000213']
   tag nist: ['AC-3']
+  tag 'host'
 
   only_if('Control not applicable within a container without sudo enabled', impact: 0.0) do
     !virtualization.system.eql?('docker')

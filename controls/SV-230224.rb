@@ -39,6 +39,7 @@ rest by using disk encryption.
   tag fix_id: 'F-32868r567419_fix'
   tag cci: ['CCI-001199']
   tag nist: ['SC-28']
+  tag 'host'
 
   all_args = command('blkid').stdout.strip.split("\n").map { |s| s.sub(/^"(.*)"$/, '\1') }
 

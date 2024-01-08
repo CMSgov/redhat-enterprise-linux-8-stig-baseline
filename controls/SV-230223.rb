@@ -42,6 +42,7 @@ Reboot the system for the changes to take effect.'
   tag fix_id: 'F-32867r928584_fix'
   tag cci: ['CCI-000068']
   tag nist: ['AC-17 (2)']
+  tag 'host'
 
   if virtualization.system.eql?('docker')
     impact 0.0

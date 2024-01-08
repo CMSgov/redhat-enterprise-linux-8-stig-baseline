@@ -28,6 +28,7 @@ until the passwords can be regenerated with SHA-512.'
   tag fix_id: 'F-32876r567443_fix'
   tag cci: ['CCI-000196']
   tag nist: ['IA-5 (1) (c)']
+  tag 'host', 'container'
 
   weak_pw_hash_users = inspec.shadow.where { password !~ /^[*!]{1,2}.*$|^\$6\$.*$|^$/ }.users
 

@@ -37,6 +37,7 @@ the following command:
   tag fix_id: 'F-32878r743921_fix'
   tag cci: ['CCI-000213']
   tag nist: ['AC-3']
+  tag 'host'
 
   only_if('Control not applicable within a container without sudo enabled', impact: 0.0) do
     !virtualization.system.eql?('docker')
