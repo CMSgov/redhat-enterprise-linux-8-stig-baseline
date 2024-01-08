@@ -34,13 +34,13 @@ $ sudo grub2-mkconfig -o /boot/efi/EFI/redhat/grub.cfg'
   tag fix_id: 'F-47753r743811_fix'
   tag cci: ['CCI-000213']
   tag nist: ['AC-3']
+  tag 'host'
 
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
-    end
-  elsif file('/sys/firmware/efi').exist?
+  only_if('This requirement is Not Applicable in the container', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  if file('/sys/firmware/efi').exist?
     describe parse_config_file(input('grub_uefi_main_cfg')) do
       its('set superusers') { should cmp '"root"' }
     end

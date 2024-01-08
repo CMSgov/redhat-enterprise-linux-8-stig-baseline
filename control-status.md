@@ -252,12 +252,12 @@
 | E        | SV-230495 | Y        |          |        | Y     |                                |                                                                                                         |
 | E        | SV-230496 | Y        |          |        | Y     |                                |                                                                                                         |
 | E        | SV-230497 | Y        |          |        | Y     |                                |                                                                                                         |
-| A        | SV-230498 |          |          |        | Y     |                                |                                                                                                         |
+| Aaron!   | SV-230498 |          |          |        | Y     |                                |                                                                                                         |
 | A        | SV-230499 |          |          |        | Y     |                                |                                                                                                         |
 | A        | SV-230500 |          |          |        | Y     |                                |                                                                                                         |
 | A        | SV-230502 |          |          |        | Y     |                                |                                                                                                         |
 | A        | SV-230503 |          |          |        | Y     |                                |                                                                                                         |
-| A        | SV-230504 | Y        |          |        | Y     |                                |                                                                                                         |
+| Aaro     | SV-230504 | Y        |          |        | Y     |                                |                                                                                                         |
 | A        | SV-230505 |          |          |        | Y     |                                |                                                                                                         |
 | A        | SV-230506 |          |          |        | Y     |                                |                                                                                                         |
 | A        | SV-230507 |          |          |        | Y     |                                |                                                                                                         |
@@ -265,7 +265,7 @@
 | A        | SV-230509 |          |          |        | Y     |                                |                                                                                                         |
 | A        | SV-230510 |          |          |        | Y     |                                |                                                                                                         |
 | A        | SV-230511 |          |          |        | Y     |                                |                                                                                                         |
-| A        | SV-230512 |          |          |        | Y     |                                |                                                                                                         |
+| Aar      | SV-230512 |          |          |        | Y     |                                |                                                                                                         |
 | A        | SV-230513 |          |          |        | Y     |                                |                                                                                                         |
 | A        | SV-230514 |          |          |        | Y     |                                |                                                                                                         |
 | A        | SV-230515 |          |          |        | Y     |                                |                                                                                                         |
@@ -292,7 +292,7 @@
 | A        | SV-230537 |          |          |        | Y     |                                |                                                                                                         |
 | A        | SV-230538 |          |          |        | Y     |                                |                                                                                                         |
 | A        | SV-230539 |          |          |        | Y     |                                |                                                                                                         |
-| A        | SV-230540 |          |          |        | Y     |                                |                                                                                                         |
+| Aa       | SV-230540 |          |          |        | Y     |                                |                                                                                                         |
 | A        | SV-230541 |          |          |        | Y     |                                |                                                                                                         |
 | A        | SV-230542 |          |          |        | Y     |                                |                                                                                                         |
 | A        | SV-230543 |          |          |        | Y     |                                |                                                                                                         |
@@ -317,12 +317,12 @@
 | A        | SV-237640 |          |          |        | Y     |                                |                                                                                                         |
 | A        | SV-237641 |          |          |        | Y     |                                |                                                                                                         |
 | A        | SV-237642 |          |          |        | Y     |                                |                                                                                                         |
-| A        | SV-237643 |          |          |        | Y     |                                |                                                                                                         |
-| A        | SV-244519 |          |          |        | Y     |                                |                                                                                                         |
-| A        | SV-244521 |          |          |        | Y     |                                |                                                                                                         |
-| A        | SV-244522 |          |          |        | Y     |                                |                                                                                                         |
-| A        | SV-244523 |          |          |        | Y     |                                |                                                                                                         |
-| A        | SV-244524 |          | Y        | Y      | Y     | Y                              | None                                                                                                    |
+| A        | SV-237643 | *        | Y        | Y      | Y     | `sudoers_config`               | `sudoers_config_files`                                                                                  |
+| A        | SV-244519 |          | Y        | Y      | Y     | N                              | None                                                                                                    |
+| A        | SV-244521 |          | Y        | Y      | Y     | N                              | `grub_uefi_main_cfg`                                                                                    |
+| A        | SV-244522 |          | Y        | Y      | Y     | N                              | `grub_main_cfg`                                                                                         |
+| A        | SV-244523 |          | Y        | Y      | Y     | N                              | None                                                                                                    |
+| A        | SV-244524 |          | Y        | Y      | Y     | N                              | None                                                                                                    |
 | A        | SV-244525 |          | Y        | Y      | Y     | N                              | `sshd_config_values`<br>`allow_container_openssh_server`                                                |
 | A        | SV-244526 |          | Y        | Y      | Y     | N                              | `allow_container_openssh_server`                                                                        |
 | A        | SV-244527 |          | Y        | Y      | Y     | N                              | None                                                                                                    |
@@ -331,7 +331,7 @@
 | A        | SV-244530 |          | Y        | Y      | Y     | N                              | None                                                                                                    |
 | A        | SV-244531 | Y        | Y        | Y      | Y     | N                              | `non_interactive_shells`<br>`exempt_home_users`                                                         |
 | A        | SV-244532 | Y        | Y        | Y      | Y     | N                              | `non_interactive_shells`<br>`exempt_home_users`                                                         |
-| A        | SV-244533 |          | Y        | Y      | Y     |                                | `pam_auth_files`                                                                                        |
+| A        | SV-244533 |          | Y        | Y      | Y     | N                              | `pam_auth_files`                                                                                        |
 | A        | SV-244534 |          | Y        | Y      | Y     | N                              | None                                                                                                    |
 | A        | SV-244535 | *        | Y        | Y      | Y     | `enhance x11 detection`        | None                                                                                                    |
 | A        | SV-244536 | *        | Y        | Y      | Y     | `enhance x11 detection`        | None                                                                                                    |

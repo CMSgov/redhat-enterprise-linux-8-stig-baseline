@@ -28,15 +28,13 @@ mode by adding the following line to the
   tag fix_id: 'F-47755r743817_fix'
   tag cci: ['CCI-000213']
   tag nist: ['AC-3']
+  tag 'host'
 
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
-    end
-  else
-    describe service('emergency') do
-      its('params.ExecStart') { should include '/usr/lib/systemd/systemd-sulogin-shell emergency' }
-    end
+  only_if('This requirement is Not Applicable in the container', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  describe service('emergency') do
+    its('params.ExecStart') { should include '/usr/lib/systemd/systemd-sulogin-shell emergency' }
   end
 end

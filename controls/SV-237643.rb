@@ -36,20 +36,43 @@ Remove any duplicate or conflicting lines from /etc/sudoers and /etc/sudoers.d/ 
   tag fix_id: 'F-40825r858763_fix'
   tag cci: ['CCI-002038']
   tag nist: ['IA-11']
+  tag 'host', 'container-conditional'
 
-  if virtualization.system.eql?('docker') && !command('sudo').exist?
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
-    end
-  else
-    config = bash("grep -i 'timestamp_timeout' /etc/sudoers /etc/sudoers.d/* |  awk -F ':' '{ print $2 }'")
-    describe config do
-      its('stdout') { should match(/^Defaults timestamp_timeout/) }
-    end
+  sudoers_config_files = input('sudoers_config_files').map(&:strip).join(' ')
+  sudo_configs = command("cat #{sudoers_config_files}").stdout
 
-    describe parse_config(config.stdout) do
-      its('Defaults timestamp_timeout') { should cmp >= 0 }
+  sudo_config_data = parse_config(sudo_configs).params
+
+  setting = 'timestamp_timeout'
+  value = 0
+
+  sudo_config_hash = Hashie::Mash.new
+  sudo_config_data.each do |k, v|
+    if k.start_with?('Defaults')
+      key_parts = k.split('   ', 2) # split by three spaces
+      sudo_config_hash.Defaults ||= Hashie::Mash.new
+      sudo_config_hash.Defaults[key_parts[1].strip] = v
+    else
+      key_parts = k.split("\t") # split by tab character
+      sudo_config_hash[key_parts[0]] ||= Hashie::Mash.new
+      sudo_config_hash[key_parts[0]][key_parts[1]] = v
+    end
+  end
+
+  impact 0.0 if virtualization.system.eql?('docker') && !command('sudo').exist?
+
+  describe 'The Sudo Configuration' do
+    if virtualization.system.eql?('docker') && !command('sudo').exist?
+      it 'This requirement is Not Applicable since `sudo` not installed in the container.' do
+        skip 'This requirement is Not Applicable since `sudo` not installed in the container.'
+      end
+    else
+      it 'has a configured non-negative Default timestamp_timeout value' do
+        expect(sudo_config_hash.Defaults[setting]).to be >= 0, "The Default #{setting} setting is not present or incorrectly configured. Please ensure #{setting} present and is not negative."
+      end
+      it 'has the correct Default timestamp_timeout setting' do
+        expect(sudo_config_hash.Defaults[setting.to_s]).to eq(0), "The Default #{setting} setting is not present or incorrectly configured. Please ensure #{setting} is set to #{value}."
+      end
     end
   end
 end

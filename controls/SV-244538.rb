@@ -80,7 +80,7 @@ file should be created under the appropriate subdirectory.
   if no_gui
     impact 0.0
     describe 'The system does not have a GUI Desktop is installed, this control is Not Applicable' do
-      skip 'The GUI desktop is not installed, this control is Not Applicable.'
+      skip 'A GUI desktop is not installed, this control is Not Applicable.'
     end
   else
     describe command('grep -i idle /etc/dconf/db/local.d/locks/*') do
