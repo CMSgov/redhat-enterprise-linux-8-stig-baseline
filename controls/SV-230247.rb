@@ -32,6 +32,7 @@ the following command:
   tag fix_id: 'F-32891r567488_fix'
   tag cci: ['CCI-001314']
   tag nist: ['SI-11 b']
+  tag 'host', 'container'
 
   describe file('/var/log/messages') do
     its('group') { should be_in input('var_log_messages_group') }

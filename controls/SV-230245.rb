@@ -34,6 +34,7 @@ running the following command:
   tag fix_id: 'F-32889r567482_fix'
   tag cci: ['CCI-001314']
   tag nist: ['SI-11 b']
+  tag 'host', 'container'
 
   describe file('/var/log/messages') do
     it { should_not be_more_permissive_than('0640') }

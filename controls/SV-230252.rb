@@ -45,23 +45,21 @@ A reboot is required for the changes to take effect.'
   tag fix_id: 'F-32896r917872_fix'
   tag cci: ['CCI-001453']
   tag nist: ['AC-17 (2)']
+  tag 'host', 'container-conditional'
 
-  if virtualization.system.eql?('docker') && !file('/etc/sysconfig/sshd').exist?
-    impact 0.0
-    describe 'Control not applicable - SSH is not installed within containerized RHEL' do
-      skip 'Control not applicable - SSH is not installed within containerized RHEL'
-    end
-  else
-    describe parse_config_file('/etc/crypto-policies/back-ends/opensshserver.config') do
-      its('CRYPTO_POLICY') { should_not be_nil }
-    end
+  only_if('Control not applicable - SSH is not installed within containerized RHEL', impact: 0.0) {
+    !(virtualization.system.eql?('docker') && !file('/etc/sysconfig/sshd').exist?)
+  }
 
-    crypto_policy = parse_config_file('/etc/crypto-policies/back-ends/opensshserver.config')['CRYPTO_POLICY']
+  describe parse_config_file('/etc/crypto-policies/back-ends/opensshserver.config') do
+    its('CRYPTO_POLICY') { should_not be_nil }
+  end
 
-    unless crypto_policy.nil?
-      describe parse_config(crypto_policy.gsub(/\s|'/, "\n")) do
-        its('-oCiphers') { should cmp 'aes256-ctr,aes192-ctr,aes128-ctr' }
-      end
+  crypto_policy = parse_config_file('/etc/crypto-policies/back-ends/opensshserver.config')['CRYPTO_POLICY']
+
+  unless crypto_policy.nil?
+    describe parse_config(crypto_policy.gsub(/\s|'/, "\n")) do
+      its('-oCiphers') { should cmp 'aes256-ctr,aes192-ctr,aes128-ctr,aes256-gcm@openssh.com,aes128-gcm@openssh.com' }
     end
   end
 end

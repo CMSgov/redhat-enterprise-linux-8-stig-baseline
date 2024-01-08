@@ -23,6 +23,7 @@ If the MACs entries in the "opensshserver.config" file have any hashes other tha
   tag fix_id: 'F-32895r917869_fix'
   tag cci: ['CCI-001453']
   tag nist: ['AC-17 (2)']
+  tag 'host', 'container-conditional'
 
   # Check if SSH is installed within containerized RHEL
   only_if('SSH is not installed within containerized RHEL. Therefore, this requirement is not applicable.', impact: 0.0) do
