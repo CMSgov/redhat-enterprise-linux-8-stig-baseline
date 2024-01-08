@@ -1,20 +1,20 @@
 control 'SV-230229' do
   title 'RHEL 8, for PKI-based authentication, must validate certificates by
-    constructing a certification path (which includes status information) to an
-    accepted trust anchor.'
-  desc "Without path validation, an informed trust decision by the relying
-    party cannot be made when presented with any certificate not already explicitly
-    trusted.
+constructing a certification path (which includes status information) to an
+accepted trust anchor.'
+  desc 'Without path validation, an informed trust decision by the relying
+party cannot be made when presented with any certificate not already explicitly
+trusted.
 
-    A trust anchor is an authoritative entity represented via a public key and
-    associated data. It is used in the context of public key infrastructures, X.509
-    digital certificates, and DNSSEC.
+  A trust anchor is an authoritative entity represented via a public key and
+associated data. It is used in the context of public key infrastructures, X.509
+digital certificates, and DNSSEC.
 
-    When there is a chain of trust, usually the top entity to be trusted
-    becomes the trust anchor; it can be, for example, a Certification Authority
-    (CA). A certification path starts with the subject certificate and proceeds
-    through a number of intermediate certificates up to a trusted root certificate,
-    typically issued by a trusted CA.
+  When there is a chain of trust, usually the top entity to be trusted
+becomes the trust anchor; it can be, for example, a Certification Authority
+(CA). A certification path starts with the subject certificate and proceeds
+through a number of intermediate certificates up to a trusted root certificate,
+typically issued by a trusted CA.
 
     This requirement verifies that a certification path to an accepted trust
 anchor is used for certificate validation and that the path includes status
@@ -50,7 +50,7 @@ If the root ca file is not a DoD-issued certificate with a valid date and instal
 
 Obtain a valid copy of the DoD root CA file from the PKI CA certificate bundle at cyber.mil and copy into the following file:
 
-/etc/sssd/pki/sssd_auth_ca_db.pem"
+/etc/sssd/pki/sssd_auth_ca_db.pem'
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000066-GPOS-00034'
@@ -62,6 +62,10 @@ Obtain a valid copy of the DoD root CA file from the PKI CA certificate bundle a
   tag cci: ['CCI-000185']
   tag nist: ['IA-5 (2) (a)', 'IA-5 (2) (b) (1)']
   tag 'host', 'container'
+
+  only_if('If the System Administrator demonstrates the use of an approved alternate multifactor authentication method, this requirement is not applicable.') {
+    !input('smart_card_enabled')
+  }
 
   root_ca_loc = input('root_ca_location')
   root_ca_file = input('root_ca_file')
@@ -78,11 +82,15 @@ Obtain a valid copy of the DoD root CA file from the PKI CA certificate bundle a
   describe 'Ensure the RootCA is a DoD-issued certificate with a valid date' do
     if file(root_ca_full_path).exist?
       subject { x509_certificate(root_ca_full_path) }
-      its('issuer_dn') { should match '/C=US/O=U.S. Government/OU=DoD/OU=PKI/CN=DoD Root CA 3' }
-      its('subject_dn') { should match '/C=US/O=U.S. Government/OU=DoD/OU=PKI/CN=DoD Root CA 3' }
-      its('validity_in_days') { should be > 0 }
-    else
-      skip "The #{root_ca_full_path} cannot be verified as a valid DoD-issued certificate before it exists"
+      it 'has the correct issuer_dn' do
+        expect(subject.issuer_dn).to match('/C=US/O=U.S. Government/OU=DoD/OU=PKI/CN=DoD Root CA 3')
+      end
+      it 'has the correct subject_dn' do
+        expect(subject.subject_dn).to match('/C=US/O=U.S. Government/OU=DoD/OU=PKI/CN=DoD Root CA 3')
+      end
+      it 'is valid' do
+        expect(subject.validity_in_days).to be > 0
+      end
     end
   end
 end
