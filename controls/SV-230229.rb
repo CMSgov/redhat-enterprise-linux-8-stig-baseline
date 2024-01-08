@@ -63,7 +63,7 @@ Obtain a valid copy of the DoD root CA file from the PKI CA certificate bundle a
   tag nist: ['IA-5 (2) (a)', 'IA-5 (2) (b) (1)']
   tag 'host', 'container'
 
-  only_if('If the System Administrator demonstrates the use of an approved alternate multifactor authentication method, this requirement is not applicable.') {
+  only_if('If the System Administrator demonstrates the use of an approved alternate multifactor authentication method, this requirement is not applicable.', impact: 0.0) {
     !input('smart_card_enabled')
   }
 
