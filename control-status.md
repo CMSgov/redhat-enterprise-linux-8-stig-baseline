@@ -8,7 +8,7 @@
 | W,A      | SV-230226 |                       | Y        | Y      | Y     | N                              | `banner_message_text_gui`                                                                               |
 | W,A      | SV-230227 |                       | Y        | Y      | Y     | N                              | `banner_message_text_cli`                                                                               |
 | W,A      | SV-230228 |                       | Y        | Y      | Y     | N                              | None                                                                                                    |
-| W,A      | SV-230229 |                       | Y        | Y      | Y     | N                              | `root_ca_location`                                                                                      |
+| W,A      | SV-230229 |                       | Y        | Y      | Y     | N                              | `root_ca_files`                                                                                      |
 | W,A      | SV-230230 |                       | Y        | Y      | Y     | N                              | `private_key_files`                                                                                     |
 | W,A      | SV-230231 |                       | Y        | Y      | Y     | N                              | None                                                                                                    |
 | W,A      | SV-230232 |                       | Y        | Y      | Y     | N                              | None                                                                                                    |

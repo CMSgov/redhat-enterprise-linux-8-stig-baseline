@@ -73,6 +73,7 @@ restart the "sssd" service, run the following command:
   tag fix_id: 'F-33016r567863_fix'
   tag cci: ['CCI-000765']
   tag nist: ['IA-2 (1)']
+  tag 'host'
 
   only_if('If the System Administrator demonstrates the use of an approved
     alternate multifactor authentication method, this requirement is not applicable.', impact: 0.0) {

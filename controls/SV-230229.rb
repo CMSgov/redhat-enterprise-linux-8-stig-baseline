@@ -67,21 +67,14 @@ Obtain a valid copy of the DoD root CA file from the PKI CA certificate bundle a
     !input('smart_card_enabled')
   }
 
-  root_ca_loc = input('root_ca_location')
   root_ca_file = input('root_ca_file')
-  root_ca_full_path = File.join(root_ca_loc, root_ca_file)
-
-  describe directory(root_ca_loc) do
-    it { should exist }
-  end
-
-  describe file(root_ca_full_path) do
+  describe file(root_ca_file) do
     it { should exist }
   end
 
   describe 'Ensure the RootCA is a DoD-issued certificate with a valid date' do
-    if file(root_ca_full_path).exist?
-      subject { x509_certificate(root_ca_full_path) }
+    if file(root_ca_file).exist?
+      subject { x509_certificate(root_ca_file) }
       it 'has the correct issuer_dn' do
         expect(subject.issuer_dn).to match('/C=US/O=U.S. Government/OU=DoD/OU=PKI/CN=DoD Root CA 3')
       end
