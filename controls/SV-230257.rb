@@ -30,19 +30,13 @@ $ sudo chmod 755 [FILE]'
   tag fix_id: 'F-32901r792861_fix'
   tag cci: ['CCI-001499']
   tag nist: ['CM-5 (6)']
+  tag 'host', 'container'
 
-  files = command('find -L /bin /sbin /usr/bin /usr/sbin /usr/local/bin /usr/local/sbin -perm /0022 -exec ls -d {} \\;').stdout.split("\n")
+  failing_files = command("find -L #{input('system_command_dirs').join(' ')} -perm /0022 -exec ls -d {} \\;").stdout.split("\n")
 
-  if files.empty?
-    describe 'List of system commands are found to be group-writable or world-writable' do
-      subject { files }
-      it { should be_empty }
-    end
-  else
-    files.each do |file|
-      describe file(file) do
-        it { should_not be_more_permissive_than('0755') }
-      end
+  describe 'System commands' do
+    it "should have mode '0755' or less permissive" do
+      expect(failing_files).to be_empty, "Files with excessive permissions:\n\t- #{failing_files.join("\n\t- ")}"
     end
   end
 end

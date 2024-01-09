@@ -28,19 +28,13 @@ $ sudo chmod 755 [FILE]'
   tag fix_id: 'F-32904r792866_fix'
   tag cci: ['CCI-001499']
   tag nist: ['CM-5 (6)']
+  tag 'host', 'container'
 
-  files = command('find -L /lib /lib64 /usr/lib /usr/lib64 -perm /0022 -type f -exec ls -d {} \\;').stdout.split("\n")
+  failing_files = command("find -L #{input('system_libraries').join(' ')} -perm /0022 -type f -exec ls -d {} \\;").stdout.split("\n")
 
-  if files.empty?
-    describe 'List of system-wide shared library files found to be group-writable or world-writable' do
-      subject { files }
-      it { should be_empty }
-    end
-  else
-    files.each do |file|
-      describe file(file) do
-        it { should_not be_more_permissive_than('0755') }
-      end
+  describe 'System libraries' do
+    it "should have mode '0755' or less permissive" do
+      expect(failing_files).to be_empty, "Files with excessive permissions:\n\t- #{failing_files.join("\n\t- ")}"
     end
   end
 end
