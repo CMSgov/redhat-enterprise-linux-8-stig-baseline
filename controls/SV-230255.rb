@@ -54,13 +54,18 @@ A reboot is required for the changes to take effect.'
   tag fix_id: 'F-32899r809381_fix'
   tag cci: ['CCI-001453']
   tag nist: ['AC-17 (2)']
+  tag 'host', 'container'
 
-  describe.one do
+  crypto_policies = package('crypto-policies')
+
+  if crypto_policies.version < "20210617-1.gitc776d3e.el8.noarch"
     describe parse_config_file('/etc/crypto-policies/back-ends/opensslcnf.config') do
       its('MinProtocol') { should be_in ['TLSv1.2', 'TLSv1.3'] }
     end
+  else
     describe parse_config_file('/etc/crypto-policies/back-ends/opensslcnf.config') do
       its(['TLS.MinProtocol']) { should be_in ['TLSv1.2', 'TLSv1.3'] }
+      its(['DTLS.MinProtocol']) { should be_in ['DTLSv1.2', 'DTLSv1.3'] }
     end
   end
 end

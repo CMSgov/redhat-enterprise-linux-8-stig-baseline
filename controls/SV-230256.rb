@@ -45,8 +45,15 @@ adding the following line to "/etc/crypto-policies/back-ends/gnutls.config":
   tag fix_id: 'F-32900r567515_fix'
   tag cci: ['CCI-001453']
   tag nist: ['AC-17 (2)']
+  tag 'host', 'container'
 
-  describe file('/etc/crypto-policies/back-ends/gnutls.config') do
-    its('content') { should match(/-VERS-DTLS0.9:-VERS-SSL3.0:-VERS-TLS1.0:-VERS-TLS1.1:-VERS-DTLS1.0/) }
+  gnutls = file('/etc/crypto-policies/back-ends/gnutls.config').content.strip.split(':')
+  unapproved_versions = input('unapproved_ssl_tls_versions') # "-VERS-DTLS0.9:-VERS-SSL3.0:-VERS-TLS1.0:-VERS-TLS1.1:-VERS-DTLS1.0".split(':')
+  failing_versions = unapproved_versions - gnutls
+
+  describe "GnuTLS" do
+    it "should disable unapproved SSL/TLS versions" do
+      expect(failing_versions).to be_empty, "GnuTLS should not allow:\n\t- #{failing_versions.join("\n\t- ")}"
+    end
   end
 end
