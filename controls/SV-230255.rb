@@ -58,7 +58,7 @@ A reboot is required for the changes to take effect.'
 
   crypto_policies = package('crypto-policies')
 
-  if crypto_policies.version < "20210617-1.gitc776d3e.el8.noarch"
+  if crypto_policies.version < '20210617-1.gitc776d3e.el8.noarch'
     describe parse_config_file('/etc/crypto-policies/back-ends/opensslcnf.config') do
       its('MinProtocol') { should be_in ['TLSv1.2', 'TLSv1.3'] }
     end
