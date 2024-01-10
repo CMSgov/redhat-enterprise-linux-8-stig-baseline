@@ -90,19 +90,13 @@ jobs:
         with:
           command_string: "view summary -i spec/results/rhel-8_${{ matrix.suite }}.json"
 
-      - name: Save our ${{ matrix.suite }} results summary
-        if: ${{ !contains(steps.commit.outputs.message, 'only-validate-profile') }}
-        uses: mitre/saf_action@v1.5.0
-        with:
-          command_string: "view summary -i spec/results/rhel-8_${{ matrix.suite }}.json -o spec/results/rhel-8_${{ matrix.suite }}-data.json"
-
       - name: Generate Markdown Summary
         continue-on-error: true
         id: generate-summary
         run: |
           cat spec/results/rhel-8_${{ matrix.suite }}-data.json | python markdown-summary.py > spec/results/rhel-8_${{ matrix.suite }}-markdown-summary.md
-          echo "SUMMARY=$(cat spec/results/rhel-8_${{ matrix.suite }}-markdown-summary.md)" >> $GITHUB_ENV
-          echo "${{ env.SUMMARY }}" >> $GITHUB_STEP_SUMMARY
+          echo spec/results/rhel-8_${{ matrix.suite }}-markdown-summary.md
+          cat spec/results/rhel-8_${{ matrix.suite }}-markdown-summary.md >> $GITHUB_STEP_SUMMARY
 
       - name: Ensure the scan meets our ${{ matrix.suite }} results threshold
         if: ${{ !contains(steps.commit.outputs.message, 'only-validate-profile') }}
