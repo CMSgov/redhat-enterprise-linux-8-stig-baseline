@@ -53,32 +53,30 @@ Note: Per requirement RHEL-08-010358, the "mailx" package must be installed on t
   tag fix_id: 'F-32907r902715_fix'
   tag cci: ['CCI-001744']
   tag nist: ['CM-3 (5)']
+  tag 'host'
 
   file_integrity_tool = input('file_integrity_tool')
 
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
+  only_if('Control not applicable within a container', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  describe package(file_integrity_tool) do
+    it { should be_installed }
+  end
+  describe.one do
+    describe file("/etc/cron.daily/#{file_integrity_tool}") do
+      its('content') { should match %r{/bin/mail} }
     end
-  else
-    describe package(file_integrity_tool) do
-      it { should be_installed }
+    describe file("/etc/cron.weekly/#{file_integrity_tool}") do
+      its('content') { should match %r{/bin/mail} }
     end
-    describe.one do
-      describe file("/etc/cron.daily/#{file_integrity_tool}") do
-        its('content') { should match %r{/bin/mail} }
-      end
-      describe file("/etc/cron.weekly/#{file_integrity_tool}") do
-        its('content') { should match %r{/bin/mail} }
-      end
-      describe crontab('root').where { command =~ /#{file_integrity_tool}/ } do
-        its('commands.flatten') { should include(match %r{/bin/mail}) }
-      end
-      if file("/etc/cron.d/#{file_integrity_tool}").exist?
-        describe crontab(path: "/etc/cron.d/#{file_integrity_tool}") do
-          its('commands') { should include(match %r{/bin/mail}) }
-        end
+    describe crontab('root').where { command =~ /#{file_integrity_tool}/ } do
+      its('commands.flatten') { should include(match %r{/bin/mail}) }
+    end
+    if file("/etc/cron.d/#{file_integrity_tool}").exist?
+      describe crontab(path: "/etc/cron.d/#{file_integrity_tool}") do
+        its('commands') { should include(match %r{/bin/mail}) }
       end
     end
   end

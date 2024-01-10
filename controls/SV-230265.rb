@@ -49,16 +49,9 @@ updated versions have been installed.
   tag fix_id: 'F-32909r567542_fix'
   tag cci: ['CCI-001749']
   tag nist: ['CM-5 (3)']
+  tag 'host', 'container'
 
-  describe.one do
-    describe parse_config_file('/etc/dnf/dnf.conf') do
-      its('main.localpkg_gpgcheck') { should cmp 'True' }
-    end
-    describe parse_config_file('/etc/dnf/dnf.conf') do
-      its('main.localpkg_gpgcheck') { should cmp 1 }
-    end
-    describe parse_config_file('/etc/dnf/dnf.conf') do
-      its('main.localpkg_gpgcheck') { should cmp 'yes' }
-    end
+  describe parse_config_file('/etc/dnf/dnf.conf') do
+    its('main.localpkg_gpgcheck') { should match(/True|1|yes/i) }
   end
 end

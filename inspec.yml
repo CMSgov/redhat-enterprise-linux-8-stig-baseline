@@ -543,6 +543,18 @@ inputs:
       - /usr/sbin
       - /usr/local/bin
       - /usr/local/sbin
+  
+  # SV-230266
+  - name: sysctl_conf_file_locations
+    description: Filepaths to possible locations for kernel settings
+    type: Array
+    value:
+      - /run/sysctl.d/*.conf
+      - /usr/local/lib/sysctl.d/*.conf
+      - /usr/lib/sysctl.d/*.conf
+      - /lib/sysctl.d/*.conf
+      - /etc/sysctl.conf
+      - /etc/sysctl.d/*.conf
 
   #SV-251709
   - name: required_system_accounts

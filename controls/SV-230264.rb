@@ -47,13 +47,22 @@ repository prior to install by setting the following option in the
   tag fix_id: 'F-32908r880710_fix'
   tag cci: ['CCI-001749']
   tag nist: ['CM-5 (3)']
+  tag 'host', 'container'
 
-  gpgcheck_entry_list = command('ls /etc/yum.repos.d/*.repo').stdout.split("\n")
+  # TODO: create a plural resource for repo def files (`repositories`?)
 
-  gpgcheck_entry_list.each do |gpgcheck_entry|
-    describe "Repo file #{gpgcheck_entry}" do
-      subject { file(gpgcheck_entry) }
-      its('content') { should match(/gpgcheck\s*=\s*1/) }
+  # get list of all repo files
+  repo_def_files = command('ls /etc/yum.repos.d/*.repo').stdout.split("\n")
+
+  # pull out all repo definitions from all files into one big hash
+  repos = repo_def_files.map { |file| parse_config_file(file).params }.inject(&:merge)
+
+  # check big hash for repos that fail the test condition
+  failing_repos = repos.keys.reject { |repo_name| repos[repo_name]['gpgcheck'] == '1' }
+
+  describe 'All repositories' do
+    it 'should be configured to verify digital signatures' do
+      expect(failing_repos).to be_empty, "Misconfigured repositories:\n\t- #{failing_repos.join("\n\t- ")}"
     end
   end
 end

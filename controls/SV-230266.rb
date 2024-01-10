@@ -56,19 +56,21 @@ $ sudo sysctl --system'
   tag fix_id: 'F-32910r858747_fix'
   tag cci: ['CCI-001749']
   tag nist: ['CM-5 (3)']
+  tag 'host'
 
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
-    end
-  else
-    describe kernel_parameter('kernel.kexec_load_disabled') do
-      its('value') { should eq 1 }
-    end
+  only_if('Control not applicable within a container', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
 
-    describe command('grep -r ^kernel.kexec_load_disabled /etc/sysctl.conf /etc/sysctl.d/*.conf') do
-      its('stdout') { should match(/kernel.kexec_load_disabled(\s+)?=(\s+)?1$/) }
+  describe kernel_parameter('kernel.kexec_load_disabled') do
+    its('value') { should eq 1 }
+  end
+
+  search_result = command("grep -r ^kernel.kexec_load_disabled #{input('sysctl_conf_file_locations').join(' ')}").stdout.strip
+
+  describe 'Kernel config files' do
+    it 'should disable loading a new kernel' do
+      expect(search_result).to match(/kernel.kexec_load_disabled(\s+)?=(\s+)?1$/), 'No config file was found that explicitly disables kernel loading'
     end
   end
 end
