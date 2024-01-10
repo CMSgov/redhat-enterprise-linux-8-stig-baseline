@@ -14,6 +14,7 @@ jobs:
       CHEF_LICENSE: accept-silent
       CHEF_LICENSE_KEY: ${{ secrets.SAF_CHEF_LICENSE_KEY }}
       KITCHEN_LOCAL_YAML: kitchen.disa.ec2.yml
+      PLATFORM: 'rhel-8'
       LC_ALL: "en_US.UTF-8"
     strategy:
       matrix:
@@ -69,13 +70,13 @@ jobs:
       - name: Run kitchen test
         if: ${{ !contains(steps.commit.outputs.message, 'only-validate-profile') }}
         continue-on-error: true
-        run: bundle exec kitchen test --destroy=always ${{ matrix.suite }}-rhel-8
+        run: bundle exec kitchen test --destroy=always ${{ matrix.suite }}-${{ env.PLATFORM }}
 
       - name: Create our ${{ matrix.suite }} results summary
         if: ${{ !contains(steps.commit.outputs.message, 'only-validate-profile') }}
         uses: mitre/saf_action@v1.5.0
         with:
-          command_string: "view summary -j -i spec/results/rhel-8_${{ matrix.suite }}.json -o spec/results/rhel-8_${{ matrix.suite }}-data.json"
+          command_string: "view summary -j -i spec/results/${{ env.PLATFORM }}_${{ matrix.suite }}.json -o spec/results/${{ env.PLATFORM }}_${{ matrix.suite }}-data.json"
 
       - name: Save Test Result JSON
         if: ${{ !contains(steps.commit.outputs.message, 'only-validate-profile') }}
@@ -88,24 +89,23 @@ jobs:
         if: ${{ !contains(steps.commit.outputs.message, 'only-validate-profile') }}
         continue-on-error: true
         run: |
-          curl -# -s -F data=@spec/results/rhel-8_${{ matrix.suite }}.json -F "filename=${{ env.COMMIT_SHORT_SHA }}-rhel-8_${{ matrix.suite }}" -F "public=true" -F "evaluationTags=${{ env.COMMIT_SHORT_SHA }},${{ github.repository }},${{ github.workflow }},'Supplemental Automation Content v1r12'" -H "Authorization: Api-Key ${{ secrets.HEIMDALL_UPLOAD_GROUP_KEY }}" "${{ vars.SAF_HEIMDALL_URL }}/evaluations"
+          curl -# -s -F data=@spec/results/${{ env.PLATFORM }}_${{ matrix.suite }}.json -F "filename=${{ env.COMMIT_SHORT_SHA }}-${{ env.PLATFORM }}_${{ matrix.suite }}" -F "public=true" -F "evaluationTags=${{ env.COMMIT_SHORT_SHA }},${{ github.repository }},${{ github.workflow }},'Supplemental Automation Content v1r12'" -H "Authorization: Api-Key ${{ secrets.HEIMDALL_UPLOAD_GROUP_KEY }}" "${{ vars.SAF_HEIMDALL_URL }}/evaluations"
 
       - name: Display our ${{ matrix.suite }} results summary
         if: ${{ !contains(steps.commit.outputs.message, 'only-validate-profile') }}
         uses: mitre/saf_action@v1.5.0
         with:
-          command_string: "view summary -i spec/results/rhel-8_${{ matrix.suite }}.json"
+          command_string: "view summary -i spec/results/${{ env.PLATFORM }}_${{ matrix.suite }}.json"
 
       - name: Generate Markdown Summary
         continue-on-error: true
         id: generate-summary
         run: |
-          cat spec/results/rhel-8_${{ matrix.suite }}-data.json | python markdown-summary.py > spec/results/rhel-8_${{ matrix.suite }}-markdown-summary.md
-          echo spec/results/rhel-8_${{ matrix.suite }}-markdown-summary.md
-          cat spec/results/rhel-8_${{ matrix.suite }}-markdown-summary.md >> $GITHUB_STEP_SUMMARY
+          cat spec/results/${{ env.PLATFORM }}_${{ matrix.suite }}-data.json | python markdown-summary.py > spec/results/${{ env.PLATFORM }}_${{ matrix.suite }}-markdown-summary.md
+          cat spec/results/${{ env.PLATFORM }}_${{ matrix.suite }}-markdown-summary.md >> $GITHUB_STEP_SUMMARY
 
       - name: Ensure the scan meets our ${{ matrix.suite }} results threshold
         if: ${{ !contains(steps.commit.outputs.message, 'only-validate-profile') }}
         uses: mitre/saf_action@v1.5.0
         with:
-          command_string: "validate threshold -i spec/results/rhel-8_${{ matrix.suite }}.json -F ${{ matrix.suite }}.threshold.yml"
+          command_string: "validate threshold -i spec/results/${{ env.PLATFORM }}_${{ matrix.suite }}.json -F ${{ matrix.suite }}.threshold.yml"
