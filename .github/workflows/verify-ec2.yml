@@ -102,7 +102,6 @@ jobs:
         id: generate-summary
         run: |
           cat spec/results/rhel-8_${{ matrix.suite }}-data.json | python markdown-summary.py > spec/results/rhel-8_${{ matrix.suite }}-markdown-summary.md
-          echo spec/results/rhel-8_${{ matrix.suite }}-markdown-summary.md
           cat spec/results/rhel-8_${{ matrix.suite }}-markdown-summary.md >> $GITHUB_STEP_SUMMARY
 
       - name: Ensure the scan meets our ${{ matrix.suite }} results threshold
