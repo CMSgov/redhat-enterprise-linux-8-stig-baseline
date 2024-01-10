@@ -65,7 +65,7 @@ lifecycle:
         sudo dnf -y install python3-pip
         sudo dnf -y install ansible
         echo "Ansible Version Installed:"
-        ansible -v
+        ansible --version
 
 transport:
   max_ssh_sessions: 6
