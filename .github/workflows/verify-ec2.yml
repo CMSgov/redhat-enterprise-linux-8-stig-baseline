@@ -96,7 +96,7 @@ jobs:
         with:
           command_string: "view summary -i spec/results/rhel-8_${{ matrix.suite }}.json -o spec/results/rhel-8_${{ matrix.suite }}-data.json"
 
-      - name: :rocket: Generate Markdown Summary
+      - name: Generate Markdown Summary
         continue-on-error: true
         id: generate-summary
         run: |
