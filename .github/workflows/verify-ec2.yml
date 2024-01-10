@@ -71,6 +71,13 @@ jobs:
         continue-on-error: true
         run: bundle exec kitchen test --destroy=always ${{ matrix.suite }}-rhel-8
 
+      - name: Save our ${{ matrix.suite }} results summary
+        continue-on-error: true
+        if: ${{ !contains(steps.commit.outputs.message, 'only-validate-profile') }}
+        uses: mitre/saf_action@v1.5.0
+        with:
+          command_string: "view summary -j -i spec/results/rhel-8_${{ matrix.suite }}.json -o spec/results/rhel-8_${{ matrix.suite }}-data.json"
+
       - name: Save Test Result JSON
         if: ${{ !contains(steps.commit.outputs.message, 'only-validate-profile') }}
         uses: actions/upload-artifact@v3
@@ -83,12 +90,6 @@ jobs:
         continue-on-error: true
         run: |
           curl -# -s -F data=@spec/results/rhel-8_${{ matrix.suite }}.json -F "filename=${{ env.COMMIT_SHORT_SHA }}-rhel-8_${{ matrix.suite }}" -F "public=true" -F "evaluationTags=${{ env.COMMIT_SHORT_SHA }},${{ github.repository }},${{ github.workflow }}" -H "Authorization: Api-Key ${{ secrets.HEIMDALL_UPLOAD_GROUP_KEY }}" "${{ vars.SAF_HEIMDALL_URL }}/evaluations"
-
-      - name: Save our ${{ matrix.suite }} results summary
-        if: ${{ !contains(steps.commit.outputs.message, 'only-validate-profile') }}
-        uses: mitre/saf_action@v1.5.0
-        with:
-          command_string: "view summary -j -i spec/results/rhel-8_${{ matrix.suite }}.json -o spec/results/rhel-8_${{ matrix.suite }}-data.json"
 
       - name: Display our ${{ matrix.suite }} results summary
         if: ${{ !contains(steps.commit.outputs.message, 'only-validate-profile') }}

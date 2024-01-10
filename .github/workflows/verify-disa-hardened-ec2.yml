@@ -71,6 +71,12 @@ jobs:
         continue-on-error: true
         run: bundle exec kitchen test --destroy=always ${{ matrix.suite }}-rhel-8
 
+      - name: Create our ${{ matrix.suite }} results summary
+        if: ${{ !contains(steps.commit.outputs.message, 'only-validate-profile') }}
+        uses: mitre/saf_action@v1.5.0
+        with:
+          command_string: "view summary -j -i spec/results/rhel-8_${{ matrix.suite }}.json -o spec/results/rhel-8_${{ matrix.suite }}-data.json"
+
       - name: Save Test Result JSON
         if: ${{ !contains(steps.commit.outputs.message, 'only-validate-profile') }}
         uses: actions/upload-artifact@v3
@@ -89,6 +95,14 @@ jobs:
         uses: mitre/saf_action@v1.5.0
         with:
           command_string: "view summary -i spec/results/rhel-8_${{ matrix.suite }}.json"
+
+      - name: Generate Markdown Summary
+        continue-on-error: true
+        id: generate-summary
+        run: |
+          cat spec/results/rhel-8_${{ matrix.suite }}-data.json | python markdown-summary.py > spec/results/rhel-8_${{ matrix.suite }}-markdown-summary.md
+          echo spec/results/rhel-8_${{ matrix.suite }}-markdown-summary.md
+          cat spec/results/rhel-8_${{ matrix.suite }}-markdown-summary.md >> $GITHUB_STEP_SUMMARY
 
       - name: Ensure the scan meets our ${{ matrix.suite }} results threshold
         if: ${{ !contains(steps.commit.outputs.message, 'only-validate-profile') }}
