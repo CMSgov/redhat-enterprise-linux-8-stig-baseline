@@ -1,0 +1,62 @@
+---
+platforms:
+  - name: rhel-8
+
+driver:
+  name: ec2
+  # subnet_filter:
+  #   tag: 'Default'
+  #   value: '*public*'
+  metadata_options:
+    http_tokens: required
+    http_put_response_hop_limit: 1
+    instance_metadata_tags: enabled
+  instance_type: t2.micro
+  associate_public_ip: true
+  interface: public
+  skip_cost_warning: true
+  privileged: true
+
+provisioner:
+  name: ansible_playbook
+  hosts: all
+  require_chef_for_busser: false
+  require_ruby_for_busser: false
+  ansible_binary_path: /usr/local/bin
+  require_pip3: true
+  ansible_verbose: true
+  roles_path: spec/ansible/disa/roles
+  galaxy_ignore_certs: true
+  #requirements_path: spec/ansible/disa/roles/requirements.yml
+  ansible_extra_flags: <%= ENV['ANSIBLE_EXTRA_FLAGS'] %>
+
+suites:
+  # - name: vanilla
+  #   provisioner:
+  #     playbook: spec/ansible/roles/ansible-role-rhel-vanilla.yml
+  #   driver:
+  #     tags:
+  #       Name: Vanilla-<%= ENV['USER'] %>
+  #       CreatedBy: test-kitchen
+
+  - name: hardened
+    provisioner:
+      playbook: spec/ansible/disa/site.yml
+    driver:
+      tags:
+        Name: Hardened-<%= ENV['USER'] %>
+        CreatedBy: test-kitchen
+
+lifecycle:
+  pre_converge:
+    - remote: |
+        echo "NOTICE - Installing needed packages"
+        sudo dnf -y clean all
+        sudo dnf -y install --nogpgcheck bc bind-utils redhat-lsb-core vim
+        echo "updating system packages"
+        sudo dnf -y update --nogpgcheck --nobest
+        sudo dnf -y distro-sync
+        echo "NOTICE - Updating the ec2-user to keep sudo working"
+        sudo chage -d $(( $( date +%s ) / 86400 )) ec2-user
+        echo "NOTICE - updating ec2-user sudo config"
+        sudo chmod 600 /etc/sudoers && sudo sed -i'' "/ec2-user/d" /etc/sudoers && sudo chmod 400 /etc/sudoers
