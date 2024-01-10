@@ -60,19 +60,21 @@ $ sudo sysctl --system'
   tag fix_id: 'F-32911r858750_fix'
   tag cci: ['CCI-002165']
   tag nist: ['AC-3 (4)']
+  tag 'host'
 
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
-    end
-  else
-    describe kernel_parameter('fs.protected_symlinks') do
-      its('value') { should cmp 1 }
-    end
+  only_if('Control not applicable within a container', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
 
-    describe command('grep -r ^fs.protected_symlinks /etc/sysctl.conf /etc/sysctl.d/*.conf') do
-      its('stdout') { should match(/fs.protected_symlinks(\s+)=(\s+)1$/) }
+  describe kernel_parameter('fs.protected_symlinks') do
+    its('value') { should cmp 1 }
+  end
+
+  search_result = command("grep -r ^fs.protected_symlinks #{input('sysctl_conf_files').join(' ')}").stdout.strip
+
+  describe 'Kernel config files' do
+    it 'should enable DAC on symlinks' do
+      expect(search_result).to match(/fs.protected_symlinks\s+=\s+1$/), 'No config file was found that explicitly enforces DAC on symlinks'
     end
   end
 end

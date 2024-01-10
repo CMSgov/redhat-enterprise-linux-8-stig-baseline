@@ -66,11 +66,11 @@ $ sudo sysctl --system'
     its('value') { should eq 1 }
   end
 
-  search_result = command("grep -r ^kernel.kexec_load_disabled #{input('sysctl_conf_file_locations').join(' ')}").stdout.strip
+  search_result = command("grep -r ^kernel.kexec_load_disabled #{input('sysctl_conf_files').join(' ')}").stdout.strip
 
   describe 'Kernel config files' do
     it 'should disable loading a new kernel' do
-      expect(search_result).to match(/kernel.kexec_load_disabled(\s+)?=(\s+)?1$/), 'No config file was found that explicitly disables kernel loading'
+      expect(search_result).to match(/kernel.kexec_load_disabled\s+=\s+1$/), 'No config file was found that explicitly disables kernel loading'
     end
   end
 end
