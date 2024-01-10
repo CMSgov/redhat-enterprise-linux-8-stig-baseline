@@ -16,6 +16,7 @@ driver:
   interface: public
   skip_cost_warning: true
   privileged: true
+  instance_initiated_shutdown_behavior: terminate
 
 provisioner:
   name: ansible_playbook
