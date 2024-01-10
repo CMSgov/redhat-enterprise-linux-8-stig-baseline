@@ -22,7 +22,7 @@ provisioner:
   hosts: all
   require_chef_for_busser: false
   require_ruby_for_busser: false
-  ansible_binary_path: /usr/local/bin
+  ansible_binary_path: /usr/bin
   require_pip3: true
   ansible_verbose: true
   roles_path: spec/ansible/disa/roles
@@ -60,3 +60,12 @@ lifecycle:
         sudo chage -d $(( $( date +%s ) / 86400 )) ec2-user
         echo "NOTICE - updating ec2-user sudo config"
         sudo chmod 600 /etc/sudoers && sudo sed -i'' "/ec2-user/d" /etc/sudoers && sudo chmod 400 /etc/sudoers
+        # Work around for kitchen-ansible issue?
+        sudo dnf -y install python3
+        sudo dnf -y install python3-pip
+        sudo dnf -y install ansible
+        echo "Ansible Version Installed:"
+        ansible -v
+
+transport:
+  max_ssh_sessions: 6
