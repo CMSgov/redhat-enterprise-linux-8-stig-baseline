@@ -17,7 +17,7 @@ jobs:
       LC_ALL: "en_US.UTF-8"
     strategy:
       matrix:
-        suite: ["hardened"]
+        suite: ["disa-hardened"]
       fail-fast: false
     steps:
       - name: add needed packages

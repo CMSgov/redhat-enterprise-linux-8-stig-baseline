@@ -39,7 +39,7 @@ suites:
   #       Name: Vanilla-<%= ENV['USER'] %>
   #       CreatedBy: test-kitchen
 
-  - name: hardened
+  - name: disa-hardened
     provisioner:
       playbook: spec/ansible/disa/site.yml
     driver:
