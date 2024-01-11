@@ -60,58 +60,30 @@ control 'SV-230268' do
   tag fix_id: 'F-32912r858753_fix'
   tag cci: ['CCI-002165']
   tag nist: ['AC-3 (4)']
+  tag 'host'
 
-  # Define the kernel parameter to be checked
-  parameter = 'fs.protected_hardlinks'
-  action = 'enforce discretionary access control on hardlinks'
+  only_if('Control not applicable within a container', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
 
-  # Get the current value of the kernel parameter
-  current_value = kernel_parameter(parameter)
+  action = 'fs.protected_hardlinks'
 
-  # Check if the system is a Docker container
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
+  describe kernel_parameter(action) do
+    its('value') { should eq 1 }
+  end
+
+  search_result = command("grep -r #{action} #{input('sysctl_conf_files').join(' ')}").stdout.strip
+
+  correct_result = search_result.lines.any? { |line| line.match(/#{action}\s*=\s*1$/) }
+  incorrect_results = search_result.lines.map(&:strip).select { |line| line.match(/#{action}\s*=\s*[^1]$/) }
+
+  describe 'Kernel config files' do
+    it "should configure '#{action}'" do
+      expect(correct_result).to eq(true), 'No config file was found that explicitly disables this action'
     end
-  else
-    # Check if IPv4 packet forwarding is disabled
-    describe action.to_s do
-      it 'is disabled in sysctl -a' do
-        expect(current_value.value).to cmp 0
-        expect(current_value.value).not_to be_nil
-      end
-    end
-
-    # Get the list of sysctl configuration files
-    sysctl_config_files = input('sysctl_conf_files').map(&:strip).join(' ')
-
-    # Search for the kernel parameter in the configuration files
-    search_results = command("grep -r #{parameter} #{sysctl_config_files} {} \;").stdout.split("\n")
-
-    # Parse the search results into a hash
-    config_values = search_results.each_with_object({}) do |item, results|
-      file, setting = item.split(':')
-      results[file] ||= []
-      results[file] << setting.split('=').last
-    end
-
-    # Check the configuration files
-    describe 'Configuration files' do
-      if search_results.empty?
-        it "do not have `#{parameter}` disabled directly" do
-          expect(config_values).not_to be_empty, "Add the line `#{parameter}=0` to a file in the `/etc/sysctl.d/` directory"
-        end
-      else
-        describe "for #{action}" do
-          it 'have a single unique entry' do
-            expect(config_values.values.flatten.count).to eq(1), "Expected one unique configuration, but got #{config_values}"
-          end
-
-          it "do not have more then one #{action} value" do
-            expect(config_values.values.flatten.all? { |v| v == '0' }).to be true
-          end
-        end
+    if incorrect_results.present?
+      it 'should not have incorrect or conflicting setting(s) in the config files' do
+        expect(incorrect_results).to be_empty, "Incorrect or conflicting setting(s) found:\n\t- #{incorrect_results.join("\n\t- ")}"
       end
     end
   end

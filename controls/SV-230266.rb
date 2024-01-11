@@ -62,15 +62,25 @@ $ sudo sysctl --system'
     !virtualization.system.eql?('docker')
   }
 
-  describe kernel_parameter('kernel.kexec_load_disabled') do
+  action = 'kernel.kexec_load_disabled'
+
+  describe kernel_parameter(action) do
     its('value') { should eq 1 }
   end
 
-  search_result = command("grep -r ^kernel.kexec_load_disabled #{input('sysctl_conf_files').join(' ')}").stdout.strip
+  search_result = command("grep -r #{action} #{input('sysctl_conf_files').join(' ')}").stdout.strip
+
+  correct_result = search_result.lines.any? { |line| line.match(/#{action}\s*=\s*1$/) }
+  incorrect_results = search_result.lines.map(&:strip).select { |line| line.match(/#{action}\s*=\s*[^1]$/) }
 
   describe 'Kernel config files' do
-    it 'should disable loading a new kernel' do
-      expect(search_result).to match(/kernel.kexec_load_disabled\s+=\s+1$/), 'No config file was found that explicitly disables kernel loading'
+    it "should configure '#{action}'" do
+      expect(correct_result).to eq(true), 'No config file was found that explicitly disables this action'
+    end
+    if incorrect_results.present?
+      it 'should not have incorrect or conflicting setting(s) in the config files' do
+        expect(incorrect_results).to be_empty, "Incorrect or conflicting setting(s) found:\n\t- #{incorrect_results.join("\n\t- ")}"
+      end
     end
   end
 end
