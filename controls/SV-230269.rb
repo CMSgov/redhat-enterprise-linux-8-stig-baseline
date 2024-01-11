@@ -60,19 +60,31 @@ $ sudo sysctl --system'
   tag fix_id: 'F-32913r858755_fix'
   tag cci: ['CCI-001090']
   tag nist: ['SC-4']
+  tag 'host'
 
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
-    end
-  else
-    describe kernel_parameter('kernel.dmesg_restrict') do
-      its('value') { should eq 1 }
-    end
+  only_if('Control not applicable within a container', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
 
-    describe parse_config(command('grep -rh ^kernel.dmesg_restrict /etc/sysctl.conf /etc/sysctl.d/*.conf').stdout.strip) do
-      its(['kernel.dmesg_restrict']) { should cmp 1 }
+  action = 'kernel.dmesg_restrict'
+
+  describe kernel_parameter(action) do
+    its('value') { should eq 1 }
+  end
+
+  search_result = command("grep -r ^#{action} #{input('sysctl_conf_files').join(' ')}").stdout.strip
+
+  correct_result = search_result.lines.any? { |line| line.match(/#{action}\s*=\s*1$/) }
+  incorrect_results = search_result.lines.map(&:strip).select { |line| line.match(/#{action}\s*=\s*[^1]$/) }
+
+  describe 'Kernel config files' do
+    it "should configure '#{action}'" do
+      expect(correct_result).to eq(true), 'No config file was found that correctly sets this action'
+    end
+    if incorrect_results.present?
+      it 'should not have incorrect or conflicting setting(s) in the config files' do
+        expect(incorrect_results).to be_empty, "Incorrect or conflicting setting(s) found:\n\t- #{incorrect_results.join("\n\t- ")}"
+      end
     end
   end
 end

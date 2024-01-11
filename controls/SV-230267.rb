@@ -72,14 +72,14 @@ $ sudo sysctl --system'
     its('value') { should eq 1 }
   end
 
-  search_result = command("grep -r #{action} #{input('sysctl_conf_files').join(' ')}").stdout.strip
+  search_result = command("grep -r ^#{action} #{input('sysctl_conf_files').join(' ')}").stdout.strip
 
   correct_result = search_result.lines.any? { |line| line.match(/#{action}\s*=\s*1$/) }
   incorrect_results = search_result.lines.map(&:strip).select { |line| line.match(/#{action}\s*=\s*[^1]$/) }
 
   describe 'Kernel config files' do
     it "should configure '#{action}'" do
-      expect(correct_result).to eq(true), 'No config file was found that explicitly disables this action'
+      expect(correct_result).to eq(true), 'No config file was found that correctly sets this action'
     end
     if incorrect_results.present?
       it 'should not have incorrect or conflicting setting(s) in the config files' do
