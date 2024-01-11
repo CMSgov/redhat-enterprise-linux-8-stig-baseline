@@ -49,7 +49,7 @@
 | W,?      | SV-230268 |                       | Y        | Y      | Y     | N                              | `sysctl_conf_files`                                                                                     |
 | W        | SV-230269 |                       | Y        | Y      | Y     | N                              | `sysctl_conf_files`                                                                                     |
 | W        | SV-230270 |                       | Y        | Y      | Y     | N                              | `sysctl_conf_files`                                                                                     |
-| W        | SV-230271 | Y                     |          |        | Y     |                                |                                                                                                         |
+| W        | SV-230271 | Y                     | Y        | Y      | Y     | `sudoers`                      | `sudoers_config_files`                                                                                  |
 | W        | SV-230272 |                       |          |        | Y     |                                |                                                                                                         |
 | W        | SV-230273 |                       |          |        | Y     |                                |                                                                                                         |
 | W        | SV-230274 | Y                     |          |        | Y     |                                |                                                                                                         |

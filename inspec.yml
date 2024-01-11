@@ -9,13 +9,19 @@ version: 1.12.0
 inspec_version: ">= 5.0"
 
 inputs:
-  # SV-237643
+  # SV-230271, SV-237643
   - name: sudoers_config_files
     description: 'The files and directories you keep your sudoers configs'
     type: Array
     value:
       - '/etc/sudoers'
       - '/etc/sudoers.d/*'
+
+  #SV-230271
+  - name: passwordless_admins
+    description: List of administrative groups permitted by ISSO to have NOPASSWD set in sudoers files
+    type: Array
+    value: []
 
   # SV-244528, SV-244525
   - name: sshd_config_values

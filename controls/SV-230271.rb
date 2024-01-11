@@ -30,58 +30,23 @@ file or files in the "/etc/sudoers.d" directory.'
   tag fix_id: 'F-32915r854025_fix'
   tag cci: ['CCI-002038']
   tag nist: ['IA-11']
+  tag 'host', 'container-conditional'
 
-  if virtualization.system.eql?('docker') && !command('sudo').exist?
-    impact 0.0
-    describe "Control not applicable within a container & sudo doesn't exist" do
-      skip "Control not applicable within a container & sudo doesn't exist"
-    end
-  elsif input('skip_password_privilege_escalation')
-    impact 0.0
-    describe 'Users are not required to provide a password for privilege escalation as agreed to by the approval authority. This requirement is not applicable.' do
-      skip 'Users are not required to provide a password for privilege escalation as agreed to by the approval authority. This requirement is not applicable.'
-    end
-  else
-    processed = []
-    to_process = ['/etc/sudoers', '/etc/sudoers.d']
+  only_if('Control not applicable within a container without sudo installed', impact: 0.0) {
+    !(virtualization.system.eql?('docker') && !command('sudo').exist?)
+  }
 
-    until to_process.empty?
-      in_process = to_process.pop
-      next if processed.include? in_process
+  sudoers_files = input('sudoers_config_files').select { |file| file(file).exist? }
 
-      processed.push in_process
+  failing_results = command("grep -i ^.*nopasswd #{sudoers_files.join(' ')} | grep --invert-match ^.*#[^0-9]").stdout.strip.split("\n")
 
-      if file(in_process).directory?
-        to_process.concat(
-          command("find #{in_process} -maxdepth 1 -mindepth 1")
-            .stdout.strip.split("\n")
-            .select { |f| file(f).file? }
-        )
-      elsif file(in_process).file?
-        to_process.concat(
-          command("grep -E '#include\\s+' #{in_process} | sed 's/.*#include[[:space:]]*//g'")
-            .stdout.strip.split("\n")
-            .map { |f| f.start_with?('/') ? f : File.join(File.dirname(in_process), f) }
-            .select { |f| file(f).exist? }
-        )
-        to_process.concat(
-          command("grep -E '#includedir\\s+' #{in_process} | sed 's/.*#includedir[[:space:]]*//g'")
-            .stdout.strip.split("\n")
-            .map { |f| f.start_with?('/') ? f : File.join(File.dirname(in_process), f) }
-            .select { |f| file(f).exist? }
-        )
-      end
-    end
+  if input('passwordless_admins').present?
+    failing_results = failing_results.reject { |line| line.match(/#{input('passwordless_admins').join("|")}/) }
+  end
 
-    sudoers = processed.select { |f| file(f).file? }
-
-    sudoers.each do |sudoer|
-      sudo_content = file(sudoer).content.strip.split("\n")
-      nopasswd_lines = sudo_content.select { |l| l.match?(/^[^#].*NOPASSWD/) }
-      describe "#{sudoer} rules containing NOPASSWD" do
-        subject { nopasswd_lines }
-        it { should be_empty }
-      end
+  describe 'Sudoers' do
+    it 'should not include any (non-exempt) users with NOPASSWD set' do
+      expect(failing_results).to be_empty, "NOPASSWD settings found in sudoer file(s):\n\t- #{failing_results.join("\n\t- ")}"
     end
   end
 end
