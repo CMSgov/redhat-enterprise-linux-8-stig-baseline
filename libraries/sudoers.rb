@@ -56,11 +56,11 @@ class Sudoers < Inspec.resource(1)
     # TODO - figure out precendence for different sudo files; do we need to account for that?
 
     @sudoers_files = sudoers_files
-    sudo_configs = sudoers_files.map{ |f| inspec.file(f).content if inspec.file(f).exist? }.join("\n")
+    sudo_configs = sudoers_files.map{ |f| inspec.file(f).content unless !inspec.file(f).exist? }.join("\n")
     #sudo_configs = command("cat #{@sudoers_files.map(&:strip).join(' ')}").stdout
 
     # strip comment lines and blank space lines (except for the #include, just in case)
-    @lines = sudo_configs.lines.reject { |line| line.match(/^#(?!include)|^\s*$/) }.map(&:strip)
+    @lines = sudo_configs.lines.reject { |line| line.nil? || line.match(/^#(?!include)|^\s*$/) }.map(&:strip)
 
     # a sudoers file has both settings and user specifications
     # it gets easier to write parsing regexes if we split the logic for handling them
@@ -93,12 +93,14 @@ class Sudoers < Inspec.resource(1)
       sudo_config_data = inspec.parse_config(settings_lines.join("\n"), parse_options).params
       sudo_config_hash = Hashie::Mash.new
       sudo_config_data.each do |k, v|
+        puts "processing k,v: #{k}\t=>#{v}"
           if k.start_with?('Defaults')
-              key_parts = k.split('   ', 2) # split by three spaces
+              
+              key_parts = k.split("\s", 2)
               sudo_config_hash.Defaults ||= Hashie::Mash.new
               sudo_config_hash.Defaults[key_parts[1].strip] = v.map { |x| x.delete("\"") }.map(&:split).flatten
           else
-              key_parts = k.split("\t") # split by tab character
+              key_parts = k.split("\s")
               sudo_config_hash[key_parts[0]] ||= Hashie::Mash.new
               sudo_config_hash[key_parts[0]][key_parts[1]] = v
           end
