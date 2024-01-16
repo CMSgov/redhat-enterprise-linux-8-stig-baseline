@@ -49,18 +49,18 @@ class Sudoers < Inspec.resource(1)
     end
   "
 
-  attr_reader :lines, :settings, :sudoers_file, :table
+  attr_reader :lines, :settings, :sudoers_files
 
   def initialize(sudoers_files=["/etc/sudoers"])
 
-    # TODO - catch nonexistent files
-    # TODO - figure out precendence for different sudo files; do we need to accout for that?
+    # TODO - figure out precendence for different sudo files; do we need to account for that?
 
     @sudoers_files = sudoers_files
-    sudo_configs = command("cat #{@sudoers_files.map(&:strip).join(' ')}").stdout
+    sudo_configs = sudoers_files.map{ |f| inspec.file(f).content if inspec.file(f).exist? }.join("\n")
+    #sudo_configs = command("cat #{@sudoers_files.map(&:strip).join(' ')}").stdout
 
     # strip comment lines and blank space lines (except for the #include, just in case)
-    @lines = inspec.file(@sudoers_file).content.lines.reject { |line| line.match(/^#(?!include)|^\s*$/) }.map(&:strip)
+    @lines = sudo_configs.lines.reject { |line| line.match(/^#(?!include)|^\s*$/) }.map(&:strip)
 
     # a sudoers file has both settings and user specifications
     # it gets easier to write parsing regexes if we split the logic for handling them
@@ -83,6 +83,9 @@ class Sudoers < Inspec.resource(1)
   private
 
   def settings_hash(settings_lines)
+
+    # TODO: allow for sorting by type of alias (Cmnd_Alias, User_Alias, etc.)
+  
       parse_options = {
           assignment_regex: /^\s*([^=]*?)\s*\+?=\s*(.*?)\s*$/,
           multiple_values: true
