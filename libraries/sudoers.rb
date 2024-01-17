@@ -15,17 +15,19 @@ class SudoersUserSpecTable
     tags = ["NOPASSWD", "PASSWD", "NOEXEC", "EXEC", "SETENV", "NOSETENV", "LOG_INPUT", "NOLOG_INPUT", "LOG_OUTPUT", "NOLOG_OUTPUT"]
 
     @table = userspec_lines.map { |line|
+
+      line_hash = {}
       parsed_line = line.match(/^(?<users>\S+)\s+(?<hosts>[^=\s]+)=(\((?<run_as>.+)\))?\s*(?<tags>(#{tags.join(':|')}:)+)*\s*(?<commands>.*)$/)
 
       # tried just using `.named_captures` to construct the hash, but that gives hash keys that are strings, which confuses filtertable
+      # TODO: figure out how to handle optional fields like `tags`, which seem to have weird interactions with `.where`
       unless parsed_line.nil? 
-        {
-          users:    parsed_line['users'],
-          hosts:    parsed_line['hosts'],
-          run_as:   parsed_line['run_as'],
-          tags:     parsed_line['tags'],
-          commands: parsed_line['commands']
-        }.transform_values { |v| (v.present? && v.include?(',')) ? v.split(',') : v }
+        line_hash[:users] = parsed_line['users']
+        line_hash[:hosts] = parsed_line['hosts']
+        line_hash[:run_as] = parsed_line['run_as'] if parsed_line['run_as'].present?
+        line_hash[:tags] = parsed_line['tags'] if parsed_line['tags'].present?
+        line_hash[:commands] = parsed_line['commands']
+        line_hash.transform_values { |v| (v.present? && v.include?(',')) ? v.split(',') : v }
       end
     }.compact
   end
@@ -43,24 +45,26 @@ class Sudoers < Inspec.resource(1)
   desc "Parse sudoers files"
 
   example "
-    # Find users with NOPASSWD set:  
-    describe sudoers.users.where do
-      its('rules') { should match_pam_rule('password sufficient pam_unix.so sha512') }
+    # Check that there are no users with NOPASSWD set:  
+    describe sudoers.rules.where { tags.include?('NOPASSWD:') } do
+      its('count') { should eq 0 }
     end
   "
 
-  attr_reader :lines, :settings, :sudoers_files
+  attr_reader :lines, :settings, :sudoers_files, :raw_content
 
-  def initialize(sudoers_files=["/etc/sudoers"])
+  def initialize(sudoers_files="/etc/sudoers")
 
     # TODO - figure out precendence for different sudo files; do we need to account for that?
 
+    # allow user to pass a single file or a list of a bunch of sudoers files
+    sudoers_files = sudoers_files.to_a if sudoers_files.is_a?(String)
+
     @sudoers_files = sudoers_files
-    sudo_configs = sudoers_files.map{ |f| inspec.file(f).content unless !inspec.file(f).exist? }.join("\n")
-    #sudo_configs = command("cat #{@sudoers_files.map(&:strip).join(' ')}").stdout
+    @raw_content = inspec.command("cat #{sudoers_files.join(' ')}").stdout
 
     # strip comment lines and blank space lines (except for the #include, just in case)
-    @lines = sudo_configs.lines.reject { |line| line.nil? || line.match(/^#(?!include)|^\s*$/) }.map(&:strip)
+    @lines = @raw_content.lines.reject { |line| line.nil? || line.match(/^#(?!include)|^\s*$/) }.map(&:strip)
 
     # a sudoers file has both settings and user specifications
     # it gets easier to write parsing regexes if we split the logic for handling them
@@ -93,7 +97,6 @@ class Sudoers < Inspec.resource(1)
       sudo_config_data = inspec.parse_config(settings_lines.join("\n"), parse_options).params
       sudo_config_hash = Hashie::Mash.new
       sudo_config_data.each do |k, v|
-        puts "processing k,v: #{k}\t=>#{v}"
           if k.start_with?('Defaults')
               
               key_parts = k.split("\s", 2)
