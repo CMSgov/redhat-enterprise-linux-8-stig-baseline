@@ -56,9 +56,10 @@ class Sudoers < Inspec.resource(1)
   def initialize(sudoers_files="/etc/sudoers")
 
     # TODO - figure out precendence for different sudo files; do we need to account for that?
+    # TODO - catch if the user is not root, which will make them unable to read sudoers files
 
     # allow user to pass a single file or a list of a bunch of sudoers files
-    sudoers_files = sudoers_files.to_a if sudoers_files.is_a?(String)
+    sudoers_files = [sudoers_files] if sudoers_files.is_a?(String)
 
     @sudoers_files = sudoers_files
     @raw_content = inspec.command("cat #{sudoers_files.join(' ')}").stdout
