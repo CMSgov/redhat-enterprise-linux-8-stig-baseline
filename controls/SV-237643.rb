@@ -38,41 +38,18 @@ Remove any duplicate or conflicting lines from /etc/sudoers and /etc/sudoers.d/ 
   tag nist: ['IA-11']
   tag 'host', 'container-conditional'
 
-  sudoers_config_files = input('sudoers_config_files').map(&:strip).join(' ')
-  sudo_configs = command("cat #{sudoers_config_files}").stdout
-
-  sudo_config_data = parse_config(sudo_configs).params
+  only_if('This requirement is Not Applicable in a container with no sudo installed', impact: 0.0) {
+    !(virtualization.system.eql?('docker') && !command('sudo').exist?)
+  }
 
   setting = 'timestamp_timeout'
-  value = 0
+  setting_value = sudoers(input('sudoers_config_files')).settings.Defaults[setting]
 
-  sudo_config_hash = Hashie::Mash.new
-  sudo_config_data.each do |k, v|
-    if k.start_with?('Defaults')
-      key_parts = k.split('   ', 2) # split by three spaces
-      sudo_config_hash.Defaults ||= Hashie::Mash.new
-      sudo_config_hash.Defaults[key_parts[1].strip] = v
-    else
-      key_parts = k.split("\t") # split by tab character
-      sudo_config_hash[key_parts[0]] ||= Hashie::Mash.new
-      sudo_config_hash[key_parts[0]][key_parts[1]] = v
-    end
-  end
-
-  impact 0.0 if virtualization.system.eql?('docker') && !command('sudo').exist?
-
-  describe 'The Sudo Configuration' do
-    if virtualization.system.eql?('docker') && !command('sudo').exist?
-      it 'This requirement is Not Applicable since `sudo` not installed in the container.' do
-        skip 'This requirement is Not Applicable since `sudo` not installed in the container.'
-      end
-    else
-      it 'has a configured non-negative Default timestamp_timeout value' do
-        expect(sudo_config_hash.Defaults[setting]).to be >= 0, "The Default #{setting} setting is not present or incorrectly configured. Please ensure #{setting} present and is not negative."
-      end
-      it 'has the correct Default timestamp_timeout setting' do
-        expect(sudo_config_hash.Defaults[setting.to_s]).to eq(0), "The Default #{setting} setting is not present or incorrectly configured. Please ensure #{setting} is set to #{value}."
-      end
+  describe "Sudoers configuration" do
+    it "should should set #{setting} to a non-negative number, exactly once" do
+      expect(setting_value).to_not be_nil, "#{setting} not found inside sudoers config file(s)"
+      expect(setting_value.count).to eq(1), "#{setting} set #{setting_value.count} times inside sudoers config file(s)"
+      expect(setting_value.first.to_i).to be >= 0
     end
   end
 end
