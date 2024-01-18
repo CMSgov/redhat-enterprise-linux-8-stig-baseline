@@ -11,7 +11,7 @@ class SudoersUserSpecTable
   attr_reader :table
 
   def initialize(userspec_lines)
-        
+
     tags = ["NOPASSWD", "PASSWD", "NOEXEC", "EXEC", "SETENV", "NOSETENV", "LOG_INPUT", "NOLOG_INPUT", "LOG_OUTPUT", "NOLOG_OUTPUT"]
 
     @table = userspec_lines.map { |line|

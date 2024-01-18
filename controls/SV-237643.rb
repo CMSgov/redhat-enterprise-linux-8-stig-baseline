@@ -45,7 +45,7 @@ Remove any duplicate or conflicting lines from /etc/sudoers and /etc/sudoers.d/ 
   setting = 'timestamp_timeout'
   setting_value = sudoers(input('sudoers_config_files')).settings.Defaults[setting]
 
-  describe "Sudoers configuration" do
+  describe 'Sudoers configuration' do
     it "should should set #{setting} to a non-negative number, exactly once" do
       expect(setting_value).to_not be_nil, "#{setting} not found inside sudoers config file(s)"
       expect(setting_value.count).to eq(1), "#{setting} set #{setting_value.count} times inside sudoers config file(s)"
