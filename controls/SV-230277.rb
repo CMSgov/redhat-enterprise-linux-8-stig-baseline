@@ -48,21 +48,14 @@ configuration survives kernel updates:
   tag fix_id: 'F-32921r567578_fix'
   tag cci: ['CCI-001084']
   tag nist: ['SC-3']
+  tag 'host'
 
   grub_stdout = command('grub2-editenv - list').stdout
 
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
-    end
-  else
-    describe parse_config(grub_stdout) do
-      its('kernelopts') { should match(/page_poison=1/) }
-    end
-
-    describe parse_config_file('/etc/default/grub') do
-      its('GRUB_CMDLINE_LINUX') { should match(/page_poison=1/) }
+  describe 'GRUB config' do
+    it 'should enable page poisoning' do
+      expect(parse_config(grub_stdout)['kernelopts']).to match(/page_poison\s*=\s*1/), 'Current GRUB configuration does not enable page poisoning'
+      expect(parse_config_file('/etc/default/grub')['GRUB_CMDLINE_LINUX']).to match(/page_poison\s*=\s*2/), 'Page poisoning not set to persist between kernel updates'
     end
   end
 end

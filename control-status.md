@@ -55,7 +55,7 @@
 | W        | SV-230274 | Y                     | Y        | Y      | Y     | N                                | `sudo_certificate_verification`, `alternate_mfa_method`                                                   |
 | W        | SV-230275 |                       | Y        | Y      | Y     | N                                | `smart_card_enabled`, `piv_driver`                                                                        |
 | W        | SV-230276 |                       | Y        | Y      | Y     | N                                | None                                                                                                      |
-| W        | SV-230277 |                       |          |        | Y     |                                  |                                                                                                           |
+| W        | SV-230277 |                       | Y        | Y      | Y     | N                                | None                                                                                                      |
 | W        | SV-230278 |                       |          |        | Y     |                                  |                                                                                                           |
 | W        | SV-230279 |                       |          |        | Y     |                                  |                                                                                                           |
 | W        | SV-230280 |                       |          |        | Y     |                                  |                                                                                                           |
