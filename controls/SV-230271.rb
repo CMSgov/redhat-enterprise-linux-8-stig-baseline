@@ -36,17 +36,15 @@ file or files in the "/etc/sudoers.d" directory.'
     !(virtualization.system.eql?('docker') && !command('sudo').exist?)
   }
 
-  sudoers_files = input('sudoers_config_files').select { |file| file(file).exist? }
-
-  failing_results = command("grep -i ^.*nopasswd #{sudoers_files.join(' ')} | grep --invert-match ^.*#[^0-9]").stdout.strip.split("\n")
+  failing_results = sudoers(input('sudoers_config_files')).rules.where{ tags.present? && tags.include?("NOPASSWD") }
 
   if input('passwordless_admins').present?
-    failing_results = failing_results.reject { |line| line.match(/#{input('passwordless_admins').join("|")}/) }
+    failing_results = failing_results.where{ !input('passwordless_admins').include?(users) }
   end
 
   describe 'Sudoers' do
     it 'should not include any (non-exempt) users with NOPASSWD set' do
-      expect(failing_results).to be_empty, "NOPASSWD settings found in sudoer file(s):\n\t- #{failing_results.join("\n\t- ")}"
+      expect(failing_results).to be_empty, "NOPASSWD settings found for users:\n\t- #{failing_results.users.join("\n\t- ")}"
     end
   end
 end
