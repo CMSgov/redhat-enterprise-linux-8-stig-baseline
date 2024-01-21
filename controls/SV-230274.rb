@@ -46,25 +46,27 @@ $ sudo systemctl restart sssd.service'
   tag fix_id: 'F-32918r809280_fix'
   tag cci: ['CCI-001948']
   tag nist: ['IA-2 (11)']
+  tag 'host', 'container-conditional'
 
   only_if('This requirement is Not Applicable inside the container', impact: 0.0) {
     !virtualization.system.eql?('docker')
   }
 
-  describe file('/etc/sssd/sssd.conf') do
-    it { should exist }
-  end
-
-  sssd_conf_file_contents = command('cat /etc/sssd/sssd.conf /etc/sssd/conf.d/*.conf').stdout.strip
-  sssd_certificate_verification = input('sssd_certificate_verification')
-
-  if sssd_conf_file_contents.empty?
-    describe 'Unable to verify the SSSD Configuration for OCSP MFA Validation' do
-      skip 'Unable to verify the SSSD Configuration for OCSP MFA Validation, please review this Requirement Manually'
+  if input('alternate_mfa_method').present?
+    describe 'Manual Review' do
+      skip "Alternate MFA method selected:\t\nConsult with ISSO to determine that alternate MFA method is approved; manually review system to ensure alternate MFA method is functioning"
     end
   else
-    describe ini({ command: 'cat /etc/sssd/sssd.conf /etc/sssd/conf.d/*.conf' }) do
-      its('sssd.certificate_verification') { should cmp sssd_certificate_verification }
+    sssd_conf = ini({ command: 'cat /etc/sssd/sssd.conf /etc/sssd/conf.d/*.conf' })
+    sssd_certificate_verification = input('sssd_certificate_verification')
+
+    describe 'SSSD' do
+      it 'should be installed and enabled' do
+        expect(service('sssd')).to be_installed.and be_enabled.and be_running
+      end
+      it "should configure certificate_verification to be '#{sssd_certificate_verification}'" do
+        expect(sssd_conf.sssd.certificate_verification).to eq(sssd_certificate_verification)
+      end
     end
   end
 end

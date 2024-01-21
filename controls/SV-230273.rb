@@ -47,6 +47,7 @@ control 'SV-230273' do
   tag fix_id: 'F-32917r743942_fix'
   tag cci: ['CCI-001948']
   tag nist: ['IA-2 (11)']
+  tag 'host'
 
   only_if('This control is does not apply to containers', impact: 0.0) {
     !virtualization.system.eql?('docker')

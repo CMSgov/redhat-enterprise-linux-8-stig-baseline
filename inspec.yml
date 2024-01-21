@@ -25,11 +25,17 @@ inputs:
 
   # SV-244528, SV-244525
   - name: sshd_config_values
-    decription: 'The agreed sshd server config values for the organization'
+    description: 'The agreed sshd server config values for the organization'
     type: Hash
     value:
       GSSAPIAuthentication: 'no'
       ClientAliveInterval: '600'
+
+  # SV-230274
+  - name: alternate_mfa_method
+    description: Name of the MFA method in place on the system (leave blank if using the default SSSD, give the name if using an approved alternate method)
+    type: String
+    value: ''
 
   # SV-244543
   - name: alert_method

@@ -26,15 +26,13 @@ finding.'
   tag fix_id: 'F-32916r567563_fix'
   tag cci: ['CCI-002038']
   tag nist: ['IA-11']
+  tag 'host', 'container-conditional'
 
-  if virtualization.system.eql?('docker') && !command('sudo').exist?
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
-    end
-  else
-    describe command('grep -ir authenticate /etc/sudoers /etc/sudoers.d/*') do
-      its('stdout') { should_not match(/!authenticate/) }
-    end
+  only_if('Control not applicable within a container without sudo installed', impact: 0.0) {
+    !(virtualization.system.eql?('docker') && !command('sudo').exist?)
+  }
+
+  describe sudoers(input('sudoers_config_files')) do
+    its('settings.Defaults') { should_not include '!authenticate' }
   end
 end
