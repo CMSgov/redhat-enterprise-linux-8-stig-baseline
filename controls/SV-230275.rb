@@ -38,17 +38,28 @@ control 'SV-230275' do
   tag fix_id: 'F-32919r567572_fix'
   tag cci: ['CCI-001953']
   tag nist: ['IA-2 (12)']
+  tag 'host'
 
   only_if('This control is does not apply to containers', impact: 0.0) {
     !virtualization.system.eql?('docker')
   }
 
   if input('smart_card_enabled')
+
     describe package('opensc') do
       it { should be_installed }
     end
-    describe command('opensc-tool --list-drivers | grep -i piv') do
-      its('stdout') { should match(/PIV-II/) }
+
+    options = { assignment_regex: /^\s*(\S+)\s+(.*)$/ }
+    opensc = command('opensc-tool --list-drivers').stdout
+    opensc_conf = parse_config(opensc, options)
+
+    piv_driver = input('piv_driver')
+
+    describe 'OpenSC drivers' do
+      it "should include '#{piv_driver}'" do
+        expect(opensc_conf.params.keys).to include(piv_driver), "Missing '#{piv_driver}' in OpenSC driver list"
+      end
     end
   else
     impact 0.0

@@ -35,23 +35,28 @@ BIOS.'
   tag fix_id: 'F-32920r567575_fix'
   tag cci: ['CCI-002824']
   tag nist: ['SI-16']
+  tag 'host'
+
+  only_if('This control is does not apply to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
 
   options = {
     assignment_regex: /^\s*([^:]*?)\s*:\s*(.*?)\s*$/
   }
 
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
-    end
-  else
-    describe.one do
-      describe command('dmesg | grep NX') do
-        it('stdout') { should match(/.+(NX \(Execute Disable\) protection: active)/) }
+  dmesg_nx_conf = command('dmesg | grep NX').stdout.match(/:\s+(\S+)$/).captures.first
+  cpuinfo_flags = parse_config_file('/proc/cpuinfo', options).flags.split
+
+  describe.one do
+    describe 'The no-execution bit flag' do
+      it 'should be set in kernel messages' do
+        expect(dmesg_nx_conf).to eq('active'), "dmesg does not show NX protection set to 'active'"
       end
-      describe parse_config_file('/proc/cpuinfo', options) do
-        its('flags.split') { should include 'nx' }
+    end
+    describe 'The no-execution bit flag' do
+      it 'should be set in CPU info' do
+        expect(cpuinfo_flags).to include('nx'), "'nx' flag not set in /proc/cpuinfo flags"
       end
     end
   end

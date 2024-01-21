@@ -37,6 +37,12 @@ inputs:
     type: String
     value: ''
 
+  # SV-230275
+  - name: piv_driver
+    description: OpenSC driver responsible for handling PIV cards
+    type: String
+    value: "PIV-II"
+
   # SV-244543
   - name: alert_method
     description: 'The method used to provide real-time information to the ISSO or AO'
