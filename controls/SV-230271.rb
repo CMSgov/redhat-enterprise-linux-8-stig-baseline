@@ -36,11 +36,9 @@ file or files in the "/etc/sudoers.d" directory.'
     !(virtualization.system.eql?('docker') && !command('sudo').exist?)
   }
 
-  failing_results = sudoers(input('sudoers_config_files')).rules.where{ tags.present? && tags.include?("NOPASSWD") }
+  failing_results = sudoers(input('sudoers_config_files')).rules.where { tags.present? && tags.include?('NOPASSWD') }
 
-  if input('passwordless_admins').present?
-    failing_results = failing_results.where{ !input('passwordless_admins').include?(users) }
-  end
+  failing_results = failing_results.where { !input('passwordless_admins').include?(users) } if input('passwordless_admins').present?
 
   describe 'Sudoers' do
     it 'should not include any (non-exempt) users with NOPASSWD set' do
