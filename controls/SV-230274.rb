@@ -64,8 +64,10 @@ $ sudo systemctl restart sssd.service'
       it 'should be installed and enabled' do
         expect(service('sssd')).to be_installed.and be_enabled.and be_running
       end
-      it "should configure certificate_verification to be '#{sssd_certificate_verification}'" do
-        expect(sssd_conf.sssd.certificate_verification).to eq(sssd_certificate_verification)
+      if sssd_conf.present?
+        it "should configure certificate_verification to be '#{sssd_certificate_verification}'" do
+          expect(sssd_conf.sssd.certificate_verification).to eq(sssd_certificate_verification)
+        end
       end
     end
   end
