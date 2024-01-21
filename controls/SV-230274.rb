@@ -46,7 +46,7 @@ $ sudo systemctl restart sssd.service'
   tag fix_id: 'F-32918r809280_fix'
   tag cci: ['CCI-001948']
   tag nist: ['IA-2 (11)']
-  tag 'host', 'container-conditional'
+  tag 'host'
 
   only_if('This requirement is Not Applicable inside the container', impact: 0.0) {
     !virtualization.system.eql?('docker')
