@@ -49,23 +49,23 @@ file systems that contain user home directories for interactive users.'
     !virtualization.system.eql?('docker')
   }
 
-  interactive_user_homedirs = passwd.where { 
-    uid.to_i >= 1000 && shell !~ /nologin/ 
+  interactive_user_homedirs = passwd.where {
+    uid.to_i >= 1000 && shell !~ /nologin/
   }.homes.map { |home_path|
-    home_path.match(/^(.*)\/.*$/).captures.first
+    home_path.match(%r{^(.*)/.*$}).captures.first
   }.uniq
 
   option = 'nosuid'
 
   mounted_on_root = interactive_user_homedirs.select { |dir| dir == '/' }
-  not_configured = interactive_user_homedirs.select { |dir| !etc_fstab.where { mount_point == dir }.configured? }
-  option_not_set = interactive_user_homedirs.select { |dir| !etc_fstab.where { mount_point == dir }.mount_options.flatten.include?(option) }
+  not_configured = interactive_user_homedirs.reject { |dir| etc_fstab.where { mount_point == dir }.configured? }
+  option_not_set = interactive_user_homedirs.reject { |dir| etc_fstab.where { mount_point == dir }.mount_options.flatten.include?(option) }
 
-  describe "All interactive user home directories" do
+  describe 'All interactive user home directories' do
     it "should not be mounted under root ('/')" do
       expect(mounted_on_root).to be_empty, "Home directories mounted on root ('/'):\n\t- #{mounted_on_root.join("\n\t- ")}"
     end
-    it "should be configured in /etc/fstab" do
+    it 'should be configured in /etc/fstab' do
       expect(not_configured).to be_empty, "Unconfigured home directories:\n\t- #{not_configured.join("\n\t- ")}"
     end
     if (option_not_set - not_configured).present?

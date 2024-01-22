@@ -31,7 +31,7 @@ system/partition.'
   describe mount('/tmp') do
     it { should be_mounted }
   end
-  
+
   describe etc_fstab.where { mount_point == '/tmp' } do
     it { should exist }
   end

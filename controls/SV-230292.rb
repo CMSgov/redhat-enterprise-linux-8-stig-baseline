@@ -30,7 +30,7 @@ If a separate entry for "/var" is not in use, this is a finding.'
   describe mount('/var') do
     it { should be_mounted }
   end
-  
+
   describe etc_fstab.where { mount_point == '/var' } do
     it { should exist }
   end

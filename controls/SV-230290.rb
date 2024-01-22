@@ -38,7 +38,7 @@ the SSH daemon, run the following command:
   only_if('This control is does not apply to containers without SSH installed', impact: 0.0) {
     !(virtualization.system.eql?('docker') && !directory('/etc/ssh').exist?)
   }
-  
+
   describe sshd_config do
     its('IgnoreUserKnownHosts') { should cmp 'yes' }
   end

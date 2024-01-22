@@ -44,9 +44,9 @@ the SSH daemon, run the following command:
   ssh_host_key_dirs = input('ssh_host_key_dirs').join(' ')
   pub_keys = command("find #{ssh_host_key_dirs} -xdev -name '*.pub'").stdout.split("\n")
   mode = input('ssh_pub_key_mode')
-  failing_keys = pub_keys.select{ |key| file(key).more_permissive_than?(mode) }
+  failing_keys = pub_keys.select { |key| file(key).more_permissive_than?(mode) }
 
-  describe "All SSH public keys on the filesystem" do
+  describe 'All SSH public keys on the filesystem' do
     it "should be less permissive than #{mode}" do
       expect(failing_keys).to be_empty, "Failing keyfiles:\n\t- #{failing_keys.join("\n\t- ")}"
     end
