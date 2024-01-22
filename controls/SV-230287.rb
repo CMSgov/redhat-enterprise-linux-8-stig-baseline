@@ -27,25 +27,20 @@ The SSH daemon must be restarted for the changes to take effect. To restart the 
   tag fix_id: 'F-32931r880713_fix'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host', 'container-conditional'
 
-  if virtualization.system.eql?('docker') && !directory('/etc/ssh').exist?
-    impact 0.0
-    describe 'Control not applicable - SSH is not installed within containerized RHEL' do
-      skip 'Control not applicable - SSH is not installed within containerized RHEL'
-    end
-  else
-    key_files = command("find /etc/ssh -xdev -name '*ssh_host*key'").stdout.split("\n")
-    if !key_files.nil? && !key_files.empty?
-      key_files.each do |keyfile|
-        describe file(keyfile) do
-          it { should_not be_more_permissive_than('0640') }
-        end
-      end
-    else
-      describe 'No files have a more permissive mode.' do
-        subject { key_files.nil? || key_files.empty? }
-        it { should eq true }
-      end
+  only_if('This control is does not apply to containers without SSH installed', impact: 0.0) {
+    !(virtualization.system.eql?('docker') && !directory('/etc/ssh').exist?)
+  }
+
+  ssh_host_key_dirs = input('ssh_host_key_dirs').join(' ')
+  priv_keys = command("find #{ssh_host_key_dirs} -xdev -name '*.pem'").stdout.split("\n")
+  mode = input('ssh_private_key_mode')
+  failing_keys = priv_keys.select{ |key| file(key).more_permissive_than?(mode) }
+
+  describe "All SSH private keys on the filesystem" do
+    it "should be less permissive than #{mode}" do
+      expect(failing_keys).to be_empty, "Failing keyfiles:\n\t- #{failing_keys.join("\n\t- ")}"
     end
   end
 end

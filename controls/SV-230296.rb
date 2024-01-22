@@ -36,15 +36,13 @@ the SSH daemon, run the following command:
   tag fix_id: 'F-32940r567635_fix'
   tag cci: ['CCI-000770']
   tag nist: ['IA-2 (5)']
+  tag 'host', 'container-conditional'
 
-  if virtualization.system.eql?('docker') && !file('/etc/ssh/sshd_config').exist?
-    impact 0.0
-    describe 'Control not applicable - SSH is not installed within containerized RHEL' do
-      skip 'Control not applicable - SSH is not installed within containerized RHEL'
-    end
-  else
-    describe sshd_config('/etc/ssh/sshd_config') do
-      its('PermitRootLogin') { should cmp input('permit_root_login') }
-    end
+  only_if('This control is does not apply to containers without SSH installed', impact: 0.0) {
+    !(virtualization.system.eql?('docker') && !directory('/etc/ssh').exist?)
+  }
+
+  describe sshd_config do
+    its('PermitRootLogin') { should cmp input('permit_root_login') }
   end
 end

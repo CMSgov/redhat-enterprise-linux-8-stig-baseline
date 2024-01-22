@@ -21,18 +21,17 @@ If a separate entry for "/var" is not in use, this is a finding.'
   tag fix_id: 'F-32936r567623_fix'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host'
 
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
-    end
-  else
-    describe mount('/var') do
-      it { should be_mounted }
-    end
-    describe etc_fstab.where { mount_point == '/var' } do
-      it { should exist }
-    end
+  only_if('This control is does not apply to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  describe mount('/var') do
+    it { should be_mounted }
+  end
+  
+  describe etc_fstab.where { mount_point == '/var' } do
+    it { should exist }
   end
 end

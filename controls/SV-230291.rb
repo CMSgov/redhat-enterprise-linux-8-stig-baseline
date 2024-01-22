@@ -32,15 +32,13 @@ the SSH daemon, run the following command:
   tag fix_id: 'F-32935r743956_fix'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host', 'container-conditional'
 
-  if virtualization.system.eql?('docker') && !file('/etc/ssh/sshd_config').exist?
-    impact 0.0
-    describe 'Control not applicable - SSH is not installed within containerized RHEL' do
-      skip 'Control not applicable - SSH is not installed within containerized RHEL'
-    end
-  else
-    describe sshd_config do
-      its('KerberosAuthentication') { should cmp 'no' }
-    end
+  only_if('This control is does not apply to containers without SSH installed', impact: 0.0) {
+    !(virtualization.system.eql?('docker') && !directory('/etc/ssh').exist?)
+  }
+  
+  describe sshd_config do
+    its('KerberosAuthentication') { should cmp 'no' }
   end
 end

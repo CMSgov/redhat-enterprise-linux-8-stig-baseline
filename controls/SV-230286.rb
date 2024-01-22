@@ -35,25 +35,20 @@ the SSH daemon, run the following command:
   tag fix_id: 'F-32930r567605_fix'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host', 'container-conditional'
 
-  if virtualization.system.eql?('docker') && !directory('/etc/ssh').exist?
-    impact 0.0
-    describe 'Control not applicable - SSH is not installed within containerized RHEL' do
-      skip 'Control not applicable - SSH is not installed within containerized RHEL'
-    end
-  else
-    pub_files = command("find /etc/ssh -xdev -name '*.pub' -perm /133").stdout.split("\n")
-    if !pub_files.nil? && !pub_files.empty?
-      pub_files.each do |pubfile|
-        describe file(pubfile) do
-          it { should_not be_more_permissive_than('0644') }
-        end
-      end
-    else
-      describe 'No files have a more permissive mode.' do
-        subject { pub_files.nil? || pub_files.empty? }
-        it { should eq true }
-      end
+  only_if('This control is does not apply to containers without SSH installed', impact: 0.0) {
+    !(virtualization.system.eql?('docker') && !directory('/etc/ssh').exist?)
+  }
+
+  ssh_host_key_dirs = input('ssh_host_key_dirs').join(' ')
+  pub_keys = command("find #{ssh_host_key_dirs} -xdev -name '*.pub'").stdout.split("\n")
+  mode = input('ssh_pub_key_mode')
+  failing_keys = pub_keys.select{ |key| file(key).more_permissive_than?(mode) }
+
+  describe "All SSH public keys on the filesystem" do
+    it "should be less permissive than #{mode}" do
+      expect(failing_keys).to be_empty, "Failing keyfiles:\n\t- #{failing_keys.join("\n\t- ")}"
     end
   end
 end

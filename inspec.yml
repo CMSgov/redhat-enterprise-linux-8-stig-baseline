@@ -51,6 +51,27 @@ inputs:
     type: String
     value: "PIV-II"
 
+  # SV-230286, SV-230287
+  - name: ssh_host_key_dirs
+    description: Directories where public host SSH keys for the server are stored
+    type: Array
+    value:
+      - /etc/ssh/
+      - /home/
+
+  # SV-230286
+  - name: ssh_pub_key_mode
+    description: All public ssh keyfiles on the filesystem should be equal or less permissive than this octet
+    type: String
+    value: '0644'
+
+  
+  # SV-230287
+  - name: ssh_private_key_mode
+    description: All private ssh keyfiles on the filesystem should be equal or less permissive than this octet
+    type: String
+    value: '0640'    
+
   # SV-244543
   - name: alert_method
     description: 'The method used to provide real-time information to the ISSO or AO'

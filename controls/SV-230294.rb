@@ -27,17 +27,19 @@ data path, this is a finding.'
   tag fix_id: 'F-32938r567629_fix'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host'
+
+  only_if('This control is does not apply to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
 
   audit_data_path = command("dirname #{auditd_conf.log_file}").stdout.strip
 
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
-    end
-  else
-    describe etc_fstab.where { mount_point == audit_data_path } do
-      it { should exist }
-    end
+  describe mount(audit_data_path) do
+    it { should be_mounted }
+  end
+
+  describe etc_fstab.where { mount_point == audit_data_path } do
+    it { should exist }
   end
 end
