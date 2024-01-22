@@ -51,11 +51,12 @@ configuration survives kernel updates:
   tag 'host'
 
   grub_stdout = command('grub2-editenv - list').stdout
+  setting = /page_poison\s*=\s*1/
 
   describe 'GRUB config' do
     it 'should enable page poisoning' do
-      expect(parse_config(grub_stdout)['kernelopts']).to match(/page_poison\s*=\s*1/), 'Current GRUB configuration does not enable page poisoning'
-      expect(parse_config_file('/etc/default/grub')['GRUB_CMDLINE_LINUX']).to match(/page_poison\s*=\s*1/), 'Page poisoning not set to persist between kernel updates'
+      expect(parse_config(grub_stdout)['kernelopts']).to match(setting), 'Current GRUB configuration does not disable this setting'
+      expect(parse_config_file('/etc/default/grub')['GRUB_CMDLINE_LINUX']).to match(setting), 'Setting not configured to persist between kernel updates'
     end
   end
 end

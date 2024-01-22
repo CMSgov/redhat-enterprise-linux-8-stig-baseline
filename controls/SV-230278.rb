@@ -50,21 +50,19 @@ configuration survives kernel updates:
   tag fix_id: 'F-32922r743947_fix'
   tag cci: ['CCI-001084']
   tag nist: ['SC-3']
+  tag 'host'
+
+  only_if('This control is does not apply to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
 
   grub_stdout = command('grub2-editenv - list').stdout
+  setting = /vsyscall\s*=\s*none/
 
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
-    end
-  else
-    describe parse_config(grub_stdout) do
-      its('kernelopts') { should match(/vsyscall=none/) }
-    end
-
-    describe parse_config_file('/etc/default/grub') do
-      its('GRUB_CMDLINE_LINUX') { should match(/vsyscall=none/) }
+  describe 'GRUB config' do
+    it 'should enable page poisoning' do
+      expect(parse_config(grub_stdout)['kernelopts']).to match(setting), 'Current GRUB configuration does not disable this setting'
+      expect(parse_config_file('/etc/default/grub')['GRUB_CMDLINE_LINUX']).to match(setting), 'Setting not configured to persist between kernel updates'
     end
   end
 end
