@@ -55,15 +55,12 @@ $ sudo sysctl --system'
   tag fix_id: 'F-32924r858766_fix'
   tag cci: ['CCI-002824']
   tag nist: ['SI-16']
+  tag 'host'
 
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
-    end
-  else
-    describe kernel_parameter('kernel.randomize_va_space') do
-      its('value') { should eq 2 }
-    end
+  only_if('This control is does not apply to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+  describe kernel_parameter('kernel.randomize_va_space') do
+    its('value') { should eq 2 }
   end
 end

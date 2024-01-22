@@ -34,6 +34,7 @@ updated versions have been installed.
   tag fix_id: 'F-32925r567590_fix'
   tag cci: ['CCI-002617']
   tag nist: ['SI-2 (6)']
+  tag 'host', 'container'
 
   describe parse_config_file('/etc/dnf/dnf.conf') do
     its('main.clean_requirements_on_remove') { should match(/1|True|yes/i) }

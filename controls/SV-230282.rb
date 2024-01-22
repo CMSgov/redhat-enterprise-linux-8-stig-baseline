@@ -60,19 +60,19 @@ functions.
   tag fix_id: 'F-32926r567593_fix'
   tag cci: ['CCI-002696']
   tag nist: ['SI-6 a']
+  tag 'host'
 
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
-    end
-  else
-    describe command('sestatus') do
-      its('stdout') { should match(/^Loaded\spolicy\sname:\s+targeted\n?$/) }
-    end
+  only_if('This control is does not apply to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
 
-    describe parse_config_file('/etc/selinux/config') do
-      its('SELINUXTYPE') { should eq 'targeted' }
-    end
+  describe selinux do
+    it { should_not be_disabled }
+    it { should be_enforcing }
+    its('policy') { should eq 'targeted' }
+  end
+
+  describe parse_config_file('/etc/selinux/config') do
+    its('SELINUXTYPE') { should eq 'targeted' }
   end
 end
