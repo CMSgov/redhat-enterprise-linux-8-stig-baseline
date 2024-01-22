@@ -52,7 +52,7 @@
 | W        | SV-230271 | Y                     | Y        | Y      | Y     | `sudoers`                        | `sudoers_config_files`                                                                                  |
 | W        | SV-230272 |                       | Y        | Y      | Y     | `sudoers`                        | `sudoers_config_files`                                                                                    |
 | W        | SV-230273 |                       | Y        | Y      | Y     | N                                | `smart_card_enabled`                                                                                     |
-| W        | SV-230274 | Y                     | Y        | Y      | Y     | N                                | `sudo_certificate_verification`, `alternate_mfa_method`                                                   |
+| W        | SV-230274 | Y                     | Y        | Y      | Y     | N                                | `sudo_certificate_verification`, `alternate_mfa_method`,`sssd_conf_files`                                 |
 | W        | SV-230275 |                       | Y        | Y      | Y     | N                                | `smart_card_enabled`, `piv_driver`                                                                        |
 | W        | SV-230276 |                       | Y        | Y      | Y     | N                                | None                                                                                                      |
 | W        | SV-230277 |                       | Y        | Y      | Y     | N                                | None                                                                                                      |

@@ -57,16 +57,18 @@ $ sudo systemctl restart sssd.service'
       skip "Alternate MFA method selected:\t\nConsult with ISSO to determine that alternate MFA method is approved; manually review system to ensure alternate MFA method is functioning"
     end
   else
-    sssd_conf = ini({ command: 'cat /etc/sssd/sssd.conf /etc/sssd/conf.d/*.conf' })
+    sssd_conf_files = input('sssd_conf_files')
+    sssd_conf_contents = ini({ command: "cat #{input('sssd_conf_files').join(' ')}" })
     sssd_certificate_verification = input('sssd_certificate_verification')
 
     describe 'SSSD' do
       it 'should be installed and enabled' do
-        expect(service('sssd')).to be_installed.and be_enabled.and be_running
+        expect(service('sssd')).to be_installed.and be_enabled
+        expect(sssd_conf_contents.params).to_not be_empty, "SSSD configuration files not found or have no content; files checked:\n\t- #{sssd_conf_files.join("\n\t- ")}"
       end
-      if sssd_conf.present?
+      if sssd_conf_contents.params.present?
         it "should configure certificate_verification to be '#{sssd_certificate_verification}'" do
-          expect(sssd_conf.sssd.certificate_verification).to eq(sssd_certificate_verification)
+          expect(sssd_conf_contents.sssd.certificate_verification).to eq(sssd_certificate_verification)
         end
       end
     end

@@ -37,6 +37,14 @@ inputs:
     type: String
     value: ''
 
+  # SV-230274
+  - name: sssd_conf_files
+    description: File and directory globs to check for SSSD configuration
+    type: Array
+    value:
+      - /etc/sssd/sssd.conf
+      - /etc/sssd/conf.d/*.conf
+
   # SV-230275
   - name: piv_driver
     description: OpenSC driver responsible for handling PIV cards
