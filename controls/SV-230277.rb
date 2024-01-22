@@ -55,7 +55,7 @@ configuration survives kernel updates:
   describe 'GRUB config' do
     it 'should enable page poisoning' do
       expect(parse_config(grub_stdout)['kernelopts']).to match(/page_poison\s*=\s*1/), 'Current GRUB configuration does not enable page poisoning'
-      expect(parse_config_file('/etc/default/grub')['GRUB_CMDLINE_LINUX']).to match(/page_poison\s*=\s*2/), 'Page poisoning not set to persist between kernel updates'
+      expect(parse_config_file('/etc/default/grub')['GRUB_CMDLINE_LINUX']).to match(/page_poison\s*=\s*1/), 'Page poisoning not set to persist between kernel updates'
     end
   end
 end
