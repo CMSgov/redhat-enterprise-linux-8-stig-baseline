@@ -49,9 +49,11 @@ file systems that contain user home directories for interactive users.'
     !virtualization.system.eql?('docker')
   }
 
-  interactive_user_homedirs = passwd.where {
+  interactive_users = passwd.where {
     uid.to_i >= 1000 && shell !~ /nologin/
-  }.homes.map { |home_path|
+  }
+
+  interactive_user_homedirs = interactive_users.homes.map { |home_path|
     home_path.match(%r{^(.*)/.*$}).captures.first
   }.uniq
 
