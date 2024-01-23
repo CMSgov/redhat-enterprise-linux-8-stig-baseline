@@ -32,8 +32,8 @@ non-root local partitions.'
 
   option = 'nodev'
 
-  mount_stdout = command("mount").stdout.lines
-  failing_mount_points = mount_stdout.reject { |mp| mp.match(/^[^\/dev\S*]\s*.*\(.*#{option}.*\)/) }
+  mount_stdout = command('mount').stdout.lines
+  failing_mount_points = mount_stdout.reject { |mp| mp.match(%r{^[^/dev\S*]\s*.*\(.*#{option}.*\)}) }
 
   # failing_mount_points = command("mount \| grep '^/dev\\S* on /\\S' \| grep --invert-match '#{option}'").stdout.split
 

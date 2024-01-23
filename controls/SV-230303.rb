@@ -36,7 +36,7 @@ file systems that are associated with removable media.'
   file_systems = etc_fstab.params
   non_removable_media = input('non_removable_media_fs')
   mounted_removeable_media = file_systems.reject { |mnt| non_removable_media.include?(mnt['mount_point']) }
-  failing_mounts = mounted_removeable_media.reject { |mnt| mnt['mount_options'].include?(option)}
+  failing_mounts = mounted_removeable_media.reject { |mnt| mnt['mount_options'].include?(option) }
 
   # be very explicit about why this one was a finding since we do not know which mounts are removeable media without the user telling us
   rem_media_msg = "NOTE: Some mounted devices are not indicated to be non-removable media (you may need to update the 'non_removable_media_fs' input to check if these are truly subject to this requirement):\n\t- #{mounted_removeable_media.join("\n\t- ")}"
@@ -44,13 +44,13 @@ file systems that are associated with removable media.'
   # there should either be no mounted removable media (which should be a requirement anyway), OR
   # all removeable media should be mounted with nodev
   if mounted_removeable_media.empty?
-    describe "No removeable media" do
-      it "should be mounted" do
+    describe 'No removeable media' do
+      it 'should be mounted' do
         expect(mounted_removeable_media).to be_empty
       end
     end
   else
-    describe "Any mounted removeable media" do
+    describe 'Any mounted removeable media' do
       it "should have '#{option}' set" do
         expect(failing_mounts).to be_empty, "#{rem_media_msg}\nRemoveable media without '#{option}' set:\n\t- #{failing_mounts.join("\n\t- ")}"
       end
