@@ -346,7 +346,7 @@ inputs:
   - name: non_removable_media_fs
     description: File systems listed in /etc/fstab which are not removable media devices
     type: Array
-    value: ["/", "/tmp", "none", "/home"]
+    value: ["/", "/tmp", "none", "/home", "/tmpfs"]
 
   # SV-230230
   - name: private_key_files
