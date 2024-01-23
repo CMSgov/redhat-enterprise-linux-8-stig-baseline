@@ -43,7 +43,6 @@ the /boot directory.'
   else
 
     describe.one do
-
       # Note - the test EC2s don't have this dir. Seems that boot tasks traditionally done by /boot
       # are handled differently in the cloud
       describe file('/boot') do

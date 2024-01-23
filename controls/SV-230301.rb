@@ -24,8 +24,7 @@ non-root local partitions.'
   tag nist: ['CM-6 b']
   tag 'host'
 
-
-  # TODO - figure out how mount works enough to make this test readable
+  # TODO: figure out how mount works enough to make this test readable
 
   # only_if('This control is does not apply to containers', impact: 0.0) {
   #   !virtualization.system.eql?('docker')
@@ -41,7 +40,7 @@ non-root local partitions.'
   # describe.one
 
   #   describe mount('')
-    
+
   #   describe "All mounted devices outside of '/dev' directory" do
   #     it "should be mounted with the '#{option}' option" do
   #       expect(failing_mount_points).to be_empty, "Failing devices:\n\t- #{failing_mount_points.join("\n\t- ")}"
