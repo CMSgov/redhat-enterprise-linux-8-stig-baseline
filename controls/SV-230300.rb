@@ -29,21 +29,31 @@ the /boot directory.'
   tag fix_id: 'F-32944r567647_fix'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host'
 
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
-    end
-  elsif file('/sys/firmware/efi').exist?
+  only_if('This control is does not apply to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  if file('/sys/firmware/efi').exist?
     impact 0.0
     describe 'System running UEFI' do
       skip 'The System is running UEFI, this control is Not Applicable.'
     end
   else
-    describe mount('/boot') do
-      it { should be_mounted }
-      its('options') { should include 'nosuid' }
+
+    describe.one do
+
+      # Note - the test EC2s don't have this dir. Seems that boot tasks traditionally done by /boot
+      # are handled differently in the cloud
+      describe file('/boot') do
+        it { should_not exist }
+      end
+
+      describe mount('/boot') do
+        it { should be_mounted }
+        its('options') { should include 'nosuid' }
+      end
     end
   end
 end

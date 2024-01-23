@@ -43,27 +43,36 @@ file systems that contain user home directories for interactive users.'
   tag fix_id: 'F-32946r567653_fix'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host'
 
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
+  only_if('This control is does not apply to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  interactive_users = passwd.where {
+    uid.to_i >= 1000 && shell !~ /nologin/
+  }
+
+  interactive_user_homedirs = interactive_users.homes.map { |home_path|
+    home_path.match(%r{^(.*)/.*$}).captures.first
+  }.uniq
+
+  option = 'noexec'
+
+  mounted_on_root = interactive_user_homedirs.select { |dir| dir == '/' }
+  not_configured = interactive_user_homedirs.reject { |dir| etc_fstab.where { mount_point == dir }.configured? }
+  option_not_set = interactive_user_homedirs.reject { |dir| etc_fstab.where { mount_point == dir }.mount_options.flatten.include?(option) }
+
+  describe 'All interactive user home directories' do
+    it "should not be mounted under root ('/')" do
+      expect(mounted_on_root).to be_empty, "Home directories mounted on root ('/'):\n\t- #{mounted_on_root.join("\n\t- ")}"
     end
-  else
-    home_dirs = []
-    iuser_entries = passwd.where { uid.to_i >= 1000 && shell !~ /nologin/ }
-    iuser_entries.entries.each do |ie|
-      username_size = ie.user.length
-      home_dirs.append(ie.home[0..ie.home.length - (username_size + 2)])
+    it 'should be configured in /etc/fstab' do
+      expect(not_configured).to be_empty, "Unconfigured home directories:\n\t- #{not_configured.join("\n\t- ")}"
     end
-    home_dirs.uniq.each do |home_dir|
-      describe 'User home directories should not be mounted under root' do
-        subject { home_dir }
-        it { should_not eq '/' }
-      end
-      describe etc_fstab.where { mount_point == home_dir } do
-        it { should be_configured }
-        its('mount_options.first') { should include 'noexec' }
+    if (option_not_set - not_configured).present?
+      it "should have the '#{option}' mount option set" do
+        expect(option_not_set - not_configured).to be_empty, "Mounted home directories without '#{option}' set:\n\t- #{not_configured.join("\n\t- ")}"
       end
     end
   end

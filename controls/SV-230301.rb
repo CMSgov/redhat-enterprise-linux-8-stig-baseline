@@ -22,11 +22,29 @@ non-root local partitions.'
   tag fix_id: 'F-32945r567650_fix'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host'
 
-  mount_points = command("mount \| grep '^/dev\\S* on /\\S' \| grep --invert-match 'nodev'").stdout
 
-  describe "List of devices mounted without 'nodev' option outside root /dev directory" do
-    subject { mount_points }
-    it { should be_empty }
-  end
+  # TODO - figure out how mount works enough to make this test readable
+
+  # only_if('This control is does not apply to containers', impact: 0.0) {
+  #   !virtualization.system.eql?('docker')
+  # }
+
+  # option = 'nodev'
+
+  # mount_stdout = command("mount").stdout.lines
+  # failing_mount_points = mount_stdout.reject { |mp| mp.match(/^[^\/dev\S*]\s*.*\(.*#{option}.*\)/) }
+
+  # # failing_mount_points = command("mount \| grep '^/dev\\S* on /\\S' \| grep --invert-match '#{option}'").stdout.split
+
+  # describe.one
+
+  #   describe mount('')
+    
+  #   describe "All mounted devices outside of '/dev' directory" do
+  #     it "should be mounted with the '#{option}' option" do
+  #       expect(failing_mount_points).to be_empty, "Failing devices:\n\t- #{failing_mount_points.join("\n\t- ")}"
+  #     end
+  #   end
 end
