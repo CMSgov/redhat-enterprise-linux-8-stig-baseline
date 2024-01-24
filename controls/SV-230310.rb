@@ -38,15 +38,13 @@ the following command:
   tag fix_id: 'F-32954r567677_fix'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host'
 
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
-    end
-  else
-    describe systemd_service('kdump.service') do
-      it { should_not be_running }
-    end
+  only_if('This control is does not apply to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+  
+  describe systemd_service('kdump.service') do
+    it { should_not be_running }
   end
 end

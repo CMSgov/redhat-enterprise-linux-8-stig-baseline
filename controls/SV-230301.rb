@@ -24,8 +24,6 @@ non-root local partitions.'
   tag nist: ['CM-6 b']
   tag 'host'
 
-  # TODO: figure out how mount works enough to make this test readable
-
   only_if('This control is does not apply to containers', impact: 0.0) {
     !virtualization.system.eql?('docker')
   }
@@ -33,9 +31,7 @@ non-root local partitions.'
   option = 'nodev'
 
   mount_stdout = command('mount').stdout.lines
-  failing_mount_points = mount_stdout.reject { |mp| mp.match(%r{^[^/dev\S*]\s*.*\(.*#{option}.*\)}) }
-
-  # failing_mount_points = command("mount \| grep '^/dev\\S* on /\\S' \| grep --invert-match '#{option}'").stdout.split
+  failing_mount_points = mount_stdout.select { |mp| mp.match(%r{^/dev\S*\s+on\s+/\S}) }.reject { |mp| mp.match(%r{\(.*#{option}.*\)}) }
 
   describe "All mounted devices outside of '/dev' directory" do
     it "should be mounted with the '#{option}' option" do
