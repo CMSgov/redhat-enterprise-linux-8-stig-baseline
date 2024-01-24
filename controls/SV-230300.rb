@@ -41,18 +41,9 @@ the /boot directory.'
       skip 'The System is running UEFI, this control is Not Applicable.'
     end
   else
-
-    # describe.one do
-    #   # Note - the test EC2s don't have this dir. Seems that boot tasks traditionally done by /boot
-    #   # are handled differently in the cloud
-    #   describe file('/boot') do
-    #     it { should_not exist }
-    #   end
-
-      describe mount('/boot') do
-        it { should be_mounted }
-        its('options') { should include 'nosuid' }
-      end
-    # end
+    describe mount('/boot') do
+      it { should be_mounted }
+      its('options') { should include 'nosuid' }
+    end
   end
 end

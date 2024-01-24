@@ -31,7 +31,7 @@ non-root local partitions.'
   option = 'nodev'
 
   mount_stdout = command('mount').stdout.lines
-  failing_mount_points = mount_stdout.select { |mp| mp.match(%r{^/dev\S*\s+on\s+/\S}) }.reject { |mp| mp.match(%r{\(.*#{option}.*\)}) }
+  failing_mount_points = mount_stdout.select { |mp| mp.match(%r{^/dev\S*\s+on\s+/\S}) }.reject { |mp| mp.match(/\(.*#{option}.*\)/) }
 
   describe "All mounted devices outside of '/dev' directory" do
     it "should be mounted with the '#{option}' option" do

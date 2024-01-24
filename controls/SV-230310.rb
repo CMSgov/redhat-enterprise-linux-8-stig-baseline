@@ -43,8 +43,16 @@ the following command:
   only_if('This control is does not apply to containers', impact: 0.0) {
     !virtualization.system.eql?('docker')
   }
-  
-  describe systemd_service('kdump.service') do
-    it { should_not be_running }
+
+  caveat = input('kernel_dump_permitted')
+
+  if caveat
+    describe 'Manual Review' do
+      skip 'Inputs indicate this capability is an operational requirement of this system; manually review system documentation and confirm this with the ISSO'
+    end
+  else
+    describe systemd_service('kdump.service') do
+      it { should_not be_running }
+    end
   end
 end

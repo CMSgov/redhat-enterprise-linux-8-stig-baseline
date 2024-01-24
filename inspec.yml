@@ -210,6 +210,12 @@ inputs:
       - "/lib/sysctl.d/*.conf"
       - "/etc/sysctl.conf"
 
+  # SV-230310, SV-230311
+  - name: kernel_dump_permitted
+    description: Flag to set if the ability to dump the kernel is an operational requirement of this system (sets the relevant controls to manual review)
+    type: Boolean
+    value: false
+
   # SV-230311
   - name: kernel_config_files
     description: The system files that control kernel behavior on startup
