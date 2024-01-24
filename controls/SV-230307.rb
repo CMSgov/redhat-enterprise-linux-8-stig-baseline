@@ -26,20 +26,27 @@ file systems that are being imported via NFS.'
   tag fix_id: 'F-32951r567668_fix'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host'
 
-  nfs_systems = etc_fstab.nfs_file_systems.entries
+  only_if('This control is does not apply to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
 
-  if !nfs_systems.nil? && !nfs_systems.empty?
-    nfs_systems.each do |nfs_system|
-      describe "Network File System mounted on #{nfs_system['mount_point']}" do
-        subject { nfs_system }
-        its('mount_options') { should include 'nodev' }
+  option = 'nodev'
+  nfs_file_systems = etc_fstab.nfs_file_systems.params
+  failing_mounts = nfs_file_systems.reject { |mnt| mnt['mount_options'].include?(option) }
+
+  if nfs_file_systems.empty?
+    describe 'No NFS' do
+      it 'is mounted' do
+        expect(nfs_file_systems).to be_empty
       end
     end
   else
-    describe 'No NFS file systems were found' do
-      subject { nfs_systems.nil? || nfs_systems.empty? }
-      it { should eq true }
+    describe 'Any mounted Network File System (NFS)' do
+      it "should have '#{option}' set" do
+        expect(failing_mounts).to be_empty, "NFS without '#{option}' set:\n\t- #{failing_mounts.join("\n\t- ")}"
+      end
     end
   end
 end

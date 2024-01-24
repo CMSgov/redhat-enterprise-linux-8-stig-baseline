@@ -45,7 +45,7 @@ file systems that are associated with removable media.'
   # all removeable media should be mounted with nodev
   if mounted_removeable_media.empty?
     describe 'No removeable media' do
-      it 'should be mounted' do
+      it 'are mounted' do
         expect(mounted_removeable_media).to be_empty
       end
     end
