@@ -61,6 +61,7 @@ performed, the "/etc/resolv.conf" file must be empty. An empty
   tag fix_id: 'F-32960r567695_fix'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host', 'container'
 
   dns_in_host_line = parse_config_file('/etc/nsswitch.conf',
                                        comment_char: '#',

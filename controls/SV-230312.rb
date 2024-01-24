@@ -44,22 +44,20 @@ $ sudo systemctl daemon-reload'
   tag cci: ['CCI-000366']
   tag legacy: []
   tag nist: ['CM-6 b']
+  tag 'host'
+
+  only_if('This control is does not apply to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
 
   s = systemd_service('systemd-coredump.socket')
 
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
+  describe.one do
+    describe s do
+      its('params.LoadState') { should eq 'masked' }
     end
-  else
-    describe.one do
-      describe s do
-        its('params.LoadState') { should eq 'masked' }
-      end
-      describe s do
-        its('params.LoadState') { should eq 'not-found' }
-      end
+    describe s do
+      its('params.LoadState') { should eq 'not-found' }
     end
   end
 end

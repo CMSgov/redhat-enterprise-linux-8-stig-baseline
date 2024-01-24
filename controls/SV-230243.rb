@@ -45,8 +45,11 @@ sticky bit:
   tag fix_id: 'F-32887r567476_fix'
   tag cci: ['CCI-001090']
   tag nist: ['SC-4']
+  tag 'host', 'container'
 
-  ww_dirs = command('find / -type d \\( -perm -0002 -a ! -perm -1000 \\) -print 2>/dev/null').stdout.split("\n")
+  partitions = etc_fstab.params.map { |partition| partition['mount_point'] }.uniq
+
+  ww_dirs = command("find #{partitions} -type d \\( -perm -0002 -a ! -perm -1000 \\) -print 2>/dev/null").stdout.split("\n")
 
   if ww_dirs.empty?
     describe 'List of world-writable directories on the target' do
@@ -55,7 +58,7 @@ sticky bit:
     end
   else
     non_sticky_ww_dirs = ww_dirs.reject { |dir| file(dir).sticky? }
-    describe 'All public directories' do
+    describe 'All world-writeable directories' do
       it 'should have the sticky bit set' do
         fail_msg = "Public directories without sticky bit:\n\t- #{non_sticky_ww_dirs.join("\n\t- ")}"
         expect(non_sticky_ww_dirs).to be_empty, fail_msg
