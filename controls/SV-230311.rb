@@ -53,15 +53,33 @@ $ sudo sysctl --system'
   tag cci: ['CCI-000366']
   tag legacy: []
   tag nist: ['CM-6 b']
+  tag 'host'
 
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
-    end
-  else
-    describe kernel_parameter('kernel.core_pattern') do
-      its('value') { should eq '|/bin/false' }
+  only_if('This control is does not apply to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  kernel_setting = 'kernel.core_pattern'
+  kernel_expected_value = '|/bin/false'
+
+  describe kernel_parameter(kernel_setting) do
+    its('value') { should eq kernel_expected_value }
+  end
+
+  k_conf_files = input('kernel_config_files')
+
+  # make sure the setting is set somewhere
+  k_conf = command("grep -r #{kernel_setting} #{k_conf_files.join(' ')}").stdout.split("\n")
+
+  # make sure it is set correctly
+  failing_k_conf = k_conf.reject { |k| k.match(/#{kernel_parameter}\s*=\s*#{kernel_expected_value}/) }
+
+  describe "Kernel config files" do
+    it "should set '#{kernel_setting}' on startup" do
+      expect(k_conf).to_not be_empty, "Setting not found in any of the following config files:\n\t- #{input(k_conf_files.join("\n\t- "))}"
+      if k_conf.present?
+        expect(failing_k_conf).to be_empty, "Incorrect or conflicting settings found:\n\t- #{failing_k_conf.join("\n\t- ")}"
+      end
     end
   end
 end
