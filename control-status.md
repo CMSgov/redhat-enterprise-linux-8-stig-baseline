@@ -89,7 +89,7 @@
 | W        | SV-230310 |                       | Y        | Y      | Y     | N                                | None                                                                                                      |
 | W        | SV-230311 |                       | Y        | Y      | Y     | N                                | `kernel_config_files`                                                                                     |
 | W        | SV-230312 |                       | Y        | Y      | Y     | N                                | None                                                                                                      |
-| W        | SV-230313 |                       |          |        | Y     |                                  |                                                                                                           |
+| W        | SV-230313 |                       | Y        | Y      | Y     | N                                | None                                                                                                      |
 | W        | SV-230314 |                       | Y        | Y      | Y     | N                                | None                                                                                                      |
 | W        | SV-230315 |                       | Y        | Y      | Y     | N                                | None                                                                                                      |
 | W        | SV-230316 | Y                     | Y        | Y      | Y     | N                                | None                                                                                                      |

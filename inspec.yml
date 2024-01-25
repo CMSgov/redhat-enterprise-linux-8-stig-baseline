@@ -216,6 +216,12 @@ inputs:
     type: Boolean
     value: false
 
+  # SV-230313
+  - name: core_dump_permitted
+    description: Flag to set if the ability to dump the state of the core after a program crash is an operational requirement of this system (sets the relevant controls to manual review)
+    type: Boolean
+    value: false
+
   # SV-230311
   - name: kernel_config_files
     description: The system files that control kernel behavior on startup
