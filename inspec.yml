@@ -70,7 +70,13 @@ inputs:
   - name: ssh_private_key_mode
     description: All private ssh keyfiles on the filesystem should be equal or less permissive than this octet
     type: String
-    value: '0640'    
+    value: '0640'
+
+  # SV-230321
+  - name: home_dir_mode
+    description: All interactive user home directories should have permissions equal to or less than this octet
+    type: String
+    value: "0750"
 
   # SV-244543
   - name: alert_method
@@ -252,8 +258,6 @@ inputs:
     type: Array
     value:
       - root
-      - vagrant
-      - ec2-user
 
   # SV-230309, SV-230317, SV-230320, SV-230321, SV-230322, SV-230325, SV-230328. SV-230384, SV-244531, SV-244532
   - name: non_interactive_shells

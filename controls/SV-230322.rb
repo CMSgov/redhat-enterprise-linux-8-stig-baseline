@@ -37,20 +37,30 @@ of "/home/smithj", and has a primary group of users.
   tag fix_id: 'F-32966r880716_fix'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host', 'container'
 
-  ignore_shells = input('non_interactive_shells').join('|')
-
+  exempt_home_users = input('exempt_home_users')
   uid_min = login_defs.read_params['UID_MIN'].to_i
   uid_min = 1000 if uid_min.nil?
 
-  findings = Set[]
-  users.where { !shell.match(ignore_shells) && (uid >= uid_min || uid.zero?) }.entries.each do |user_info|
-    next if input('exempt_home_users').include?(user_info.username.to_s)
+  iuser_entries = passwd.where { uid.to_i >= uid_min && shell !~ /nologin/ && !exempt_home_users.include?(user) }
 
-    findings += command("find #{user_info.home} -maxdepth 0 -not -gid #{user_info.gid}").stdout.split("\n")
-  end
-  describe "Home directories that are not group-owned by the user's primary GID" do
-    subject { findings.to_a }
-    it { should be_empty }
+  if !iuser_entries.users.nil? && !iuser_entries.users.empty?
+    failing_iusers = iuser_entries.entries.reject { |iu|
+      file(iu['home']).gid == iu.gid.to_i
+    }
+    failing_homedirs = failing_iusers.map { |iu| iu['home'] }
+
+    describe 'All non-exempt interactive user account home directories on the system' do
+      it 'should be group-owned by the group of the user they are associated with' do
+        expect(failing_homedirs).to be_empty, "Failing home directories:\n\t- #{failing_homedirs.join("\n\t- ")}"
+      end
+    end
+  else
+    describe 'No non-exempt interactive user accounts' do
+      it 'were detected on the system' do
+        expect(true).to eq(true)
+      end
+    end
   end
 end
