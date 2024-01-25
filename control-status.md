@@ -99,7 +99,7 @@
 | W,A      | SV-230320 |                       | Y        | Y      | Y     | N                                | `exempt_home_users`                                                                                     |
 | W        | SV-230321 | Y                     | Y        | Y      | Y     | N                                | `exempt_home_users`, `home_dir_mode`                                                                      |
 | W        | SV-230322 |                       | Y        | Y      | Y     | N                                | `exempt_home_users`                                                                                       |
-| W        | SV-230323 |                       |          |        | Y     |                                  |                                                                                                           |
+| W        | SV-230323 |                       | Y        | Y      | Y     | N                                | `exempt_home_users`                                                                                       |
 | W        | SV-230324 |                       |          |        | Y     |                                  |                                                                                                           |
 | W        | SV-230325 | Y                     |          |        | Y     |                                  |                                                                                                           |
 | W        | SV-230326 | Y                     |          |        | Y     |                                  |                                                                                                           |
