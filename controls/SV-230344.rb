@@ -75,6 +75,7 @@ restart the "sssd" service, run the following command:
   tag fix_id: 'F-32988r567779_fix'
   tag cci: ['CCI-000044']
   tag nist: ['AC-7 a']
+  tag 'host', 'container'
 
   only_if('If the system is RHEL version 8.2 or newer, this check is not applicable.', impact: 0.0) {
     (os.release.to_f) < 8.2

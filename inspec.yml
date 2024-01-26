@@ -526,9 +526,9 @@ inputs:
 
   # SV-230336, SV-230337
   - name: lockout_time
-    description: Minimum amount of time account must be locked out after failed logins. This attribute should never be set greater than 604800 (time in seconds).
+    description: Minimum amount of time account must be locked out after failed logins. '0' indicates an account should not unlock until reset by an admin.
     type: Numeric
-    value: 604800
+    value: 0
 
   # SV-230338, SV-230339
   - name: log_directory

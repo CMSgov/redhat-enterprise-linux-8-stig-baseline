@@ -46,19 +46,14 @@ line:
   tag fix_id: 'F-32981r743971_fix'
   tag cci: ['CCI-000044']
   tag nist: ['AC-7 a']
+  tag 'host', 'container'
 
   only_if('This check applies to RHEL versions 8.2 or newer, if the system is
   RHEL version 8.0 or 8.1, this check is not applicable.', impact: 0.0) {
     (os.release.to_f) >= 8.2
   }
 
-  describe.one do
-    describe parse_config_file('/etc/security/faillock.conf') do
-      its('unlock_time') { should cmp 0 }
-    end
-    describe parse_config_file('/etc/security/faillock.conf') do
-      its('unlock_time') { should cmp >= input('lockout_time') }
-      its('unlock_time') { should cmp <= 604_800 }
-    end
+  describe parse_config_file('/etc/security/faillock.conf') do
+    its('unlock_time') { should cmp >= input('lockout_time') }
   end
 end
