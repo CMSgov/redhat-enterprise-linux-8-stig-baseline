@@ -34,6 +34,7 @@ If a separate entry for the file system/partition containing the nonprivileged i
   tag fix_id: 'F-32972r902722_fix'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host'
 
   only_if('This requirement is Not Applicable inside a container, the containers host manages the containers filesystems') {
     !virtualization.system.eql?('docker')
@@ -46,7 +47,7 @@ If a separate entry for the file system/partition containing the nonprivileged i
   if input('seperate_filesystem_exempt')
     impact 0.0
     describe 'This system is not required to have sperate filesystems for each mount point' do
-      skip 'The system is managing filesystems and space via other mechinisums, this requirement is Not Applicable'
+      skip 'The system is managing filesystems and space via other mechanisms; this requirement is Not Applicable'
     end
   else
     homes.each do |home|

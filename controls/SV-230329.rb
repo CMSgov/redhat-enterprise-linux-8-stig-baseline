@@ -36,15 +36,15 @@ logon to the system via a graphical user interface.
   tag fix_id: 'F-32973r567734_fix'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host'
+
+  only_if('This requirement is Not Applicable inside a container, the containers host manages the containers filesystems') {
+    !virtualization.system.eql?('docker')
+  }
 
   custom_conf = '/etc/gdm/custom.conf'
 
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
-    end
-  elsif package('gnome-desktop3').installed?
+  if package('gnome-desktop3').installed?
     if (f = file(custom_conf)).exist?
       describe parse_config_file(custom_conf) do
         its('daemon.AutomaticLoginEnable') { cmp false }

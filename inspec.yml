@@ -78,6 +78,12 @@ inputs:
     type: String
     value: "0750"
 
+  # SV-230321
+  - name: initialization_file_mode
+    description: All initialization files (.bash_profile etc) should have permissions equal to or less than this octet
+    type: String
+    value: "0740"
+
   # SV-244543
   - name: alert_method
     description: 'The method used to provide real-time information to the ISSO or AO'
@@ -422,11 +428,17 @@ inputs:
     type: Numeric
     value: 35
 
-  # SV-230441, SV-230374
+  # SV-230331, SV-230441, SV-230374
   - name: temporary_accounts
     description: Temporary user accounts
     type: Array
-    value: []
+    value: ['tmp_guy']
+  
+  # SV-230331
+  - name: temporary_account_max_days
+    description: Max number of days a temporary account should be permitted to exist
+    type: Numeric
+    value: 3
 
   # SV-230227
   - name: banner_message_text_cli
