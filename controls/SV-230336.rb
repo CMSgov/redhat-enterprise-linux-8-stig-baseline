@@ -72,10 +72,11 @@ restart the "sssd" service, run the following command:
   tag fix_id: 'F-32980r567755_fix'
   tag cci: ['CCI-000044']
   tag nist: ['AC-7 a']
+  tag 'host'
 
-  only_if('This check applies to RHEL version 8.2 and later. If the system is
-  not RHEL version 8.2 or newer, this check is Not Applicable.', impact: 0.0) {
-    (os.release.to_f) >= 8.2
+  only_if('This check applies to RHEL version 8.1 and earlier. If the system is
+  RHEL version 8.2 or newer, this check is Not Applicable.', impact: 0.0) {
+    (os.release.to_f) < 8.2
   }
 
   pam_auth_files = input('pam_auth_files')

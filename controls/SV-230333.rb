@@ -44,20 +44,15 @@ line:
   tag fix_id: 'F-32977r743965_fix'
   tag cci: ['CCI-000044']
   tag nist: ['AC-7 a']
+  tag 'host', 'container'
 
-  # NOTE: This check applies to RHEL versions 8.2 or newer,
-  # if the system is RHEL version 8.0 or 8.1,
-  # this check is not applicable.
+  only_if('This check applies to RHEL version 8.2 and later. If the system is
+  not RHEL version 8.2 or newer, this check is Not Applicable.', impact: 0.0) {
+    (os.release.to_f) >= 8.2
+  }
 
-  if os.release.to_f < 8.2
-    impact 0.0
-    describe 'This requirement only applies to RHEL 8 Systems 8.2 and newer' do
-      skip "Currently on release #{os.release}, this control is Not Applicable."
-    end
-  else
-    describe parse_config_file('/etc/security/faillock.conf') do
-      its('deny') { should cmp <= input('unsuccessful_attempts') }
-      its('deny') { should_not cmp 0 }
-    end
+  describe parse_config_file('/etc/security/faillock.conf') do
+    its('deny') { should cmp <= input('unsuccessful_attempts') }
+    its('deny') { should_not cmp 0 }
   end
 end
