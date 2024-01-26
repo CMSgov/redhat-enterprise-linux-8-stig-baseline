@@ -51,7 +51,7 @@ control 'SV-230374' do
 
   tmp_users = input('temporary_accounts')
 
-  # note that 230331 is extremely similar to this req, to the point where this input seems
+  # NOTE: that 230331 is extremely similar to this req, to the point where this input seems
   # appropriate to use for both of them
   tmp_max_days = input('temporary_account_max_days')
 
