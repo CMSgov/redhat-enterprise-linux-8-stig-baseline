@@ -31,6 +31,7 @@ following command:
   tag fix_id: 'F-32969r917878_fix'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host'
 
   ignore_shells = input('non_interactive_shells').join('|')
 

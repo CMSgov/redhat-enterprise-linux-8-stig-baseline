@@ -37,7 +37,12 @@ of "/home/smithj", and has a primary group of users.
   tag fix_id: 'F-32966r880716_fix'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
-  tag 'host', 'container'
+  tag 'host'
+  
+  only_if('This control is does not apply to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
 
   exempt_home_users = input('exempt_home_users')
   uid_min = login_defs.read_params['UID_MIN'].to_i

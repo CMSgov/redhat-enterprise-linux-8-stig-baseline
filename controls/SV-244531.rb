@@ -33,7 +33,7 @@ directory with the following command:
   tag fix_id: 'F-47763r743841_fix'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
-  tag 'host', 'container'
+  tag 'host'
 
   ignore_shells = input('non_interactive_shells').join('|')
   exempt_home_users = input('exempt_home_users').join('|')
