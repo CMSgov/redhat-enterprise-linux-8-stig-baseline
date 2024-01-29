@@ -54,26 +54,27 @@ all domains that have the "core" item assigned, this is a finding.)
     end
   else
 
-    limits_files = command('find /etc/security/limits.d/ -name *.conf').stdout.strip.split
+    setting = 'core'
+    expected_value = 0
+
+    limits_files = command('ls /etc/security/limits.d/*.conf').stdout.strip.split
     limits_files.append('/etc/security/limits.conf')
 
-    # make sure that at least one limits.conf file to
-    globally_set = limits_files.any? { |lf| limits_conf(lf).read_params['*'].present? && limits_conf(lf).read_params['*'].include?(%w[hard core 0]) }
+    # make sure that at least one limits.conf file has the correct setting
+    globally_set = limits_files.any? { |lf| limits_conf(lf).read_params['*'].present? && limits_conf(lf).read_params['*'].include?(["hard", "#{setting}", "#{expected_value}"]) }
 
     # make sure that no limits.conf file has a value that contradicts the global set
     failing_files = limits_files.select { |lf|
       limits_conf(lf).read_params.values.flatten(1).any? { |l|
-        l[1].eql?('core') && !l[2].to_i.eql?(0)
+        l[1].eql?(setting) && !l[2].to_i.eql?(expected_value)
       }
     }
     describe 'Limits files' do
       it 'should disallow core dumps by default' do
-        expect(globally_set).to eq(true), "No global ('*') setting for core dumps found"
+        expect(globally_set).to eq(true), "No correct global ('*') setting found"
       end
-      if globally_set
-        it 'should not have any conflicting core dump settings' do
-          expect(failing_files).to be_empty, "Files with incorrect core settings:\n\t- #{failing_files.join("\n\t- ")}"
-        end
+      it 'should not have any conflicting settings' do
+        expect(failing_files).to be_empty, "Files with incorrect '#{setting}' settings:\n\t- #{failing_files.join("\n\t- ")}"
       end
     end
   end

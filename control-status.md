@@ -122,7 +122,7 @@
 | W        | SV-230343 |                       | Y        | Y      | Y     | N                                | None                                                                                                      |
 | W        | SV-230344 |                       | Y        | Y      | Y     | N                                | `pam_auth_files`                                                                                          |
 | W        | SV-230345 |                       | Y        | Y      | Y     | N                                |                                                                                                           |
-| W        | SV-230346 |                       |          |        | Y     |                                  |                                                                                                           |
+| W        | SV-230346 |                       | Y        | Y      | Y     | N                                | `many_concurrent_sessions_permitted`                                                                      |
 | W        | SV-230347 |                       |          |        | Y     |                                  |                                                                                                           |
 | W        | SV-230348 |                       |          |        | Y     |                                  |                                                                                                           |
 | W        | SV-230349 | Y                     |          |        | Y     |                                  |                                                                                                           |

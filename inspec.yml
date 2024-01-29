@@ -234,6 +234,12 @@ inputs:
     type: Boolean
     value: false
 
+  # SV-230346
+  - name: many_concurrent_sessions_permitted
+    description: Flag to set if the ability to have many concurrent sessions is an operational requirement of this system (sets the relevant controls to manual review) 
+    type: Boolean
+    value: false
+
   # SV-230311
   - name: kernel_config_files
     description: The system files that control kernel behavior on startup
