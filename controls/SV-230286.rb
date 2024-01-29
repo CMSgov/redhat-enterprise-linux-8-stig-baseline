@@ -37,7 +37,7 @@ the SSH daemon, run the following command:
   tag nist: ['CM-6 b']
   tag 'host', 'container-conditional'
 
-  only_if('This control is does not apply to containers without SSH installed', impact: 0.0) {
+  only_if('This control is Not Applicable to containers without SSH installed', impact: 0.0) {
     !(virtualization.system.eql?('docker') && !directory('/etc/ssh').exist?)
   }
 

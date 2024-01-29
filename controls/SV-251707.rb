@@ -34,7 +34,7 @@ control 'SV-251707' do
   tag nist: ['CM-5 (6)']
   tag 'host'
 
-  only_if('This control is does not apply to containers', impact: 0.0) {
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
     !virtualization.system.eql?('docker')
   }
 

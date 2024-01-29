@@ -54,7 +54,7 @@ control 'SV-230351' do
   tag cci: ['CCI-000056']
   tag nist: ['AC-11 b']
 
-  only_if('This control is does not apply to containers', impact: 0.0) {
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
     !virtualization.system.eql?('docker')
   }
 

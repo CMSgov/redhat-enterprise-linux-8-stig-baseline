@@ -49,7 +49,7 @@ offline_credentials_expiration = 1'
 
   sssd_config = parse_config_file('/etc/sssd/sssd.conf')
 
-  only_if('This control is does not apply to containers', impact: 0.0) {
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
     !virtualization.system.eql?('docker')
   }
 

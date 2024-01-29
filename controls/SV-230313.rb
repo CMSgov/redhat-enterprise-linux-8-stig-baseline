@@ -42,7 +42,7 @@ all domains that have the "core" item assigned, this is a finding.)
   tag nist: ['CM-6 b']
   tag 'host'
 
-  only_if('This control is does not apply to containers', impact: 0.0) {
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
     !virtualization.system.eql?('docker')
   }
 
