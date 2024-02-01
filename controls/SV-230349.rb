@@ -43,15 +43,34 @@ This setting will take effect at next logon.'
   tag fix_id: 'F-32993r880735_fix'
   tag cci: ['CCI-000056']
   tag nist: ['AC-11 b']
+  tag 'host'
 
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  tmux_running = command('ps all | grep tmux | grep -v grep').stdout.strip
+
+  describe 'tmux' do
+    it 'should be running' do
+      expect(tmux_running).to_not be_empty, 'tmux is not running'
     end
-  else
-    describe command('grep -i tmux /etc/bashrc') do
-      its('stdout.strip') { should cmp '[ -n "$PS1" -a -z "$TMUX" ] && exec tmux' }
+  end
+
+  if tmux_running.present?
+
+    # compare the tmux config with the expected multiline string the same way we do the banner checks
+    # i.e. strip out all whitespace and compare the strings
+
+    expected_config = "if [ \"$PS1\" ]; then\nparent=$(ps -o ppid= -p $$)\nname=$(ps -o comm= -p $parent)\ncase \"$name\" in (sshd|login) tmux ;; esac\nfi".content.gsub(/[\r\n\s]/, '')
+
+    tmux_script = command('grep -r tmux /etc/bashrc /etc/profile.d').stdout.strip.match(/^(?<path>\S+):/)['path']
+    tmux_config = file(tmux_script).content.gsub(/[\r\n\s]/, '')
+
+    describe 'tmux' do
+      it 'should be configured as expected' do
+        expect(tmux_config).to match(/#{expected_config}/), 'tmux config does not match expected script'
+      end
     end
   end
 end

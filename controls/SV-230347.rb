@@ -58,7 +58,7 @@ and add or update the following lines:
   only_if('This control is Not Applicable to containers', impact: 0.0) {
     !virtualization.system.eql?('docker')
   }
-  
+
   if package('gnome-desktop3').installed?
     describe command('gsettings get org.gnome.desktop.screensaver lock-enabled') do
       its('stdout.strip') { should cmp 'true' }

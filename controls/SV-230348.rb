@@ -43,15 +43,21 @@ Reload tmux configuration to take effect. This can be performed in tmux while it
   tag fix_id: 'F-32992r880719_fix'
   tag cci: ['CCI-000056']
   tag nist: ['AC-11 b']
+  tag 'host'
 
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  lock_command = command('grep -i lock-command /etc/tmux.conf').stdout.strip
+  lock_session = command('grep -i lock-session /etc/tmux.conf').stdout.strip
+
+  describe 'tmux settings' do
+    it 'should set lock-command' do
+      expect(lock_command).to match(/set -g lock-command vlock/)
     end
-  else
-    describe command('grep -i lock-command /etc/tmux.conf') do
-      its('stdout.strip') { should cmp 'set -g lock-command vlock' }
+    it 'should bind a specific key to lock-session' do
+      expect(lock_session).to match(/bind . lock-session/)
     end
   end
 end
