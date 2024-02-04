@@ -27,6 +27,7 @@ PASS_MAX_DAYS 60'
   tag fix_id: 'F-33010r567845_fix'
   tag cci: ['CCI-000199']
   tag nist: ['IA-5 (1) (d)']
+  tag 'host', 'container'
 
   value = input('pass_max_days')
   setting = input_object('pass_max_days').name.upcase

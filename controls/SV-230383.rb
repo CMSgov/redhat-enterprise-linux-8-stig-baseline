@@ -36,6 +36,7 @@ file to "077":
   tag fix_id: 'F-33027r567896_fix'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host', 'container'
 
   permissions_for_shells = input('permissions_for_shells')
 

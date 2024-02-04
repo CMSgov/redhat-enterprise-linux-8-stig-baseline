@@ -35,6 +35,7 @@ length for new user accounts.
   tag fix_id: 'F-33014r567857_fix'
   tag cci: ['CCI-000205']
   tag nist: ['IA-5 (1) (a)']
+  tag 'host', 'container'
 
   value = input('pass_min_len')
   setting = input_object('pass_min_len').name.upcase

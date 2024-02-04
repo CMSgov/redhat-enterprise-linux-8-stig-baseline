@@ -45,6 +45,7 @@ allow for a normal user to perform administrative-level actions.
   tag fix_id: 'F-33023r567884_fix'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host', 'container'
 
   passwd.users.each do |user|
     describe user do

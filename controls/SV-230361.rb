@@ -38,6 +38,7 @@ Remove any configurations that conflict with the above value.'
   tag fix_id: 'F-33005r858778_fix'
   tag cci: ['CCI-000195']
   tag nist: ['IA-5 (1) (b)']
+  tag 'host', 'container'
 
   value = input('maxrepeat')
   setting = 'maxrepeat'

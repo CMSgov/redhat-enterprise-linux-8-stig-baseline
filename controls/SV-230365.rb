@@ -32,6 +32,7 @@ the required value):
   tag fix_id: 'F-33009r567842_fix'
   tag cci: ['CCI-000198']
   tag nist: ['IA-5 (1) (d)']
+  tag 'host', 'container'
 
   value = input('pass_min_days')
   setting = input_object('pass_min_days').name.upcase

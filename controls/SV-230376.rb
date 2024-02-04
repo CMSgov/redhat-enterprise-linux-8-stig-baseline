@@ -46,6 +46,7 @@ offline_credentials_expiration = 1'
   tag fix_id: 'F-33020r567875_fix'
   tag cci: ['CCI-002007']
   tag nist: ['IA-5 (13)']
+  tag 'host'
 
   sssd_config = parse_config_file('/etc/sssd/sssd.conf')
 

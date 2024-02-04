@@ -30,6 +30,7 @@ the SSH daemon, run the following command:
   tag fix_id: 'F-33024r743992_fix'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host', 'container-conditional'
 
   if virtualization.system.eql?('docker') && !file('/etc/ssh/sshd_config').exist?
     impact 0.0

@@ -41,6 +41,7 @@ between logon prompts following a failed console logon attempt.
   tag fix_id: 'F-33022r567881_fix'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host', 'container'
 
   describe login_defs do
     its('FAIL_DELAY.to_i') { should cmp >= 4 }

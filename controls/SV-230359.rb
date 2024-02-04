@@ -39,6 +39,7 @@ Remove any configurations that conflict with the above value.'
   tag fix_id: 'F-33003r858774_fix'
   tag cci: ['CCI-000194']
   tag nist: ['IA-5 (1) (a)']
+  tag 'host', 'container'
 
   describe 'pwquality.conf settings' do
     let(:config) { parse_config_file('/etc/security/pwquality.conf', multiple_values: true) }

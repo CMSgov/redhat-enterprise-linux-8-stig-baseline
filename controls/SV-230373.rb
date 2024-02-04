@@ -38,6 +38,7 @@ control 'SV-230373' do
   tag fix_id: 'F-33017r567866_fix'
   tag cci: ['CCI-000795']
   tag nist: ['IA-4 e']
+  tag 'host', 'container'
 
   days_of_inactivity = input('days_of_inactivity')
 

@@ -36,6 +36,7 @@ UMASK 077'
   tag fix_id: 'F-33029r792901_fix'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host', 'container'
 
   umask_regexp = /umask\s*(?<umask_code>\d\d\d)/
 

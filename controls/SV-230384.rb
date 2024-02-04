@@ -36,6 +36,7 @@ environment variables.)
   tag fix_id: 'F-33028r567899_fix'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host', 'container'
 
   ignore_shells = input('non_interactive_shells').join('|')
 

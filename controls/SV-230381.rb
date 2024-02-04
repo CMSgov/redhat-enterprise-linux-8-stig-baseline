@@ -28,6 +28,7 @@ account accesses last occurred by setting the required configuration options in
   tag fix_id: 'F-33025r567890_fix'
   tag cci: ['CCI-000366', 'CCI-000052']
   tag nist: ['CM-6 b', 'AC-9']
+  tag 'host', 'container'
 
   describe pam('/etc/pam.d/postlogin') do
     its('lines') { should match_pam_rule('session .* pam_lastlog.so').all_with_args('showfailed') }

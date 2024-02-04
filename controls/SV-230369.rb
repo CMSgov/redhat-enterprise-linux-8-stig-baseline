@@ -46,6 +46,7 @@ Remove any configurations that conflict with the above value.'
   tag fix_id: 'F-33013r858784_fix'
   tag cci: ['CCI-000205']
   tag nist: ['IA-5 (1) (a)']
+  tag 'host', 'container'
 
   describe parse_config_file('/etc/security/pwquality.conf') do
     its('minlen.to_i') { should cmp >= input('pass_min_len') }

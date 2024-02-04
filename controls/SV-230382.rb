@@ -35,6 +35,7 @@ effect.'
   tag fix_id: 'F-33026r567893_fix'
   tag cci: ['CCI-000366', 'CCI-000052']
   tag nist: ['CM-6 b', 'AC-9']
+  tag 'host', 'container-conditional'
 
   if virtualization.system.eql?('docker') && !file('/etc/ssh/sshd_config').exist?
     impact 0.0

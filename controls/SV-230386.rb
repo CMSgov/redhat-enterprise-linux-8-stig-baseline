@@ -45,6 +45,7 @@ this is a finding.'
   tag fix_id: 'F-33030r567905_fix'
   tag cci: ['CCI-002233']
   tag nist: ['AC-6 (8)']
+  tag 'host'
 
   if virtualization.system.eql?('docker')
     impact 0.0
