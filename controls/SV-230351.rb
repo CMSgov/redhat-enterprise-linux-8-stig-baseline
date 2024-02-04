@@ -53,6 +53,7 @@ control 'SV-230351' do
   tag fix_id: 'F-32995r792898_fix'
   tag cci: ['CCI-000056']
   tag nist: ['AC-11 b']
+  tag 'host'
 
   only_if('This control is Not Applicable to containers', impact: 0.0) {
     !virtualization.system.eql?('docker')
@@ -72,8 +73,14 @@ control 'SV-230351' do
       Applicable."
     end
   else
-    describe command('grep -R removal-action /etc/dconf/db/*') do
-      its('stdout.strip') { should match(/^[^#].*:\s*removal-action\s*=[\s']*lock-screen[\s']*$/) }
+
+    # we're going to do this with grep to avoid doing really complicated tree parsing logic
+    dconf = command('grep -R removal-action /etc/dconf/db/*').stdout.strip
+
+    describe 'The dconf database' do
+      it 'should be set to initate a session lock when a smartcard is removed' do
+        expect(dconf).to match(/removal-action\s*=\s*['"]lock-screen['"]/), 'lock-screen setting not found'
+      end
     end
   end
 end

@@ -536,6 +536,11 @@ inputs:
     type: Numeric
     value: 0
 
+  - name: system_activity_timeout
+    description: The expected maximum delay in seconds before the system will lock the session
+    type: Numeric
+    value: 900
+
   # SV-230338, SV-230339
   - name: log_directory
     description: Documented tally log directory

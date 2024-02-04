@@ -51,16 +51,15 @@ lines:
   tag fix_id: 'F-32996r567803_fix'
   tag cci: ['CCI-000057']
   tag nist: ['AC-11 a']
+  tag 'host'
 
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
-    end
-  elsif package('gnome-desktop3').installed?
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  if package('gnome-desktop3').installed?
     describe command("gsettings get org.gnome.desktop.session idle-delay | cut -d ' ' -f2") do
-      its('stdout.strip') { should cmp <= 900 }
-      its('stdout.strip') { should cmp >= 0 }
+      its('stdout.strip') { should cmp <= input('system_inactivity_timeout') }
     end
   else
     impact 0.0

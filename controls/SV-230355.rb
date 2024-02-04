@@ -52,16 +52,14 @@ $ sudo systemctl restart sssd.service'
   tag fix_id: 'F-32999r818835_fix'
   tag cci: ['CCI-000187']
   tag nist: ['IA-5 (2) (c)', 'IA-5 (2) (a) (2)']
+  tag 'host'
 
-  if virtualization.system.eql?('docker') && !file('/etc/sssd/sssd.conf').exist?
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
-    end
-  else
-    describe file('/etc/sssd/sssd.conf') do
-      it { should exist }
-      its('content') { should match(/^\s*\[certmap.*\]\s*$/) }
-    end
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  describe file('/etc/sssd/sssd.conf') do
+    it { should exist }
+    its('content') { should match(/^\s*\[certmap.*\]\s*$/) }
   end
 end

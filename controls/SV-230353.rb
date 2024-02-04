@@ -40,15 +40,23 @@ global configuration file:
   tag fix_id: 'F-32997r567806_fix'
   tag cci: ['CCI-000057']
   tag nist: ['AC-11 a']
+  tag 'host'
 
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  timeout = command('grep -i lock-after-time /etc/tmux.conf').stdout.strip.match(/lock-after-time\s+(?<timeout>\d+)/)
+  expected_timeout = input('system_activity_timeout')
+
+  describe 'tmux settings' do
+    it 'should set lock-after-time' do
+      expect(timeout).to_not be_nil, 'lock-after-time not set'
     end
-  else
-    describe command("grep -i lock-after-time /etc/tmux.conf | cut -d ' ' -f4") do
-      its('stdout.strip') { should cmp <= input('system_inactivity_timeout') }
+    if timeout.present?
+      it "should lock the session after #{expected_timeout} seconds" do
+        expect(timeout['timeout'].to_i).to cmp <= expected_timeout
+      end
     end
   end
 end
