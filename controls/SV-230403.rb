@@ -34,15 +34,12 @@ the following line to "/etc/audit/rules.d/audit.rules"
   tag fix_id: 'F-33047r567956_fix'
   tag cci: ['CCI-000162']
   tag nist: ['AU-9', 'AU-9 a']
+  tag 'host'
 
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
-    end
-  else
-    describe command('grep -i immutable /etc/audit/audit.rules') do
-      its('stdout.strip') { should cmp '--loginuid-immutable' }
-    end
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+  describe command('grep -i immutable /etc/audit/audit.rules') do
+    its('stdout.strip') { should cmp '--loginuid-immutable' }
   end
 end

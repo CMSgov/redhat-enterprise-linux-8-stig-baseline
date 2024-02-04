@@ -37,15 +37,12 @@ option:
   tag fix_id: 'F-33039r567932_fix'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host'
 
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
-    end
-  else
-    describe parse_config_file('/etc/audit/auditd.conf') do
-      its('log_format') { should eq 'ENRICHED' }
-    end
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+  describe parse_config_file('/etc/audit/auditd.conf') do
+    its('log_format') { should eq 'ENRICHED' }
   end
 end

@@ -37,15 +37,12 @@ is recommended to add this option as the last step in securing the system.'
   tag fix_id: 'F-33046r567953_fix'
   tag cci: ['CCI-000162']
   tag nist: ['AU-9', 'AU-9 a']
+  tag 'host'
 
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
-    end
-  else
-    describe command('grep "^\s*[^#]" /etc/audit/audit.rules | tail -1') do
-      its('stdout.strip') { should cmp '-e 2' }
-    end
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+  describe command('grep "^\s*[^#]" /etc/audit/audit.rules | tail -1') do
+    its('stdout.strip') { should cmp '-e 2' }
   end
 end

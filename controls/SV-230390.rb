@@ -51,15 +51,13 @@ by setting the "disk_error_action" to "SYSLOG".'
   tag fix_id: 'F-33034r567917_fix'
   tag cci: ['CCI-000140']
   tag nist: ['AU-5 b']
+  tag 'host'
 
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
-    end
-  else
-    describe auditd_conf do
-      its('disk_error_action') { should be_in input('disk_error_action') }
-    end
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  describe auditd_conf do
+    its('disk_error_action') { should be_in input('disk_error_action') }
   end
 end

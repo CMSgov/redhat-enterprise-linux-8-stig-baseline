@@ -42,15 +42,12 @@ path, by default this location is usually "/var/log/audit".'
   tag fix_id: 'F-33044r567947_fix'
   tag cci: ['CCI-000162']
   tag nist: ['AU-9', 'AU-9 a']
+  tag 'host'
 
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
-    end
-  else
-    describe directory(auditd_conf('/etc/audit/auditd.conf').log_file.split('/')[0..-2].join('/')) do
-      its('group') { should be_in input('var_log_audit_group') }
-    end
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+  describe directory(auditd_conf('/etc/audit/auditd.conf').log_file.split('/')[0..-2].join('/')) do
+    its('group') { should be_in input('var_log_audit_group') }
   end
 end

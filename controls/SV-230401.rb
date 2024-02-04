@@ -40,17 +40,15 @@ by default this location is "/var/log/audit".'
   tag fix_id: 'F-33045r567950_fix'
   tag cci: ['CCI-000162']
   tag nist: ['AU-9', 'AU-9 a']
+  tag 'host'
+
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
 
   log_dir = command("dirname #{auditd_conf('/etc/audit/auditd.conf').log_file}").stdout.strip
 
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
-    end
-  else
-    describe directory(log_dir) do
-      it { should_not be_more_permissive_than('0700') }
-    end
+  describe directory(log_dir) do
+    it { should_not be_more_permissive_than('0700') }
   end
 end

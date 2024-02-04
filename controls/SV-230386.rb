@@ -47,28 +47,27 @@ this is a finding.'
   tag nist: ['AC-6 (8)']
   tag 'host'
 
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
-    end
-  else
-    # All execve calls should use 'always,exit'
-    describe auditd.syscall('execve') do
-      its('action.uniq') { should eq ['always'] }
-      its('list.uniq') { should eq ['exit'] }
-    end
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
 
-    # Work with the SUID rules
-    describe auditd.syscall('execve').where { fields.include?('euid=0') } do
-      its('arch.uniq') { should include 'b32' }
-      its('arch.uniq') { should include 'b64' }
-    end
+  audit_syscalls = ['execve']
 
-    # Work with the SGID rules
-    describe auditd.syscall('execve').where { fields.include?('egid=0') } do
-      its('arch.uniq') { should include 'b32' }
-      its('arch.uniq') { should include 'b64' }
+  describe 'Syscall' do
+    audit_syscalls.each do |audit_syscall|
+      it "#{audit_syscall} is audited properly" do
+        audit_rule = auditd.syscall(audit_syscall)
+        expect(audit_rule).to exist
+        expect(audit_rule.action.uniq).to cmp 'always'
+        expect(audit_rule.list.uniq).to cmp 'exit'
+        if os.arch.match(/64/)
+          expect(audit_rule.arch.uniq).to include('b32', 'b64')
+        else
+          expect(audit_rule.arch.uniq).to cmp 'b32'
+        end
+        expect(audit_rule.fields.flatten).to include('uid!=euid', 'gid!=egid', 'euid=0', 'egid=0')
+        expect(audit_rule.key.uniq).to include('execpriv')
+      end
     end
   end
 end

@@ -42,6 +42,7 @@ UMASK 077'
 
   bashrc_umask = file('/etc/bashrc').content.match(umask_regexp)[:umask_code]
   cshrc_umask = file('/etc/csh.cshrc').content.match(umask_regexp)[:umask_code]
+  profile_umask = file('/etc/profile').content.match(umask_regexp)[:umask_code]
 
   if bashrc_umask == '000' || cshrc_umask == '000'
     impact 0.7
@@ -55,5 +56,9 @@ UMASK 077'
   describe 'umask value defined in /etc/csh.cshrc' do
     subject { cshrc_umask }
     it { should cmp input('permissions_for_shells')['cshrc_umask'] }
+  end
+  describe 'umask value defined in /etc/profile' do
+    subject { profile_umask }
+    it { should cmp input('permissions_for_shells')['profile_umask'] }
   end
 end

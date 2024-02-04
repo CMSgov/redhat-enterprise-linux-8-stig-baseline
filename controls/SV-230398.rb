@@ -35,15 +35,12 @@ the /etc/audit/auditd.conf file:
   tag fix_id: 'F-33042r567941_fix'
   tag cci: ['CCI-000162']
   tag nist: ['AU-9', 'AU-9 a']
+  tag 'host'
 
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
-    end
-  else
-    describe file(auditd_conf('/etc/audit/auditd.conf').log_file) do
-      its('group') { should be_in input('var_log_audit_group') }
-    end
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+  describe file(auditd_conf('/etc/audit/auditd.conf').log_file) do
+    its('group') { should be_in input('var_log_audit_group') }
   end
 end

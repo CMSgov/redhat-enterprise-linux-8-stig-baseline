@@ -42,17 +42,15 @@ $ sudo chmod 0600 /var/log/audit/audit.log'
   tag fix_id: 'F-33040r902732_fix'
   tag cci: ['CCI-000162']
   tag nist: ['AU-9', 'AU-9 a']
+  tag 'host'
+
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
 
   log_file = auditd_conf('/etc/audit/auditd.conf').log_file
 
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
-    end
-  else
-    describe file(log_file) do
-      it { should_not be_more_permissive_than('0600') }
-    end
+  describe file(log_file) do
+    it { should_not be_more_permissive_than('0600') }
   end
 end

@@ -613,6 +613,7 @@ inputs:
       default_umask: "077"
       bashrc_umask: "077"
       cshrc_umask: "077"
+      profile_umask: "077"
 
   # SV-251707
   - name: permissions_for_libs
@@ -825,3 +826,17 @@ inputs:
     description: Delay in seconds before the login prompt is displayed again after a failed login attempt
     type: Numeric
     value: 4
+
+  # SV-230387
+  - name: logging_conf_files
+    description: Configuration files for the logging service
+    type: Array
+    value:
+      - /etc/rsyslog.conf
+      - /etc/rsyslog.d/*.conf
+
+  # SV-230389
+  - name: alternative_notification_method
+    description: Alternative method for notifying the ISSO or AO (aside from syslog email utility)
+    type: String
+    value: ""

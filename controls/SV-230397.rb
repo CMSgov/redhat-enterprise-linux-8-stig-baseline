@@ -44,17 +44,15 @@ location is "/var/log/audit/audit.log".'
   tag fix_id: 'F-33041r567938_fix'
   tag cci: ['CCI-000162']
   tag nist: ['AU-9', 'AU-9 a']
+  tag 'host'
+
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
 
   log_file = auditd_conf('/etc/audit/auditd.conf').log_file
 
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
-    end
-  else
-    describe file(log_file) do
-      its('owner') { should eq 'root' }
-    end
+  describe file(log_file) do
+    its('owner') { should eq 'root' }
   end
 end
