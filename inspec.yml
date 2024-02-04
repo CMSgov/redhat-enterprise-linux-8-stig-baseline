@@ -819,3 +819,9 @@ inputs:
     description: Maximum rounds of hashing during password encryption
     type: Numeric
     value: 5000
+    
+  # SV-230378
+  - name: login_prompt_delay
+    description: Delay in seconds before the login prompt is displayed again after a failed login attempt
+    type: Numeric
+    value: 4

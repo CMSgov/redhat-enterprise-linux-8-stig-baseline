@@ -44,6 +44,6 @@ between logon prompts following a failed console logon attempt.
   tag 'host', 'container'
 
   describe login_defs do
-    its('FAIL_DELAY.to_i') { should cmp >= 4 }
+    its('FAIL_DELAY.to_i') { should cmp >= input('login_prompt_delay') }
   end
 end

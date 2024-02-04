@@ -47,11 +47,11 @@ allow for a normal user to perform administrative-level actions.
   tag nist: ['CM-6 b']
   tag 'host', 'container'
 
-  passwd.users.each do |user|
-    describe user do
-      it 'should be listed in allowed users.' do
-        expect(subject).to(be_in((input('known_system_accounts') + input('user_accounts')).uniq))
-      end
+  failing_users = passwd.users.reject { |u| (input('known_system_accounts') + input('user_accounts')).uniq.include?(u) }
+
+  describe 'All users' do
+    it 'should have an explicit, authorized purpose (either a known user account or a required system account)' do
+      expect(failing_users).to be_empty, "Failing users:\n\t- #{failing_users.join("\n\t- ")}"
     end
   end
 end
