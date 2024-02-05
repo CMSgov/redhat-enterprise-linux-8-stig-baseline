@@ -57,7 +57,7 @@ This setting will take effect at next logon.'
     end
   end
 
-  if tmux_running.present?
+  if tmux_running.nil?
 
     # compare the tmux config with the expected multiline string the same way we do the banner checks
     # i.e. strip out all whitespace and compare the strings

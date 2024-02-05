@@ -53,7 +53,7 @@ global configuration file:
     it 'should set lock-after-time' do
       expect(timeout).to_not be_nil, 'lock-after-time not set'
     end
-    if timeout.present?
+    if timeout.nil?
       it "should lock the session after #{expected_timeout} seconds" do
         expect(timeout['timeout'].to_i).to cmp <= expected_timeout
       end

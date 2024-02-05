@@ -62,7 +62,7 @@ to "10" for all accounts and/or account types.
     limits_files.append('/etc/security/limits.conf')
 
     # make sure that at least one limits.conf file has the correct setting
-    globally_set = limits_files.any? { |lf| limits_conf(lf).read_params['*'].present? && limits_conf(lf).read_params['*'].include?(['hard', setting.to_s, expected_value.to_s]) }
+    globally_set = limits_files.any? { |lf| limits_conf(lf).read_params['*'].nil? && limits_conf(lf).read_params['*'].include?(['hard', setting.to_s, expected_value.to_s]) }
 
     # make sure that no limits.conf file has a value that contradicts the global set
     failing_files = limits_files.select { |lf|

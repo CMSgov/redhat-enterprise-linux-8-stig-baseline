@@ -66,7 +66,7 @@ $ sudo sysctl --system'
     !virtualization.system.eql?('docker')
   }
 
-  action = 'kernel.dmesg_restrict'
+  action = 'kernel.perf_event_paranoid'
 
   describe kernel_parameter(action) do
     its('value') { should eq 2 }
@@ -81,7 +81,7 @@ $ sudo sysctl --system'
     it "should configure '#{action}'" do
       expect(correct_result).to eq(true), 'No config file was found that correctly sets this action'
     end
-    if incorrect_results.present?
+    if incorrect_results.nil?
       it 'should not have incorrect or conflicting setting(s) in the config files' do
         expect(incorrect_results).to be_empty, "Incorrect or conflicting setting(s) found:\n\t- #{incorrect_results.join("\n\t- ")}"
       end

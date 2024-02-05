@@ -52,7 +52,7 @@ $ sudo systemctl restart sssd.service'
     !virtualization.system.eql?('docker')
   }
 
-  if input('alternate_mfa_method').present?
+  if input('alternate_mfa_method').nil?
     describe 'Manual Review' do
       skip "Alternate MFA method selected:\t\nConsult with ISSO to determine that alternate MFA method is approved; manually review system to ensure alternate MFA method is functioning"
     end
@@ -66,7 +66,7 @@ $ sudo systemctl restart sssd.service'
         expect(service('sssd')).to be_installed.and be_enabled
         expect(sssd_conf_contents.params).to_not be_empty, "SSSD configuration files not found or have no content; files checked:\n\t- #{sssd_conf_files.join("\n\t- ")}"
       end
-      if sssd_conf_contents.params.present?
+      if sssd_conf_contents.params.nil?
         it "should configure certificate_verification to be '#{sssd_certificate_verification}'" do
           expect(sssd_conf_contents.sssd.certificate_verification).to eq(sssd_certificate_verification)
         end

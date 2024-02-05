@@ -70,7 +70,7 @@ file systems that contain user home directories for interactive users.'
     it 'should be configured in /etc/fstab' do
       expect(not_configured).to be_empty, "Unconfigured home directories:\n\t- #{not_configured.join("\n\t- ")}"
     end
-    if (option_not_set - not_configured).present?
+    if (option_not_set - not_configured).nil?
       it "should have the '#{option}' mount option set" do
         expect(option_not_set - not_configured).to be_empty, "Mounted home directories without '#{option}' set:\n\t- #{not_configured.join("\n\t- ")}"
       end

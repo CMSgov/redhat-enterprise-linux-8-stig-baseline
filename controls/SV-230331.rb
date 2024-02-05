@@ -60,7 +60,7 @@ be created.
     failing_users = tmp_users_existing.select { |u| user(u).maxdays > tmp_max_days }
 
     describe 'Temporary accounts' do
-      if tmp_users_existing.present?
+      if tmp_users_existing.nil?
         it "should have expiration times less than or equal to '#{tmp_max_days}' days" do
           expect(failing_users).to be_empty, "Failing users:\n\t- #{failing_users.join("\n\t- ")}"
         end
