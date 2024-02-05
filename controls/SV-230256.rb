@@ -48,7 +48,7 @@ adding the following line to "/etc/crypto-policies/back-ends/gnutls.config":
   tag 'host', 'container'
 
   gnutls = file('/etc/crypto-policies/back-ends/gnutls.config').content.strip.split(':')
-  unapproved_versions = input('unapproved_ssl_tls_versions') # "-VERS-DTLS0.9:-VERS-SSL3.0:-VERS-TLS1.0:-VERS-TLS1.1:-VERS-DTLS1.0".split(':')
+  unapproved_versions = input('unapproved_ssl_tls_versions').split(':')
   failing_versions = unapproved_versions - gnutls
 
   describe 'GnuTLS' do

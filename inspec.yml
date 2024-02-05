@@ -295,6 +295,12 @@ inputs:
     type: String
     value: "/boot/grub2/grub.cfg"
 
+  # SV-230256
+  - name: unapproved_ssl_tls_versions
+    description:
+    type: String
+    value: "-VERS-DTLS0.9:-VERS-SSL3.0:-VERS-TLS1.0:-VERS-TLS1.1:-VERS-DTLS1.0"
+
   # SV-230235
   - name: grub_user_boot_files
     description: Grub boot config files
