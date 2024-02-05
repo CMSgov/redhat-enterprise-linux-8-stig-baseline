@@ -65,7 +65,7 @@ inputs:
     type: String
     value: '0644'
 
-  
+
   # SV-230287
   - name: ssh_private_key_mode
     description: All private ssh keyfiles on the filesystem should be equal or less permissive than this octet
@@ -148,7 +148,7 @@ inputs:
   - name: seperate_filesystem_exempt
     description: "The system manages file system useage, LVM/XFS etc. or is managed by the service provider"
     type: Boolean
-    vaule: false
+    value: false
 
   # SV-230309
   - name: disable_slow_controls
@@ -236,7 +236,7 @@ inputs:
 
   # SV-230346
   - name: many_concurrent_sessions_permitted
-    description: Flag to set if the ability to have many concurrent sessions is an operational requirement of this system (sets the relevant controls to manual review) 
+    description: Flag to set if the ability to have many concurrent sessions is an operational requirement of this system (sets the relevant controls to manual review)
     type: Boolean
     value: false
 
@@ -439,7 +439,7 @@ inputs:
     description: Temporary user accounts
     type: Array
     value: ['tmp_guy']
-  
+
   # SV-230331
   - name: temporary_account_max_days
     description: Max number of days a temporary account should be permitted to exist
@@ -820,7 +820,7 @@ inputs:
     description: Maximum rounds of hashing during password encryption
     type: Numeric
     value: 5000
-    
+
   # SV-230378
   - name: login_prompt_delay
     description: Delay in seconds before the login prompt is displayed again after a failed login attempt
