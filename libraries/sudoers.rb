@@ -21,13 +21,13 @@ class SudoersUserSpecTable
 
       # tried just using `.named_captures` to construct the hash, but that gives hash keys that are strings, which confuses filtertable
       # TODO: figure out how to handle optional fields like `tags`, which seem to have weird interactions with `.where`
-      unless parsed_line.nil? 
+      unless parsed_line.nil?
         line_hash[:users] = parsed_line['users']
         line_hash[:hosts] = parsed_line['hosts']
-        line_hash[:run_as] = parsed_line['run_as'] if parsed_line['run_as'].present?
-        line_hash[:tags] = parsed_line['tags'] if parsed_line['tags'].present?
+        line_hash[:run_as] = parsed_line['run_as'] if !parsed_line['run_as'].nil?
+        line_hash[:tags] = parsed_line['tags'] if !parsed_line['tags'].nil?
         line_hash[:commands] = parsed_line['commands']
-        line_hash.transform_values { |v| (v.present? && v.include?(',')) ? v.split(',') : v }
+        line_hash.transform_values { |v| (!v.nil? && v.include?(',')) ? v.split(',') : v }
       end
     }.compact
   end
@@ -45,7 +45,7 @@ class Sudoers < Inspec.resource(1)
   desc "Parse sudoers files"
 
   example "
-    # Check that there are no users with NOPASSWD set:  
+    # Check that there are no users with NOPASSWD set:
     describe sudoers.rules.where { tags.include?('NOPASSWD:') } do
       its('count') { should eq 0 }
     end
@@ -90,7 +90,7 @@ class Sudoers < Inspec.resource(1)
   def settings_hash(settings_lines)
 
     # TODO: allow for sorting by type of alias (Cmnd_Alias, User_Alias, etc.)
-  
+
       parse_options = {
           assignment_regex: /^\s*([^=]*?)\s*\+?=\s*(.*?)\s*$/,
           multiple_values: true
@@ -99,7 +99,7 @@ class Sudoers < Inspec.resource(1)
       sudo_config_hash = Hashie::Mash.new
       sudo_config_data.each do |k, v|
           if k.start_with?('Defaults')
-              
+
               key_parts = k.split("\s", 2)
               sudo_config_hash.Defaults ||= Hashie::Mash.new
               sudo_config_hash.Defaults[key_parts[1].strip] = v.map { |x| x.delete("\"") }.map(&:split).flatten

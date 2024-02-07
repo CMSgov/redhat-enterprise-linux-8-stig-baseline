@@ -81,7 +81,7 @@ control 'SV-230268' do
     it "should configure '#{action}'" do
       expect(correct_result).to eq(true), 'No config file was found that correctly sets this action'
     end
-    if incorrect_results.nil?
+    unless incorrect_results.nil?
       it 'should not have incorrect or conflicting setting(s) in the config files' do
         expect(incorrect_results).to be_empty, "Incorrect or conflicting setting(s) found:\n\t- #{incorrect_results.join("\n\t- ")}"
       end

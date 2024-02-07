@@ -38,7 +38,7 @@ file or files in the "/etc/sudoers.d" directory.'
 
   # TODO: figure out why this .where throws an exception if we don't explicitly filter out nils via 'tags.nil?'
   # ergo shouldn't the filtertable be handling that kind of nil-checking for us?
-  failing_results = sudoers(input('sudoers_config_files')).rules.where { tags.nil? && tags.include?('NOPASSWD') }
+  failing_results = sudoers(input('sudoers_config_files').join(' ')).rules.where { tags.nil? && (tags || '').include?('NOPASSWD') }
 
   failing_results = failing_results.where { !input('passwordless_admins').include?(users) } if input('passwordless_admins').nil?
 
