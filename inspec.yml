@@ -565,7 +565,7 @@ inputs:
     type: String
     value: mcafeetp
 
-    # SV-245540
+  # SV-245540
   - name: linux_threat_prevention_service
     description: Endpoint Security Linux Threat Prevention Tool Service
     type: String

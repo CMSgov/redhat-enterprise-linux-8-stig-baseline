@@ -44,7 +44,7 @@ file or files in the "/etc/sudoers.d" directory.'
 
   describe 'Sudoers' do
     it 'should not include any (non-exempt) users with NOPASSWD set' do
-      expect(failing_results).to be_empty, "NOPASSWD settings found for users:\n\t- #{failing_results.users.join("\n\t- ")}"
+      expect(failing_results.users).to be_empty, "NOPASSWD settings found for users:\n\t- #{failing_results.users.join("\n\t- ")}"
     end
   end
 end
