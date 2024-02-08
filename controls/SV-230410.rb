@@ -47,7 +47,7 @@ modifications, disabling, and termination events that affect
     !virtualization.system.eql?('docker')
   }
 
-  audit_command = '/etc/sudoers.d/'
+  audit_command = '/etc/sudoers.d'
 
   describe 'Command' do
     it "#{audit_command} is audited properly" do
