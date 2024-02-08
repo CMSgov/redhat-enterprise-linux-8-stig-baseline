@@ -39,29 +39,20 @@ modifications, disabling, and termination events that affect "/etc/sudoers".
   tag fix_id: 'F-33053r567974_fix'
   tag cci: ['CCI-000169']
   tag nist: ['AU-12 a']
+  tag 'host'
 
-  audit_file = '/etc/sudoers'
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
 
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
-    end
-  else
-    describe auditd.file(audit_file) do
-      its('permissions') { should_not cmp [] }
-      its('action') { should_not include 'never' }
-      its('key') { should cmp 'identity' }
-    end
+  audit_command = '/etc/sudoers'
 
-    # Resource creates data structure including all usages of file
-    perms = auditd.file(audit_file).permissions
-
-    perms.each do |perm|
-      describe perm do
-        it { should include 'w' }
-        it { should include 'a' }
-      end
+  describe 'Command' do
+    it "#{audit_command} is audited properly" do
+      audit_rule = auditd.file(audit_command)
+      expect(audit_rule).to exist
+      expect(audit_rule.key).to cmp 'identity'
+      expect(audit_rule.permissions.flatten).to include('w', 'a')
     end
   end
 end

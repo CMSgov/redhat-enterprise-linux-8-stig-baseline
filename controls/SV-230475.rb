@@ -56,13 +56,13 @@ integrity of the audit tools.
   tag cci: ['CCI-001496']
   tag nist: ['AU-9 (3)']
 
-  audit_tools = %w(/usr/sbin/auditctl
+  audit_tools = %w[/usr/sbin/auditctl
                    /usr/sbin/auditd
                    /usr/sbin/ausearch
                    /usr/sbin/aureport
                    /usr/sbin/autrace
                    /usr/sbin/rsyslogd
-                   /usr/sbin/augenrules)
+                   /usr/sbin/augenrules]
 
   if virtualization.system.eql?('docker')
     impact 0.0
