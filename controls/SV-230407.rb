@@ -45,7 +45,7 @@ modifications, disabling, and termination events that affect "/etc/gshadow".
     !virtualization.system.eql?('docker')
   }
 
-  audit_commmand = '/etc/gshadow'
+  audit_command = '/etc/gshadow'
 
   describe 'Command' do
     it "#{audit_command} is audited properly" do
