@@ -49,26 +49,26 @@ configuration survives kernel updates:
   tag fix_id: 'F-33113r568154_fix'
   tag cci: ['CCI-001849']
   tag nist: ['AU-4']
+  tag 'host'
 
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
-    end
-  else
-    grub_config = command('grub2-editenv - list').stdout
-    kernelopts = parse_config(grub_config)['kernelopts'].strip.gsub(' ', "\n")
-    grub_cmdline_linux = parse_config_file('/etc/default/grub')['GRUB_CMDLINE_LINUX'].strip.gsub(' ', "\n").gsub('"',
-                                                                                                                 '')
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
 
-    describe 'kernelopts' do
-      subject { parse_config(kernelopts) }
-      its('audit_backlog_limit') { should cmp >= 8192 }
-    end
+  grub_config = command('grub2-editenv - list').stdout
+  kernelopts = parse_config(grub_config)['kernelopts'].strip.gsub(' ', "\n")
+  grub_cmdline_linux = parse_config_file('/etc/default/grub')['GRUB_CMDLINE_LINUX'].strip.gsub(' ', "\n").gsub('"',
+                                                                                                               '')
 
-    describe 'persistant kernelopts' do
-      subject { parse_config(grub_cmdline_linux) }
-      its('audit_backlog_limit') { should cmp >= 8192 }
-    end
+  expected_backlog_limit = input('expected_backlog_limit')
+
+  describe 'kernelopts' do
+    subject { parse_config(kernelopts) }
+    its('audit_backlog_limit') { should cmp >= expected_backlog_limit }
+  end
+
+  describe 'persistant kernelopts' do
+    subject { parse_config(grub_cmdline_linux) }
+    its('audit_backlog_limit') { should cmp >= expected_backlog_limit }
   end
 end

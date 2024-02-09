@@ -55,21 +55,21 @@ integrity of the audit tools.
   tag fix_id: 'F-33119r568172_fix'
   tag cci: ['CCI-001496']
   tag nist: ['AU-9 (3)']
+  tag 'host'
 
-  audit_tools = %w(/usr/sbin/auditctl
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  audit_tools = %w[/usr/sbin/auditctl
                    /usr/sbin/auditd
                    /usr/sbin/ausearch
                    /usr/sbin/aureport
                    /usr/sbin/autrace
                    /usr/sbin/rsyslogd
-                   /usr/sbin/augenrules)
+                   /usr/sbin/augenrules]
 
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
-    end
-  elsif package('aide').installed?
+  if package('aide').installed?
     audit_tools.each do |tool|
       describe "selection_line: #{tool}" do
         subject { aide_conf.where { selection_line.eql?(tool) } }

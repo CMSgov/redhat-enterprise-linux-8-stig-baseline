@@ -55,6 +55,7 @@ updating the following rules in the "/etc/audit/rules.d/audit.rules" file:
   tag fix_id: 'F-33111r568148_fix'
   tag cci: ['CCI-000169']
   tag nist: ['AU-12 a']
+  tag 'host'
 
   audit_command = '/var/log/lastlog'
 

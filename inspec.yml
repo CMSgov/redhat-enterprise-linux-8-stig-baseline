@@ -72,6 +72,18 @@ inputs:
     type: String
     value: '0640'
 
+    # SV-230471
+  - name: audit_conf_mode
+    description: All audit config files on the filesystem should be equal or less permissive than this octet
+    type: String
+    value: '0640'
+
+  # SV-230472
+  - name: audit_tool_mode
+    description: All audit config files on the filesystem should be equal or less permissive than this octet
+    type: String
+    value: '0755'
+
   # SV-230321
   - name: home_dir_mode
     description: All interactive user home directories should have permissions equal to or less than this octet
@@ -846,3 +858,9 @@ inputs:
     description: Alternative method for notifying the ISSO or AO (aside from syslog email utility)
     type: String
     value: ""
+
+  # SV-230469
+  - name: expected_backlog_limit
+    description: The maximum number of audit records that can be stored in the audit buffer 
+    type: Numeric
+    value: 8192

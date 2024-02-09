@@ -67,21 +67,19 @@ configuration survives kernel updates:
   tag fix_id: 'F-33112r568151_fix'
   tag cci: ['CCI-000169']
   tag nist: ['AU-12 a']
+  tag 'host'
+
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
 
   grub_config = command('grub2-editenv - list').stdout
 
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
-    end
-  else
-    describe parse_config(grub_config) do
-      its('kernelopts') { should match(/audit=1/) }
-    end
+  describe parse_config(grub_config) do
+    its('kernelopts') { should match(/audit=1/) }
+  end
 
-    describe parse_config_file('/etc/default/grub') do
-      its('GRUB_CMDLINE_LINUX') { should match(/audit=1/) }
-    end
+  describe parse_config_file('/etc/default/grub') do
+    its('GRUB_CMDLINE_LINUX') { should match(/audit=1/) }
   end
 end
