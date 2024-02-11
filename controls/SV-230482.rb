@@ -48,16 +48,20 @@ for off-loading audit logs by setting the following option in
   tag fix_id: 'F-33126r568193_fix'
   tag cci: ['CCI-001851']
   tag nist: ['AU-4 (1)']
+  tag 'host'
 
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  if input('alternative_notification_method') != ''
+    describe 'manual check' do
+      skip 'Manual check required. Ask the administrator to indicate how audit logs are being offloaded and what packages are installed to support it.'
     end
   else
     describe 'rsyslog configuration' do
       subject {
-        command("grep -i '^\$ActionSendStreamDriverAuthMode' /etc/rsyslog.conf /etc/rsyslog.d/* | awk -F ':' '{ print $2 }'").stdout
+        command("grep -i '^\$ActionSendStreamDriverAuthMode' #{input('logging_conf_files').join(' ')}  | awk -F ':' '{ print $2 }'").stdout
       }
       it { should match %r{\$ActionSendStreamDriverAuthMode\s+x509/name} }
     end

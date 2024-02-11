@@ -48,11 +48,15 @@ required packages with the following command:
   tag fix_id: 'F-33121r568178_fix'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host'
 
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  if input('alternative_notification_method') != ''
+    describe 'manual check' do
+      skip 'Manual check required. Ask the administrator to indicate how audit logs are being offloaded and what packages are installed to support it.'
     end
   else
     describe package('rsyslog') do

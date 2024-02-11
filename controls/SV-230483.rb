@@ -35,15 +35,19 @@ control 'SV-230483' do
   tag fix_id: 'F-33127r744013_fix'
   tag cci: ['CCI-001855']
   tag nist: ['AU-5 (1)']
+  tag 'host'
 
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  if input('alternative_notification_method') != ''
+    describe 'manual check' do
+      skip 'Manual check required. Ask the administrator to indicate how audit logs are being offloaded and what packages are installed to support it.'
     end
   else
     describe auditd_conf do
-      its('space_left') { should cmp '25%' }
+      its('space_left.to_i') { should cmp >= input('audit_storage_threshold') }
     end
   end
 end

@@ -66,48 +66,47 @@ the following line in the /etc/chrony.conf file.
   tag fix_id: 'F-33128r568199_fix'
   tag cci: ['CCI-001891']
   tag nist: ['AU-8 (1) (a)']
+  tag 'host'
 
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
-    end
-  else
-    time_sources = ntp_conf('/etc/chrony.conf').server
-    # Cover case when a single server is defined and resource returns a string and not an array
-    time_sources = [time_sources] if time_sources.is_a? String
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
 
-    unless time_sources.nil?
-      max_poll_values = time_sources.map { |val|
-        val.match?(/.*maxpoll.*/) ? val.gsub(/.*maxpoll\s+(\d+)(\s+.*|$)/, '\1').to_i : 10
-      }
-    end
+  time_sources = ntp_conf('/etc/chrony.conf').server
 
-    # Verify the "chrony.conf" file is configured to an authoritative DoD time source by running the following command:
+  # Cover case when a single server is defined and resource returns a string and not an array
+  time_sources = [time_sources] if time_sources.is_a? String
 
-    describe ntp_conf('/etc/chrony.conf') do
-      its('server') { should_not be_nil }
-    end
+  unless time_sources.nil?
+    max_poll_values = time_sources.map { |val|
+      val.match?(/.*maxpoll.*/) ? val.gsub(/.*maxpoll\s+(\d+)(\s+.*|$)/, '\1').to_i : 10
+    }
+  end
 
-    unless ntp_conf('/etc/chrony.conf').server.nil?
-      if ntp_conf('/etc/chrony.conf').server.is_a? String
-        describe ntp_conf('/etc/chrony.conf') do
-          its('server') { should match input('authoritative_timeserver') }
-        end
-      end
+  # Verify the "chrony.conf" file is configured to an authoritative DoD time source by running the following command:
 
-      if ntp_conf('/etc/chrony.conf').server.is_a? Array
-        describe ntp_conf('/etc/chrony.conf') do
-          its('server.join') { should match input('authoritative_timeserver') }
-        end
+  describe ntp_conf('/etc/chrony.conf') do
+    its('server') { should_not be_nil }
+  end
+
+  unless ntp_conf('/etc/chrony.conf').server.nil?
+    if ntp_conf('/etc/chrony.conf').server.is_a? String
+      describe ntp_conf('/etc/chrony.conf') do
+        its('server') { should match input('authoritative_timeserver') }
       end
     end
-    # All time sources must contain valid maxpoll entries
-    unless time_sources.nil?
-      describe 'chronyd maxpoll values (99=maxpoll absent)' do
-        subject { max_poll_values }
-        it { should all be < 17 }
+
+    if ntp_conf('/etc/chrony.conf').server.is_a? Array
+      describe ntp_conf('/etc/chrony.conf') do
+        its('server.join') { should match input('authoritative_timeserver') }
       end
+    end
+  end
+  # All time sources must contain valid maxpoll entries
+  unless time_sources.nil?
+    describe 'chronyd maxpoll values (99=maxpoll absent)' do
+      subject { max_poll_values }
+      it { should all be < 17 }
     end
   end
 end

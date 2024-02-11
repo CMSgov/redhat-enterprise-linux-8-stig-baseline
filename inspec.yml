@@ -864,3 +864,9 @@ inputs:
     description: The maximum number of audit records that can be stored in the audit buffer 
     type: Numeric
     value: 8192
+
+  # SV-230483
+  - name: audit_storage_threshold
+    description: The percentage threshold of space remaining in the audit storage volume before the system should take action
+    type: Numeric
+    value: 25

@@ -44,11 +44,15 @@ event queue becomes full, this is a finding.'
   tag fix_id: 'F-33124r568187_fix'
   tag cci: ['CCI-001851']
   tag nist: ['AU-4 (1)']
+  tag 'host'
 
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  if input('alternative_notification_method') != ''
+    describe 'manual check' do
+      skip 'Manual check required. Ask the administrator to indicate how audit logs are being offloaded and what packages are installed to support it.'
     end
   else
     describe parse_config_file('/etc/audit/auditd.conf') do

@@ -46,23 +46,27 @@ setting the following options in "/etc/rsyslog.conf" or
   tag fix_id: 'F-33125r568190_fix'
   tag cci: ['CCI-001851']
   tag nist: ['AU-4 (1)']
+  tag 'host'
 
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  if input('alternative_notification_method') != ''
+    describe 'manual check' do
+      skip 'Manual check required. Ask the administrator to indicate how audit logs are being offloaded and what packages are installed to support it.'
     end
   else
     describe 'rsyslog configuration' do
       subject {
-        command("grep -i '^\$DefaultNetstreamDriver' /etc/rsyslog.conf /etc/rsyslog.d/* | awk -F ':' '{ print $2 }'").stdout
+        command("grep -i '^\$DefaultNetstreamDriver' #{input('logging_conf_files').join(' ')} | awk -F ':' '{ print $2 }'").stdout
       }
       it { should match(/\$DefaultNetstreamDriver\s+gtls/) }
     end
 
     describe 'rsyslog configuration' do
       subject {
-        command("grep -i '^\$ActionSendStreamDriverMode' /etc/rsyslog.conf /etc/rsyslog.d/* | awk -F ':' '{ print $2 }'").stdout
+        command("grep -i '^\$ActionSendStreamDriverMode' #{input('logging_conf_files').join(' ')} | awk -F ':' '{ print $2 }'").stdout
       }
       it { should match(/\$ActionSendStreamDriverMode\s+1/) }
     end

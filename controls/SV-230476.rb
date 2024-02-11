@@ -47,30 +47,29 @@ records, a new partition with sufficient space will need be to be created.'
   tag fix_id: 'F-33120r568175_fix'
   tag cci: ['CCI-001849']
   tag nist: ['AU-4']
+  tag 'host'
+
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
 
   audit_log_dir = command("dirname #{auditd_conf.log_file}").stdout.strip
 
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
-    end
-  else
-    describe file(audit_log_dir) do
-      it { should exist }
-      it { should be_directory }
-    end
+  describe file(audit_log_dir) do
+    it { should exist }
+    it { should be_directory }
+  end
 
-    # Fetch partition sizes in 1K blocks for consistency
-    partition_info = command("df -B 1K #{audit_log_dir}").stdout.split("\n")
-    partition_sz_arr = partition_info.last.gsub(/\s+/m, ' ').strip.split(' ')
+  # Fetch partition sizes in 1K blocks for consistency
+  partition_info = command("df -B 1K #{audit_log_dir}").stdout.split("\n")
+  partition_sz_arr = partition_info.last.gsub(/\s+/m, ' ').strip.split(' ')
 
-    # Get unused space percentage
-    percentage_space_unused = (100 - partition_sz_arr[4].to_i)
+  # Get unused space percentage
+  percentage_space_unused = (100 - partition_sz_arr[4].to_i)
 
-    describe "auditd_conf's space_left threshold should be under the amount of space currently available (in 1K blocks) for the audit log directory:" do
-      subject { auditd_conf }
-      its('space_left.to_i') { should be <= percentage_space_unused }
+  describe "auditd_conf's space_left threshold" do
+    it 'should be under the amount of space currently available (in 1K blocks) for the audit log directory' do
+      expect(auditd_conf.space_left.to_i).to be <= percentage_space_unused
     end
   end
 end
