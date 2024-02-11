@@ -854,7 +854,7 @@ inputs:
       - /etc/rsyslog.d/*.conf
 
   # SV-230389
-  - name: alternative_notification_method
+  - name: alternative_logging_method
     description: Alternative method for notifying the ISSO or AO (aside from syslog email utility)
     type: String
     value: ""

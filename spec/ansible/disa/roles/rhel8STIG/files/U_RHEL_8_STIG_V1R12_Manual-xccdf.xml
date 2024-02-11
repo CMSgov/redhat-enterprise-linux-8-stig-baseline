@@ -4452,7 +4452,7 @@ $ sudo yum list installed rsyslog
 
 rsyslog.x86_64          8.1911.0-3.el8          @AppStream
 
-If the "rsyslog" package is not installed, ask the administrator to indicate how audit logs are being offloaded and what packages are installed to support it.  If there is no evidence of audit logs being offloaded, this is a finding.</check-content></check></Rule></Group><Group id="V-230478"><title>SRG-OS-000480-GPOS-00227</title><description>&lt;GroupDescription&gt;&lt;/GroupDescription&gt;</description><Rule id="SV-230478r744011_rule" weight="10.0" severity="medium"><version>RHEL-08-030680</version><title>RHEL 8 must have the packages required for encrypting offloaded audit logs installed.</title><description>&lt;VulnDiscussion&gt;Information stored in one location is vulnerable to accidental or incidental deletion or alteration.
+If the "rsyslog" package is not installed, ask the administrator to indicate how logging is done for this system.  If there is no evidence of audit logs being offloaded, this is a finding.</check-content></check></Rule></Group><Group id="V-230478"><title>SRG-OS-000480-GPOS-00227</title><description>&lt;GroupDescription&gt;&lt;/GroupDescription&gt;</description><Rule id="SV-230478r744011_rule" weight="10.0" severity="medium"><version>RHEL-08-030680</version><title>RHEL 8 must have the packages required for encrypting offloaded audit logs installed.</title><description>&lt;VulnDiscussion&gt;Information stored in one location is vulnerable to accidental or incidental deletion or alteration.
 
 Off-loading is a common process in information systems with limited audit storage capacity.
 

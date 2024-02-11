@@ -47,9 +47,9 @@ processing failure.
     !virtualization.system.eql?('docker')
   }
 
-  if input('alternative_notification_method').nil?
+  if input('alternative_logging_method') != ''
     describe 'Manual Review' do
-      skip 'Inputs indicate that an alternative method of notification is in place. Verify with the ISSO that the method is documented and in use. If the method is not documented or in use, this is a finding.'
+      skip 'Inputs indicate that an alternative logging method is in place. Verify with the ISSO that the method is documented and in use. If the method is not documented or in use, this is a finding.'
     end
   else
     describe command('grep "postmaster:\s*root$" /etc/aliases') do

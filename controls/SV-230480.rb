@@ -50,9 +50,9 @@ event queue becomes full, this is a finding.'
     !virtualization.system.eql?('docker')
   }
 
-  if input('alternative_notification_method') != ''
+  if input('alternative_logging_method') != ''
     describe 'manual check' do
-      skip 'Manual check required. Ask the administrator to indicate how audit logs are being offloaded and what packages are installed to support it.'
+      skip 'Manual check required. Ask the administrator to indicate how logging is done for this system.'
     end
   else
     describe parse_config_file('/etc/audit/auditd.conf') do
