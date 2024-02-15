@@ -36,11 +36,15 @@ documented with the ISSO.'
   tag fix_id: 'F-33146r568253_fix'
   tag cci: ['CCI-000778']
   tag nist: ['IA-3']
+  tag 'host'
 
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  if input('autofs_required') == true
+    describe "Skip" do
+      skip "Inputs indicate that autofs is required to be enabled. Manually review with the ISSO to confirm that this is a requirement for the mission."
     end
   elsif package('autofs').installed?
     describe systemd_service('autofs.service') do

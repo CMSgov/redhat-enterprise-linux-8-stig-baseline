@@ -27,17 +27,15 @@ If the "port" option is not set to "0", is commented out or missing, this is a f
   tag fix_id: 'F-33129r928589_fix'
   tag cci: ['CCI-000381']
   tag nist: ['CM-7 a']
+  tag 'host'
+
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !(virtualization.system.eql?('docker') && !file('/etc/chrony.conf').exist?)
+  }
 
   chrony_conf = ntp_conf('/etc/chrony.conf')
-
-  if virtualization.system.eql?('docker') && !file('/etc/chrony.conf').exist?
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
-    end
-  else
-    describe chrony_conf do
-      its('port') { should cmp 0 }
-    end
+  
+  describe chrony_conf do
+    its('port') { should cmp 0 }
   end
 end

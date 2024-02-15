@@ -37,16 +37,19 @@ Reboot the system for the settings to take effect.'
   tag fix_id: 'F-33147r809318_fix'
   tag cci: ['CCI-000778']
   tag nist: ['IA-3']
+  tag 'host'
 
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
-    end
-  else
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+  if input('usb_storage_required') == false
     describe kernel_module('usb_storage') do
       it { should be_disabled }
       it { should be_blacklisted }
+    end
+  else
+    describe "Skip" do
+      skip "Inputs indicate that USB storage is required to be enabled. Manually review with the ISSO to confirm that this is a requirement for the mission."
     end
   end
 end

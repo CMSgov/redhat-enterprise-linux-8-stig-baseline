@@ -48,16 +48,13 @@ kernel module.
   tag fix_id: 'F-33142r568241_fix'
   tag cci: ['CCI-000381']
   tag nist: ['CM-7 a']
+  tag 'host'
 
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
-    end
-  else
-    describe kernel_module('cramfs') do
-      it { should be_disabled }
-      it { should be_blacklisted }
-    end
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+  describe kernel_module('cramfs') do
+    it { should be_disabled }
+    it { should be_blacklisted }
   end
 end

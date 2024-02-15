@@ -58,26 +58,25 @@ $ sudo firewall-cmd --reload'
   tag cci: ['CCI-002314']
   tag legacy: []
   tag nist: ['AC-17 (1)']
+  tag 'host'
 
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
-    end
-  else
-    describe firewalld do
-      it { should be_running }
-    end
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
 
-    describe firewalld.zone do
-      it { should_not be_empty }
-    end
+  describe service('firewalld') do
+    it { should be_running }
+  end
 
-    firewalld.zone.each do |zone|
-      describe "Firewall zone \'#{zone}\' target" do
-        subject { firewalld.zone(zone).target }
-        it { should cmp 'DROP' }
-      end
+  describe firewalld do
+    its('zone') { should_not be_empty }
+  end
+
+  failing_zones = firewalld.zone.select { |fz| firewalld.zone(fz).target != 'DROP' }
+
+  describe "All firewall zones" do
+    it "should be configured to drop all incoming network packets unless explicitly accepted" do
+      expect(failing_zones).to be_empty, "Failing zones:\n\t- #{failing_zones.join("\n\t- ")}"
     end
   end
 end

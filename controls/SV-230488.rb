@@ -39,6 +39,7 @@ command:
   tag fix_id: 'F-33132r568211_fix'
   tag cci: ['CCI-000381']
   tag nist: ['CM-7 a']
+  tag 'host', 'container'
 
   describe packages(/abrt/) do
     its('statuses') { should_not cmp 'installed' }

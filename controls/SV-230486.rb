@@ -27,15 +27,15 @@ If the "cmdport" option is not set to "0", is commented out or missing, this is 
   tag fix_id: 'F-33130r928592_fix'
   tag cci: ['CCI-000381']
   tag nist: ['CM-7 a']
+  tag 'host'
 
-  if virtualization.system.eql?('docker') && !file('/etc/chrony.conf').exist?
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
-    end
-  else
-    describe ntp_conf('/etc/chrony.conf') do
-      its('cmdport') { should cmp 0 }
-    end
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !(virtualization.system.eql?('docker') && !file('/etc/chrony.conf').exist?)
+  }
+
+  chrony_conf = ntp_conf('/etc/chrony.conf')
+  
+  describe chrony_conf do
+    its('cmdport') { should cmp 0 }
   end
 end

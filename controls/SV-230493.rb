@@ -57,13 +57,13 @@ Reboot the system for the settings to take effect.'
   tag fix_id: 'F-33137r809315_fix'
   tag cci: ['CCI-000381']
   tag nist: ['CM-7 a']
+  tag 'host'
 
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
-    end
-  elsif input('camera_installed')
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+  
+  if input('camera_installed')
     describe kernel_module('uvcvideo') do
       it { should_not be_loaded }
       it { should be_blacklisted }

@@ -877,3 +877,17 @@ inputs:
     description: The percentage threshold of space remaining in the audit storage volume before the system should take action
     type: Numeric
     value: 25
+
+  # SV-230502
+  - name: autofs_required
+    description: Set to true if there is a documented requirement for the target system to have autofs enabled
+    type: Boolean
+    value: false
+
+  # SV-230503
+  - name: usb_storage_required
+    description: Set to true if there is a documented requirement for the target system to use USB storage
+    type: Boolean
+    value: false
+
+  
