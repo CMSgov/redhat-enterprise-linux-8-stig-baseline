@@ -38,11 +38,15 @@ $ sudo yum install firewalld.noarch'
   tag fix_id: 'F-33149r744019_fix'
   tag cci: ['CCI-002314']
   tag nist: ['AC-17 (1)']
+  tag 'host'
 
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  if input('alternate_firewall')
+    describe 'Manual' do
+      skip 'Inputs indicate an alternate firewall aside from firewalld is being used. Manually review with the ISSO to ensure the firewall is installed.'
     end
   else
     describe package('firewalld') do

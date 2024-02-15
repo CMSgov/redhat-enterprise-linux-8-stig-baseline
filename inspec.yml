@@ -890,4 +890,16 @@ inputs:
     type: Boolean
     value: false
 
+  # SV-230505
+  - name: alternate_firewall
+    description: Set to true if there is a firewall other than the default firewalld in place on the system
+    type: Boolean
+    value: false
+
+  # SV-230506
+  - name: wifi_hardware
+    description: Set to false if there is no wireless network capability on board the system
+    type: Boolean
+    value: true
+
   

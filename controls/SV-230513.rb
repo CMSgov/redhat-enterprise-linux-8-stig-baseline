@@ -48,20 +48,20 @@ adding /modifying the /etc/fstab with the following line:
   tag fix_id: 'F-33157r568286_fix'
   tag cci: ['CCI-001764']
   tag nist: ['CM-7 (2)']
+  tag 'host'
 
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
-    end
-  elsif input('skip_mount_tmp')['noexec']
-    impact 0.0
-    describe 'The requirement to add noexec to the /tmp mount is determined to be not applicable by by agreement with the approval authority of the organization.' do
-      skip 'The requirement to add noexec to the /tmp mount is determined to be not applicable by by agreement with the approval authority of the organization.'
-    end
-  else
-    describe etc_fstab.where { mount_point == '/tmp' } do
-      its('mount_options.flatten') { should include 'noexec' }
-    end
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  path = '/tmp'
+  option = 'noexec'
+
+  describe mount(path) do
+    its('options') { should include option }
+  end
+
+  describe etc_fstab.where { mount_point == path } do
+    its('mount_options.flatten') { should include option }
   end
 end

@@ -58,15 +58,16 @@ following command:
   tag fix_id: 'F-33150r568265_fix'
   tag cci: ['CCI-001444']
   tag nist: ['AC-18 (1)']
+  tag 'host', 'container'
 
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
-    end
-  else
+  if input('wifi_hardware')
     describe command('nmcli device') do
       its('stdout.strip') { should_not match(/wifi\s*connected/) }
+    end
+  else
+    impact 0.0
+    describe 'Skip' do
+      skip 'The system does not have a wireless network adapter, this control is Not Applicable.'
     end
   end
 end

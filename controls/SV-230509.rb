@@ -46,8 +46,20 @@ option by adding /modifying the /etc/fstab with the following line:
   tag fix_id: 'F-33153r568274_fix'
   tag cci: ['CCI-001764']
   tag nist: ['CM-7 (2)']
+  tag 'host'
 
-  describe etc_fstab.where { mount_point == '/dev/shm' } do
-    its('mount_options.flatten') { should include 'nosuid' }
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  path = '/dev/shm'
+  option = 'nosuid'
+
+  describe mount(path) do
+    its('options') { should include option }
+  end
+
+  describe etc_fstab.where { mount_point == path } do
+    its('mount_options.flatten') { should include option }
   end
 end
