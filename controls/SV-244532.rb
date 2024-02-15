@@ -56,7 +56,7 @@ local interactive user's files and directories, use the following command:
   end
   describe 'All files in the users home directory' do
     it 'are expected to be owned by the user' do
-      expect(findings).to be_empty, 'Some files in the users home directory are not owned by the user. Please ensure all files are owned by thier user.'
+      expect(findings).to be_empty, "Some files in the users home directory are not owned by the user. Please ensure all files are owned by thier user. Findings:\n\t- #{findings.join("\n\t- ")}"
     end
   end
 end

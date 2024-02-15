@@ -54,7 +54,7 @@ command:
 
   audit_tools = ['/sbin/auditctl', '/sbin/aureport', '/sbin/ausearch', '/sbin/autrace', '/sbin/auditd', '/sbin/rsyslogd', '/sbin/augenrules']
 
-  failing_tools = audit_tools.select { |at| file(at).owned_by?('root') }
+  failing_tools = audit_tools.select { |at| !file(at).owned_by?('root') }
 
   describe 'Audit executables' do
     it 'should be owned by root' do

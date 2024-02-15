@@ -27,7 +27,7 @@ $ sudo passwd -l [username]'
   tag nist: ['CM-6 b']
   tag 'host', 'container', 'review'
 
-  users_with_blank_passwords = shadow.where { password.blank? }.users - input('users_allowed_blank_passwords')
+  users_with_blank_passwords = shadow.where { password.nil? || password.empty? }.users - input('users_allowed_blank_passwords')
 
   # TODO: is this an NA in containers?
 
