@@ -72,10 +72,10 @@ $ sudo firewall-cmd --reload'
     its('zone') { should_not be_empty }
   end
 
-  failing_zones = firewalld.zone.select { |fz| firewalld.zone(fz).target != 'DROP' }
+  failing_zones = firewalld.zone.reject { |fz| firewalld.zone(fz).target == 'DROP' }
 
-  describe "All firewall zones" do
-    it "should be configured to drop all incoming network packets unless explicitly accepted" do
+  describe 'All firewall zones' do
+    it 'should be configured to drop all incoming network packets unless explicitly accepted' do
       expect(failing_zones).to be_empty, "Failing zones:\n\t- #{failing_zones.join("\n\t- ")}"
     end
   end

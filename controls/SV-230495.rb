@@ -51,7 +51,7 @@ Reboot the system for the settings to take effect.'
   only_if('This control is Not Applicable to containers', impact: 0.0) {
     !virtualization.system.eql?('docker')
   }
-  
+
   describe kernel_module('can') do
     it { should be_disabled }
     it { should be_blacklisted }

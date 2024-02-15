@@ -34,7 +34,7 @@ If the "port" option is not set to "0", is commented out or missing, this is a f
   }
 
   chrony_conf = ntp_conf('/etc/chrony.conf')
-  
+
   describe chrony_conf do
     its('port') { should cmp 0 }
   end

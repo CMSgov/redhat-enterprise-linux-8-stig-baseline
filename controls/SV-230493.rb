@@ -62,7 +62,7 @@ Reboot the system for the settings to take effect.'
   only_if('This control is Not Applicable to containers', impact: 0.0) {
     !virtualization.system.eql?('docker')
   }
-  
+
   if input('camera_installed')
     describe kernel_module('uvcvideo') do
       it { should_not be_loaded }

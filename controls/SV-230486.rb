@@ -34,7 +34,7 @@ If the "cmdport" option is not set to "0", is commented out or missing, this is 
   }
 
   chrony_conf = ntp_conf('/etc/chrony.conf')
-  
+
   describe chrony_conf do
     its('cmdport') { should cmp 0 }
   end
