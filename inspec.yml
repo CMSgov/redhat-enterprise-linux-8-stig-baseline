@@ -727,6 +727,13 @@ inputs:
     type: String
     value: /etc/security/faillock.conf
 
+  # SV-230408, SV-230406
+  - name: audit_rule_keys
+    description: The audit rule keys
+    type: Array
+    value:
+    - identity
+
   # SV-244544
   - name: external_firewall
     description: "The system use an external firewall or service vs a local firewall service"
@@ -861,7 +868,7 @@ inputs:
 
   # SV-230469
   - name: expected_backlog_limit
-    description: The maximum number of audit records that can be stored in the audit buffer 
+    description: The maximum number of audit records that can be stored in the audit buffer
     type: Numeric
     value: 8192
 
