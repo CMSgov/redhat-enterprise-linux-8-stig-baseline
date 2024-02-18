@@ -55,9 +55,13 @@ $ sudo sysctl --system'
   tag nist: ['CM-6 b']
   tag 'host'
 
+  only_if('This system is acting as a router on the network, this control is Not Applicable', impact: 0.0) {
+    !input('network_router')
+  }
+
   # Define the kernel parameter to be checked
   parameter = 'net.core.bpf_jit_harden'
-  action = 'Enables hardening for the BPF JIT'
+  action = 'BPF JIT compiler'
   value = 2
 
   # Get the current value of the kernel parameter
@@ -70,7 +74,7 @@ $ sudo sysctl --system'
       skip 'Control not applicable within a container'
     end
   else
-    # Check if IPv4 packet forwarding is disabled
+
     describe kernel_parameter(parameter) do
       it 'is disabled in sysctl -a' do
         expect(current_value.value).to cmp value
@@ -96,18 +100,15 @@ $ sudo sysctl --system'
     # Check the configuration files
     describe 'Configuration files' do
       if search_results.empty?
-        it "do not have `#{parameter}` disabled directly" do
+        it "do not explicitly set the `#{parameter}` parameter" do
           expect(config_values).not_to be_empty, "Add the line `#{parameter}=#{value}` to a file in the `/etc/sysctl.d/` directory"
         end
       else
-        describe "for #{action}" do
-          it 'does not have conflicting settings' do
-            expect(uniq_config_values.count).to eq(1), "Expected one unique configuration, but got #{config_values}"
-          end
-
-          it 'does not have more then one value' do
-            expect(config_values.values.flatten.all? { |v| v.to_i.eql?(value) }).to be true
-          end
+        it "do not have conflicting settings for #{action}" do
+          expect(uniq_config_values.count).to eq(1), "Expected one unique configuration, but got #{config_values}"
+        end
+        it "set the parameter to the right value for #{action}" do
+          expect(config_values.values.flatten.all? { |v| v.to_i.eql?(value) }).to be true
         end
       end
     end

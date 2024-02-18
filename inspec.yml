@@ -890,6 +890,18 @@ inputs:
     type: Boolean
     value: false
 
+  # SV-230533
+  - name: tftp_required
+    description: Set to true if there is a documented requirement for the target system to use TFTP
+    type: Boolean
+    value: false
+
+  # SV-230554
+  - name: promiscuous_mode_required
+    description: Set to true if there is a documented requirement for the target system to use promiscuous mode
+    type: Boolean
+    value: false
+
   # SV-230505
   - name: alternate_firewall
     description: Set to true if there is a firewall other than the default firewalld in place on the system

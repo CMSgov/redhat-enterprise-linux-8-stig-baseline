@@ -36,22 +36,20 @@ $ sudo systemctl daemon-reload'
   tag fix_id: 'F-33173r833337_fix'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host'
+
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
 
   c = systemd_service('ctrl-alt-del.target')
 
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
+  describe.one do
+    describe c do
+      its('params.LoadState') { should eq 'masked' }
     end
-  else
-    describe.one do
-      describe c do
-        its('params.LoadState') { should eq 'masked' }
-      end
-      describe c do
-        its('params.LoadState') { should eq 'not-found' }
-      end
+    describe c do
+      its('params.LoadState') { should eq 'not-found' }
     end
   end
 end

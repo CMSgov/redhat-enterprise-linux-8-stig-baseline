@@ -26,8 +26,15 @@ $ sudo yum remove tftp-server'
   tag fix_id: 'F-33177r568346_fix'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host', 'container'
 
-  describe package('tftp-server') do
-    it { should_not be_installed }
+  if input('tftp_required')
+    describe 'Manual' do
+      skip 'Inputs indicate that TFTP protocol is required to be enabled. Manually review with the ISSO to confirm that this is a requirement for the mission.'
+    end
+  else
+    describe package('tftp-server') do
+      it { should_not be_installed }
+    end
   end
 end

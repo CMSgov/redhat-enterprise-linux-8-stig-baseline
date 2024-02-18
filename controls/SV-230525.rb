@@ -44,15 +44,13 @@ Establish rate-limiting rules based on organization-defined types of DoS attacks
   tag fix_id: 'F-33169r902734_fix'
   tag cci: ['CCI-002385']
   tag nist: ['SC-5', 'SC-5 a']
+  tag 'host'
 
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
-    end
-  else
-    describe parse_config_file('/etc/firewalld/firewalld.conf') do
-      its('FirewallBackend') { should eq 'nftables' }
-    end
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  describe parse_config_file('/etc/firewalld/firewalld.conf') do
+    its('FirewallBackend') { should eq 'nftables' }
   end
 end

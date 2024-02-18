@@ -24,7 +24,7 @@ control 'SV-250317' do
 
     Check that IPv4 forwarding is disabled using the following command:
 
-    $ sudo sysctl net.ipv4.conf.all.forwarding
+    $ sudo sysctl net..conf.all.forwarding
 
     net.ipv4.conf.all.forwarding = 0
 
@@ -88,8 +88,13 @@ control 'SV-250317' do
     describe 'Control not applicable within a container' do
       skip 'Control not applicable within a container'
     end
+  elsif input('ipv4_enabled') == false
+    impact 0.0
+    describe 'IPv4 is disabled on the system, this requirement is Not Applicable.' do
+      skip 'IPv4 is disabled on the system, this requirement is Not Applicable.'
+    end
   else
-    # Check if IPv4 packet forwarding is disabled
+
     describe kernel_parameter(parameter) do
       it 'is disabled in sysctl -a' do
         expect(current_value.value).to cmp value
@@ -115,18 +120,15 @@ control 'SV-250317' do
     # Check the configuration files
     describe 'Configuration files' do
       if search_results.empty?
-        it "does not have `#{parameter}` disabled directly" do
+        it "do not explicitly set the `#{parameter}` parameter" do
           expect(config_values).not_to be_empty, "Add the line `#{parameter}=#{value}` to a file in the `/etc/sysctl.d/` directory"
         end
       else
-        describe "for #{action}" do
-          it 'does not have conflicting settings' do
-            expect(uniq_config_values.count).to eq(1), "Expected one unique configuration, but got #{config_values}"
-          end
-
-          it 'does not have more then one value' do
-            expect(config_values.values.flatten.all? { |v| v.to_i.eql?(value) }).to be true
-          end
+        it "do not have conflicting settings for #{action}" do
+          expect(uniq_config_values.count).to eq(1), "Expected one unique configuration, but got #{config_values}"
+        end
+        it "set the parameter to the right value for #{action}" do
+          expect(config_values.values.flatten.all? { |v| v.to_i.eql?(value) }).to be true
         end
       end
     end

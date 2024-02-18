@@ -27,6 +27,7 @@ assign a UID of greater than "1000" that has not already been assigned.'
   tag fix_id: 'F-33178r568349_fix'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host', 'container'
 
   describe passwd.uids(0) do
     its('users') { should cmp 'root' }

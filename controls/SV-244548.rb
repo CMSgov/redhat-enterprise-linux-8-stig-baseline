@@ -51,8 +51,9 @@ a keyboard or mouse'
   tag fix_id: 'F-47780r743892_fix'
   tag cci: ['CCI-001958']
   tag nist: ['IA-3']
+  tag 'host'
 
-  only_if('This requirement is does not apply to containers', impact: 0.0) {
+  only_if('This requirement does not apply to containers', impact: 0.0) {
     !virtualization.system.eql?('docker')
   }
 

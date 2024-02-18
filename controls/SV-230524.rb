@@ -47,11 +47,15 @@ a keyboard or mouse'
   tag fix_id: 'F-33168r744025_fix'
   tag cci: ['CCI-001958']
   tag nist: ['IA-3']
+  tag 'host'
 
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  if input('peripherals_package') != 'usbguard'
+    describe 'Manual' do
+      skip 'Inputs indicate a tool other than usbguard should be managing peripherals. Work with the ISSO to determine if and how unauthorized peripherals are being blocked.'
     end
   else
     describe command('usbguard list-rules') do

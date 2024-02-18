@@ -48,7 +48,7 @@ Reboot the system for the settings to take effect.'
       it { should be_blacklisted }
     end
   else
-    describe 'Skip' do
+    describe 'Manual' do
       skip 'Inputs indicate that USB storage is required to be enabled. Manually review with the ISSO to confirm that this is a requirement for the mission.'
     end
   end

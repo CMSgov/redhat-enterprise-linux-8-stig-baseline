@@ -50,15 +50,13 @@ $ sudo sysctl --system'
   tag fix_id: 'F-33191r858825_fix'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host'
 
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
-    end
-  else
-    describe kernel_parameter('kernel.kptr_restrict') do
-      its('value') { should eq 1 }
-    end
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  describe kernel_parameter('kernel.kptr_restrict') do
+    its('value') { should eq 1 }
   end
 end

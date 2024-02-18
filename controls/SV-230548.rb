@@ -54,20 +54,13 @@ $ sudo sysctl --system'
   tag fix_id: 'F-33192r858827_fix'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host'
 
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
-    end
-  elsif input('container_host')
-    impact 0.0
-    describe true do
-      skip 'Profile running on a container host -- User namespaces are used primarily for Linux containers.; this control is Not Applicable'
-    end
-  else
-    describe kernel_parameter('user.max_user_namespaces') do
-      its('value') { should be_zero }
-    end
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  describe kernel_parameter('user.max_user_namespaces') do
+    its('value') { should be_zero }
   end
 end

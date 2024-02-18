@@ -45,25 +45,22 @@ uncommented file and directory selection lists.'
   tag fix_id: 'F-33195r568400_fix'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host'
 
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
-    end
-  else
-    describe package('aide') do
-      it { should be_installed }
-    end
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+  describe package('aide') do
+    it { should be_installed }
+  end
 
-    findings = []
-    aide_conf.where { !selection_line.start_with? '!' }.entries.each do |selection|
-      findings.append(selection.selection_line) unless selection.rules.include? 'xattrs'
-    end
+  findings = []
+  aide_conf.where { !selection_line.start_with? '!' }.entries.each do |selection|
+    findings.append(selection.selection_line) unless selection.rules.include? 'xattrs'
+  end
 
-    describe "List of monitored files/directories without 'xattrs' rule" do
-      subject { findings }
-      it { should be_empty }
-    end
+  describe "List of monitored files/directories without 'xattrs' rule" do
+    subject { findings }
+    it { should be_empty }
   end
 end

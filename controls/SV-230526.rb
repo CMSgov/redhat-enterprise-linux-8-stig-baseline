@@ -46,15 +46,13 @@ following command:
   tag fix_id: 'F-33170r744031_fix'
   tag cci: ['CCI-002418']
   tag nist: ['SC-8']
+  tag 'host'
 
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
-    end
-  else
-    describe systemd_service('sshd.service') do
-      it { should be_running }
-    end
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  describe systemd_service('sshd.service') do
+    it { should be_running }
   end
 end
