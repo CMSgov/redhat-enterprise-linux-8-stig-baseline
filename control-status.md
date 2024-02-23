@@ -302,15 +302,15 @@
 | A        | SV-230547 |                       | Y        | Y      | Y     | `ip_config`                      | `network_router`,`sysctl_conf_files`                                                                      |
 | A        | SV-230548 | Y                     | Y        | Y      | Y     | `ip_config`                      | `network_router`,`sysctl_conf_files`                                                                      |
 | A        | SV-230549 |                       | Y        | Y      | Y     | `ip_config`                      | `network_router`,`sysctl_conf_files`                                                                      |
-| A        | SV-230550 |                       | Y        | Y      | Y     | N                                |                                                       |
-| A        | SV-230551 |                       | Y        | Y      | Y     | N                                |                                                        |
-| A        | SV-230552 |                       | Y        | Y      | Y     | N                                |                                                        |
+| A        | SV-230550 |                       | Y        | Y      | Y     | N                                | None                                                  |
+| A        | SV-230551 |                       | Y        | Y      | Y     | N                                | None                                                   |
+| A        | SV-230552 |                       | Y        | Y      | Y     | N                                | None                                                   |
 | A        | SV-230553 |                       | Y        | Y      | Y     | N                                | `emove_xorg_x11_server_packages`                                                                          |
 | A        | SV-230554 |                       | Y        | Y      | Y     | N                                | `promiscuous_mode_permitted`                                                                              |
-| A        | SV-230555 |                       |          |        | Y     |                                  |                                                                                                           |
-| A        | SV-230556 |                       |          |        | Y     |                                  |                                                                                                           |
-| A        | SV-230557 |                       |          |        | Y     |                                  |                                                                                                           |
-| A        | SV-230558 |                       |          |        | Y     |                                  |                                                                                                           |
+| A        | SV-230555 |                       | Y        | Y      | Y     | N                                | None                                                                                                      |
+| A        | SV-230556 |                       | Y        | Y      | Y     | N                                | None                                                                                                      |
+| A        | SV-230557 |                       | Y        | Y      | Y     | N                                | None                                                                                                      |
+| A        | SV-230558 |                       | Y        | Y      | Y     | N                                | `ftp_required`                                                                                            |
 | A        | SV-230559 |                       |          |        | Y     |                                  |                                                                                                           |
 | A        | SV-230560 |                       |          |        | Y     |                                  |                                                                                                           |
 | A        | SV-230561 |                       |          |        | Y     |                                  |                                                                                                           |

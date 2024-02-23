@@ -34,6 +34,7 @@ line to "/etc/xinetd.d/tftp" (or modify the line to have the required value):
   tag fix_id: 'F-33201r568418_fix'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host', 'container'
 
   if package('tftp-server').installed?
     impact 0.5

@@ -896,6 +896,12 @@ inputs:
     type: Boolean
     value: false
 
+  # SV-230558
+  - name: ftp_required
+    description: Set to true if there is a documented requirement for the target system to use FTP
+    type: Boolean
+    value: false
+
   # SV-230554
   - name: promiscuous_mode_required
     description: Set to true if there is a documented requirement for the target system to use promiscuous mode
