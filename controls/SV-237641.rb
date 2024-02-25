@@ -38,7 +38,7 @@ ALL     ALL=(ALL:ALL) ALL'
 
   describe 'Sudoers file(s)' do
     it 'should not contain any unrestricted sudo rules' do
-      expect(bad_sudoers_rules.entries).to be_empty, "Unrestricted sudo rules found; check sudoers file(s):\n\t- #{sudoers_config_files.join("\n\t- ")}"
+      expect(bad_sudoers_rules.entries).to be_empty, "Unrestricted sudo rules found; check sudoers file(s):\n\t- #{input('sudoers_config_files').join("\n\t- ")}"
     end
   end
 end
