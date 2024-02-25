@@ -33,44 +33,67 @@ directory owned by the application, it must be documented with the ISSO.'
   tag fix_id: 'F-32961r567698_fix'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host', 'container'
 
   ignore_shells = input('non_interactive_shells').join('|')
 
-  findings = Set[]
+  findings = {}
   users.where { !shell.match(ignore_shells) && (uid >= 1000 || uid.zero?) }.entries.each do |user_info|
     next if input('exempt_home_users').include?(user_info.username.to_s)
 
-    grep_results = command("grep -i path --exclude=\".bash_history\" #{user_info.home}/.*").stdout.split('\\n')
+    grep_results = command("grep -i path= --exclude=\".bash_history\" #{user_info.home}/.*").stdout.split("\n")
     grep_results.each do |result|
+      puts "RESULT: #{result}"
       result.slice! 'PATH='
       # Case when last value in exec search path is :
       result += ' ' if result[-1] == ':'
       result.slice! '$PATH:'
+      result.gsub! "=\"", '=' # account for cases where path is set to equal a quote-wrapped statement
       result.gsub! '$HOME', user_info.home.to_s
       result.gsub! '~', user_info.home.to_s
+      result.gsub! ':$PATH', '' # remove $PATH if it shows up at the end of line
+
+      puts "RESULT POST PROCESS: #{result}"
       line_arr = result.split(':')
       line_arr.delete_at(0)
       line_arr.each do |line|
+        puts "LINE: #{line}"
+
+        line = line.strip
+
         # Don't run test on line that exports PATH and is not commented out
         next unless !line.start_with?('export') && !line.start_with?('#')
 
         # Case when :: found in exec search path or : found at beginning
         if line.strip.empty?
           curr_work_dir = command('pwd').stdout.delete("\n")
-          line = curr_work_dir if curr_work_dir.start_with?(user_info.home.to_s)
+          line = curr_work_dir if curr_work_dir.start_with?(user_info.home.to_s) || curr_work_dir[]
         end
+
+        # catch a leading '"'
+        if line.start_with?('"')
+          line = line[1..-1]
+        end
+
         # This will fail if non-home directory found in path
-        findings.add(line) unless line.start_with?(user_info.home)
+        if !line.start_with?(user_info.home)
+
+          # we want a hash of usernames as the keys and arrays of failing lines as values
+          if findings[user_info.username]
+            findings[user_info.username] = findings[user_info.username] << line
+          else
+            findings[user_info.username] = [line]
+          end
+        end
       end
     end
   end
-  describe.one do
-    describe etc_fstab do
-      its('home_mount_options') { should include 'nosuid' }
-    end
-    describe 'Initialization files that include executable search paths that include directories outside their home directories' do
-      subject { findings.to_a }
-      it { should be_empty }
+
+  puts "FINDINGS: #{findings}"
+
+  describe 'Initialization files' do
+    it "should not include executable search paths that include directories outside the respective user's home directory" do
+      expect(findings).to be_empty, "Users with non-homedir paths assigned to their PATH environment variable:\n\t#{findings}"
     end
   end
 end

@@ -93,7 +93,7 @@
 | W        | SV-230314 |                       | Y        | Y      | Y     | N                                | None                                                                                                      |
 | W        | SV-230315 |                       | Y        | Y      | Y     | N                                | None                                                                                                      |
 | W        | SV-230316 | Y                     | Y        | Y      | Y     | N                                | None                                                                                                      |
-| W        | SV-230317 |                       |          |        | Y     |                                  |                                                                                                           |
+| W        | SV-230317 |                       | Y        | Y      | Y     | N                                | `non_interactive_shells`,`exempt_home_users`                                                              |
 | W        | SV-230318 | Y                     | Y        | Y      | Y     | N                                | None                                                                                                      |
 | W,A      | SV-230319 | Y                     | Y        | Y      | Y     | N                                | None                                                                                                      |
 | W,A      | SV-230320 |                       | Y        | Y      | Y     | N                                | `exempt_home_users`                                                                                     |
