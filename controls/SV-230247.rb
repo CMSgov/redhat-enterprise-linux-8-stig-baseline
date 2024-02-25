@@ -35,6 +35,7 @@ the following command:
   tag 'host', 'container'
 
   describe file('/var/log/messages') do
+    it { should exist }
     its('group') { should be_in input('var_log_messages_group') }
   end
 end

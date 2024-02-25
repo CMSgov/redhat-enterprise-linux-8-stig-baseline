@@ -36,6 +36,7 @@ the following command:
   tag 'host', 'container'
 
   describe directory('/var/log') do
+    it { should exist }
     it { should_not be_more_permissive_than('0755') }
   end
 end

@@ -34,6 +34,7 @@ command:
   tag 'host', 'container'
 
   describe directory('/var/log') do
+    it { should exist }
     it { should be_owned_by 'root' }
   end
 end

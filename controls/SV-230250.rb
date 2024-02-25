@@ -35,6 +35,7 @@ following command:
   tag 'host', 'container'
 
   describe directory('/var/log') do
+    it { should exist }
     its('group') { should eq 'root' }
   end
 end
