@@ -41,8 +41,15 @@ remove it from the system with the following command:
   tag fix_id: 'F-33205r568430_fix'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host', 'container'
 
-  describe package('tuned') do
-    it { should_not be_installed }
+  if input('tuned_required')
+    describe 'Manual' do
+      skip 'Inputs indicate that gssproxy is required to be enabled. Manually review with the ISSO to confirm that this is a requirement for the mission.'
+    end
+  else
+    describe package('tuned') do
+      it { should_not be_installed }
+    end
   end
 end

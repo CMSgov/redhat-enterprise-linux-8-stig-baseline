@@ -37,17 +37,26 @@ Remove any configurations that conflict with the above from the following locati
   tag fix_id: 'F-40824r880726_fix'
   tag cci: ['CCI-002227']
   tag nist: ['AC-6 (5)']
+  tag 'host'
 
-  if virtualization.system.eql?('docker') && !command('sudo').exist?
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
+  only_if('This control is Not Applicable to containers without sudo installed', impact: 0.0) {
+    !(virtualization.system.eql?('docker') && !command('sudo').exist?)
+  }
+
+  settings = sudoers(input('sudoers_config_files').join(' ')).settings['Defaults']
+
+  describe 'Sudoers file(s) settings' do
+    it 'should set !targetpw' do
+      expect(settings).to include('!targetpw'), 'Sudoers file(s) do not set !targetpw'
+      expect(settings).not_to include('targetpw'), 'Sudoers file(s) set targetpw'
     end
-  else
-    describe bash("egrep -i '(!rootpw|!targetpw|!runaspw)' /etc/sudoers /etc/sudoers.d/* | grep -v '#' |  awk -F ':' '{ print $2 }'") do
-      its('stdout') { should match(/^Defaults !targetpw/) }
-      its('stdout') { should match(/^Defaults !rootpw/) }
-      its('stdout') { should match(/^Defaults !runaspw/) }
+    it 'should set !rootpw' do
+      expect(settings).to include('!rootpw'), 'Sudoers file(s) do not set !rootpw'
+      expect(settings).not_to include('rootpw'), 'Sudoers file(s) set rootpw'
+    end
+    it 'should set !runaspw' do
+      expect(settings).to include('!runaspw'), 'Sudoers file(s) do not set !runaspw'
+      expect(settings).not_to include('runaspw'), 'Sudoers file(s) set runaspw'
     end
   end
 end

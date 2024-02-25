@@ -38,8 +38,15 @@ or remove it from the system with the following command:
   tag fix_id: 'F-33204r568427_fix'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host', 'container'
 
-  describe package('iprutils') do
-    it { should_not be_installed }
+  if input('iprutils_required')
+    describe 'Manual' do
+      skip 'Inputs indicate that iprutils is required to be enabled. Manually review with the ISSO to confirm that this is a requirement for the mission.'
+    end
+  else
+    describe package('iprutils') do
+      it { should_not be_installed }
+    end
   end
 end

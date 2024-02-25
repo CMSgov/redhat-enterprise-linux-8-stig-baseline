@@ -23,20 +23,22 @@ ALL     ALL=(ALL:ALL) ALL'
   tag fix_id: 'F-40823r646892_fix'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host'
 
-  sudoers_files = bash('ls -d /etc/sudoers.d/*').stdout.strip.split.append('/etc/sudoers')
+  only_if('This control is Not Applicable to containers without sudo installed', impact: 0.0) {
+    !(virtualization.system.eql?('docker') && !command('sudo').exist?)
+  }
 
-  if virtualization.system.eql?('docker') && !command('sudo').exist?
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
-    end
-  else
-    sudoers_files.each do |file|
-      describe file(file) do
-        its('content') { should_not match(/^ALL\s*ALL=\(ALL\)\sALL/) }
-        its('content') { should_not match(/^ALL\s*ALL=\(ALL:ALL\)\sALL/) }
-      end
+  bad_sudoers_rules = sudoers(input('sudoers_config_files').join(' ')).rules.where {
+    users == 'ALL' &&
+      hosts == 'ALL' &&
+      run_as.start_with?('ALL') &&
+      commands == 'ALL'
+  }
+
+  describe 'Sudoers file(s)' do
+    it 'should not contain any unrestricted sudo rules' do
+      expect(bad_sudoers_rules.entries).to be_empty, "Unrestricted sudo rules found; check sudoers file(s):\n\t- #{sudoers_config_files.join("\n\t- ")}"
     end
   end
 end

@@ -908,6 +908,30 @@ inputs:
     type: Boolean
     value: false
 
+  # SV-230559
+  - name: gssproxy_required
+    description: Set to true if there is a documented requirement for the target system to use gss_proxy
+    type: Boolean
+    value: false
+
+    # SV-230560
+  - name: iprutils_required
+    description: Set to true if there is a documented requirement for the target system to use iprutils
+    type: Boolean
+    value: false
+  
+    # SV-230561
+  - name: tuned_required
+    description: Set to true if there is a documented requirement for the target system to use tuned
+    type: Boolean
+    value: false
+
+    # SV-230640
+  - name: kerberos_required
+    description: Set to true if there is a documented requirement for the target system to use Kerberos auth
+    type: Boolean
+    value: false
+
   # SV-230505
   - name: alternate_firewall
     description: Set to true if there is a firewall other than the default firewalld in place on the system

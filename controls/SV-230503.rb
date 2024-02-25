@@ -42,14 +42,14 @@ Reboot the system for the settings to take effect.'
   only_if('This control is Not Applicable to containers', impact: 0.0) {
     !virtualization.system.eql?('docker')
   }
-  if input('usb_storage_required') == false
+  if input('usb_storage_required')
+    describe 'Manual' do
+      skip 'Inputs indicate that USB storage is required to be enabled. Manually review with the ISSO to confirm that this is a requirement for the mission.'
+    end
+  else
     describe kernel_module('usb_storage') do
       it { should be_disabled }
       it { should be_blacklisted }
-    end
-  else
-    describe 'Manual' do
-      skip 'Inputs indicate that USB storage is required to be enabled. Manually review with the ISSO to confirm that this is a requirement for the mission.'
     end
   end
 end
