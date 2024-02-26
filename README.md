@@ -2,8 +2,8 @@
 
 The Redhat Enterprise Linux 8.X Security Technical Implementation Guide (RHEL8.x STIG) InSpec Profile can help programs automate their compliance checks of RedHat Enterprise Linux 8.x System to Department of Defense (DoD) requirements.
 
-- Profile Version: `1.3.1`
-- RedHat Enterprise Linux 8 Security Technical Implementation Guide v1r3
+- Profile Version: `1.12.0`
+- RedHat Enterprise Linux 8 Security Technical Implementation Guide v1r12
 
 This profile was developed to reduce the time it takes to perform a security checks based upon the STIG Guidance from the Defense Information Systems Agency (DISA) in partnership between the DISA Services Directorate (SD) and the DISA Risk Management Executive (RME) office.
 
@@ -32,6 +32,7 @@ Table of Contents
   - [(connected) Running the Profile Directly from Github](#connected-running-the-profile-directly-from-github)
   - [(disconnected) Running the profile from a local archive copy](#disconnected-running-the-profile-from-a-local-archive-copy)
   - [Different Run Options](#different-run-options)
+    - [Running Controls By Tag](#running-controls-by-tag)
 - [Using Heimdall for Viewing Test Results and Exporting for Checklist and eMASS](#using-heimdall-for-viewing-test-results-and-exporting-for-checklist-and-emass)
   - [Organization of the Repository](#organization-of-the-repository)
     - [`main` and `development` branch](#main-and-development-branch)
@@ -60,11 +61,11 @@ The RHEL8.x STIG profile checks were developed to provide technical implementati
 
 ### Source Guidance
 
-- RedHat Enterprise Linux 8 Security Technical Implementation Guide v1r3
+- RedHat Enterprise Linux 8 Security Technical Implementation Guide v1r12
 
 ### Current Profile Statistics
 
-The profile is tested on every commit and every release against both `vanilla` and `hardened` ubi8 and ec2 images using a CI/CD pipeline. The `vanilla` images are unmodified base images sourced from Red Hat itself. The `hardened` images have had their settings configured for security according to STIG guidance. Testing both vanilla and hardened configurations of both containerized and virtual machine implementations of RHEL8 is necessary to ensure the profile works in multiple environments.
+The profile is tested on every commit and every release against both `vanilla` and `hardened` ubi8 and ec2 images using [CI/CD pipelines](https://github.com/mitre/redhat-enterprise-linux-8-stig-baseline/actions). The `vanilla` images are unmodified base images sourced from Red Hat itself. The `hardened` images have had their settings configured for security according to STIG guidance, and are sourced from [Platform One's](https://p1.dso.mil/) [Iron Bank](https://login.dso.mil). Testing both vanilla and hardened configurations of both containerized and virtual machine implementations of RHEL8 is necessary to ensure the profile works in multiple environments.
 
 # Getting Started and Intended Usage
 
@@ -78,137 +79,110 @@ The profile is tested on every commit and every release against both `vanilla` a
 
 ## Intended Usage - `main` vs `releases`
 
-1. The latest `released` version of the profile is intended for use in A&A testing, formal results to AO's and IAM's etc. Please use the `released` versions of the profile in these types of workflows.
+1. The latest 'released' version of the profile is intended for use in A&A testing, formal results to Authorizing Officials, Information Assurance Managers and other security stakeholders. Please use the tagged, released versions of the profile in these types of workflows.
 
 2. The `main` branch is a development branch that will become the next release of the profile. The `main` branch is intended for use in _developement and testing_ merge requests for the next release of the profile, and _is not intended_ be used for formal and ongoing testing on systems.
 
 ## Environment Aware Testing
 
-The RHEL8.x STIG profile is `container aware` and is able to determine when the profile is being executed inside or outside a `docker container` and will only run the tests that are approporate for the enviroment it is testing in. The tests are all tagged as `host` or `host, container`.
+The RHEL8.x STIG profile is `container aware` and is able to determine when the profile is being executed inside or outside a container (ex. the Universal Base Image container images from Red Hat) and will only run the tests that are approporate for the enviroment it is testing in. The tests are tagged depending on their applicability to containers as opposed to full hosts.
 
-All the profile's tests (`controls`) apply to the `host` but many of the controls are `Not Applicable` when running inside a `docker container` (such as, for example, controls that test the system's GUI). When running inside a `docker container`, the tests that only applicable to the host will be marked as `Not Applicable` automatically.
+Controls will be tagged as some combination of `host`, `container`, and `container-conditional`. Controls that apply to full host deployments (i.e. bare-metal servers or virtual machines) are marked `host`. Controls that apply to containers are marked `container`. Controls that only apply to containers depending on the packages and services included in the container are marked `container-conditional`.
+
+All the profile's tests apply to the `host` but many of the controls are `Not Applicable` when running inside a container. (such as, for example, controls that test the system's kernel configuration). When running inside a container, the tests that only applicable to the host will be marked as `Not Applicable` automatically.
+
+InSpec also has a command-line flag to only run tests in a profile that match a given tag, if desired. See [Running Controls By Tag](#running-controls-by-tag).
+
+### Testing Containers
+
+Note that, because so many STIG requirements are not applicable to containers, it is often necessary to *also* asses the container host's STIG compliance. A container can only ever be as secure as the platform it runs on.
+
+For example, many STIG controls concern the Linux kernel's settings. A container's configuration cannot affect the hosts's kernel, so these controls are marked as not applicable to containers. However, we still need to know if our container is running a secure kernel. As such, we need to asses *the container host's* kernel settings in addition to the container.
+
+In practice, this usually means running an InSpec STIG compliance profile against *both* the container and the host, which are ultimately part of the same interconnected system.
 
 ## Tailoring to Your Environment
 
 ### Profile Inputs (see `inspec.yml` file)
 
-This profile uses InSpec Inputs to make the tests more flexible. You are able to provide inputs at runtime either via the cli or via YAML files to help the profile work best in your deployment.
+This profile uses InSpec's [inputs](https://docs.chef.io/inspec/profiles/inputs/) feature to make the tests more flexible. By default, the profile sets the inputs to baseline STIG-aligned values, but you are able to provide inputs at runtime either via the cli or via YAML files to help the profile work best in your deployment if necessary.
 
 #### **_Do not change the inputs in the `inspec.yml` file_**
 
-The `inputs` configured in the `inspec.yml` file are **profile definition and defaults for the profile** and not for the user. InSpec provides two ways to adjust the profiles inputs at run-time that do not require modifiying `inspec.yml` itself. This is because automated profiles like this one are frequently run from a script, inside a pipeline or some kind of task scheduler. Such automation usually works by running the profile directly from its source (i.e. this repository), which means the runner will not have access to the `inspec.yml`.
-
-To tailor the tested values for your deployment or organizationally defined values, **_you may update the inputs_**.
+Inputs are defined, and given a default value, in the `inspec.yml` file at the root of the profile directory. The inputs configured in the `inspec.yml` file are **profile definition and defaults for the profile**, and it is not intended for the user to modify them in that file (best practice is to pass in overrides from the CLI or a local inputs file). To tailor the profile inputs to match your deployment or organizationally defined values, **_you should instead override the inputs_** as described below.
 
 #### Update Profile Inputs from the CLI or Local File
+
+InSpec provides two ways to adjust the profiles inputs at run-time that do not require modifiying `inspec.yml` itself:
 
 1. Via the cli with the `--input` flag
 2. Pass them in a YAML file with the `--input-file` flag.
 
 More information about InSpec inputs can be found in the [InSpec Inputs Documentation](https://docs.chef.io/inspec/inputs/).
 
-#### Expected versus max/min input values
+#### Sample Input File
 
-The STIG frequently will check config values against a numerical maximum or minimum. For example, control SV-204576 states that for the file `/etc/securty/limits.conf`:
+The following YAML file is formatted as an InSpec input file. 
 
-```
-If the "maxlogins" item is missing, commented out, or the value is not set to "10" or less for all domains that have the "maxlogins" item assigned, this is a finding.'
-```
-
-The `inspec.yml` file has been written such that numerical inputs (inputs where `type == Numeric`) have two values, the `expected` and the `max/min` value. The profile controls will check that the system config value is:
-
-1. _exactly equal to_ the `expected` value
-2. _greater than_ or _less than_ the `min` or `max` value, respectively
-
-The profile is written this way so that programs can easily configure the ranges used by the checks, in case the program wants to check against different values than the STIG defaults (such as programs with more stringent requirements than the baseline STIG). The `expected`, `max` and `min` values are all set to the STIG defaults in `inspec.yml`. If the organization wants to be directly compliant with the baseline STIG, _these values should not be changed!_
-
-#### The following inputs may be configured in an inputs ".yml" file for the profile to run correctly for your specific environment. 
+Note that any of the inputs that are not explicitly overridden by this file will be set to their default values (as given in `inspec.yml`) when the profile is run.
 
 ```yaml
-# InSpec Tests that are known to consistently have long run times can be disabled with this attribute
-# Acceptable values: false, true
-# (default: false)
 disable_slow_controls: true
- 
-# Flag to designate if the target is a container host. (true or false)
-container_host: false
- 
-# Main grub boot config file (String) 
-grub_uefi_main_cfg:
- 
-# Grub boot config files (Array of strings)
-grub_uefi_user_boot_files:
- 
-# Users exempt from home directory-based controls in array format
-exempt_home_users: []
- 
-# These shells do not allow a user to login
-non_interactive_shells: []
- 
-# System accounts that support approved system activities. (Array) (defaults shown below)
-known_system_accounts: []
- 
-# Accounts of known managed users (Array)
-user_accounts: []
- 
-# Main grub boot config file (String)
-grub_main_cfg:
- 
-# Grub boot config files (Array of Strings)
-grub_user_boot_files:
- 
-# Set to 'true' if IPv4 is enabled on the system. (default true)
-ipv4_enabled:
- 
-# Set to 'true' if IPv6 is enabled on the system.(default true)
-ipv6_enabled:
- 
-# Device or system does not have a camera installed. (default true)
-camera_installed:
- 
-# Device or operating system has a Bluetooth adapter installed. (default true)
-bluetooth_installed:
- 
-# Smart card status (enabled or disabled) default: 'enabled'
-smart_card_enabled:
- 
-# Name of tool
-file_integrity_tool: 'aide'
- 
-# Timeserver used in /etc/chromy.conf (String)
-authoritative_timeserver:
- 
-# File systems that don't correspond to removable media
-non_removable_media_fs: []
- 
-# List of full paths to private key files on the system (Array)
+kernel_config_files:
+  - "/etc/sysctl.d/*.conf"
+  - "/run/sysctl.d/*.conf"
+  - "/lib/sysctl.d/*.conf"
+  - "/etc/sysctl.conf"
+user_accounts:
+  - "jdoe"
+ipv4_enabled: false
+bluetooth_installed: false
+known_system_accounts:
+  - adm
+  - bin
+  - chrony
+  - daemon
+  - dbus
+  - halt
+  - lp
+  - mail
+  - nobody
+  - ntp
+  - operator
+  - polkitd
+  - postfix
+  - root
+  - shutdown
+  - sshd
+  - sssd
+  - sync
+  - systemd-bus-proxy
+  - systemd-network
 private_key_files:
- 
-# Path to an accepted trust anchor certificate file (DoD) (String)
-root_ca_file:
- 
-# Temporary user accounts (Array)
-temporary_accounts:
- 
-# Documented tally log directory (String)
-log_directory:
+  - "/home/jdoe/.ssh/id_rsa.pem"
+system_inactivity_timeout:
+  - 1500
+gui_required: true
 ```
 
 # Running the Profile
 
 ## (connected) Running the Profile Directly from Github
-Against a remote target using ssh with escalated privileges (i.e., inspec installed on a separate runner host)
+Against a remote target using ssh with escalated privileges (i.e., InSpec installed on a separate runner host)
 ```bash
-inspec exec https://github.com/mitre/redhat-enterprise-linux-8-stig-baseline/archive/main.tar.gz -t ssh://TARGET_USERNAME:TARGET_PASSWORD@TARGET_IP:TARGET_PORT --sudo --sudo-password=<SUDO_PASSWORD_IF_REQUIRED> --input-file <path_to_your_input_file/name_of_your_input_file.yml> --reporter json:<path_to_your_output_file/name_of_your_output_file.json>
+inspec exec https://github.com/mitre/redhat-enterprise-linux-8-stig-baseline/archive/main.tar.gz -t ssh://TARGET_USERNAME:TARGET_PASSWORD@TARGET_IP:TARGET_PORT --sudo --sudo-password=<SUDO_PASSWORD_IF_REQUIRED> --input-file <path_to_your_input_file/name_of_your_input_file.yml> --reporter json:<path_to_your_desired_output_file.json>
 ```
-Against a remote target using a pem key with escalated privileges (i.e., inspec installed on a separate runner host)
+Against a remote target using a pem key with escalated privileges (i.e., InSpec installed on a separate runner host)
 ```bash
-inspec exec https://github.com/mitre/redhat-enterprise-linux-8-stig-baseline/archive/main.tar.gz -t ssh://TARGET_USERNAME@TARGET_IP:TARGET_PORT --sudo -i <your_PEM_KEY> --input-file <path_to_your_input_file/name_of_your_input_file.yml> --reporter json:<path_to_your_output_file/name_of_your_output_file.json> 
+inspec exec https://github.com/mitre/redhat-enterprise-linux-8-stig-baseline/archive/main.tar.gz -t ssh://TARGET_USERNAME@TARGET_IP:TARGET_PORT --sudo -i <path_to_your_pem_key> --input-file <path_to_your_input_file/name_of_your_input_file.yml> --reporter json:<path_to_your_desired_output_file.json> 
 ```
-
-Against a local Red Hat host with escalated privileges (i.e., inspec installed on the target)
+Against a local running Red Hat Docker container (i.e., InSpec installed on the container host):
 ```bash
-sudo inspec exec https://github.com/mitre/redhat-enterprise-linux-8-stig-baseline/archive/main.tar.gz --input-file <path_to_your_input_file/name_of_your_input_file.yml> --reporter json:<path_to_your_output_file/name_of_your_output_file.json> 
+inspec exec https://github.com/mitre/redhat-enterprise-linux-8-stig-baseline/archive/main.tar.gz -t docker://<name_of_the_container> --input-file <path_to_your_input_file/name_of_your_input_file.yml> --reporter json:<path_to_your_desired_output_file.json> 
+```
+Against a local Red Hat host with escalated privileges (i.e., InSpec installed directly on the target)
+```bash
+sudo inspec exec https://github.com/mitre/redhat-enterprise-linux-8-stig-baseline/archive/main.tar.gz --input-file <path_to_your_input_file/name_of_your_input_file.yml> --reporter json:<path_to_your_desired_output_file.json> 
 ```
 ## (disconnected) Running the profile from a local archive copy
 
@@ -243,23 +217,27 @@ inspec archive redhat-enterprise-linux-8-stig-baseline
 
 [Full exec options](https://docs.chef.io/inspec/cli/#options-3)
 
+### Running controls by tag
+
+TODO
+
 # Using Heimdall for Viewing Test Results and Exporting for Checklist and eMASS
 
-The JSON results output file can be loaded into **[Heimdall](https://heimdall-lite.mitre.org/)** for a user-interactive, graphical view of the profile scan results. Heimdall-Lite is a `browser only` viewer that allows you to easily view your results directly and locally rendered in your browser.
+The JSON results output file can be loaded into **[Heimdall](https://heimdall-lite.mitre.org/)** for a user-interactive, graphical view of the profile scan results. Heimdall-Lite is a browser only viewer that allows you to easily view your results directly and locally rendered in your browser.
 
-It can also **_export your results into a DISA Checklist (CKL) file_** for easily upload into eMass using the `Heimdall Export` function.
+It can also **_export your results into a DISA Checklist (CKL) file_** using the `Heimdall Export` function, for easily upload into eMASS.
 
-Depending on your enviroment, you can also use the [SAF CLI](https://saf-cli.mitre.org) to run a local docker instance of heimdall-lite via the `saf view:heimdall` command.
+Depending on your enviroment, you can also use the [SAF CLI](https://saf-cli.mitre.org) pipeline utility tool to run a local Docker instance of heimdall-lite via the `saf view:heimdall` command.
 
-The JSON results file may also be loaded into a **[full Heimdall Server](https://github.com/mitre/heimdall2)**, allowing for additional functionality such as to store and compare multiple profile runs.
+The JSON results file may also be loaded into a **[full Heimdall Server](https://github.com/mitre/heimdall2)**, allowing for additional functionality such as storing, aggregating and comparing multiple profile runs.
 
-You can deploy your own instances of Heimdall-Lite or Heimdall Server easily via docker, kurbernetes, or the installation packages.
+You can deploy your own instances of Heimdall Lite or Heimdall Server easily via Docker, onto Kurbernetes, or using the installation packages.
 
 ## Organization of the Repository
 
 ### `main` and `development` branch
 
-The `main` and or `development` branch contains the most recent code for the profile. It may include bugs and is typically aligned with the latest patch release for the profile. ***The main branch is not meant for real scanning or production systems***
+The `main` branch contains the most recent code for the profile. It may include bugs and is typically aligned with the latest patch release for the profile. ***The main branch is not meant for real scanning or production systems***. 
 
 This branch is primarily used for development and testing workflows for the various testing targets.
 
@@ -275,17 +253,17 @@ Releases use Semantic Versioning (SemVer), aligning with the STIG Benchmark vers
 
 ### Tags
 
-We don't use a specific current or latest tag. The current/latest tag for the profile and repository will always be the latest major tag of the benchmark. For example, if `v1.12.3` is the latest Benchmark release from the STIG author, then the tag `v1.12` will point to the `v1.12.3` release of the code.
+This profile does not use a specific 'current' or 'latest' tag. The current/latest tag for the profile and repository will always be the latest major tag of the benchmark. For example, if `version 1, release 12` is the latest Benchmark release from the STIG author, then the tag `v1.12` will point to the `v1.12.3` release of the code.
 
 #### Major Version Tags
 
-Major tags point to the latest patch release of the benchmark. For example, `v1.3` and `v1.3.0` represent the first release of the Red Hat Enterprise Linux 8 STIG V1R3 Benchmark. The `v1.12.{z}` tag(s) would represent the V1R12 Benchmark releases as we find bugs, fixes, or general improvements to the testing profile. This tag will point to its `v{x}r{y}.{z}` counterpart.
+Major tags point to the latest patch release of the benchmark. For example, `v1.3` and `v1.3.0` represent the first release of the Red Hat Enterprise Linux 8 STIG V1R3 Benchmark. The `v1.12.{z}` tag(s) represents the V1R12 Benchmark releases as we find bugs, fixes, or general improvements to the testing profile. This tag will point to its `v{x}r{y}.{z}` counterpart.
 
 ### Patch Releases
 
 The latest patch release always points to the major release for the profile.
 
-For example, after releasing `v1.12.0`, we will point `v1.12` to that patch release: `v1.12.0`. When an issue is found, we will fix, tag, and release `v1.12.1`. We will then 'move' the `v1.12` tag so that it points to tag `v1.12.1`. This way, your pipelines can choose if they want to pin on a specific release of the InSpec profile or always run 'current'.
+For example, after releasing `v1.12.0`, we point `v1.12` to that patch release: `v1.12.0`. When an issue is found, we will fix, tag, and release `v1.12.1`. We will then 'move' the `v1.12` tag so that it points to tag `v1.12.1`. This way, your pipelines can choose if they want to pin on a specific release of the InSpec profile or always run 'current'.
 
 ## Updates, Releases & Submitting PRs to the Profile
 

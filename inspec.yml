@@ -186,12 +186,6 @@ inputs:
     type: Boolean
     value: false
 
-  # SV-230548
-  - name: container_host
-    description: Flag to designate if the target is a container host
-    type: Boolean
-    value: false
-
   # SV-230368
   - name: min_reuse_generations
     description: Number of reuse generations
@@ -456,7 +450,7 @@ inputs:
   - name: temporary_accounts
     description: Temporary user accounts
     type: Array
-    value: ['tmp_guy']
+    value: []
 
   # SV-230331
   - name: temporary_account_max_days
