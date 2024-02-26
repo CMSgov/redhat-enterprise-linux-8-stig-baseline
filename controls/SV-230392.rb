@@ -65,6 +65,6 @@ by setting the "disk_full_action" to "SYSLOG".'
   }
 
   describe auditd_conf do
-    its('disk_full_action') { should be_in input('disk_full_action') }
+    its('disk_full_action.upcase') { should be_in input('disk_full_action') }
   end
 end
