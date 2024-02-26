@@ -40,7 +40,7 @@ SHA_CRYPT_MIN_ROUNDS 5000'
   end
   describe.one do
     describe login_defs do
-      its('SHA_CRYPT_MAX_ROUNDS') { should cmp >= input('sha_crypt_min_rounds') }
+      its('SHA_CRYPT_MAX_ROUNDS') { should cmp >= input('sha_crypt_max_rounds') }
     end
     describe login_defs do
       its('SHA_CRYPT_MAX_ROUNDS') { should be_nil }
