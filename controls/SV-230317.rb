@@ -48,7 +48,7 @@ directory owned by the application, it must be documented with the ISSO.'
       # Case when last value in exec search path is :
       result += ' ' if result[-1] == ':'
       result.slice! '$PATH:'
-      result.gsub! "=\"", '=' # account for cases where path is set to equal a quote-wrapped statement
+      result.gsub! '="', '=' # account for cases where path is set to equal a quote-wrapped statement
       result.gsub! '$HOME', user_info.home.to_s
       result.gsub! '~', user_info.home.to_s
       result.gsub! ':$PATH', '' # remove $PATH if it shows up at the end of line
@@ -71,20 +71,17 @@ directory owned by the application, it must be documented with the ISSO.'
         end
 
         # catch a leading '"'
-        if line.start_with?('"')
-          line = line[1..-1]
-        end
+        line = line[1..-1] if line.start_with?('"')
 
         # This will fail if non-home directory found in path
-        if !line.start_with?(user_info.home)
+        next if line.start_with?(user_info.home)
 
-          # we want a hash of usernames as the keys and arrays of failing lines as values
-          if findings[user_info.username]
-            findings[user_info.username] = findings[user_info.username] << line
-          else
-            findings[user_info.username] = [line]
-          end
-        end
+        # we want a hash of usernames as the keys and arrays of failing lines as values
+        findings[user_info.username] = if findings[user_info.username]
+                                         findings[user_info.username] << line
+                                       else
+                                         [line]
+                                       end
       end
     end
   end
