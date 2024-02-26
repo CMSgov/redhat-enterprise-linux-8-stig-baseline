@@ -57,7 +57,9 @@ by setting the "disk_error_action" to "SYSLOG".'
     !virtualization.system.eql?('docker')
   }
 
+  disk_error_action = input('disk_error_action').map(&:upcase)
+
   describe auditd_conf do
-    its('disk_error_action.upcase') { should be_in input('disk_error_action') }
+    its('disk_error_action.upcase') { should be_in disk_error_action }
   end
 end
