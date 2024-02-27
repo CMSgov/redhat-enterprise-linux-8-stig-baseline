@@ -39,7 +39,7 @@ If the MACs entries in the "opensshserver.config" file have any hashes other tha
   crypto_policy = parse_config_file('/etc/crypto-policies/back-ends/opensshserver.config')['CRYPTO_POLICY']
 
   # Parse the CRYPTO_POLICY string into a hash of configuration options
-  config_options = crypto_policy.scan(/-o(\w+)=([\w\-,@]+)/).to_h
+  config_options = crypto_policy.scan(/-o(\w+)=([\w\-,@]+.)/).to_h
 
   # Split each configuration option's values into an array
   config_options.transform_values! { |v| v.split(',') }
