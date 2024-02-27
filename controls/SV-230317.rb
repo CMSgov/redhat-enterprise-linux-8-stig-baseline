@@ -71,7 +71,7 @@ directory owned by the application, it must be documented with the ISSO.'
         end
 
         # catch a leading '"'
-        line = line[1..-1] if line.start_with?('"')
+        line = line[1..] if line.start_with?('"')
 
         # This will fail if non-home directory found in path
         next if line.start_with?(user_info.home)

@@ -63,7 +63,7 @@ by setting the "disk_full_action" to "SYSLOG".'
   only_if('This control is Not Applicable to containers', impact: 0.0) {
     !virtualization.system.eql?('docker')
   }
-  
+
   disk_full_action = input('disk_full_action').map(&:upcase)
 
   describe auditd_conf do
