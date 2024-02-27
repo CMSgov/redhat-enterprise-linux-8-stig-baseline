@@ -434,12 +434,6 @@ inputs:
     type: Numeric
     value: 900
 
-  # SV-230356
-  - name: max_retry
-    description: Maximum number of retry attempts for login
-    type: Numeric
-    value: 3
-
   # SV-230373
   - name: days_of_inactivity
     description: Maximum number of days if account inactivity before account lockout

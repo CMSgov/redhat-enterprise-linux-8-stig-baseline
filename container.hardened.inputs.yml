@@ -223,10 +223,6 @@ efi_main_cfg: "/boot/efi/EFI/redhat/grub.cfg"
 # system accounts that support approved system activities
 admin_logins: []
 
-# V-73159
-# maximum number of times to prompt user for new password
-max_retry: 3
-
 # V-72417
 # the list of packages needed for MFA on RHEL
 mfa_pkg_list:

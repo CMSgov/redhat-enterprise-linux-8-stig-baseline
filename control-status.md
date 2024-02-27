@@ -365,8 +365,8 @@
 | A        | SV-251711 |                       | Y        | Y      | Y     | N                                | None                                                                                                      |
 | A        | SV-251712 |                       | Y        | Y      | Y     | N                                | None                                                                                                      |
 | A        | SV-251713 |                       | Y        | Y      | Y     | N                                | `pam_auth_files`                                                                                        |
-| A        | SV-251714 |                       | Y        | Y      | Y     | N                                | `pam_auth_files<br>``max_retry`                                                                         |
-| A        | SV-251715 |                       | Y        | Y      | Y     | N                                | `pam_auth_files<br>``max_retry`                                                                         |
+| A        | SV-251714 |                       | Y        | Y      | Y     | N                                | `pam_auth_files<br>`                                                                         |
+| A        | SV-251715 |                       | Y        | Y      | Y     | N                                | `pam_auth_files<br>`                                                                         |
 | A        | SV-251716 |                       | Y        | Y      | Y     | N                                | `min_retry`                                                                                             |
 | A        | SV-251717 |                       | Y        | Y      | Y     | N                                | `pam_auth_files<br>``min_reuse_generations`                                                             |
 | A        | SV-251718 |                       | Y        | Y      | Y     | N                                | `gui_required`                                                                                          |
