@@ -49,12 +49,13 @@ modifications, disabling, and termination events that affect
   }
 
   audit_command = '/etc/security/opasswd'
+  audit_rule_keys = input('audit_rule_keys')
 
   describe 'Command' do
     it "#{audit_command} is audited properly" do
       audit_rule = auditd.file(audit_command)
       expect(audit_rule).to exist
-      expect(audit_rule.key).to cmp 'identity'
+      expect(audit_rule.key).to be_in audit_rule_keys
       expect(audit_rule.permissions.flatten).to include('w', 'a')
     end
   end
