@@ -40,7 +40,7 @@ file systems that are associated with removable media.'
   failing_mounts = mounted_removeable_media.reject { |mnt| mnt['mount_options'].include?(option) }
 
   # be very explicit about why this one was a finding since we do not know which mounts are removeable media without the user telling us
-  rem_media_msg = "NOTE: Some mounted devices are not indicated to be non-removable media (you may need to update the 'non_removable_media_fs' input to check if these are truly subject to this requirement):\n\t- #{mounted_removeable_media.join("\n\t- ")}"
+  rem_media_msg = "NOTE: Some mounted devices are not indicated to be non-removable media (you may need to update the 'non_removable_media_fs' input to check if these are truly subject to this requirement)\n"
 
   # there should either be no mounted removable media (which should be a requirement anyway), OR
   # all removeable media should be mounted with nosuid
