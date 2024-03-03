@@ -96,8 +96,8 @@ updating the following rules in the "/etc/audit/rules.d/audit.rules" file:
     it "#{audit_command} is audited properly" do
       audit_rule = auditd.file(audit_command)
       expect(audit_rule).to exist
-      expect(audit_rule.key).to cmp 'logins'
       expect(audit_rule.permissions.flatten).to include('w', 'a')
+      expect(audit_rule.key.uniq).to include(input('audit_rule_keynames')[audit_command])
     end
   end
 end

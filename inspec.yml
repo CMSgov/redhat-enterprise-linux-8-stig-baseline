@@ -932,4 +932,77 @@ inputs:
     type: Boolean
     value: true
 
+  # All audit rule controls:
+  # Use this hash to change what keyname should be associated with the 
+  # audit rule for a given file or function 
+  - name: audit_rule_keynames
+    description: The audit rules to be applied to the system
+    type: Hash
+    value: {
+      'execve'                        : 'execpriv',
+      '/etc/shadow'                   : 'identity',
+      '/etc/security/opasswd'         : 'identity',
+      '/etc/passwd'                   : 'identity',
+      '/etc/gshadow'                  : 'identity',
+      '/etc/group'                    : 'identity',
+      '/etc/sudoers'                  : 'identity',
+      '/etc/sudoers.d'                : 'identity',
+      '/usr/bin/su'                   : 'privileged-priv_change',
+      'setxattr'                      : 'perm_mod',
+      'fsetxattr'                     : 'perm_mod',
+      'lsetxattr'                     : 'perm_mod',
+      'removexattr'                   : 'perm_mod',
+      'fremovexattr'                  : 'perm_mod',
+      'lremovexattr'                  : 'perm_mod',
+      '/usr/bin/chage'                : 'privileged-chage',
+      '/usr/bin/chcon'                : 'perm_mod',
+      '/usr/bin/ssh-agent'            : 'privileged-ssh',
+      '/usr/bin/passwd'               : 'privileged-passwd',
+      '/usr/bin/mount'                : 'privileged-mount',
+      '/usr/bin/umount'               : 'privileged-mount',
+      'mount'                         : 'privileged-mount',
+      '/usr/sbin/unix_update'         : 'privileged-unix-update',
+      '/usr/sbin/postdrop'            : 'privileged-unix-update',
+      '/usr/sbin/postqueue'           : 'privileged-unix-update',
+      '/usr/sbin/semanage'            : 'privileged-unix-update',
+      '/usr/sbin/setfiles'            : 'privileged-unix-update',
+      '/usr/sbin/userhelper'          : 'privileged-unix-update',
+      '/usr/sbin/setsebool'           : 'privileged-unix-update',
+      '/usr/sbin/unix_chkpwd'         : 'privileged-unix-update',
+      '/usr/libexec/openssh/ssh-keysign' : 'privileged-ssh',
+      '/usr/bin/setfacl'              : 'perm_mod',
+      '/usr/sbin/pam_timestamp_check' : 'privileged-pam_timestamp_check',
+      '/usr/bin/newgrp'               : 'priv_cmd',
+      'init_module'                   : 'module_chng',
+      'finit_module'                  : 'module_chng',
+      'rename'                        : 'delete',
+      'unlink'                        : 'delete',
+      'rmdir'                         : 'delete',
+      'renameat'                      : 'delete',
+      'unlinkat'                      : 'delete',
+      '/usr/bin/gpasswd'              : 'privileged-gpasswd',
+      'delete_module'                 : 'module_chng',
+      '/usr/bin/crontab'              : 'privileged-crontab',
+      '/usr/bin/chsh'                 : 'priv_cmd',
+      'truncate'                      : 'perm_access',
+      'ftruncate'                     : 'perm_access',
+      'creat'                         : 'perm_access',
+      'open'                          : 'perm_access',
+      'openat'                        : 'perm_access',
+      'open_by_handle_at'             : 'perm_access',
+      'chown'                         : 'perm_mod',
+      'fchown'                        : 'perm_mod',
+      'fchownat'                      : 'perm_mod',
+      'lchown'                        : 'perm_mod',
+      'chmod'                         : 'perm_mod',
+      'fchmod'                        : 'perm_mod',
+      'fchmodat'                      : 'perm_mod',
+      '/usr/bin/sudo'                 : 'priv_cmd',
+      '/usr/sbin/usermod'             : 'priv_cmd',
+      '/usr/bin/chacl'                : 'priv_mod',
+      '/usr/bin/kmod'                 : 'modules',
+      '/var/log/faillock'             : 'logins',
+      '/var/log/lastlog'              : 'logins'
+    }
+
   

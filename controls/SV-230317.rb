@@ -43,7 +43,6 @@ directory owned by the application, it must be documented with the ISSO.'
 
     grep_results = command("grep -i path= --exclude=\".bash_history\" #{user_info.home}/.*").stdout.split("\n")
     grep_results.each do |result|
-      puts "RESULT: #{result}"
       result.slice! 'PATH='
       # Case when last value in exec search path is :
       result += ' ' if result[-1] == ':'
@@ -52,12 +51,9 @@ directory owned by the application, it must be documented with the ISSO.'
       result.gsub! '$HOME', user_info.home.to_s
       result.gsub! '~', user_info.home.to_s
       result.gsub! ':$PATH', '' # remove $PATH if it shows up at the end of line
-
-      puts "RESULT POST PROCESS: #{result}"
       line_arr = result.split(':')
       line_arr.delete_at(0)
       line_arr.each do |line|
-        puts "LINE: #{line}"
 
         line = line.strip
 
@@ -85,8 +81,6 @@ directory owned by the application, it must be documented with the ISSO.'
       end
     end
   end
-
-  puts "FINDINGS: #{findings}"
 
   describe 'Initialization files' do
     it "should not include executable search paths that include directories outside the respective user's home directory" do
