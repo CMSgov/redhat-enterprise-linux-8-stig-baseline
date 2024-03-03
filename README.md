@@ -29,17 +29,16 @@ Table of Contents
       - [Expected versus max/min input values](#expected-versus-maxmin-input-values)
       - [The following inputs may be configured in an inputs ".yml" file for the profile to run correctly for your specific environment.](#the-following-inputs-may-be-configured-in-an-inputs-yml-file-for-the-profile-to-run-correctly-for-your-specific-environment)
 - [Running the Profile](#running-the-profile)
-  - [(connected) Running the Profile Directly from Github](#connected-running-the-profile-directly-from-github)
-  - [(disconnected) Running the profile from a local archive copy](#disconnected-running-the-profile-from-a-local-archive-copy)
+  - [Running the Profile in an Internet-Connected Environment](#running-the-profile-in-an-internet-connected-environment)
+  - [Running the Profile in an Airgapped (disconnected) Environment](#running-the-profile-in-an-airgapped-disconnected-environment)
   - [Different Run Options](#different-run-options)
-    - [Running Controls By Tag](#running-controls-by-tag)
 - [Using Heimdall for Viewing Test Results and Exporting for Checklist and eMASS](#using-heimdall-for-viewing-test-results-and-exporting-for-checklist-and-emass)
   - [Organization of the Repository](#organization-of-the-repository)
     - [`main` and `development` branch](#main-and-development-branch)
     - [`#v{x}r{y}.{z}` branches](#vxryz-branches)
     - [Releases](#releases)
     - [Tags](#tags)
-      - [Major Version Tags](#major-version-tags)
+      - [Major and Minor Version Tags](#major-and-minor-version-tags)
     - [Patch Releases](#patch-releases)
   - [Updates, Releases \& Submitting PRs to the Profile](#updates-releases-submitting-prs-to-the-profile)
     - [Submitting Bugs](#submitting-bugs)
@@ -167,28 +166,35 @@ gui_required: true
 
 # Running the Profile
 
-## (connected) Running the Profile Directly from Github
+InSpec profiles can be executed against a local system, or a remote system using a transport. Airgapped environments can use an archived profile for local execution.
+
+## Running the Profile in an Internet-Connected Environment
+
+InSpec can execute a test profile directly from a source code repository -- for example, GitHub. It is recommended to run the profile using the source GitHub repository as the profile source where possible. This ensures that you are always running the profile version with the latest patch updates.
+
+It is also recommended to "pin" the version of the profile you are running from GitHub by specifying a tagged minor release (ex. "v1.12" -- see the "Organization of the Repository" section). This way, you will always know exactly which version and release of the STIG you are using to validate your system.
+
 Against a remote target using ssh with escalated privileges (i.e., InSpec installed on a separate runner host)
 ```bash
-inspec exec https://github.com/mitre/redhat-enterprise-linux-8-stig-baseline/archive/main.tar.gz -t ssh://TARGET_USERNAME:TARGET_PASSWORD@TARGET_IP:TARGET_PORT --sudo --sudo-password=<SUDO_PASSWORD_IF_REQUIRED> --input-file <path_to_your_input_file/name_of_your_input_file.yml> --reporter json:<path_to_your_desired_output_file.json>
+inspec exec https://github.com/mitre/redhat-enterprise-linux-8-stig-baseline/archive/v1.12.tar.gz -t ssh://TARGET_USERNAME:TARGET_PASSWORD@TARGET_IP:TARGET_PORT --sudo --sudo-password=<SUDO_PASSWORD_IF_REQUIRED> --input-file <path_to_your_input_file/name_of_your_input_file.yml> --reporter json:<path_to_your_desired_output_file.json>
 ```
 Against a remote target using a pem key with escalated privileges (i.e., InSpec installed on a separate runner host)
 ```bash
-inspec exec https://github.com/mitre/redhat-enterprise-linux-8-stig-baseline/archive/main.tar.gz -t ssh://TARGET_USERNAME@TARGET_IP:TARGET_PORT --sudo -i <path_to_your_pem_key> --input-file <path_to_your_input_file/name_of_your_input_file.yml> --reporter json:<path_to_your_desired_output_file.json> 
+inspec exec https://github.com/mitre/redhat-enterprise-linux-8-stig-baseline/archive/v1.12.tar.gz -t ssh://TARGET_USERNAME@TARGET_IP:TARGET_PORT --sudo -i <path_to_your_pem_key> --input-file <path_to_your_input_file/name_of_your_input_file.yml> --reporter json:<path_to_your_desired_output_file.json> 
 ```
 Against a local running Red Hat Docker container (i.e., InSpec installed on the container host):
 ```bash
-inspec exec https://github.com/mitre/redhat-enterprise-linux-8-stig-baseline/archive/main.tar.gz -t docker://<name_of_the_container> --input-file <path_to_your_input_file/name_of_your_input_file.yml> --reporter json:<path_to_your_desired_output_file.json> 
+inspec exec https://github.com/mitre/redhat-enterprise-linux-8-stig-baseline/archive/v1.12.tar.gz -t docker://<name_of_the_container> --input-file <path_to_your_input_file/name_of_your_input_file.yml> --reporter json:<path_to_your_desired_output_file.json> 
 ```
 Against a local Red Hat host with escalated privileges (i.e., InSpec installed directly on the target)
 ```bash
-sudo inspec exec https://github.com/mitre/redhat-enterprise-linux-8-stig-baseline/archive/main.tar.gz --input-file <path_to_your_input_file/name_of_your_input_file.yml> --reporter json:<path_to_your_desired_output_file.json> 
+sudo inspec exec https://github.com/mitre/redhat-enterprise-linux-8-stig-baseline/archive/v1.12.tar.gz --input-file <path_to_your_input_file/name_of_your_input_file.yml> --reporter json:<path_to_your_desired_output_file.json> 
 ```
-## (disconnected) Running the profile from a local archive copy
+## Running the Profile in an Airgapped (disconnected) Environment
 
-If your runner is not always expected to have direct access to the profile's hosted location, use the following steps to create an archive bundle of this overlay and all of its dependent tests:
+If your runner will not have direct access to the profile's hosted location, you can use the following steps to create an archive bundle of this overlay and all of its dependent tests:
 
-(Git is required to clone the InSpec profile using the instructions below. Git can be downloaded from the [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) site.)
+(A local Git installation is required to clone the InSpec profile using the instructions below. Git can be downloaded from the [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) site. Airgapped systems will need to use alternate sources for downloading Git.)
 
 When the **"runner"** host uses this profile overlay for the first time, follow these steps:
 
@@ -216,10 +222,6 @@ inspec archive redhat-enterprise-linux-8-stig-baseline
 ## Different Run Options
 
 [Full exec options](https://docs.chef.io/inspec/cli/#options-3)
-
-### Running controls by tag
-
-TODO
 
 # Using Heimdall for Viewing Test Results and Exporting for Checklist and eMASS
 
@@ -255,15 +257,17 @@ Releases use Semantic Versioning (SemVer), aligning with the STIG Benchmark vers
 
 This profile does not use a specific 'current' or 'latest' tag. The current/latest tag for the profile and repository will always be the latest major tag of the benchmark. For example, if `version 1, release 12` is the latest Benchmark release from the STIG author, then the tag `v1.12` will point to the `v1.12.3` release of the code.
 
-#### Major Version Tags
+#### Major and Minor Version Tags
 
-Major tags point to the latest patch release of the benchmark. For example, `v1.3` and `v1.3.0` represent the first release of the Red Hat Enterprise Linux 8 STIG V1R3 Benchmark. The `v1.12.{z}` tag(s) represents the V1R12 Benchmark releases as we find bugs, fixes, or general improvements to the testing profile. This tag will point to its `v{x}r{y}.{z}` counterpart.
+Major tags point to the latest version of the STIG that they test, and minor tags point to the latest version and release of a STIG. The patch tag indicates the patch number of the InSpec profile itself and is the only tag in the semver that does not directly correspond to the STIG's schema.
+
+ For example, `v1.3` and `v1.3.0` represent the first release of the Red Hat Enterprise Linux 8 STIG V1R3 Benchmark. The `v1.12.{z}` tag(s) represents the V1R12 Benchmark releases as the profile authors find bugs, fixes, or general improvements to the testing profile. This tag will point to its `v{x}r{y}.{z}` counterpart.
 
 ### Patch Releases
 
-The latest patch release always points to the major release for the profile.
+The latest patch release always points to the release for the profile.
 
-For example, after releasing `v1.12.0`, we point `v1.12` to that patch release: `v1.12.0`. When an issue is found, we will fix, tag, and release `v1.12.1`. We will then 'move' the `v1.12` tag so that it points to tag `v1.12.1`. This way, your pipelines can choose if they want to pin on a specific release of the InSpec profile or always run 'current'.
+For example, after releasing `v1.12.0`, we point `v1.12` to that patch release: `v1.12.0`. When an issue is found, we will fix, tag, and release `v1.12.1`. We will then 'move' the `v1.12` tag so that it points to tag `v1.12.1`. This way, your pipelines can choose if they want to pin on a specific release of the InSpec profile or always run 'current' for a particular release of the STIG.
 
 ## Updates, Releases & Submitting PRs to the Profile
 

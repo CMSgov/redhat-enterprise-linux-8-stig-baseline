@@ -54,7 +54,6 @@ directory owned by the application, it must be documented with the ISSO.'
       line_arr = result.split(':')
       line_arr.delete_at(0)
       line_arr.each do |line|
-
         line = line.strip
 
         # Don't run test on line that exports PATH and is not commented out
@@ -67,7 +66,7 @@ directory owned by the application, it must be documented with the ISSO.'
         end
 
         # catch a leading '"'
-        line = line[1..] if line.start_with?('"')
+        line = line[1..line.length] if line.start_with?('"')
 
         # This will fail if non-home directory found in path
         next if line.start_with?(user_info.home)
