@@ -16,3 +16,7 @@ allow_container_openssh_server: false
 audit_rule_keynames_overrides: {
     'execve': 'my_org_specific_keyname_for_auditing_execve'
   }
+skip_mount_tmp:
+  nodev: false
+  nosuid: false
+  noexec: false

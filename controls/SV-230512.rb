@@ -55,7 +55,7 @@ adding /modifying the /etc/fstab with the following line:
   path = '/tmp'
   option = 'nosuid'
 
-  if input('skip_mount_tmp')[option]
+  if input('skip_mount_tmp')[option] == true
     describe 'N/A' do
       skip "Inputs indicate that the /tmp directory needs '#{option}' enabled. Confirm this with the ISSO."
     end
