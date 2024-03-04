@@ -8,6 +8,29 @@ version: 1.12.0
 
 inspec_version: ">= 5.0"
 
+### INPUTS ###
+# Inputs are variables that can be referenced by any control in the profile, 
+# and are defined and given a default value in this file.
+
+# By default, each parameter is set to exactly comply with the STIG baseline
+# wherever possible. Some STIG controls will require you to update an input
+# to provide the profile with necessary context for your system.
+
+# For example, control SV-230379 checks that only 'necessary accounts' exist
+# on the system. The list of 'necessary' accounts depends on the function of
+# the system, and you will likely need to add approved accounts to the 
+# 'known_system_accounts' input. Also, depending on your local organizational
+# security policy, you may need to deviate from the STIG on some controls to
+# make the test profile 'stricter' or 'looser.'
+
+# In both cases, you can override the default values given in this file
+# using an input file or a CLI flag at execution time. See InSpec's Inputs docs
+# at https://docs.chef.io/inspec/profiles/inputs/ for details.
+
+# NOTE: DO NOT directly change the default values by editing this file. Use
+# overrides instead.
+###
+
 inputs:
   # SV-230271, SV-237643
   - name: sudoers_config_files
@@ -932,9 +955,11 @@ inputs:
     type: Boolean
     value: true
 
-  # All audit rule controls:
-  # Use this hash to change what keyname should be associated with the 
-  # audit rule for a given file or function 
+  # Default values for expected keynames for all audit rules
+  # NOTE: DO NOT override this hash
+  # If you need to override these values, do so via adding the desired key/value to
+  # the `audit_rule_keynames_overrides` input instead -- overriding `audit_rule_keynames`
+  # directly will lose the values for any key you do not explictly define.
   - name: audit_rule_keynames
     description: The audit rules to be applied to the system
     type: Hash
@@ -1004,5 +1029,18 @@ inputs:
       '/var/log/faillock'             : 'logins',
       '/var/log/lastlog'              : 'logins'
     }
+
+  # Override values for expected keynames for all audit rules
+  # Override this hash to change the default values for the audit_rule_keynames
+  # Any keys you do not explictly add to this input will use the default values
+  # as given in `audit_rule_keynames`
+  # Example:
+  # {
+  #   'execve': 'my_org_specific_keyname_for_auditing_execve'
+  # }
+  - name: audit_rule_keynames_overrides
+    description: The audit rules to be applied to the system
+    type: Hash
+    value: {}
 
   

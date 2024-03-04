@@ -59,7 +59,7 @@ auid!=unset -k privileged-mount
       expect(audit_rule.action.uniq).to cmp 'always'
       expect(audit_rule.list.uniq).to cmp 'exit'
       expect(audit_rule.fields.flatten).to include('perm=x', 'auid>=1000', 'auid!=-1')
-      expect(audit_rule.key.uniq).to include(input('audit_rule_keynames')[audit_command])
+      expect(audit_rule.key.uniq).to include(input('audit_rule_keynames').merge(input('audit_rule_keynames_overrides'))[audit_command])
     end
   end
 end

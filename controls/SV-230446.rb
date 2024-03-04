@@ -69,7 +69,7 @@ module_chng
           expect(audit_rule.arch.uniq).to cmp 'b32'
         end
         expect(audit_rule.fields.flatten).to include('auid>=1000', 'auid!=-1')
-        expect(audit_rule.key.uniq).to include(input('audit_rule_keynames')[audit_syscall])
+        expect(audit_rule.key.uniq).to include(input('audit_rule_keynames').merge(input('audit_rule_keynames_overrides'))[audit_syscall])
       end
     end
   end

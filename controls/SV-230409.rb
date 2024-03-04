@@ -52,7 +52,7 @@ modifications, disabling, and termination events that affect "/etc/sudoers".
       audit_rule = auditd.file(audit_command)
       expect(audit_rule).to exist
       expect(audit_rule.permissions.flatten).to include('w', 'a')
-      expect(audit_rule.key.uniq).to include(input('audit_rule_keynames')[audit_command])
+      expect(audit_rule.key.uniq).to include(input('audit_rule_keynames').merge(input('audit_rule_keynames_overrides'))[audit_command])
     end
   end
 end
