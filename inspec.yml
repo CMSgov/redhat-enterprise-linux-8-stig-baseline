@@ -743,13 +743,6 @@ inputs:
     type: String
     value: /etc/security/faillock.conf
 
-  # SV-230404, SV-230405, SV-230406, SV-230407, SV-230408, SV-230409, SV-230410
-  - name: audit_rule_keys
-    description: The audit rule keys
-    type: Array
-    value:
-    - identity
-
   # SV-244544
   - name: external_firewall
     description: "The system use an external firewall or service vs a local firewall service"
