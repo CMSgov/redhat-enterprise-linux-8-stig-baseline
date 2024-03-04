@@ -47,8 +47,8 @@ adding the following line to "/etc/crypto-policies/back-ends/gnutls.config":
   tag nist: ['AC-17 (2)']
   tag 'host', 'container'
 
-  gnutls = file('/etc/crypto-policies/back-ends/gnutls.config').content.strip.split(':')
-  unapproved_versions = input('unapproved_ssl_tls_versions').split(':')
+  gnutls = file('/etc/crypto-policies/back-ends/gnutls.config').content.upcase.strip.split(':')
+  unapproved_versions = input('unapproved_ssl_tls_versions').map(&:upcase)
   failing_versions = unapproved_versions - gnutls
 
   describe 'GnuTLS' do
