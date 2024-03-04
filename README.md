@@ -108,7 +108,9 @@ This profile uses InSpec's [inputs](https://docs.chef.io/inspec/profiles/inputs/
 
 #### **_Do not change the inputs in the `inspec.yml` file_**
 
-Inputs are defined, and given a default value, in the `inspec.yml` file at the root of the profile directory. The inputs configured in the `inspec.yml` file are **profile definition and defaults for the profile**, and it is not intended for the user to modify them in that file (best practice is to pass in overrides from the CLI or a local inputs file). To tailor the profile inputs to match your deployment or organizationally defined values, **_you should instead override the inputs_** as described below.
+Inputs are defined, and given a default value, in the `inspec.yml` file at the root of the profile directory. The inputs configured in the `inspec.yml` file are **profile definitions and defaults**, and it is not intended for the user to modify them in that file directly. To tailor the profile inputs to match your deployment or organizationally defined values, **_you should instead override the inputs_** as described below.
+
+It is recommended to review `inspec.yml`'s `inputs` section to get the list of all inputs that can be configured and see if any of them need to be overridden to more accurately scan your system.
 
 #### Update Profile Inputs from the CLI or Local File
 

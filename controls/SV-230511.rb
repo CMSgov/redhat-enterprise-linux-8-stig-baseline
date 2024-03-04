@@ -57,11 +57,17 @@ adding /modifying the /etc/fstab with the following line:
   path = '/tmp'
   option = 'nodev'
 
-  describe mount(path) do
-    its('options') { should include option }
-  end
+  if input('skip_mount_tmp')[option]
+    describe 'N/A' do
+      skip "Inputs indicate that the /tmp directory needs '#{option}' enabled. Confirm this with the ISSO."
+    end
+  else
+    describe mount(path) do
+      its('options') { should include option }
+    end
 
-  describe etc_fstab.where { mount_point == path } do
-    its('mount_options.flatten') { should include option }
+    describe etc_fstab.where { mount_point == path } do
+      its('mount_options.flatten') { should include option }
+    end
   end
 end

@@ -46,7 +46,7 @@ class Sudoers < Inspec.resource(1)
 
   example "
     # Check that there are no users with NOPASSWD set:
-    describe sudoers.rules.where { tags.include?('NOPASSWD:') } do
+    describe sudoers.rules.where { !tags.nil? && tags.include?('NOPASSWD:') } do
       its('count') { should eq 0 }
     end
   "
