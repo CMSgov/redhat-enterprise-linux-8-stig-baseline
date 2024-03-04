@@ -7,16 +7,15 @@ listen on the wildcard address.  By default, sshd binds the forwarding server
 to the loopback address and sets the hostname part of the DIPSLAY environment
 variable to localhost.  This prevents remote hosts from connecting to the proxy
 display.'
-  desc 'check', 'Verify the SSH daemon prevents remote hosts from connecting to the proxy
-display.
+  desc 'check', 'Verify the SSH daemon prevents remote hosts from connecting to the proxy display.
 
-    Check the SSH X11UseLocalhost setting with the following command:
+Check the SSH X11UseLocalhost setting with the following command:
 
-    # sudo grep -i x11uselocalhost /etc/ssh/sshd_config
-    X11UseLocalhost yes
+# sudo grep -ir x11uselocalhost /etc/ssh/sshd_config*
+X11UseLocalhost yes
 
-    If the "X11UseLocalhost" keyword is set to "no", is missing, or is
-commented out, this is a finding.'
+If the "X11UseLocalhost" keyword is set to "no", is missing, or is commented out, this is a finding.
+If conflicting results are returned, this is a finding.'
   desc 'fix', 'Configure the SSH daemon to prevent remote hosts from connecting to the
 proxy display.
 
@@ -30,20 +29,18 @@ is provided by a third-party vendor):
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-230556'
-  tag rid: 'SV-230556r627750_rule'
+  tag rid: 'SV-230556r858723_rule'
   tag stig_id: 'RHEL-08-040341'
   tag fix_id: 'F-33200r568415_fix'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host', 'container-conditional'
 
-  if virtualization.system.eql?('docker') && !file('/etc/ssh/sshd_config').exist?
-    impact 0.0
-    describe 'Control not applicable - SSH is not installed within containerized RHEL' do
-      skip 'Control not applicable - SSH is not installed within containerized RHEL'
-    end
-  else
-    describe sshd_config do
-      its('X11UseLocalhost') { should cmp 'yes' }
-    end
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !(virtualization.system.eql?('docker') && !file('/etc/ssh/sshd_config').exist?)
+  }
+
+  describe sshd_config do
+    its('X11UseLocalhost') { should cmp 'yes' }
   end
 end

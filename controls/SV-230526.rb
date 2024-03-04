@@ -41,20 +41,18 @@ following command:
   tag gtitle: 'SRG-OS-000423-GPOS-00187'
   tag satisfies: ['SRG-OS-000423-GPOS-00187', 'SRG-OS-000424-GPOS-00188', 'SRG-OS-000425-GPOS-00189', 'SRG-OS-000426-GPOS-00190']
   tag gid: 'V-230526'
-  tag rid: 'SV-230526r744032_rule'
+  tag rid: 'SV-230526r916422_rule'
   tag stig_id: 'RHEL-08-040160'
   tag fix_id: 'F-33170r744031_fix'
   tag cci: ['CCI-002418']
   tag nist: ['SC-8']
+  tag 'host'
 
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
-    end
-  else
-    describe systemd_service('sshd.service') do
-      it { should be_running }
-    end
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  describe systemd_service('sshd.service') do
+    it { should be_running }
   end
 end

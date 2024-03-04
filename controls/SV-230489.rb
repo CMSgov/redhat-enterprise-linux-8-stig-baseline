@@ -38,6 +38,7 @@ removing the sendmail package from the system with the following command:
   tag fix_id: 'F-33133r568214_fix'
   tag cci: ['CCI-000381']
   tag nist: ['CM-7 a']
+  tag 'host', 'container'
 
   describe package('sendmail') do
     it { should_not be_installed }

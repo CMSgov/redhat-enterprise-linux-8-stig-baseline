@@ -39,20 +39,24 @@ event queue becomes full, this is a finding.'
   tag gtitle: 'SRG-OS-000342-GPOS-00133'
   tag satisfies: ['SRG-OS-000342-GPOS-00133', 'SRG-OS-000479-GPOS-00224']
   tag gid: 'V-230480'
-  tag rid: 'SV-230480r627750_rule'
+  tag rid: 'SV-230480r877390_rule'
   tag stig_id: 'RHEL-08-030700'
   tag fix_id: 'F-33124r568187_fix'
   tag cci: ['CCI-001851']
   tag nist: ['AU-4 (1)']
+  tag 'host'
 
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  if input('alternative_logging_method') != ''
+    describe 'manual check' do
+      skip 'Manual check required. Ask the administrator to indicate how logging is done for this system.'
     end
   else
     describe parse_config_file('/etc/audit/auditd.conf') do
-      its('overflow_action') { should match /syslog$|single$|halt$/i }
+      its('overflow_action') { should match(/syslog$|single$|halt$/i) }
     end
   end
 end

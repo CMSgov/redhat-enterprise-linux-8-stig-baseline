@@ -2,7 +2,8 @@ name: Vagrant Testing Matrix
 
 on:
   push:
-    branches: [main]
+    branches-ignore:
+      - none
   pull_request:
 
 jobs:

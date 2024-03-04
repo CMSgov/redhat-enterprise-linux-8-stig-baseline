@@ -43,20 +43,26 @@ for off-loading audit logs by setting the following option in
   tag gtitle: 'SRG-OS-000342-GPOS-00133'
   tag satisfies: ['SRG-OS-000342-GPOS-00133', 'SRG-OS-000479-GPOS-00224']
   tag gid: 'V-230482'
-  tag rid: 'SV-230482r627750_rule'
+  tag rid: 'SV-230482r877390_rule'
   tag stig_id: 'RHEL-08-030720'
   tag fix_id: 'F-33126r568193_fix'
   tag cci: ['CCI-001851']
   tag nist: ['AU-4 (1)']
+  tag 'host'
 
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  if input('alternative_logging_method') != ''
+    describe 'manual check' do
+      skip 'Manual check required. Ask the administrator to indicate how logging is done for this system.'
     end
   else
     describe 'rsyslog configuration' do
-      subject { command("grep -i '^\$ActionSendStreamDriverAuthMode' /etc/rsyslog.conf /etc/rsyslog.d/* | awk -F ':' '{ print $2 }'").stdout }
+      subject {
+        command("grep -i '^\$ActionSendStreamDriverAuthMode' #{input('logging_conf_files').join(' ')}  | awk -F ':' '{ print $2 }'").stdout
+      }
       it { should match %r{\$ActionSendStreamDriverAuthMode\s+x509/name} }
     end
   end

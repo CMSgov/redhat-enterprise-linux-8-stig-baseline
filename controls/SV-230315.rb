@@ -35,6 +35,11 @@ ProcessSizeMax=0'
   tag cci: ['CCI-000366']
   tag legacy: []
   tag nist: ['CM-6 b']
+  tag 'host'
+
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
 
   describe parse_config_file('/etc/systemd/coredump.conf') do
     its('Coredump.ProcessSizeMax') { should cmp '0' }

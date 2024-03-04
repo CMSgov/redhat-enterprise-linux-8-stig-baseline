@@ -40,14 +40,18 @@ requirement or remove it from the system with the following command:
   tag fix_id: 'F-32883r567464_fix'
   tag cci: ['CCI-000803']
   tag nist: ['IA-7']
+  tag 'host', 'container'
 
-  describe.one do
-    describe package('krb5-workstation') do
-      it { should_not be_installed }
+  krb5_workstation = package('krb5-workstation')
+
+  if krb5_workstation.installed? && krb5_workstation.version >= '1.17-18.el8'
+    impact 0.0
+    describe 'N/A' do
+      skip 'Kerberos installation is at version 1.17-18.el8 or greater; this control is Not Applicable'
     end
-
-    describe package('krb5-workstation') do
-      its('version') { should cmp >= '1.17-9.el8' }
+  else
+    describe krb5_workstation do
+      it { should_not be_installed }
     end
   end
 end

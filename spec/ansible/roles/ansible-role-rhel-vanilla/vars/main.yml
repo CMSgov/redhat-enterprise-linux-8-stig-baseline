@@ -2,5 +2,5 @@
 – hosts: all
 sudo: yes
 roles:
-– { role: “ansible-role-rhel-stig-vanilla”}
+– { role: “ansible-role-rhel-stig-vanilla” }
 

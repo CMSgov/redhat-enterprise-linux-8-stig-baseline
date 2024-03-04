@@ -37,15 +37,13 @@ with the following command:
   tag fix_id: 'F-33055r646880_fix'
   tag cci: ['CCI-000169']
   tag nist: ['AU-12 a']
+  tag 'host'
 
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
-    end
-  else
-    describe package('audit') do
-      it { should be_installed }
-    end
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  describe package('audit') do
+    it { should be_installed }
   end
 end

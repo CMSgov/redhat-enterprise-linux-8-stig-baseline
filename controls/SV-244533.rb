@@ -53,17 +53,18 @@ to match the following lines:
   tag fix_id: 'F-47765r743847_fix'
   tag cci: ['CCI-000044']
   tag nist: ['AC-7 a']
+  tag 'host', 'container'
 
-  if os.release.to_f <= 8.2
-    impact 0.5
-    describe "The release is #{os.release}" do
-      skip 'The release is lower than 8.2; this control is Not Applicable.'
-    end
-  else
-    describe pam('/etc/pam.d/system-auth') do
-      its('lines') { should match_pam_rule('auth required pam_faillock.so preauth') }
-      its('lines') { should match_pam_rule('auth required pam_faillock.so authfail') }
-      its('lines') { should match_pam_rule('account required pam_faillock.so') }
-    end
+  only_if('This check applies to RHEL versions 8.2 or newer, if the system is
+    RHEL version 8.0 or 8.1, this check is not applicable.', impact: 0.0) {
+    (os.release.to_f) >= 8.2
+  }
+
+  pam_auth_files = input('pam_auth_files')
+
+  describe pam(pam_auth_files['system-auth']) do
+    its('lines') { should match_pam_rule('auth required pam_faillock.so preauth') }
+    its('lines') { should match_pam_rule('auth required pam_faillock.so authfail') }
+    its('lines') { should match_pam_rule('account required pam_faillock.so') }
   end
 end

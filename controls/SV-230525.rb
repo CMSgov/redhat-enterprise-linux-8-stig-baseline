@@ -30,32 +30,27 @@ the system with the following command:
 
     If the "nftables" is not set as the "firewallbackend" default, this is
 a finding.'
-  desc 'fix', 'Configure "nftables" to be the default "firewallbackend" for
-"firewalld" by adding or editing the following line in
-"etc/firewalld/firewalld.conf":
+  desc 'fix', 'Configure "nftables" to be the default "firewallbackend" for "firewalld" by adding or editing the following line in "/etc/firewalld/firewalld.conf":
 
-    FirewallBackend=nftables
+FirewallBackend=nftables
 
-    Establish rate-limiting rules based on organization-defined types of DoS
-attacks on impacted network interfaces.'
+Establish rate-limiting rules based on organization-defined types of DoS attacks on impacted network interfaces.'
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000420-GPOS-00186'
   tag gid: 'V-230525'
-  tag rid: 'SV-230525r744029_rule'
+  tag rid: 'SV-230525r902735_rule'
   tag stig_id: 'RHEL-08-040150'
-  tag fix_id: 'F-33169r744028_fix'
+  tag fix_id: 'F-33169r902734_fix'
   tag cci: ['CCI-002385']
-  tag nist: ['SC-5']
+  tag nist: ['SC-5', 'SC-5 a']
+  tag 'host'
 
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
-    end
-  else
-    describe parse_config_file('/etc/firewalld/firewalld.conf') do
-      its('FirewallBackend') { should eq 'nftables' }
-    end
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  describe parse_config_file('/etc/firewalld/firewalld.conf') do
+    its('FirewallBackend') { should eq 'nftables' }
   end
 end

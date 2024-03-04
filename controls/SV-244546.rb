@@ -72,27 +72,42 @@ permissive = 0'
   tag cci: ['CCI-001764']
   tag nist: ['CM-7 (2)']
 
-  if virtualization.system.eql?('docker')
+  # Check if the system is a Docker container or not using Fapolicyd
+  if virtualization.system.eql?('docker') || !input('use_fapolicyd')
     impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
+    describe 'Control not applicable' do
+      skip 'The organization is not using the Fapolicyd service to manage firewall services, this control is Not Applicable' unless input('use_fapolicyd')
+      skip 'Control not applicable within a container' if virtualization.system.eql?('docker')
     end
   else
-    describe parse_config_file('/etc/fapolicyd/fapolicyd.conf') do
-      its('permissive') { should cmp 0 }
+    # Parse the fapolicyd configuration file
+    fapolicyd_config = parse_config_file('/etc/fapolicyd/fapolicyd.conf')
+
+    describe 'Fapolicyd configuration' do
+      it 'permissive should not be commented out' do
+        expect(fapolicyd_config.content).to match(/^permissive\s*=\s*0$/), 'permissive is commented out in the fapolicyd.conf file'
+      end
+      it 'should have permissive set to 0' do
+        expect(fapolicyd_config.params['permissive']).to cmp '0'
+      end
     end
 
-    rules_file = '/etc/fapolicyd/compiled.rules'
-    if os.release.to_f < 8.4
-      rules_file = '/etc/fapolicyd/fapolicyd.rules'
-    end
+    # Determine the rules file based on the OS release
+    rules_file = os.release.to_f < 8.4 ? '/etc/fapolicyd/fapolicyd.rules' : '/etc/fapolicyd/compiled.rules'
 
+    # Check if the rules file exists
     describe file(rules_file) do
       it { should exist }
     end
 
-    describe file(rules_file).content.strip.split("\n")[-1] do
-      it { should cmp 'deny perm=any all : all' }
-    end if file(rules_file).exist?
+    # If the rules file exists, check the last rule
+    if file(rules_file).exist?
+      rules = file(rules_file).content.strip.split("\n")
+      last_rule = rules.last
+
+      describe 'Last rule in the rules file' do
+        it { expect(last_rule).to cmp 'deny perm=any all : all' }
+      end
+    end
   end
 end

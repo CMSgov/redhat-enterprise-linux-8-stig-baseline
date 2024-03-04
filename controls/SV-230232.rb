@@ -23,17 +23,18 @@ until the passwords can be regenerated with SHA-512.'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000073-GPOS-00041'
   tag gid: 'V-230232'
-  tag rid: 'SV-230232r627750_rule'
+  tag rid: 'SV-230232r877397_rule'
   tag stig_id: 'RHEL-08-010120'
   tag fix_id: 'F-32876r567443_fix'
   tag cci: ['CCI-000196']
   tag nist: ['IA-5 (1) (c)']
+  tag 'host', 'container'
 
   weak_pw_hash_users = inspec.shadow.where { password !~ /^[*!]{1,2}.*$|^\$6\$.*$|^$/ }.users
 
-  describe weak_pw_hash_users do
-    it 'should only contain SHA512 hashes' do
-      message = "Users without SHA512 hashes: #{weak_pw_hash_users.join(', ')}"
+  describe 'All stored passwords' do
+    it 'should only be hashed with the SHA512 algorithm' do
+      message = "Users without SHA512 hashes:\n\t- #{weak_pw_hash_users.join("\n\t- ")}"
       expect(weak_pw_hash_users).to be_empty, message
     end
   end

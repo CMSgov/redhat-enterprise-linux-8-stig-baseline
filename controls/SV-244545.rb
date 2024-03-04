@@ -42,16 +42,22 @@ $ sudo systemctl enable --now fapolicyd'
   tag gtitle: 'SRG-OS-000368-GPOS-00154'
   tag satisfies: ['SRG-OS-000368-GPOS-00154', 'SRG-OS-000370-GPOS-00155', 'SRG-OS-000480-GPOS-00232']
   tag gid: 'V-244545'
-  tag rid: 'SV-244545r743884_rule'
+  tag rid: 'SV-244545r854074_rule'
   tag stig_id: 'RHEL-08-040136'
   tag fix_id: 'F-47777r743883_fix'
   tag cci: ['CCI-001764']
   tag nist: ['CM-7 (2)']
+  tag 'host'
 
   if virtualization.system.eql?('docker')
     impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
+    describe 'This requirement is Not Applicable in the container' do
+      skip 'This requirement is Not Applicable in the container'
+    end
+  elsif !input('use_fapolicyd')
+    impact 0.0
+    describe 'The organization does not use the Fapolicyd service to manage firewall services' do
+      skip 'The organization is not using the Fapolicyd service to manage firewall services, this control is Not Applicable'
     end
   else
     describe service('fapolicyd') do

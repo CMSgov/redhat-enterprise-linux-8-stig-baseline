@@ -37,15 +37,13 @@ the following command:
   tag fix_id: 'F-47769r743859_fix'
   tag cci: ['CCI-000056']
   tag nist: ['AC-11 b']
+  tag 'host'
 
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
-    end
-  else
-    describe package('tmux') do
-      it { should be_installed }
-    end
+  only_if('This requirement is Not Applicable in the container', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  describe package('tmux') do
+    it { should be_installed }
   end
 end

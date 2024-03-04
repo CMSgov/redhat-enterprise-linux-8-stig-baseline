@@ -17,13 +17,12 @@ the ForwardX11Trusted option is also enabled.
 should be disabled or restricted as appropriate to the system’s needs.)
   desc 'check', 'Verify X11Forwarding is disabled with the following command:
 
-    $ sudo grep -i x11forwarding /etc/ssh/sshd_config | grep -v "^#"
+$ sudo grep -ir x11forwarding /etc/ssh/sshd_config* | grep -v "^#"
 
-    X11Forwarding no
+X11Forwarding no
 
-    If the "X11Forwarding" keyword is set to "yes" and is not documented
-with the Information System Security Officer (ISSO) as an operational
-requirement or is missing, this is a finding.'
+If the "X11Forwarding" keyword is set to "yes" and is not documented with the Information System Security Officer (ISSO) as an operational requirement or is missing, this is a finding.
+If conflicting results are returned, this is a finding.'
   desc 'fix', 'Edit the "/etc/ssh/sshd_config" file to uncomment or add the line for the
 "X11Forwarding" keyword and set its value to "no" (this file may be named
 differently or be in a different location if using a version of SSH that is
@@ -38,20 +37,18 @@ provided by a third-party vendor):
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-230555'
-  tag rid: 'SV-230555r627750_rule'
+  tag rid: 'SV-230555r858721_rule'
   tag stig_id: 'RHEL-08-040340'
   tag fix_id: 'F-33199r568412_fix'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host', 'container-conditional'
 
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
-    end
-  else
-    describe sshd_config do
-      its('X11Forwarding') { should cmp 'no' }
-    end
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !(virtualization.system.eql?('docker') && !file('/etc/ssh/sshd_config').exist?)
+  }
+
+  describe sshd_config do
+    its('X11Forwarding') { should cmp 'no' }
   end
 end

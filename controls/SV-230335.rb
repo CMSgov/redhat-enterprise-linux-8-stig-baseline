@@ -44,18 +44,14 @@ line:
   tag fix_id: 'F-32979r743968_fix'
   tag cci: ['CCI-000044']
   tag nist: ['AC-7 a']
+  tag 'host', 'container'
 
-  fail_interval = input('fail_interval')
+  only_if('This check applies to RHEL versions 8.2 or newer, if the system is
+    RHEL version 8.0 or 8.1, this check is not applicable.', impact: 0.0) {
+    (os.release.to_f) >= 8.2
+  }
 
-  if os.release.to_f <= 8.2
-    impact 0.5
-    describe "The release is #{os.release}" do
-      skip 'The release is lower than 8.2; this control is Not Applicable.'
-    end
-  else
-    describe parse_config_file('/etc/security/faillock.conf') do
-      its('fail_interval') { should cmp >= fail_interval }
-      its('fail_interval') { should_not cmp 0 }
-    end
+  describe parse_config_file(input('security_faillock_conf')) do
+    its('fail_interval') { should cmp >= input('fail_interval') }
   end
 end

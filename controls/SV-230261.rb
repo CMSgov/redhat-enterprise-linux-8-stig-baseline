@@ -34,19 +34,13 @@ owned by "root".
   tag fix_id: 'F-32905r567530_fix'
   tag cci: ['CCI-001499']
   tag nist: ['CM-5 (6)']
+  tag 'host', 'container'
 
-  files = command('find -L /lib /lib64 /usr/lib /usr/lib64 ! -user root -exec ls -d {} \\;').stdout.split("\n")
+  failing_files = command("find -L #{input('system_libraries').join(' ')} ! -user root -exec ls -d {} \\;").stdout.split("\n")
 
-  if files.empty?
-    describe 'List of system-wide shared library files not owned by root' do
-      subject { files }
-      it { should be_empty }
-    end
-  else
-    files.each do |file|
-      describe file(file) do
-        it { should be_owned_by 'root' }
-      end
+  describe 'System libraries' do
+    it 'should be owned by root' do
+      expect(failing_files).to be_empty, "Files not owned by root:\n\t- #{failing_files.join("\n\t- ")}"
     end
   end
 end

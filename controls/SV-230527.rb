@@ -20,15 +20,14 @@ not have to be employed, and vice versa.
 
     Session key regeneration limits the chances of a session key becoming
 compromised.'
-  desc 'check', 'Verify the SSH server is configured to force frequent session key
-renegotiation with the following command:
+  desc 'check', 'Verify the SSH server is configured to force frequent session key renegotiation with the following command:
 
-    $ sudo grep -i RekeyLimit /etc/ssh/sshd_config
+$ sudo grep -ir RekeyLimit /etc/ssh/sshd_config*
 
-    RekeyLimit 1G 1h
+RekeyLimit 1G 1h
 
-    If "RekeyLimit" does not have a maximum data amount and maximum time
-defined, is missing or commented out, this is a finding.'
+If "RekeyLimit" does not have a maximum data amount and maximum time defined, is missing or commented out, this is a finding.
+If conflicting results are returned, this is a finding.'
   desc 'fix', 'Configure the system to force a frequent session key renegotiation for SSH
 connections to the server by add or modifying the following line in the
 "/etc/ssh/sshd_config" file:
@@ -43,20 +42,18 @@ connections to the server by add or modifying the following line in the
   tag gtitle: 'SRG-OS-000033-GPOS-00014'
   tag satisfies: ['SRG-OS-000033-GPOS-00014', 'SRG-OS-000420-GPOS-00186', 'SRG-OS-000424-GPOS-00188']
   tag gid: 'V-230527'
-  tag rid: 'SV-230527r627750_rule'
+  tag rid: 'SV-230527r877398_rule'
   tag stig_id: 'RHEL-08-040161'
   tag fix_id: 'F-33171r568328_fix'
   tag cci: ['CCI-000068']
   tag nist: ['AC-17 (2)']
+  tag 'host'
 
-  if virtualization.system.eql?('docker') && !file('/etc/ssh/sshd_config').exist?
-    impact 0.0
-    describe 'Control not applicable - SSH is not installed within containerized RHEL' do
-      skip 'Control not applicable - SSH is not installed within containerized RHEL'
-    end
-  else
-    describe sshd_config do
-      its('RekeyLimit') { should cmp '1G 1h' }
-    end
+  only_if('This control is Not Applicable to containers without SSH enabled', impact: 0.0) {
+    !(virtualization.system.eql?('docker') && !file('/etc/ssh/sshd_config').exist?)
+  }
+
+  describe sshd_config do
+    its('RekeyLimit') { should cmp '1G 1h' }
   end
 end

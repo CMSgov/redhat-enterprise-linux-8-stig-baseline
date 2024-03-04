@@ -47,34 +47,20 @@ permissive mode.'
   tag stig_id: 'RHEL-08-030620'
   tag fix_id: 'F-33116r568163_fix'
   tag cci: ['CCI-001493']
-  tag nist: ['AU-9']
+  tag nist: ['AU-9', 'AU-9 a']
+  tag 'host'
 
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
-    end
-  else
-    describe file('/sbin/auditctl') do
-      it { should_not be_more_permissive_than('0755') }
-    end
-    describe file('/sbin/aureport') do
-      it { should_not be_more_permissive_than('0755') }
-    end
-    describe file('/sbin/ausearch') do
-      it { should_not be_more_permissive_than('0755') }
-    end
-    describe file('/sbin/autrace') do
-      it { should_not be_more_permissive_than('0755') }
-    end
-    describe file('/sbin/auditd') do
-      it { should_not be_more_permissive_than('0755') }
-    end
-    describe file('/sbin/rsyslogd') do
-      it { should_not be_more_permissive_than('0755') }
-    end
-    describe file('/sbin/augenrules') do
-      it { should_not be_more_permissive_than('0755') }
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  audit_tools = ['/sbin/auditctl', '/sbin/aureport', '/sbin/ausearch', '/sbin/autrace', '/sbin/auditd', '/sbin/rsyslogd', '/sbin/augenrules']
+
+  failing_tools = audit_tools.select { |at| file(at).more_permissive_than?(input('audit_tool_mode')) }
+
+  describe 'Audit executables' do
+    it "should be no more permissive than '#{input('audit_tool_mode')}'" do
+      expect(failing_tools).to be_empty, "Failing tools:\n\t- #{failing_tools.join("\n\t- ")}"
     end
   end
 end

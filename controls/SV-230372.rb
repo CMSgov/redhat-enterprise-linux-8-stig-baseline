@@ -73,6 +73,14 @@ restart the "sssd" service, run the following command:
   tag fix_id: 'F-33016r567863_fix'
   tag cci: ['CCI-000765']
   tag nist: ['IA-2 (1)']
+  tag 'host'
+
+  only_if('If the System Administrator demonstrates the use of an approved
+    alternate multifactor authentication method, this requirement is not applicable.', impact: 0.0) {
+    !input('smart_card_enabled')
+  }
+
+  pam_auth_files = input('pam_auth_files')
 
   if virtualization.system.eql?('docker')
     impact 0.0
@@ -80,8 +88,19 @@ restart the "sssd" service, run the following command:
       skip 'Control not applicable within a container'
     end
   else
-    describe ini('/etc/sssd/sssd.conf') do
-      its('pam_cert_auth') { should cmp 'True' }
+    describe parse_config_file(input('sssd_conf_path')) do
+      its('pam') { should include('pam_cert_auth' => 'True') }
+    end
+    describe service('sssd') do
+      it { should be_installed }
+      it { should be_enabled }
+      it { should be_running }
+    end
+
+    [pam_auth_files['system-auth'], pam_auth_files['smartcard-auth']].each do |path|
+      describe pam(path) do
+        its('lines') { should match_pam_rule('.* .* pam_sss.so (try_cert_auth|require_cert_auth)') }
+      end
     end
   end
 end

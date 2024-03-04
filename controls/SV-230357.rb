@@ -15,33 +15,47 @@ compromised.
 Note that in order to require uppercase characters, without degrading the
 "minlen" value, the credit value must be expressed as a negative number in
 "/etc/security/pwquality.conf".'
-  desc 'check', 'Verify the value for "ucredit" in "/etc/security/pwquality.conf" with
-the following command:
+  desc 'check', 'Verify the value for "ucredit" with the following command:
 
-    $ sudo grep ucredit /etc/security/pwquality.conf
+$ sudo grep -r ucredit /etc/security/pwquality.conf*
 
-    ucredit = -1
+/etc/security/pwquality.conf:ucredit = -1
 
-    If the value of "ucredit" is a positive number or is commented out, this
-is a finding.'
-  desc 'fix', 'Configure the operating system to enforce password complexity by requiring
-that at least one uppercase character be used by setting the "ucredit" option.
+If the value of "ucredit" is a positive number or is commented out, this is a finding.
+If conflicting results are returned, this is a finding.'
+  desc 'fix', 'Configure the operating system to enforce password complexity by requiring that at least one uppercase character be used by setting the "ucredit" option.
 
-    Add the following line to /etc/security/pwquality.conf (or modify the line
-to have the required value):
+Add the following line to /etc/security/pwquality.conf (or modify the line to have the required value):
 
-    ucredit = -1'
+ucredit = -1
+
+Remove any configurations that conflict with the above value.'
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000069-GPOS-00037'
   tag gid: 'V-230357'
-  tag rid: 'SV-230357r627750_rule'
+  tag rid: 'SV-230357r858771_rule'
   tag stig_id: 'RHEL-08-020110'
-  tag fix_id: 'F-33001r567818_fix'
+  tag fix_id: 'F-33001r858770_fix'
   tag cci: ['CCI-000192']
   tag nist: ['IA-5 (1) (a)']
+  tag 'host', 'container'
 
-  describe parse_config_file('/etc/security/pwquality.conf') do
-    its('ucredit.to_i') { should cmp < 0 }
+  describe 'pwquality.conf:' do
+    let(:config) { parse_config_file('/etc/security/pwquality.conf', multiple_values: true) }
+    let(:setting) { 'ucredit' }
+    let(:value) { Array(config.params[setting]) }
+
+    it 'has `ucredit` set' do
+      expect(value).not_to be_empty, 'ucredit is not set in pwquality.conf'
+    end
+
+    it 'only sets `ucredit` once' do
+      expect(value.length).to eq(1), 'ucredit is commented or set more than once in pwquality.conf'
+    end
+
+    it 'does not set `ucredit` to a positive value' do
+      expect(value.first.to_i).to cmp < 0, 'ucredit is not set to a negative value in pwquality.conf'
+    end
   end
 end

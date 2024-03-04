@@ -42,16 +42,20 @@ a keyboard or mouse'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000378-GPOS-00163'
   tag gid: 'V-230524'
-  tag rid: 'SV-230524r744026_rule'
+  tag rid: 'SV-230524r854065_rule'
   tag stig_id: 'RHEL-08-040140'
   tag fix_id: 'F-33168r744025_fix'
   tag cci: ['CCI-001958']
   tag nist: ['IA-3']
+  tag 'host'
 
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  if input('peripherals_package') != 'usbguard'
+    describe 'Manual' do
+      skip 'Inputs indicate a tool other than usbguard should be managing peripherals. Work with the ISSO to determine if and how unauthorized peripherals are being blocked.'
     end
   else
     describe command('usbguard list-rules') do

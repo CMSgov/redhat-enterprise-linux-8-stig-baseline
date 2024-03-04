@@ -77,31 +77,27 @@ updating the following rules in the "/etc/audit/rules.d/audit.rules" file:
   tag fix_id: 'F-33110r568145_fix'
   tag cci: ['CCI-000169']
   tag nist: ['AU-12 a']
+  tag 'host'
 
-  if os.release < '8.2'
+  if os.release.to_f < 8.2
     m = /dir=(?<dir>\S*)/
     s = command('grep -i pam_faillock.so /etc/pam.d/system-auth').stdout
     dir_match = m.match(s)
-    audit_file = (dir_match[:dir] if dir_match)
+    audit_command = (dir_match[:dir] if dir_match)
   else
-    audit_file = parse_config_file('/etc/security/faillock.conf').params('dir')
+    audit_command = parse_config_file('/etc/security/faillock.conf').params('dir')
   end
 
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
-    end
-  elsif audit_file
-    describe auditd.file(audit_file) do
-      its('permissions.flatten') { should include 'w' }
-      its('permissions.flatten') { should include 'a' }
-      its('key') { should cmp 'logins' }
-    end
-  else
-    describe 'No faillock logfile found' do
-      subject { audit_file }
-      it { should_not be nil }
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  describe 'Command' do
+    it "#{audit_command} is audited properly" do
+      audit_rule = auditd.file(audit_command)
+      expect(audit_rule).to exist
+      expect(audit_rule.permissions.flatten).to include('w', 'a')
+      expect(audit_rule.key.uniq).to include(input('audit_rule_keynames').merge(input('audit_rule_keynames_overrides'))[audit_command])
     end
   end
 end

@@ -43,19 +43,31 @@ be created.
   tag fix_id: 'F-32975r567740_fix'
   tag cci: ['CCI-000016']
   tag nist: ['AC-2 (2)']
+  tag 'host', 'container'
 
-  temporary_accounts = input('temporary_accounts')
+  tmp_users = input('temporary_accounts')
+  tmp_max_days = input('temporary_account_max_days')
 
-  if temporary_accounts.empty?
+  if tmp_users.empty?
     describe 'Temporary accounts' do
-      subject { temporary_accounts }
+      subject { tmp_users }
       it { should be_empty }
     end
   else
-    temporary_accounts.each do |acct|
-      describe user(acct.to_s) do
-        its('maxdays') { should cmp <= 3 }
-        its('maxdays') { should cmp > 0 }
+    # user has to specify what the tmp accounts are, so we will print a different pass message
+    # if none of those tmp accounts even exist on the system for clarity
+    tmp_users_existing = tmp_users.select { |u| user(u).exists? }
+    failing_users = tmp_users_existing.select { |u| user(u).maxdays > tmp_max_days }
+
+    describe 'Temporary accounts' do
+      if tmp_users_existing.nil?
+        it "should have expiration times less than or equal to '#{tmp_max_days}' days" do
+          expect(failing_users).to be_empty, "Failing users:\n\t- #{failing_users.join("\n\t- ")}"
+        end
+      else
+        it "(input as '#{tmp_users.join("', '")}') were not found on this system" do
+          expect(tmp_users_existing).to be_empty
+        end
       end
     end
   end

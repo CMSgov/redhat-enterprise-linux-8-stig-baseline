@@ -15,34 +15,47 @@ compromised.
 Note that in order to require lower-case characters without degrading the
 "minlen" value, the credit value must be expressed as a negative number in
 "/etc/security/pwquality.conf".'
-  desc 'check', 'Verify the value for "lcredit" in "/etc/security/pwquality.conf" with
-the following command:
+  desc 'check', 'Verify the value for "lcredit" with the following command:
 
-    $ sudo grep lcredit /etc/security/pwquality.conf
+$ sudo grep -r lcredit /etc/security/pwquality.conf*
 
-    lcredit = -1
+/etc/security/pwquality.conf:lcredit = -1
 
-    If the value of "lcredit" is a positive number or is commented out, this
-is a finding.'
-  desc 'fix', 'Configure the operating system to enforce password complexity by requiring
-that at least one lower-case character be used by setting the "lcredit"
-option.
+If the value of "lcredit" is a positive number or is commented out, this is a finding.
+If conflicting results are returned, this is a finding.'
+  desc 'fix', 'Configure the operating system to enforce password complexity by requiring that at least one lower-case character be used by setting the "lcredit" option.
 
-    Add the following line to /etc/security/pwquality.conf (or modify the line
-to have the required value):
+Add the following line to /etc/security/pwquality.conf (or modify the line to have the required value):
 
-    lcredit = -1'
+lcredit = -1
+
+Remove any configurations that conflict with the above value.'
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000070-GPOS-00038'
   tag gid: 'V-230358'
-  tag rid: 'SV-230358r627750_rule'
+  tag rid: 'SV-230358r858773_rule'
   tag stig_id: 'RHEL-08-020120'
-  tag fix_id: 'F-33002r567821_fix'
+  tag fix_id: 'F-33002r858772_fix'
   tag cci: ['CCI-000193']
   tag nist: ['IA-5 (1) (a)']
+  tag 'host', 'container'
 
-  describe parse_config_file('/etc/security/pwquality.conf') do
-    its('lcredit.to_i') { should cmp < 0 }
+  describe 'pwquality.conf settings' do
+    let(:config) { parse_config_file('/etc/security/pwquality.conf', multiple_values: true) }
+    let(:setting) { 'lcredit' }
+    let(:value) { Array(config.params[setting]) }
+
+    it 'has `lcredit` set' do
+      expect(value).not_to be_empty, 'lcredit is not set in pwquality.conf'
+    end
+
+    it 'only sets `lcredit` once' do
+      expect(value.length).to eq(1), 'lcredit is commented or set more than once in pwquality.conf'
+    end
+
+    it 'does not set `lcredit` to a positive value' do
+      expect(value.first.to_i).to be < 0, 'lcredit is not set to a negative value in pwquality.conf'
+    end
   end
 end

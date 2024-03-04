@@ -72,20 +72,23 @@ restart the "sssd" service, run the following command:
   tag fix_id: 'F-32982r567761_fix'
   tag cci: ['CCI-000044']
   tag nist: ['AC-7 a']
+  tag 'host', 'container'
 
-  log_directory = input('log_directory')
+  only_if('This check applies to RHEL versions 8.0 and 8.1, if the system is
+    RHEL version 8.2 or newer, this check is not applicable.', impact: 0.0) {
+    (os.release.to_f) < 8.2
+  }
 
-  if os.release.to_f >= 8.2
-    impact 0.0
-    describe "The release is #{os.release}" do
-      skip 'The release is 8.2 or newer; this control is Not Applicable.'
-    end
-  else
-    describe pam('/etc/pam.d/password-auth') do
-      its('lines') { should match_pam_rule('auth [default=die]|required pam_faillock.so').all_with_args("dir=#{log_directory}") }
-    end
-    describe pam('/etc/pam.d/system-auth') do
-      its('lines') { should match_pam_rule('auth [default=die]|required pam_faillock.so').all_with_args("dir=#{log_directory}") }
-    end
+  pam_auth_files = input('pam_auth_files')
+
+  describe pam(pam_auth_files['password-auth']) do
+    its('lines') {
+      should match_pam_rule('auth [default=die]|required pam_faillock.so').all_with_args("dir=#{input('log_directory')}")
+    }
+  end
+  describe pam(pam_auth_files['system-auth']) do
+    its('lines') {
+      should match_pam_rule('auth [default=die]|required pam_faillock.so').all_with_args("dir=#{input('log_directory')}")
+    }
   end
 end

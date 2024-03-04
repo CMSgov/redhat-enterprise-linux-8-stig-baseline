@@ -41,16 +41,14 @@ commands:
   tag fix_id: 'F-32942r567641_fix'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host'
 
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
-    end
-  else
-    describe service('rsyslog') do
-      it { should be_enabled }
-      it { should be_running }
-    end
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  describe service('rsyslog') do
+    it { should be_enabled }
+    it { should be_running }
   end
 end

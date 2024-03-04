@@ -39,6 +39,7 @@ account that has a duplicate User ID (UID) with a unique UID.'
   tag fix_id: 'F-33015r567860_fix'
   tag cci: ['CCI-000764']
   tag nist: ['IA-2']
+  tag 'host', 'container'
 
   user_count = passwd.where { uid.to_i >= 1000 }.entries.length
 

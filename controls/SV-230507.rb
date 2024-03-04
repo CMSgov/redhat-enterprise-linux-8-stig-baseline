@@ -25,46 +25,56 @@ employing cryptographic techniques). If physical means of protection are
 employed, then logical means (cryptography) do not have to be employed, and
 vice versa. If the wireless peripheral is only passing telemetry data,
 encryption of the data may not be required.'
-  desc 'check', 'If the device or operating system does not have a Bluetooth adapter
-installed, this requirement is not applicable.
+  desc 'check', 'If the device or operating system does not have a Bluetooth adapter installed, this requirement is not applicable.
 
-    This requirement is not applicable to mobile devices (smartphones and
-tablets), where the use of Bluetooth is a local AO decision.
+This requirement is not applicable to mobile devices (smartphones and tablets), where the use of Bluetooth is a local AO decision.
 
-    Determine if Bluetooth is disabled with the following command:
+Determine if Bluetooth is disabled with the following command:
 
-    $ sudo grep bluetooth /etc/modprobe.d/*
+$ sudo grep bluetooth /etc/modprobe.d/*
 
-    /etc/modprobe.d/bluetooth.conf:install bluetooth /bin/true
+/etc/modprobe.d/bluetooth.conf:install bluetooth /bin/true
 
-    If the Bluetooth driver blacklist entry is missing, a Bluetooth driver is
-determined to be in use, and the collaborative computing device has not been
-authorized for use, this is a finding.'
-  desc 'fix', 'Configure the operating system to disable the Bluetooth adapter when not in
-use.
+If the Bluetooth driver blacklist entry is missing, a Bluetooth driver is determined to be in use, and the collaborative computing device has not been authorized for use, this is a finding.
 
-    Build or modify the "/etc/modprobe.d/bluetooth.conf" file with the
-following line:
+Verify the operating system disables the ability to use Bluetooth with the following command:
 
-    install bluetooth /bin/true
+$ sudo grep -r bluetooth /etc/modprobe.d | grep -i "blacklist" | grep -v "^#"
 
-    Reboot the system for the settings to take effect.'
+blacklist bluetooth
+
+If the command does not return any output or the output is not "blacklist bluetooth", and use of Bluetooth is not documented with the ISSO as an operational requirement, this is a finding.'
+  desc 'fix', 'Configure the operating system to disable the Bluetooth adapter when not in use.
+
+Build or modify the "/etc/modprobe.d/bluetooth.conf" file with the following line:
+
+install bluetooth /bin/true
+
+Disable the ability to use the Bluetooth kernel module.
+
+$ sudo vi /etc/modprobe.d/blacklist.conf
+
+Add or update the line:
+
+blacklist bluetooth
+
+Reboot the system for the settings to take effect.'
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000300-GPOS-00118'
   tag gid: 'V-230507'
-  tag rid: 'SV-230507r627750_rule'
+  tag rid: 'SV-230507r833336_rule'
   tag stig_id: 'RHEL-08-040111'
-  tag fix_id: 'F-33151r568268_fix'
+  tag fix_id: 'F-33151r833335_fix'
   tag cci: ['CCI-001443']
   tag nist: ['AC-18 (1)']
+  tag 'host'
 
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
-    end
-  elsif input('bluetooth_installed')
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  if input('bluetooth_installed')
     describe kernel_module('bluetooth') do
       it { should be_disabled }
       it { should be_blacklisted }

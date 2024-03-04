@@ -45,34 +45,20 @@ command:
   tag stig_id: 'RHEL-08-030630'
   tag fix_id: 'F-33117r568166_fix'
   tag cci: ['CCI-001493']
-  tag nist: ['AU-9']
+  tag nist: ['AU-9', 'AU-9 a']
+  tag 'host'
 
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
-    end
-  else
-    describe file('/sbin/auditctl') do
-      it { should be_owned_by 'root' }
-    end
-    describe file('/sbin/aureport') do
-      it { should be_owned_by 'root' }
-    end
-    describe file('/sbin/ausearch') do
-      it { should be_owned_by 'root' }
-    end
-    describe file('/sbin/autrace') do
-      it { should be_owned_by 'root' }
-    end
-    describe file('/sbin/auditd') do
-      it { should be_owned_by 'root' }
-    end
-    describe file('/sbin/rsyslogd') do
-      it { should be_owned_by 'root' }
-    end
-    describe file('/sbin/augenrules') do
-      it { should be_owned_by 'root' }
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  audit_tools = ['/sbin/auditctl', '/sbin/aureport', '/sbin/ausearch', '/sbin/autrace', '/sbin/auditd', '/sbin/rsyslogd', '/sbin/augenrules']
+
+  failing_tools = audit_tools.reject { |at| file(at).owned_by?('root') }
+
+  describe 'Audit executables' do
+    it 'should be owned by root' do
+      expect(failing_tools).to be_empty, "Failing tools:\n\t- #{failing_tools.join("\n\t- ")}"
     end
   end
 end

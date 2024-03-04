@@ -35,10 +35,13 @@ restrict client connections to the local network with the following command:
   tag fix_id: 'F-33194r568397_fix'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host', 'container'
 
   if package('postfix').installed?
     describe command('postconf -n smtpd_client_restrictions') do
-      its('stdout.strip') { should match /^smtpd_client_restrictions\s+=\s+(permit_mynetworks|reject)($|(,\s*(permit_mynetworks|reject)\s*$))/i }
+      its('stdout.strip') {
+        should match(/^smtpd_client_restrictions\s+=\s+(permit_mynetworks|reject)($|(,\s*(permit_mynetworks|reject)\s*$))/i)
+      }
     end
   else
     impact 0.0

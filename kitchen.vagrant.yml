@@ -1,4 +1,7 @@
 ---
+platforms:
+  - name: rhel-8
+
 driver:
   name: vagrant
   driver_config:

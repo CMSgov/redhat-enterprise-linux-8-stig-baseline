@@ -46,20 +46,25 @@ defaults,nodev,nosuid,noexec 0 0'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000368-GPOS-00154'
   tag gid: 'V-230518'
-  tag rid: 'SV-230518r627750_rule'
+  tag rid: 'SV-230518r854059_rule'
   tag stig_id: 'RHEL-08-040130'
   tag fix_id: 'F-33162r568301_fix'
   tag cci: ['CCI-001764']
   tag nist: ['CM-7 (2)']
+  tag 'host'
 
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
-    end
-  else
-    describe etc_fstab.where { mount_point == '/var/log/audit' } do
-      its('mount_options.flatten') { should include 'nosuid' }
-    end
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  path = '/var/log/audit'
+  option = 'nosuid'
+
+  describe mount(path) do
+    its('options') { should include option }
+  end
+
+  describe etc_fstab.where { mount_point == path } do
+    its('mount_options.flatten') { should include option }
   end
 end

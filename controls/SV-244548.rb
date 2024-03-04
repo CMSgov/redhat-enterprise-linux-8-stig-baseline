@@ -46,21 +46,25 @@ a keyboard or mouse'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000378-GPOS-00163'
   tag gid: 'V-244548'
-  tag rid: 'SV-244548r743893_rule'
+  tag rid: 'SV-244548r854077_rule'
   tag stig_id: 'RHEL-08-040141'
   tag fix_id: 'F-47780r743892_fix'
   tag cci: ['CCI-001958']
   tag nist: ['IA-3']
+  tag 'host'
 
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
+  only_if('This requirement does not apply to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  peripherals_service = input('peripherals_service')
+
+  describe service(peripherals_service) do
+    it "is expected to be running. \n\tPlease ensure to configure the service to ensure your devices function as expected." do
+      expect(subject.running?).to be(true), "The #{peripherals_service} service is not running"
     end
-  else
-    describe service('usbguard') do
-      it { should be_running }
-      it { should be_enabled }
+    it "is expected to be enabled. \n\tPlease ensure to configure the service to ensure your devices function as expected." do
+      expect(subject.enabled?).to be(true), "The #{peripherals_service} service is not enabled"
     end
   end
 end

@@ -1,13 +1,13 @@
 control 'SV-244519' do
-  title 'RHEL 8 must display a banner before granting local or remote access to
-the system via a graphical user logon.'
-  desc 'Display of a standardized and approved use notification before
+  title "RHEL 8 must display a banner before granting local or remote access to
+the system via a graphical user logon."
+  desc "Display of a standardized and approved use notification before
 granting access to the operating system ensures privacy and security
 notification verbiage used is consistent with applicable federal laws,
 Executive Orders, directives, policies, regulations, standards, and guidance.
 
     System use notifications are required only for access via logon interfaces
-with human users and are not required when such human interfaces do not exist.'
+with human users and are not required when such human interfaces do not exist."
   desc 'check', 'Verify RHEL 8 displays a banner before granting access to the operating
 system via a graphical user logon.
 
@@ -55,21 +55,22 @@ this requirement is Not Applicable.
   tag fix_id: 'F-47751r743805_fix'
   tag cci: ['CCI-000048']
   tag nist: ['AC-8 a']
+  tag 'host'
 
-  if virtualization.system.eql?('docker')
+  only_if('This requirement is Not Applicable in the container', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  no_gui = command('ls /usr/share/xsessions/*').stderr.match?(/No such file or directory/)
+
+  if no_gui
     impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
-    end
-  elsif package('gnome-desktop3').installed?
-    describe command('grep ^banner-message-enable /etc/dconf/db/local.d/*') do
-      its('stdout.strip') { should cmp 'banner-message-enable=true' }
+    describe 'The system does not have a GUI Desktop is installed, this control is Not Applicable' do
+      skip 'A GUI desktop is not installed, this control is Not Applicable.'
     end
   else
-    impact 0.0
-    describe 'The system does not have GNOME installed' do
-      skip "The system does not have GNOME installed, this requirement is Not
-        Applicable."
+    describe command('grep ^banner-message-enable /etc/dconf/db/local.d/*') do
+      its('stdout.strip') { should cmp 'banner-message-enable=true' }
     end
   end
 end

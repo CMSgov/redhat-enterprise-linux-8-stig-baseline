@@ -5,13 +5,13 @@ control 'SV-230356' do
 RHEL 8 utilizes "pwquality" as a mechanism to enforce password complexity. This is set in both:
 /etc/pam.d/password-auth
 /etc/pam.d/system-auth'
-  desc 'check', 'Verify the operating system uses "pwquality" to enforce the password complexity rules. 
+  desc 'check', 'Verify the operating system uses "pwquality" to enforce the password complexity rules.
 
 Check for the use of "pwquality" in the password-auth file with the following command:
 
      $ sudo cat /etc/pam.d/password-auth | grep pam_pwquality
 
-     password requisite pam_pwquality.so 
+     password requisite pam_pwquality.so
 
 If the command does not return a line containing the value "pam_pwquality.so" as shown, or the line is commented out, this is a finding.'
   desc 'fix', 'Configure the operating system to use "pwquality" to enforce password complexity rules.
@@ -28,11 +28,14 @@ Add the following line to the "/etc/pam.d/password-auth" file (or modify the lin
   tag fix_id: 'F-33000r902727_fix'
   tag cci: ['CCI-000192', 'CCI-000366']
   tag nist: ['IA-5 (1) (a)', 'CM-6 b']
+  tag 'host', 'container'
 
-  describe pam('/etc/pam.d/passwd') do
+  pam_auth_files = input('pam_auth_files')
+
+  describe pam(pam_auth_files['password-auth']) do
     its('lines') { should match_pam_rule('password (required|requisite) pam_pwquality.so') }
   end
-  describe pam('/etc/pam.d/password-auth') do
+  describe pam(pam_auth_files['system-auth']) do
     its('lines') { should match_pam_rule('password (required|requisite) pam_pwquality.so') }
   end
 end

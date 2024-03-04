@@ -23,14 +23,15 @@ account accesses last occurred by setting the required configuration options in
   tag severity: 'low'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-230381'
-  tag rid: 'SV-230381r627750_rule'
+  tag rid: 'SV-230381r858726_rule'
   tag stig_id: 'RHEL-08-020340'
   tag fix_id: 'F-33025r567890_fix'
-  tag cci: ['CCI-000366']
-  tag nist: ['CM-6 b']
+  tag cci: ['CCI-000366', 'CCI-000052']
+  tag nist: ['CM-6 b', 'AC-9']
+  tag 'host', 'container'
 
   describe pam('/etc/pam.d/postlogin') do
     its('lines') { should match_pam_rule('session .* pam_lastlog.so').all_with_args('showfailed') }
-    its('lines') { should match_pam_rule('session .* pam_lastlog.so').all_without_args('silent') }
+    its('lines') { should_not match_pam_rule('session .* pam_lastlog.so').all_without_args('silent') }
   end
 end

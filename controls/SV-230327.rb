@@ -29,11 +29,25 @@ with the "chgrp" command:
   tag fix_id: 'F-32971r567728_fix'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host', 'container'
 
-  command('grep -v "nodev" /proc/filesystems | awk \'NF{ print $NF }\'')
-    .stdout.strip.split("\n").each do |fs|
-    describe command("find / -xdev -xautofs -fstype #{fs} -nogroup") do
-      its('stdout.strip') { should be_empty }
+  if input('disable_slow_controls')
+    describe 'This control consistently takes a long to run and has been disabled using the disable_slow_controls attribute.' do
+      skip 'This control consistently takes a long to run and has been disabled using the disable_slow_controls attribute. You must enable this control for a full accredidation for production.'
+    end
+  else
+
+    failing_files = Set[]
+
+    command('grep -v "nodev" /proc/filesystems | awk \'NF{ print $NF }\'')
+      .stdout.strip.split("\n").each do |fs|
+      failing_files += command("find / -xdev -xautofs -fstype #{fs} -nogroup").stdout.strip.split("\n")
+    end
+
+    describe 'All files on RHEL 8' do
+      it 'should have a group' do
+        expect(failing_files).to be_empty, "Files with no group:\n\t- #{failing_files.join("\n\t- ")}"
+      end
     end
   end
 end

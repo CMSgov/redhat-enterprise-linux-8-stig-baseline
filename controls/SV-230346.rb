@@ -36,49 +36,47 @@ to "10" for all accounts and/or account types.
   tag severity: 'low'
   tag gtitle: 'SRG-OS-000027-GPOS-00008'
   tag gid: 'V-230346'
-  tag rid: 'SV-230346r627750_rule'
+  tag rid: 'SV-230346r877399_rule'
   tag stig_id: 'RHEL-08-020024'
   tag fix_id: 'F-32990r619863_fix'
   tag cci: ['CCI-000054']
   tag nist: ['AC-10']
+  tag 'host'
 
-  maxlogins_limit = input('maxlogins_limit')
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
 
-  # Collect any files under limits.d if they exist
-  limits_files = directory('/etc/security/limits.d').exist? ? command('ls /etc/security/limits.d/*.conf').stdout.strip.lines : []
-  # Add limits.conf to the list
-  limits_files.push('/etc/security/limits.conf')
-  compliant_files = []
-  noncompliant_files = []
+  caveat = input('many_concurrent_sessions_permitted')
 
-  limits_files.each do |limits_file|
-    # Get any universal limits from each file
-    local_limits = limits_conf(limits_file).*
-    # If we got an array (results) check further
-    next unless local_limits.is_a?(Array)
-    local_limits.each do |temp_limit|
-      # For each result check if it is a 'hard' limit for 'maxlogins'
-      if temp_limit.include?('hard') && temp_limit.include?('maxlogins')
-        # If the limit is in range, push to compliant files
-        if temp_limit[-1].to_i <= maxlogins_limit
-          compliant_files.push(limits_file)
-        # Otherwise add to noncompliant files
-        else
-          noncompliant_files.push(limits_file)
-        end
+  if caveat
+    describe 'Manual Review' do
+      skip 'Inputs indicate this capability is an operational requirement of this system; manually review system documentation and confirm this with the ISSO'
+    end
+  else
+
+    setting = 'maxlogins'
+    expected_value = 10
+
+    limits_files = command('ls /etc/security/limits.d/*.conf').stdout.strip.split
+    limits_files.append('/etc/security/limits.conf')
+
+    # make sure that at least one limits.conf file has the correct setting
+    globally_set = limits_files.any? { |lf| !limits_conf(lf).read_params['*'].nil? && limits_conf(lf).read_params['*'].include?(['hard', setting.to_s, expected_value.to_s]) }
+
+    # make sure that no limits.conf file has a value that contradicts the global set
+    failing_files = limits_files.select { |lf|
+      limits_conf(lf).read_params.values.flatten(1).any? { |l|
+        l[1].eql?(setting) && l[2].to_i > expected_value
+      }
+    }
+    describe 'Limits files' do
+      it "should limit concurrent sessions to #{expected_value} by default" do
+        expect(globally_set).to eq(true), "No global ('*') setting for concurrent sessions found"
+      end
+      it 'should not have any conflicting settings' do
+        expect(failing_files).to be_empty, "Files with incorrect '#{setting}' settings:\n\t- #{failing_files.join("\n\t- ")}"
       end
     end
-  end
-
-  # It is required that at least 1 file contain compliant configuration
-  describe "Files configuring maxlogins less than or equal to #{maxlogins_limit}" do
-    subject { compliant_files.length }
-    it { should be_positive }
-  end
-
-  # No files should set 'hard' 'maxlogins' to any noncompliant value
-  describe "Files configuring maxlogins greater than #{maxlogins_limit}" do
-    subject { noncompliant_files }
-    it { should cmp [] }
   end
 end

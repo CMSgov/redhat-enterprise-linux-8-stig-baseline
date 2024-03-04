@@ -1,54 +1,76 @@
 control 'SV-230349' do
   title 'RHEL 8 must ensure session control is automatically started at shell
 initialization.'
-  desc 'A session lock is a temporary action taken when a user stops work and
-moves away from the immediate physical vicinity of the information system but
-does not want to log out because of the temporary nature of the absence.
+  desc 'Tmux is a terminal multiplexer that enables a number of terminals to be created, accessed, and controlled from a single screen. Red Hat endorses tmux as the recommended session controlling package.'
+  desc 'check', 'Verify the operating system shell initialization file is configured to start each shell with the tmux terminal multiplexer with the following commands:
 
-    The session lock is implemented at the point where session activity can be
-determined. Rather than be forced to wait for a period of time to expire before
-the user session can be locked, RHEL 8 needs to provide users with the ability
-to manually invoke a session lock so users can secure their session if it is
-necessary to temporarily vacate the immediate physical vicinity.
+Determine if tmux is currently running:
+     $ sudo ps all | grep tmux | grep -v grep
 
-    Tmux is a terminal multiplexer that enables a number of terminals to be
-created, accessed, and controlled from a single screen.  Red Hat endorses tmux
-as the recommended session controlling package.'
-  desc 'check', 'Verify the operating system shell initialization file is configured to
-start each shell with the tmux terminal multiplexer with the following command:
+If the command does not produce output, this is a finding.
 
-    $ sudo grep -i tmux /etc/bashrc
+Determine the location of the tmux script:
+     $ sudo grep -r tmux /etc/bashrc /etc/profile.d
 
-    [ -n "$PS1" -a -z "$TMUX" ] && exec tmux
+     /etc/profile.d/tmux.sh:  case "$name" in (sshd|login) tmux ;; esac
 
-    If "tmux" is not configured as the example above, is commented out, or
-missing from the "/etc/bashrc" initialization file, this is a finding.'
-  desc 'fix', 'Configure the operating system to initialize the tmux terminal multiplexer
-as each shell is called by adding the following line to the end of the
-"/etc/bashrc" configuration file:
+Review the tmux script by using the following example:
+     $ sudo cat /etc/profile.d/tmux.sh
 
-    [ -n "$PS1" -a -z "$TMUX" ] && exec tmux
+if [ "$PS1" ]; then
+parent=$(ps -o ppid= -p $$)
+name=$(ps -o comm= -p $parent)
+case "$name" in (sshd|login) tmux ;; esac
+fi
 
-    This setting will take effect at next logon.'
+If "tmux" is not configured as the example above, is commented out, or is missing, this is a finding.'
+  desc 'fix', 'Configure the operating system to initialize the tmux terminal multiplexer as each shell is called by adding the following lines to a custom.sh shell script in the /etc/profile.d/ directory:
+
+if [ "$PS1" ]; then
+parent=$(ps -o ppid= -p $$)
+name=$(ps -o comm= -p $parent)
+case "$name" in (sshd|login) tmux ;; esac
+fi
+
+This setting will take effect at next logon.'
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000028-GPOS-00009'
   tag satisfies: ['SRG-OS-000028-GPOS-00009', 'SRG-OS-000030-GPOS-00011']
   tag gid: 'V-230349'
-  tag rid: 'SV-230349r627750_rule'
+  tag rid: 'SV-230349r917920_rule'
   tag stig_id: 'RHEL-08-020041'
-  tag fix_id: 'F-32993r567794_fix'
+  tag fix_id: 'F-32993r880735_fix'
   tag cci: ['CCI-000056']
   tag nist: ['AC-11 b']
+  tag 'host'
 
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  tmux_running = command('ps all | grep tmux | grep -v grep').stdout.strip
+
+  describe 'tmux' do
+    it 'should be running' do
+      expect(tmux_running).to_not be_empty, 'tmux is not running'
     end
-  else
-    describe command('grep -i tmux /etc/bashrc') do
-      its('stdout.strip') { should cmp '[ -n "$PS1" -a -z "$TMUX" ] && exec tmux' }
+  end
+
+  if tmux_running.nil?
+
+    # compare the tmux config with the expected multiline string the same way we do the banner checks
+    # i.e. strip out all whitespace and compare the strings
+
+    expected_config = "if [ \"$PS1\" ]; then\nparent=$(ps -o ppid= -p $$)\nname=$(ps -o comm= -p $parent)\ncase \"$name\" in (sshd|login) tmux ;; esac\nfi".content.gsub(/[\r\n\s]/, '')
+
+    tmux_script = command('grep -r tmux /etc/bashrc /etc/profile.d').stdout.strip.match(/^(?<path>\S+):/)['path']
+    tmux_config = file(tmux_script).content.gsub(/[\r\n\s]/, '')
+
+    describe 'tmux' do
+      it 'should be configured as expected' do
+        expect(tmux_config).to match(/#{expected_config}/), 'tmux config does not match expected script'
+      end
     end
   end
 end

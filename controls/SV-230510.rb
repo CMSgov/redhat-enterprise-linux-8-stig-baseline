@@ -43,13 +43,25 @@ by adding /modifying the /etc/fstab with the following line:
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000368-GPOS-00154'
   tag gid: 'V-230510'
-  tag rid: 'SV-230510r627750_rule'
+  tag rid: 'SV-230510r854051_rule'
   tag stig_id: 'RHEL-08-040122'
   tag fix_id: 'F-33154r568277_fix'
   tag cci: ['CCI-001764']
   tag nist: ['CM-7 (2)']
+  tag 'host'
 
-  describe etc_fstab.where { mount_point == '/dev/shm' } do
-    its('mount_options.flatten') { should include 'noexec' }
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  path = '/dev/shm'
+  option = 'noexec'
+
+  describe mount(path) do
+    its('options') { should include option }
+  end
+
+  describe etc_fstab.where { mount_point == path } do
+    its('mount_options.flatten') { should include option }
   end
 end

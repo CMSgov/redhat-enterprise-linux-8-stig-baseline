@@ -31,18 +31,25 @@ Security for Linux (ENSL) in conjunction with SELinux.
   tag fix_id: 'F-48770r754729_fix'
   tag cci: ['CCI-001233']
   tag nist: ['SI-2 (2)']
+  tag 'host'
 
-  if virtualization.system.eql?('docker')
+  only_if('Control not applicable within a container', impact: 0.0) do
+    !virtualization.system.eql?('docker')
+  end
+
+  if input('skip_endpoint_security_tool')
     impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
+    describe 'Implementing the Endpoint Security for Linux Threat Prevention tool is not applicable by agreement with  the approval authority of the organization.' do
+      skip 'Implementing the Endpoint Security for Linux Threat Prevention tool is not applicable by agreement with  the approval authority of the organization.'
     end
   else
-    describe package('mcafeetp') do
+    linux_threat_prevention_package = input('linux_threat_prevention_package')
+    linux_threat_prevention_service = input('linux_threat_prevention_service')
+    describe package(linux_threat_prevention_package) do
       it { should be_installed }
     end
 
-    describe processes('mfetpd') do
+    describe processes(linux_threat_prevention_service) do
       it { should exist }
     end
   end

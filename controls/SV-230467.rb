@@ -55,19 +55,20 @@ updating the following rules in the "/etc/audit/rules.d/audit.rules" file:
   tag fix_id: 'F-33111r568148_fix'
   tag cci: ['CCI-000169']
   tag nist: ['AU-12 a']
+  tag 'host'
 
-  audit_file = '/var/log/lastlog'
+  audit_command = '/var/log/lastlog'
 
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
-    end
-  else
-    describe auditd.file(audit_file) do
-      its('permissions.flatten') { should include 'w' }
-      its('permissions.flatten') { should include 'a' }
-      its('key') { should cmp 'logins' }
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  describe 'Command' do
+    it "#{audit_command} is audited properly" do
+      audit_rule = auditd.file(audit_command)
+      expect(audit_rule).to exist
+      expect(audit_rule.permissions.flatten).to include('w', 'a')
+      expect(audit_rule.key.uniq).to include(input('audit_rule_keynames').merge(input('audit_rule_keynames_overrides'))[audit_command])
     end
   end
 end

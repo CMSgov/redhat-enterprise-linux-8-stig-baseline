@@ -44,21 +44,14 @@ updated versions have been installed.
   tag severity: 'high'
   tag gtitle: 'SRG-OS-000366-GPOS-00153'
   tag gid: 'V-230265'
-  tag rid: 'SV-230265r627750_rule'
+  tag rid: 'SV-230265r877463_rule'
   tag stig_id: 'RHEL-08-010371'
   tag fix_id: 'F-32909r567542_fix'
   tag cci: ['CCI-001749']
   tag nist: ['CM-5 (3)']
+  tag 'host', 'container'
 
-  describe.one do
-    describe ini('/etc/dnf/dnf.conf') do
-      its('main.localpkg_gpgcheck') { should cmp 'True' }
-    end
-    describe ini('/etc/dnf/dnf.conf') do
-      its('main.localpkg_gpgcheck') { should cmp 1 }
-    end
-    describe ini('/etc/dnf/dnf.conf') do
-      its('main.localpkg_gpgcheck') { should cmp 'yes' }
-    end
+  describe parse_config_file('/etc/dnf/dnf.conf') do
+    its('main.localpkg_gpgcheck') { should match(/True|1|yes/i) }
   end
 end

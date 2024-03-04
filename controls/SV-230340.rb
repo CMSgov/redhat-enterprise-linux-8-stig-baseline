@@ -68,18 +68,23 @@ restart the "sssd" service, run the following command:
   tag fix_id: 'F-32984r567767_fix'
   tag cci: ['CCI-000044']
   tag nist: ['AC-7 a']
+  tag 'host', 'container'
 
-  if os.release.to_f >= 8.2
-    impact 0.0
-    describe "The release is #{os.release}" do
-      skip 'The release is 8.2 or newer; this control is Not Applicable.'
-    end
-  else
-    describe pam('/etc/pam.d/password-auth') do
-      its('lines') { should match_pam_rule('auth [default=die]|required pam_faillock.so preauth').all_with_args('silent') }
-    end
-    describe pam('/etc/pam.d/system-auth') do
-      its('lines') { should match_pam_rule('auth [default=die]|required pam_faillock.so preauth').all_with_args('silent') }
-    end
+  only_if('This check applies to RHEL versions 8.0 and 8.1, if the system is
+    RHEL version 8.2 or newer, this check is not applicable.', impact: 0.0) {
+    (os.release.to_f) < 8.2
+  }
+
+  pam_auth_files = input('pam_auth_files')
+
+  describe pam(pam_auth_files['password-auth']) do
+    its('lines') {
+      should match_pam_rule('auth [default=die]|required pam_faillock.so preauth').all_with_args('silent')
+    }
+  end
+  describe pam(pam_auth_files['system-auth']) do
+    its('lines') {
+      should match_pam_rule('auth [default=die]|required pam_faillock.so preauth').all_with_args('silent')
+    }
   end
 end

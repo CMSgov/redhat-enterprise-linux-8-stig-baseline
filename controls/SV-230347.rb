@@ -53,13 +53,13 @@ and add or update the following lines:
   tag fix_id: 'F-32991r567788_fix'
   tag cci: ['CCI-000056']
   tag nist: ['AC-11 b']
+  tag 'host'
 
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
-    end
-  elsif package('gnome-desktop3').installed?
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  if package('gnome-desktop3').installed?
     describe command('gsettings get org.gnome.desktop.screensaver lock-enabled') do
       its('stdout.strip') { should cmp 'true' }
     end

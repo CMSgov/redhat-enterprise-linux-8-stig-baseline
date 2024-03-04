@@ -29,8 +29,15 @@ or remove it from the system with the following command:
   tag fix_id: 'F-33202r568421_fix'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host', 'container'
 
-  describe package('vsftpd') do
-    it { should_not be_installed }
+  if input('ftp_required')
+    describe 'Manual' do
+      skip 'Inputs indicate that FTP is required. Manually review with the ISSO to confirm that this is a requirement for the mission.'
+    end
+  else
+    describe package('vsftpd') do
+      it { should_not be_installed }
+    end
   end
 end

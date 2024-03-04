@@ -8,44 +8,41 @@ requirement applies to the globally configured system defaults and the local
 interactive user defaults for each account on the system.'
   desc 'check', 'Verify that the umask default for installed shells is "077".
 
-    Check for the value of the "UMASK" parameter in the "/etc/bashrc" and
-"/etc/csh.cshrc" files with the following command:
+Check for the value of the "UMASK" parameter in the "/etc/bashrc", "/etc/csh.cshrc" and "/etc/profile" files with the following command:
 
-    Note: If the value of the "UMASK" parameter is set to "000" in either
-the "/etc/bashrc" or the "/etc/csh.cshrc" files, the Severity is raised to
-a CAT I.
+Note: If the value of the "UMASK" parameter is set to "000" in the "/etc/bashrc" the "/etc/csh.cshrc" or the "/etc/profile" files, the Severity is raised to a CAT I.
 
-    # grep -i umask /etc/bashrc /etc/csh.cshrc
+# grep -i umask /etc/bashrc /etc/csh.cshrc /etc/profile
 
-    /etc/bashrc:          umask 077
-    /etc/bashrc:          umask 077
-    /etc/csh.cshrc:      umask 077
-    /etc/csh.cshrc:      umask 077
+/etc/bashrc:          umask 077
+/etc/bashrc:          umask 077
+/etc/csh.cshrc:      umask 077
+/etc/csh.cshrc:      umask 077
+/etc/profile:      umask 077
+/etc/profile:      umask 077
 
-    If the value for the "UMASK" parameter is not "077", or the "UMASK"
-parameter is missing or is commented out, this is a finding.'
-  desc 'fix', 'Configure the operating system to define default permissions for all
-authenticated users in such a way that the user can only read and modify their
-own files.
+If the value for the "UMASK" parameter is not "077", or the "UMASK" parameter is missing or is commented out, this is a finding.'
+  desc 'fix', 'Configure the operating system to define default permissions for all authenticated users in such a way that the user can only read and modify their own files.
 
-    Add or edit the lines for the "UMASK" parameter in the "/etc/bashrc"
-and "etc/csh.cshrc" files to "077":
+Add or edit the lines for the "UMASK" parameter in the "/etc/bashrc", "/etc/csh.cshrc" and "/etc/profile"files to "077":
 
-    UMASK 077'
+UMASK 077'
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-230385'
-  tag rid: 'SV-230385r627750_rule'
+  tag rid: 'SV-230385r792902_rule'
   tag stig_id: 'RHEL-08-020353'
-  tag fix_id: 'F-33029r567902_fix'
+  tag fix_id: 'F-33029r792901_fix'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host', 'container'
 
   umask_regexp = /umask\s*(?<umask_code>\d\d\d)/
 
   bashrc_umask = file('/etc/bashrc').content.match(umask_regexp)[:umask_code]
   cshrc_umask = file('/etc/csh.cshrc').content.match(umask_regexp)[:umask_code]
+  profile_umask = file('/etc/profile').content.match(umask_regexp)[:umask_code]
 
   if bashrc_umask == '000' || cshrc_umask == '000'
     impact 0.7
@@ -54,10 +51,14 @@ and "etc/csh.cshrc" files to "077":
 
   describe 'umask value defined in /etc/bashrc' do
     subject { bashrc_umask }
-    it { should cmp '077' }
+    it { should cmp input('permissions_for_shells')['bashrc_umask'] }
   end
   describe 'umask value defined in /etc/csh.cshrc' do
     subject { cshrc_umask }
-    it { should cmp '077' }
+    it { should cmp input('permissions_for_shells')['cshrc_umask'] }
+  end
+  describe 'umask value defined in /etc/profile' do
+    subject { profile_umask }
+    it { should cmp input('permissions_for_shells')['profile_umask'] }
   end
 end

@@ -59,15 +59,13 @@ adding or modifying the following line in
   tag fix_id: 'F-33114r744005_fix'
   tag cci: ['CCI-000169']
   tag nist: ['AU-12 a']
+  tag 'host'
 
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
-    end
-  else
-    describe parse_config_file('/etc/usbguard/usbguard-daemon.conf') do
-      its('AuditBackend') { should cmp 'LinuxAudit' }
-    end
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  describe parse_config_file('/etc/usbguard/usbguard-daemon.conf') do
+    its('AuditBackend') { should cmp 'LinuxAudit' }
   end
 end

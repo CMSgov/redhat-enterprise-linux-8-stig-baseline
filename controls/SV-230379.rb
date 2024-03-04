@@ -45,16 +45,13 @@ allow for a normal user to perform administrative-level actions.
   tag fix_id: 'F-33023r567884_fix'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host', 'container'
 
-  known_system_accounts = input('known_system_accounts')
-  user_accounts = input('user_accounts')
+  failing_users = passwd.users.reject { |u| (input('known_system_accounts') + input('user_accounts')).uniq.include?(u) }
 
-  allowed_accounts = (known_system_accounts + user_accounts).uniq
-  passwd.users.each do |user|
-    describe user do
-      it 'should be listed in allowed users.' do
-        expect(subject).to(be_in(allowed_accounts))
-      end
+  describe 'All users' do
+    it 'should have an explicit, authorized purpose (either a known user account or a required system account)' do
+      expect(failing_users).to be_empty, "Failing users:\n\t- #{failing_users.join("\n\t- ")}"
     end
   end
 end

@@ -121,29 +121,27 @@ Agreement for details."'
   tag fix_id: 'F-32871r567428_fix'
   tag cci: ['CCI-000048']
   tag nist: ['AC-8 a']
+  tag 'host'
 
-  banner_message_text_cli = input('banner_message_text_cli')
+  only_if('Control not applicable within a container', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
 
-  clean_banner = banner_message_text_cli.gsub(/[\r\n\s]/, '')
   banner_file = file('/etc/issue')
-  banner_missing = !banner_file.exist?
 
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
+  describe banner_file do
+    it { should exist }
+  end
+
+  if banner_file.exist?
+
+    banner = banner_file.content.gsub(/[\r\n\s]/, '')
+    expected_banner = input('banner_message_text_cli').gsub(/[\r\n\s]/, '')
+
+    describe 'The CLI Login Banner ' do
+      it 'is set to the standard banner and has the correct text' do
+        expect(banner).to eq(expected_banner), 'Banner does not match expected text'
+      end
     end
-  else
-    describe 'The banner text is not set because /etc/issue does not exist' do
-      subject { banner_missing }
-      it { should be false }
-    end if banner_missing
-
-    banner_message = banner_file.content.gsub(/[\r\n\s]/, '')
-
-    describe 'The banner text should match the standard banner' do
-      subject { banner_message }
-      it { should cmp clean_banner }
-    end unless banner_missing
   end
 end

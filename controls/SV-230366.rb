@@ -27,9 +27,15 @@ PASS_MAX_DAYS 60'
   tag fix_id: 'F-33010r567845_fix'
   tag cci: ['CCI-000199']
   tag nist: ['IA-5 (1) (d)']
+  tag 'host', 'container'
 
-  describe login_defs do
-    its('PASS_MAX_DAYS.to_i') { should cmp <= 60 }
-    its('PASS_MAX_DAYS.to_i') { should cmp > 0 }
+  value = input('pass_max_days')
+  setting = input_object('pass_max_days').name.upcase
+
+  describe "/etc/login.defs does not have `#{setting}` configured" do
+    let(:config) { login_defs.read_params[setting] }
+    it "greater than #{value} day" do
+      expect(config).to cmp <= value
+    end
   end
 end

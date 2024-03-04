@@ -26,6 +26,7 @@ users by setting the "CREATE_HOME" parameter in "/etc/login.defs" to
   tag fix_id: 'F-32968r567719_fix'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host', 'container'
 
   describe login_defs do
     its('CREATE_HOME') { should eq 'yes' }

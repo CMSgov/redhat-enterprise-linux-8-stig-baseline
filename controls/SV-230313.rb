@@ -40,24 +40,41 @@ all domains that have the "core" item assigned, this is a finding.)
   tag cci: ['CCI-000366']
   tag legacy: []
   tag nist: ['CM-6 b']
+  tag 'host'
 
-  limits_files = command('find /etc/security/limits.d/ -name *.conf').stdout.strip.split
-  limits_files.append('/etc/security/limits.conf')
-  describe.one do
-    limits_files.each do |lf|
-      describe limits_conf(lf) do
-        its('*') { should include %w(hard core 0) }
-      end
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  caveat = input('core_dump_permitted')
+
+  if caveat
+    describe 'Manual Review' do
+      skip 'Inputs indicate this capability is an operational requirement of this system; manually review system documentation and confirm this with the ISSO'
     end
-  end
-  limits_files.each do |lf|
-    lines = limits_conf(lf).read_params.values.flatten(1)
-    lines.each do |line|
-      l = { type: line[0], item: line[1], value: line[2] }
-      next unless l[:item].eql?('core')
-      describe "#{lf} entries" do
-        subject { l }
-        its([:value]) { should cmp 0 }
+  else
+
+    setting = 'core'
+    expected_value = 0
+
+    limits_files = command('ls /etc/security/limits.d/*.conf').stdout.strip.split
+    limits_files.append('/etc/security/limits.conf')
+
+    # make sure that at least one limits.conf file has the correct setting
+    globally_set = limits_files.any? { |lf| !limits_conf(lf).read_params['*'].nil? && limits_conf(lf).read_params['*'].include?(['hard', setting.to_s, expected_value.to_s]) }
+
+    # make sure that no limits.conf file has a value that contradicts the global set
+    failing_files = limits_files.select { |lf|
+      limits_conf(lf).read_params.values.flatten(1).any? { |l|
+        l[1].eql?(setting) && !l[2].to_i.eql?(expected_value)
+      }
+    }
+    describe 'Limits files' do
+      it 'should disallow core dumps by default' do
+        expect(globally_set).to eq(true), "No correct global ('*') setting found"
+      end
+      it 'should not have any conflicting settings' do
+        expect(failing_files).to be_empty, "Files with incorrect '#{setting}' settings:\n\t- #{failing_files.join("\n\t- ")}"
       end
     end
   end

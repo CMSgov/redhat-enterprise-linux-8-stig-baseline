@@ -34,20 +34,27 @@ command:
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000297-GPOS-00115'
   tag gid: 'V-244544'
-  tag rid: 'SV-244544r743881_rule'
+  tag rid: 'SV-244544r854073_rule'
   tag stig_id: 'RHEL-08-040101'
   tag fix_id: 'F-47776r743880_fix'
   tag cci: ['CCI-002314']
   tag nist: ['AC-17 (1)']
 
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
+  only_if('This requirment is Not Applicable in the container, the container management platform manages the firewall service', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  if input('external_firewall')
+    message = 'This system uses an externally managed firewall service, verify with the system administrator that the firewall is configured to requirements'
+    describe message do
+      skip message
     end
   else
-    describe systemd_service('firewalld.service') do
-      it { should be_enabled }
+    describe package('firewalld') do
+      it { should be_installed }
+    end
+    describe firewalld do
+      it { should be_installed }
       it { should be_running }
     end
   end

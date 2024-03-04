@@ -38,8 +38,15 @@ or remove it from the system with the following command:
   tag fix_id: 'F-33203r568424_fix'
   tag cci: ['CCI-000381']
   tag nist: ['CM-7 a']
+  tag 'host', 'container'
 
-  describe package('gssproxy') do
-    it { should_not be_installed }
+  if input('gssproxy_required')
+    describe 'Manual' do
+      skip 'Inputs indicate that gssproxy is required to be enabled. Manually review with the ISSO to confirm that this is a requirement for the mission.'
+    end
+  else
+    describe package('gssproxy') do
+      it { should_not be_installed }
+    end
   end
 end

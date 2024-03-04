@@ -1,15 +1,14 @@
 control 'SV-230274' do
-  title 'RHEL 8 must implement certificate status checking for multifactor
-authentication.'
+  title 'RHEL 8 must implement certificate status checking for multifactor authentication.'
   desc 'Using an authentication device, such as a DoD Common Access Card (CAC)
-or token that is separate from the information system, ensures that even if the
-information system is compromised, credentials stored on the authentication
-device will not be affected.
+    or token that is separate from the information system, ensures that even if the
+    information system is compromised, credentials stored on the authentication
+    device will not be affected.
 
     Multifactor solutions that require devices separate from information
-systems gaining access include, for example, hardware tokens providing
-time-based or challenge-response authenticators and smart cards such as the
-U.S. Government Personal Identity Verification (PIV) card and the DoD CAC.
+    systems gaining access include, for example, hardware tokens providing
+    time-based or challenge-response authenticators and smart cards such as the
+    U.S. Government Personal Identity Verification (PIV) card and the DoD CAC.
 
     RHEL 8 includes multiple options for configuring certificate status
 checking, but for this requirement focuses on the System Security Services
@@ -47,22 +46,30 @@ $ sudo systemctl restart sssd.service'
   tag fix_id: 'F-32918r809280_fix'
   tag cci: ['CCI-001948']
   tag nist: ['IA-2 (11)']
+  tag 'host'
 
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
+  only_if('This requirement is Not Applicable inside the container', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  if input('alternate_mfa_method').nil?
+    describe 'Manual Review' do
+      skip "Alternate MFA method selected:\t\nConsult with ISSO to determine that alternate MFA method is approved; manually review system to ensure alternate MFA method is functioning"
     end
   else
-    describe file('/etc/sssd/sssd.conf') do
-      it { should exist }
-    end
+    sssd_conf_files = input('sssd_conf_files')
+    sssd_conf_contents = ini({ command: "cat #{input('sssd_conf_files').join(' ')}" })
+    sssd_certificate_verification = input('sssd_certificate_verification')
 
-    sssd_conf_file_contents = command('cat /etc/sssd/sssd.conf /etc/sssd/conf.d/*.conf').stdout.strip
-
-    unless sssd_conf_file_contents.empty?
-      describe ini({ command: 'cat /etc/sssd/sssd.conf /etc/sssd/conf.d/*.conf' }) do
-        its('sssd.certificate_verification') { should match /ocsp_dgst(\s+)?=(\s+)?sha1/ }
+    describe 'SSSD' do
+      it 'should be installed and enabled' do
+        expect(service('sssd')).to be_installed.and be_enabled
+        expect(sssd_conf_contents.params).to_not be_empty, "SSSD configuration files not found or have no content; files checked:\n\t- #{sssd_conf_files.join("\n\t- ")}"
+      end
+      if sssd_conf_contents.params.nil?
+        it "should configure certificate_verification to be '#{sssd_certificate_verification}'" do
+          expect(sssd_conf_contents.sssd.certificate_verification).to eq(sssd_certificate_verification)
+        end
       end
     end
   end

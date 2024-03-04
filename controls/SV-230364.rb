@@ -26,12 +26,17 @@ password lifetime:
   tag fix_id: 'F-33008r567839_fix'
   tag cci: ['CCI-000198']
   tag nist: ['IA-5 (1) (d)']
+  tag 'host', 'container'
 
-  shadow.users.each do |user|
-    # filtering on non-system accounts (uid >= 1000)
-    next unless user(user).uid >= 1000
-    describe shadow.users(user) do
-      its('min_days.first.to_i') { should cmp >= 1 }
+  # TODO: add inputs for a frequecny
+
+  bad_users = users.where { uid >= 1000 }.where { mindays < 1 }.usernames
+  in_scope_users = bad_users - input('exempt_home_users')
+
+  describe 'Users should not' do
+    it 'be able to change their password more then once a 24 hour period' do
+      failure_message = "The following users can update their password more then once a day: #{in_scope_users.join(', ')}"
+      expect(in_scope_users).to be_empty, failure_message
     end
   end
 end

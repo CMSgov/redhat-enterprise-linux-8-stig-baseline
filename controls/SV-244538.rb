@@ -69,20 +69,24 @@ file should be created under the appropriate subdirectory.
   tag fix_id: 'F-47770r743862_fix'
   tag cci: ['CCI-000057']
   tag nist: ['AC-11 a']
+  tag 'host'
 
-  if virtualization.system.eql?('docker')
+  only_if('This requirement is Not Applicable in the container', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  no_gui = command('ls /usr/share/xsessions/*').stderr.match?(/No such file or directory/)
+
+  if no_gui
     impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
-    end
-  elsif package('gnome-desktop3').installed?
-    describe command('grep -i idle /etc/dconf/db/local.d/locks/*') do
-      its('stdout.split') { should include '/org/gnome/desktop/session/idle-delay' }
+    describe 'The system does not have a GUI Desktop is installed, this control is Not Applicable' do
+      skip 'A GUI desktop is not installed, this control is Not Applicable.'
     end
   else
-    impact 0.0
-    describe 'The GNOME desktop is not installed' do
-      skip 'The GNOME desktop is not installed, this control is Not Applicable.'
+    describe command('grep -i idle /etc/dconf/db/local.d/locks/*') do
+      it 'checks if idle delay is set' do
+        expect(subject.stdout.split).to include('/org/gnome/desktop/session/idle-delay'), 'The idle delay is not set. Please ensure it is set.'
+      end
     end
   end
 end

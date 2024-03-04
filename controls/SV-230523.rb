@@ -41,16 +41,21 @@ $ sudo yum install fapolicyd.x86_64'
   tag gtitle: 'SRG-OS-000368-GPOS-00154'
   tag satisfies: ['SRG-OS-000368-GPOS-00154', 'SRG-OS-000370-GPOS-00155', 'SRG-OS-000480-GPOS-00232']
   tag gid: 'V-230523'
-  tag rid: 'SV-230523r744023_rule'
+  tag rid: 'SV-230523r854064_rule'
   tag stig_id: 'RHEL-08-040135'
   tag fix_id: 'F-33167r744022_fix'
   tag cci: ['CCI-001764']
   tag nist: ['CM-7 (2)']
+  tag 'host'
 
-  if virtualization.system.eql?('docker')
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  if !input('use_fapolicyd')
     impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
+    describe 'The organization is not using the Fapolicyd service to manage firewall servies, this control is Not Applicable' do
+      skip 'The organization is not using the Fapolicyd service to manage firewall servies, this control is Not Applicable'
     end
   else
     describe package('fapolicyd') do

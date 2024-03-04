@@ -37,24 +37,17 @@ option:
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000342-GPOS-00133'
   tag gid: 'V-230394'
-  tag rid: 'SV-230394r627750_rule'
+  tag rid: 'SV-230394r877390_rule'
   tag stig_id: 'RHEL-08-030062'
   tag fix_id: 'F-33038r567929_fix'
   tag cci: ['CCI-001851']
   tag nist: ['AU-4 (1)']
+  tag 'host'
 
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
-    end
-  elsif file('/etc/audit/auditd.conf').exist?
-    describe parse_config_file('/etc/audit/auditd.conf') do
-      its('name_format') { should match /^hostname$|^fqd$|^numeric$/i }
-    end
-  else
-    describe "File '/etc/audit/auditd.conf' cannot be found. This test cannot be checked in a automated fashion and you must check it manually" do
-      skip "File '/etc/audit/auditd.conf' cannot be found. This check must be performed manually"
-    end
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+  describe parse_config_file('/etc/audit/auditd.conf') do
+    its('name_format') { should match(/^hostname$|^fqd$|^numeric$/i) }
   end
 end

@@ -41,15 +41,13 @@ The SSH service must be restarted for changes to take effect.'
   tag fix_id: 'F-32897r567506_fix'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host', 'container-conditional'
 
-  if virtualization.system.eql?('docker') && !file('/etc/sysconfig/sshd').exist?
-    impact 0.0
-    describe 'Control not applicable - SSH is not installed within containerized RHEL' do
-      skip 'Control not applicable - SSH is not installed within containerized RHEL'
-    end
-  else
-    describe parse_config_file('/etc/sysconfig/sshd') do
-      its('SSH_USE_STRONG_RNG.to_i') { should eq 32 }
-    end
+  only_if('Control not applicable - SSH is not installed within containerized RHEL', impact: 0.0) {
+    !(virtualization.system.eql?('docker') && !file('/etc/sysconfig/sshd').exist?)
+  }
+
+  describe parse_config_file('/etc/sysconfig/sshd') do
+    its('SSH_USE_STRONG_RNG') { should cmp 32 }
   end
 end

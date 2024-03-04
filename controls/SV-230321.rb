@@ -33,24 +33,33 @@ command:
   tag fix_id: 'F-32965r567710_fix'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host'
+
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
 
   exempt_home_users = input('exempt_home_users')
-
+  expected_mode = input('home_dir_mode')
   uid_min = login_defs.read_params['UID_MIN'].to_i
   uid_min = 1000 if uid_min.nil?
 
   iuser_entries = passwd.where { uid.to_i >= uid_min && shell !~ /nologin/ && !exempt_home_users.include?(user) }
 
   if !iuser_entries.users.nil? && !iuser_entries.users.empty?
-    iuser_entries.homes.each do |home_dir|
-      describe file(home_dir) do
-        it { should_not be_more_permissive_than('0750') }
+    failing_homedirs = iuser_entries.homes.select { |home|
+      file(home).more_permissive_than?(expected_mode)
+    }
+    describe 'All non-exempt interactive user account home directories on the system' do
+      it "should not be more permissive than '#{expected_mode}'" do
+        expect(failing_homedirs).to be_empty, "Failing home directories:\n\t- #{failing_homedirs.join("\n\t- ")}"
       end
     end
   else
-    describe 'No non-exempt interactive user accounts were detected on the system' do
-      subject { true }
-      it { should be true }
+    describe 'No non-exempt interactive user accounts' do
+      it 'were detected on the system' do
+        expect(true).to eq(true)
+      end
     end
   end
 end

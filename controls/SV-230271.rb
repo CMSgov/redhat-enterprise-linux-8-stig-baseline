@@ -25,57 +25,26 @@ file or files in the "/etc/sudoers.d" directory.'
   tag gtitle: 'SRG-OS-000373-GPOS-00156'
   tag satisfies: ['SRG-OS-000373-GPOS-00156', 'SRG-OS-000373-GPOS-00157', 'SRG-OS-000373-GPOS-00158']
   tag gid: 'V-230271'
-  tag rid: 'SV-230271r627750_rule'
+  tag rid: 'SV-230271r854026_rule'
   tag stig_id: 'RHEL-08-010380'
-  tag fix_id: 'F-32915r567560_fix'
+  tag fix_id: 'F-32915r854025_fix'
   tag cci: ['CCI-002038']
   tag nist: ['IA-11']
+  tag 'host', 'container-conditional'
 
-  if virtualization.system.eql?('docker') && !command('sudo').exist?
-    impact 0.0
-    describe "Control not applicable within a container & sudo doesn't exist" do
-      skip "Control not applicable within a container & sudo doesn't exist"
-    end
-  else
-    processed = []
-    to_process = ['/etc/sudoers', '/etc/sudoers.d']
+  only_if('Control not applicable within a container without sudo installed', impact: 0.0) {
+    !(virtualization.system.eql?('docker') && !command('sudo').exist?)
+  }
 
-    until to_process.empty?
-      in_process = to_process.pop
-      next if processed.include? in_process
-      processed.push in_process
+  # TODO: figure out why this .where throws an exception if we don't explicitly filter out nils via 'tags.nil?'
+  # ergo shouldn't the filtertable be handling that kind of nil-checking for us?
+  failing_results = sudoers(input('sudoers_config_files').join(' ')).rules.where { tags.nil? && (tags || '').include?('NOPASSWD') }
 
-      if file(in_process).directory?
-        to_process.concat(
-          command("find #{in_process} -maxdepth 1 -mindepth 1")
-            .stdout.strip.split("\n")
-            .select { |f| file(f).file? }
-        )
-      elsif file(in_process).file?
-        to_process.concat(
-          command("grep -E '#include\\s+' #{in_process} | sed 's/.*#include[[:space:]]*//g'")
-            .stdout.strip.split("\n")
-            .map { |f| f.start_with?('/') ? f : File.join(File.dirname(in_process), f) }
-            .select { |f| file(f).exist? }
-        )
-        to_process.concat(
-          command("grep -E '#includedir\\s+' #{in_process} | sed 's/.*#includedir[[:space:]]*//g'")
-            .stdout.strip.split("\n")
-            .map { |f| f.start_with?('/') ? f : File.join(File.dirname(in_process), f) }
-            .select { |f| file(f).exist? }
-        )
-      end
-    end
+  failing_results = failing_results.where { !input('passwordless_admins').include?(users) } if input('passwordless_admins').nil?
 
-    sudoers = processed.select { |f| file(f).file? }
-
-    sudoers.each do |sudoer|
-      sudo_content = file(sudoer).content.strip.split("\n")
-      nopasswd_lines = sudo_content.select { |l| l.match?(/^[^#].*NOPASSWD/) }
-      describe "#{sudoer} rules containing NOPASSWD" do
-        subject { nopasswd_lines }
-        it { should be_empty }
-      end
+  describe 'Sudoers' do
+    it 'should not include any (non-exempt) users with NOPASSWD set' do
+      expect(failing_results.users).to be_empty, "NOPASSWD settings found for users:\n\t- #{failing_results.users.join("\n\t- ")}"
     end
   end
 end

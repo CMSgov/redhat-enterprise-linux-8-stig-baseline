@@ -44,20 +44,17 @@ following line to "/etc/rsyslog.conf" or a configuration file in the
   tag fix_id: 'F-33031r743995_fix'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host'
 
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+  describe.one do
+    describe command("grep  -hsv \"^#\" #{input('logging_conf_files').join(' ')} | grep ^cron") do
+      its('stdout') { should match %r{cron\.\*\s*/var/log/cron} }
     end
-  else
-    describe.one do
-      describe command('grep  -hsv "^#" /etc/rsyslog.conf /etc/rsyslog.d/*.conf| grep ^cron') do
-        its('stdout') { should match %r{cron\.\*[\s]*/var/log/cron} }
-      end
-      describe command('grep  -hsv "^#" /etc/rsyslog.conf /etc/rsyslog.d/*.conf| grep /var/log/messages') do
-        its('stdout') { should match %r{\*.info;mail.none;authpriv.none;cron.none[\s]*/var/log/messages} }
-      end
+    describe command("grep  -hsv \"^#\" #{input('logging_conf_files').join(' ')} | grep /var/log/messages") do
+      its('stdout') { should match %r{\*.info;mail.none;authpriv.none;cron.none\s*/var/log/messages} }
     end
   end
 end

@@ -7,22 +7,17 @@ umask can be represented as a four-digit number, the first digit representing
 special access modes is typically ignored or required to be "0". This
 requirement applies to the globally configured system defaults and the local
 interactive user defaults for each account on the system.'
-  desc 'check', 'Verify that the default umask for all local interactive users is "077".
+  desc 'check', %q(Verify that the default umask for all local interactive users is "077".
 
-    Identify the locations of all local interactive user home directories by
-looking at the "/etc/passwd" file.
+Identify the locations of all local interactive user home directories by looking at the "/etc/passwd" file.
 
-    Check all local interactive user initialization files for interactive users
-with the following command:
+Check all local interactive user initialization files for interactive users with the following command:
 
-    Note: The example is for a system that is configured to create users home
-directories in the "/home" directory.
+Note: The example is for a system that is configured to create users home directories in the "/home" directory.
 
-    # grep -i umask /home/*/.*
+$ sudo grep -ir ^umask /home | grep -v '.bash_history'
 
-    If any local interactive user initialization files are found to have a
-umask statement that has a value less restrictive than "077", this is a
-finding.'
+If any local interactive user initialization files are found to have a umask statement that has a value less restrictive than "077", this is a finding.)
   desc 'fix', %q(Remove the umask statement from all local interactive user's initialization
 files.
 
@@ -36,67 +31,42 @@ environment variables.)
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00228'
   tag gid: 'V-230384'
-  tag rid: 'SV-230384r627750_rule'
+  tag rid: 'SV-230384r858732_rule'
   tag stig_id: 'RHEL-08-020352'
   tag fix_id: 'F-33028r567899_fix'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host'
 
-  non_interactive_shells = input('non_interactive_shells')
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
 
-  # Get all interactive users
-  ignore_shells = non_interactive_shells.join('|')
+  exempt_home_users = input('exempt_home_users')
+  expected_mode = input('permissions_for_shells')['default_umask']
+  uid_min = login_defs.read_params['UID_MIN'].to_i
+  uid_min = 1000 if uid_min.nil?
 
-  # Get home directory for users with UID >= 1000 or UID == 0 and support interactive logins.
-  findings = Set[]
-  dotfiles = Set[]
-  umasks = {}
-  umask_findings = Set[]
+  iusers = passwd.where { uid.to_i >= uid_min && shell !~ /nologin/ && !exempt_home_users.include?(user) }
 
-  uid_min = login_defs.UID_MIN.to_i
+  if !iusers.users.nil? && !iusers.users.empty?
 
-  interactive_users = users.where { !shell.match(ignore_shells) && (uid >= uid_min || uid == 0) }.entries
+    # run the check text's grep against all interactive users, compare any hits to the expected mode
+    failing_users = iusers.entries.select { |u|
+      umask_set = command("grep -ir ^umask #{u.home} | grep -v '.bash_history'").stdout.strip
+      umask_set.nil? && umask_set.match(/(?<umask>\d{3,4})/)['umask'].to_i > expected_mode.to_i
+    }.map(&:user)
 
-  # For each user, build and execute a find command that identifies initialization files
-  # in a user's home directory.
-  interactive_users.each do |u|
-    # Only check if the home directory is local
-    is_local = command("df -l #{u.home}").exit_status
-
-    if is_local == 0
-      # Get user's initialization files
-      dotfiles += command("find #{u.home} -xdev -maxdepth 2 ( -name '.*' ! -name '.bash_history' ) -type f").stdout.split("\n")
-
-      # Get user's umask
-      umasks.store(u.username, command("su -c 'umask' -l #{u.username}").stdout.chomp("\n"))
-
-      # Check all local initialization files to see whether or not they are less restrictive than 077.
-      dotfiles.each do |df|
-        findings += df if file(df).more_permissive_than?('0077')
-      end
-
-      # Check umask for all interactive users
-      umasks.each do |key, value|
-        max_mode = '0077'.to_i(8)
-        inv_mode = 0777 ^ max_mode
-        umask_findings += key if inv_mode & value.to_i(8) != 0
-      end
-    else
-      describe 'This control skips non-local filesystems' do
-        skip "This control has skipped the #{u.home} home directory for #{u.username} because it is not a local filesystem."
+    describe 'All non-exempt interactive users on the system' do
+      it "should not set the UMASK more permissive than '#{expected_mode}' in any init files" do
+        expect(failing_users).to be_empty, "Failing users:\n\t- #{failing_users.join("\n\t- ")}"
       end
     end
-  end
-
-  # Report on any interactive files that are less restrictive than 077.
-  describe 'No interactive user initialization files with a less restrictive umask were found.' do
-    subject { findings.empty? }
-    it { should eq true }
-  end
-
-  # Report on any interactive users that have a umask less restrictive than 077.
-  describe 'No users were found with a less restrictive umask were found.' do
-    subject { umask_findings.empty? }
-    it { should eq true }
+  else
+    describe 'No non-exempt interactive user accounts' do
+      it 'were detected on the system' do
+        expect(true).to eq(true)
+      end
+    end
   end
 end

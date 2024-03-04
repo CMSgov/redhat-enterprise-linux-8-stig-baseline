@@ -20,16 +20,13 @@ verified by acceptance/validation processes in DoD or other government agencies.
 storage) that may be assessed on specific information system components.'
   desc 'check', 'Verify that all world-writable directories have the sticky bit set.
 
-    Check to see that all world-writable directories have the sticky bit set by
-running the following command:
+Check to see that all world-writable directories have the sticky bit set by running the following command:
 
-    $ sudo find / -type d \\( -perm -0002 -a ! -perm -1000 \\) -print
-2>/dev/null
+$ sudo find / -type d \\( -perm -0002 -a ! -perm -1000 \\) -print 2>/dev/null
 
-    drwxrwxrwxt 7 root root 4096 Jul 26 11:19 /tmp
+drwxrwxrwt 7 root root 4096 Jul 26 11:19 /tmp
 
-    If any of the returned directories are world-writable and do not have the
-sticky bit set, this is a finding.'
+If any of the returned directories are world-writable and do not have the sticky bit set, this is a finding.'
   desc 'fix', 'Configure all world-writable directories to have the sticky bit set to
 prevent unauthorized and unintended information transferred via shared system
 resources.
@@ -43,23 +40,28 @@ sticky bit:
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000138-GPOS-00069'
   tag gid: 'V-230243'
-  tag rid: 'SV-230243r627750_rule'
+  tag rid: 'SV-230243r792857_rule'
   tag stig_id: 'RHEL-08-010190'
   tag fix_id: 'F-32887r567476_fix'
   tag cci: ['CCI-001090']
   tag nist: ['SC-4']
+  tag 'host', 'container'
 
-  world_writable_dirs = command('find / -type d \\( -perm -0002 -a ! -perm -1000 \\) -print 2>/dev/null').stdout.split("\n")
+  partitions = etc_fstab.params.map { |partition| partition['mount_point'] }.uniq
 
-  if world_writable_dirs.empty?
+  ww_dirs = command("find #{partitions} -type d \\( -perm -0002 -a ! -perm -1000 \\) -print 2>/dev/null").stdout.split("\n")
+
+  if ww_dirs.empty?
     describe 'List of world-writable directories on the target' do
-      subject { world_writable_dirs }
+      subject { ww_dirs }
       it { should be_empty }
     end
   else
-    world_writable_dirs.each do |dir|
-      describe file(dir) do
-        it { should be_sticky }
+    non_sticky_ww_dirs = ww_dirs.reject { |dir| file(dir).sticky? }
+    describe 'All world-writeable directories' do
+      it 'should have the sticky bit set' do
+        fail_msg = "Public directories without sticky bit:\n\t- #{non_sticky_ww_dirs.join("\n\t- ")}"
+        expect(non_sticky_ww_dirs).to be_empty, fail_msg
       end
     end
   end

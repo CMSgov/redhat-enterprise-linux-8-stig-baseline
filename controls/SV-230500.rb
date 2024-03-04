@@ -59,21 +59,20 @@ program and the PPSM CAL."
   tag fix_id: 'F-33144r568247_fix'
   tag cci: ['CCI-000382']
   tag nist: ['CM-7 b']
+  tag 'host'
 
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
-    end
-  elsif firewalld.running?
-    all_zones = command('firewall-cmd --list-all-zones').stdout
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
 
-    describe "Manually validate  Ports, Protocols, and Services Management Component Local Service Assessment (PPSM CLSA). Verify the services allowed by the firewall match the PPSM CLSA.\n firewall-cmd --list-all-zones \n #{all_zones}" do
-      skip
-    end
-  else
-    describe firewalld do
-      it { should be_running }
-    end
+  firewalld_properties = input('firewalld_properties')
+
+  describe firewalld do
+    it { should be_running }
+  end
+  describe firewalld do
+    its('ports') { should cmp [firewalld_properties['ports']] }
+    its('protocols') { should cmp [firewalld_properties['protocols']] }
+    its('services') { should cmp [firewalld_properties['services']] }
   end
 end

@@ -47,15 +47,12 @@ administrators are notified via email for those situations:
   tag fix_id: 'F-33032r567911_fix'
   tag cci: ['CCI-000139']
   tag nist: ['AU-5 a']
+  tag 'host'
 
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
-    end
-  else
-    describe auditd_conf do
-      its('action_mail_acct') { should cmp 'root' }
-    end
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+  describe auditd_conf do
+    its('action_mail_acct') { should cmp 'root' }
   end
 end

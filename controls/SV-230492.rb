@@ -37,6 +37,7 @@ removing the rsh-server package from the system with the following command:
   tag fix_id: 'F-33136r568223_fix'
   tag cci: ['CCI-000381']
   tag nist: ['CM-7 a']
+  tag 'host', 'container'
 
   describe package('rsh-server') do
     it { should_not be_installed }

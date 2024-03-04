@@ -24,7 +24,14 @@ If output is produced, this is a finding.'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
 
-  describe command('grep -i nullok /etc/pam.d/password-auth') do
-    its('stdout.strip') { should be_empty }
+  pam_auth_files = input('pam_auth_files')
+  file_list = pam_auth_files.values.join(' ')
+  bad_entries = command("grep -i nullok #{file_list}").stdout.lines.collect(&:squish)
+
+  describe 'The system is configureed' do
+    subject { command("grep -i nullok #{file_list}") }
+    it 'to not allow null passwords' do
+      expect(subject.stdout.strip).to be_empty, "The system is configured to allow null passwords. Please remove any instances of the `nullok` option from: \n\t- #{bad_entries.join("\n\t- ")}"
+    end
   end
 end

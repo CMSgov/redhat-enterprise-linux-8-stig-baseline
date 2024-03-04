@@ -1,6 +1,5 @@
 control 'SV-230365' do
-  title 'RHEL 8 passwords for new users or password changes must have a 24
-hours/1 day minimum password lifetime restriction in /etc/logins.def.'
+  title 'RHEL 8 passwords for new users or password changes must have a 24 hours/1 day minimum password lifetime restriction in /etc/login.defs.'
   desc "Enforcing a minimum password lifetime helps to prevent repeated
 password changes to defeat the password reuse or history enforcement
 requirement. If users are allowed to immediately and continually change their
@@ -28,13 +27,20 @@ the required value):
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000075-GPOS-00043'
   tag gid: 'V-230365'
-  tag rid: 'SV-230365r627750_rule'
+  tag rid: 'SV-230365r858727_rule'
   tag stig_id: 'RHEL-08-020190'
   tag fix_id: 'F-33009r567842_fix'
   tag cci: ['CCI-000198']
   tag nist: ['IA-5 (1) (d)']
+  tag 'host', 'container'
 
-  describe login_defs do
-    its('PASS_MIN_DAYS.to_i') { should cmp >= 1 }
+  value = input('pass_min_days')
+  setting = input_object('pass_min_days').name.upcase
+
+  describe "/etc/login.defs does not have `#{setting}` configured" do
+    let(:config) { login_defs.read_params[setting] }
+    it "greater than #{value} day" do
+      expect(config).to cmp <= value
+    end
   end
 end

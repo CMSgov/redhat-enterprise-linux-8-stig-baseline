@@ -33,8 +33,10 @@ the following command:
   tag fix_id: 'F-32892r567491_fix'
   tag cci: ['CCI-001314']
   tag nist: ['SI-11 b']
+  tag 'host', 'container'
 
   describe directory('/var/log') do
+    it { should exist }
     it { should_not be_more_permissive_than('0755') }
   end
 end

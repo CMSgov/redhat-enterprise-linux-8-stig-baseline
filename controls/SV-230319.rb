@@ -32,16 +32,16 @@ group.'
   tag fix_id: 'F-32963r567704_fix'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host', 'container'
 
-  ww_dirs = Set[]
   partitions = etc_fstab.params.map { |partition| partition['mount_point'] }.uniq
-  partitions.each do |part|
-    cmd = "find #{part} -xdev -type d -perm -0002 -gid +999 -print"
-    ww_dirs += command(cmd).stdout.split("\n")
-  end
 
-  describe 'List of world-writeable directories which are not group-owned by system accounts across all partitions' do
-    subject { ww_dirs.to_a }
-    it { should be_empty }
+  cmd = "find #{partitions.join(' ')} -xdev -type d -perm -0002 -gid +999 -print"
+  failing_dirs = command(cmd).stdout.split("\n").uniq
+
+  describe 'Any world-writeable directories' do
+    it 'should be group-owned by system accounts' do
+      expect(failing_dirs).to be_empty, "Failing directories:\n\t- #{failing_dirs.join("\n\t- ")}"
+    end
   end
 end

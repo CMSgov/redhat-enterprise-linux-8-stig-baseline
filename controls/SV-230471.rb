@@ -39,19 +39,19 @@ commands:
   tag fix_id: 'F-33115r568160_fix'
   tag cci: ['CCI-000171']
   tag nist: ['AU-12 b']
+  tag 'host'
+
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
 
   rules_files = bash('ls -d /etc/audit/rules.d/*.rules').stdout.strip.split.append('/etc/audit/auditd.conf')
 
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
-    end
-  else
-    rules_files.each do |rf|
-      describe file(rf) do
-        it { should_not be_more_permissive_than('0640') }
-      end
+  failing_files = rules_files.select { |rf| file(rf).more_permissive_than?(input('audit_conf_mode')) }
+
+  describe 'Audit configuration files' do
+    it "should be no more permissive than '#{input('audit_conf_mode')}'" do
+      expect(failing_files).to be_empty, "Failing files:\n\t- #{failing_files.join("\n\t- ")}"
     end
   end
 end

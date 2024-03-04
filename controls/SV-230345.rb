@@ -45,15 +45,14 @@ line:
   tag fix_id: 'F-32989r743983_fix'
   tag cci: ['CCI-000044']
   tag nist: ['AC-7 a']
+  tag 'host', 'container'
 
-  if os.release.to_f <= 8.2
-    impact 0.0
-    describe "The release is #{os.release}" do
-      skip 'The release is lower than 8.2; this control is Not Applicable.'
-    end
-  else
-    describe parse_config_file('/etc/security/faillock.conf') do
-      its('even_deny_root') { should_not be nil }
-    end
+  only_if('This check applies to RHEL versions 8.2 or newer, if the system is
+    RHEL version 8.0 or 8.1, this check is not applicable.', impact: 0.0) {
+    (os.release.to_f) >= 8.2
+  }
+
+  describe parse_config_file('/etc/security/faillock.conf') do
+    its('even_deny_root') { should_not be_nil }
   end
 end

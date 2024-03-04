@@ -37,13 +37,13 @@ the following command:
   tag fix_id: 'F-32878r743921_fix'
   tag cci: ['CCI-000213']
   tag nist: ['AC-3']
+  tag 'host'
 
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
-    end
-  elsif file('/sys/firmware/efi').exist?
+  only_if('Control not applicable within a container without sudo enabled', impact: 0.0) do
+    !virtualization.system.eql?('docker')
+  end
+
+  if file('/sys/firmware/efi').exist?
     input('grub_uefi_user_boot_files').each do |grub_user_file|
       describe parse_config_file(grub_user_file) do
         its('GRUB2_PASSWORD') { should include 'grub.pbkdf2.sha512' }

@@ -28,22 +28,25 @@ SHA_CRYPT_MIN_ROUNDS 5000'
   tag fix_id: 'F-32877r809272_fix'
   tag cci: ['CCI-000196']
   tag nist: ['IA-5 (1) (c)']
+  tag 'host', 'container'
+
+  min = input('sha_crypt_min_rounds')
+  max = input('sha_crypt_max_rounds')
 
   describe.one do
     describe login_defs do
-      its('SHAH_CRYPT_MIN_ROUNDS') { should cmp >= 5000 }
+      its('SHA_CRYPT_MIN_ROUNDS') { should cmp >= min }
     end
     describe login_defs do
-      its('SHAH_CRYPT_MIN_ROUNDS') { should be_nil }
+      its('SHA_CRYPT_MIN_ROUNDS') { should be_nil }
     end
   end
-
   describe.one do
     describe login_defs do
-      its('SHAH_CRYPT_MAX_ROUNDS') { should cmp >= 5000 }
+      its('SHA_CRYPT_MAX_ROUNDS') { should cmp >= max }
     end
     describe login_defs do
-      its('SHAH_CRYPT_MAX_ROUNDS') { should be_nil }
+      its('SHA_CRYPT_MAX_ROUNDS') { should be_nil }
     end
   end
 end

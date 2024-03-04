@@ -31,20 +31,20 @@ adding/modifying the following line in the /etc/audit/auditd.conf file.
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000343-GPOS-00134'
   tag gid: 'V-244543'
-  tag rid: 'SV-244543r743878_rule'
+  tag rid: 'SV-244543r877389_rule'
   tag stig_id: 'RHEL-08-030731'
   tag fix_id: 'F-47775r743877_fix'
   tag cci: ['CCI-001855']
   tag nist: ['AU-5 (1)']
+  tag 'host'
 
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
-    end
-  else
-    describe auditd_conf do
-      its('space_left_action.downcase') { should cmp 'email' }
-    end
+  alert_method = input('alert_method')
+
+  only_if('This requirement is Not Applicable in the container', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  describe auditd_conf do
+    its('space_left_action.downcase') { should cmp alert_method }
   end
 end

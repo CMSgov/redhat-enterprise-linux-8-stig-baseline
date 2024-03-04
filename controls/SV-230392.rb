@@ -58,23 +58,15 @@ by setting the "disk_full_action" to "SYSLOG".'
   tag fix_id: 'F-33036r567923_fix'
   tag cci: ['CCI-000140']
   tag nist: ['AU-5 b']
+  tag 'host'
 
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
-    end
-  else
-    describe.one do
-      describe auditd_conf do
-        its('disk_full_action') { should cmp 'SYSLOG' }
-      end
-      describe auditd_conf do
-        its('disk_full_action') { should cmp 'SINGLE' }
-      end
-      describe auditd_conf do
-        its('disk_full_action') { should cmp 'HALT' }
-      end
-    end
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  disk_full_action = input('disk_full_action').map(&:upcase)
+
+  describe auditd_conf do
+    its('disk_full_action.upcase') { should be_in disk_full_action }
   end
 end

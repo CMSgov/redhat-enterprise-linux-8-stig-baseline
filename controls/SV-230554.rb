@@ -32,15 +32,19 @@ by the ISSO and documented.
   tag fix_id: 'F-33198r568409_fix'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host'
 
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  if input('promiscuous_mode_permitted')
+    describe 'Manual' do
+      skip 'Inputs indicate that promiscuous mode is required to be enabled. Manually review with the ISSO to confirm that this is a requirement for the mission.'
     end
   else
     describe command('ip link | grep -i promisc') do
-      its('stdout.strip') { should match /^$/ }
+      its('stdout.strip') { should match(/^$/) }
     end
   end
 end

@@ -5,18 +5,16 @@ access via SSH.'
 layer of security is gained by extending the policy of not logging on directly
 as root. In addition, logging on with a user-specific account provides
 individual accountability of actions performed on the system.'
-  desc 'check', 'Verify remote access using SSH prevents users from logging on directly as
-"root".
+  desc 'check', 'Verify remote access using SSH prevents users from logging on directly as "root".
 
-    Check that SSH prevents users from logging on directly as "root" with the
-following command:
+Check that SSH prevents users from logging on directly as "root" with the following command:
 
-    $ sudo grep -i PermitRootLogin /etc/ssh/sshd_config
+$ sudo grep -ir PermitRootLogin /etc/ssh/sshd_config*
 
-    PermitRootLogin no
+PermitRootLogin no
 
-    If the "PermitRootLogin" keyword is set to "yes", is missing, or is
-commented out, this is a finding.'
+If the "PermitRootLogin" keyword is set to "yes", is missing, or is commented out, this is a finding.
+If conflicting results are returned, this is a finding.'
   desc 'fix', 'Configure RHEL 8 to stop users from logging on remotely as the "root"
 user via SSH.
 
@@ -33,20 +31,18 @@ the SSH daemon, run the following command:
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000109-GPOS-00056'
   tag gid: 'V-230296'
-  tag rid: 'SV-230296r627750_rule'
+  tag rid: 'SV-230296r858711_rule'
   tag stig_id: 'RHEL-08-010550'
   tag fix_id: 'F-32940r567635_fix'
   tag cci: ['CCI-000770']
   tag nist: ['IA-2 (5)']
+  tag 'host', 'container-conditional'
 
-  if virtualization.system.eql?('docker') && !file('/etc/ssh/sshd_config').exist?
-    impact 0.0
-    describe 'Control not applicable - SSH is not installed within containerized RHEL' do
-      skip 'Control not applicable - SSH is not installed within containerized RHEL'
-    end
-  else
-    describe sshd_config('/etc/ssh/sshd_config') do
-      its('PermitRootLogin') { should eq 'no' }
-    end
+  only_if('This control is Not Applicable to containers without SSH installed', impact: 0.0) {
+    !(virtualization.system.eql?('docker') && !directory('/etc/ssh').exist?)
+  }
+
+  describe sshd_config do
+    its('PermitRootLogin') { should cmp input('permit_root_login') }
   end
 end

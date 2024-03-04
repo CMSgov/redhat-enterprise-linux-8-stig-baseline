@@ -1,3 +1,5 @@
----
-compliance.min: 75
-error.total.max: 0
+compliance:
+  min: 85
+error:
+  total:
+    max: 0

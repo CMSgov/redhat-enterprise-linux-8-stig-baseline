@@ -35,10 +35,15 @@ length for new user accounts.
   tag fix_id: 'F-33014r567857_fix'
   tag cci: ['CCI-000205']
   tag nist: ['IA-5 (1) (a)']
+  tag 'host', 'container'
 
-  min_len = input('min_len')
+  value = input('pass_min_len')
+  setting = input_object('pass_min_len').name.upcase
 
-  describe login_defs do
-    its('PASS_MIN_LEN.to_i') { should be >= min_len }
+  describe "/etc/login.defs does not have `#{setting}` configured" do
+    let(:config) { login_defs.read_params[setting] }
+    it "greater than #{value} day" do
+      expect(config).to cmp >= value
+    end
   end
 end

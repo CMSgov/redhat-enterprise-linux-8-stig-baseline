@@ -1,5 +1,4 @@
-# -*- encoding : utf-8 -*-
-
+# frozen_string_literal: true
 class Pam < Inspec.resource(1)
   # These are aliases for one another
   attr_reader :rules, :lines
@@ -8,11 +7,11 @@ class Pam < Inspec.resource(1)
   # common searches
   attr_reader :services, :types, :modules
 
-  name 'pam'
+  name "pam"
 
-  supports platform: 'unix'
+  supports platform: "unix"
 
-  desc 'Use the InSpec pam resource to test the given system pam configuration'
+  desc "Use the InSpec pam resource to test the given system pam configuration"
   example "
     # Query for a match:
 
@@ -50,24 +49,22 @@ class Pam < Inspec.resource(1)
 
   class PamError < StandardError; end
 
-  def initialize(path = '/etc/pam.d')
+  def initialize(path = "/etc/pam.d")
     # To know what we were actually derived from
-    @path          = path
+    @path = path
 
     # Easy access helpers
-    @services      = {}
-    @types         = {}
-    @modules       = {}
+    @services = {}
+    @types = {}
+    @modules = {}
 
     config_target = inspec.file(path)
 
-    @rules         = Pam::Rules.new(config_target)
-    @lines         = @rules
+    @rules = Pam::Rules.new(config_target)
+    @lines = @rules
 
     @top_config = false
-    if path.strip == '/etc/pam.conf'
-      @top_config = true
-    end
+    @top_config = true if path.strip == "/etc/pam.conf"
 
     parse_content(config_target)
   end
@@ -80,51 +77,40 @@ class Pam < Inspec.resource(1)
   def parse_content(path, service_name = nil)
     config_files = Array(path)
 
-    if path.directory?
-      config_files = inspec.bash("ls #{path}/*").stdout.lines.map{|f| inspec.file(f.strip) }
-    end
+    config_files = inspec.bash("ls #{path}/*").stdout.lines.map { |f| inspec.file(f.strip) } if path.directory?
 
     config_files.each do |config_file|
       next unless config_file.content
 
       # Support multi-line continuance and skip all comments and blank lines
-      rules = config_file.content.gsub("\\\n",' ').lines.map(&:strip).delete_if do |line|
-        line  =~ /^(\s*#.*|\s*)$/
+      rules = config_file.content.gsub("\\\n", " ").lines.map(&:strip).delete_if do |line|
+        line =~ /^(\s*#.*|\s*)$/
       end
 
       service = service_name
-      unless service || @top_config
-        service = config_file.basename
-      end
+      service = config_file.basename unless service || @top_config
 
       rules.each do |rule|
-        new_rule = Pam::Rule.new(rule, {:service_name => service})
+        new_rule = Pam::Rule.new(rule, { service_name: service })
 
         # If we hit an 'include' or 'substack' statement, we need to derail and
         # delve down that tail until we hit the end
         #
         # There's no recursion checking here but, if you have a recursive PAM
         # stack, you're probably not logging into your system anyway
-        if ['include','substack'].include?(new_rule.control)
+        if ["include", "substack"].include?(new_rule.control)
           # Support full path specification includes
-          if new_rule.module_path[0].chr == '/'
-            subtarget = inspec.file(new_rule.module_path)
-          else
-            if File.directory?(path.path)
-              subtarget = inspec.file(File.join(path.path, new_rule.module_path))
+          subtarget = if new_rule.module_path[0].chr == "/"
+              inspec.file(new_rule.module_path)
+            elsif File.directory?(path.path)
+              inspec.file(File.join(path.path, new_rule.module_path))
             else
-              subtarget = inspec.file(File.join(File.dirname(path.path), new_rule.module_path))
+              inspec.file(File.join(File.dirname(path.path), new_rule.module_path))
             end
-          end
 
-          if subtarget.exist?
-            parse_content(subtarget, service)
-          end
+          parse_content(subtarget, service) if subtarget.exist?
         else
-
-          unless new_rule.type && new_rule.control && new_rule.module_path
-            raise PamError, "Invalid PAM config found at #{config_file}"
-          end
+          raise PamError, "Invalid PAM config found at #{config_file}" unless new_rule.type && new_rule.control && new_rule.module_path
 
           @services[new_rule.service] ||= []
           @services[new_rule.service] << new_rule
@@ -167,40 +153,38 @@ class Pam < Inspec.resource(1)
     end
 
     def services
-      self.collect{|l| l.service}.sort.uniq
+      collect(&:service).sort.uniq
     end
 
     def service
-      svcs = self.collect{|l| l.service}.sort.uniq
-      if svcs.length > 1
-        raise PamError, %(More than one service found: '[#{svcs.join("', '")}]')
-      end
+      svcs = collect(&:service).sort.uniq
+      raise PamError, %(More than one service found: '[#{svcs.join("', '")}]') if svcs.length > 1
 
       svcs.first
     end
 
-    def first?(rule, opts={:service_name => nil})
-      raise PamError, 'opts must be a hash' unless opts.is_a?(Hash)
+    def first?(rule, opts = { service_name: nil })
+      raise PamError, "opts must be a hash" unless opts.is_a?(Hash)
 
       service_name = get_service_name(opts[:service_name])
 
-      _rule = Pam::Rule.new(rule, {:service_name => service_name})
+      rule = Pam::Rule.new(rule, { service_name: service_name })
 
-      rules_of_type(_rule.type, opts).first == _rule
+      rules_of_type(rule.type, opts).first == rule
     end
 
-    def last?(rule, opts={:service_name => nil})
-      raise PamError, 'opts must be a hash' unless opts.is_a?(Hash)
+    def last?(rule, opts = { service_name: nil })
+      raise PamError, "opts must be a hash" unless opts.is_a?(Hash)
 
       service_name = get_service_name(opts[:service_name])
 
-      _rule = Pam::Rule.new(rule, {:service_name => service_name})
+      _rule = Pam::Rule.new(rule, { service_name: service_name })
 
       rules_of_type(_rule.type, opts).last == _rule
     end
 
-    def rules_of_type(rule_type, opts={:service_name => nil})
-      raise PamError, 'opts must be a hash' unless opts.is_a?(Hash)
+    def rules_of_type(rule_type, opts = { service_name: nil })
+      raise PamError, "opts must be a hash" unless opts.is_a?(Hash)
 
       service_name = get_service_name(opts[:service_name])
 
@@ -224,12 +208,12 @@ class Pam < Inspec.resource(1)
     # @option opts [String] :service_name The PAM Service under which the rules
     #   should be searched
     # @return [Boolean] true if found, false otherwise
-    def include?(rules, opts={:exact => false, :service_name => nil})
-      raise PamError, 'opts must be a hash' unless opts.is_a?(Hash)
+    def include?(rules, opts = { exact: false, service_name: nil })
+      raise PamError, "opts must be a hash" unless opts.is_a?(Hash)
 
       service_name = get_service_name(opts[:service_name])
 
-      rules = Array(rules).map{|l| Pam::Rule.new(l, {:service_name => service_name})}
+      rules = Array(rules).map { |l| Pam::Rule.new(l, { service_name: service_name }) }
 
       retval = false
 
@@ -240,29 +224,29 @@ class Pam < Inspec.resource(1)
         first_entry = index(rules.first)
         last_entry = index(rules.last)
 
-        if first_entry && last_entry
-          retval = (self[first_entry..last_entry] == rules)
-        end
+        retval = (self[first_entry..last_entry] == rules) if first_entry && last_entry
       else
         # This match allows other rules between the two in question
-        retval = (rules.select{|l| super(l)} == rules)
+        retval = (rules.select { |l| super(l) } == rules)
       end
 
-      return retval
+      retval
     end
-    alias_method :match, :include?
+
+    alias match include?
 
     # An alias for setting `:exact => true` in the `include` method
-    def include_exactly?(rules, opts={})
-      include?(rules, opts.merge({:exact => true}))
+    def include_exactly?(rules, opts = {})
+      include?(rules, opts.merge({ exact: true }))
     end
-    alias_method :match_exactly, :include_exactly?
+
+    alias match_exactly include_exactly?
 
     # Convert the data structure to an Array suitable for an RSpec diff
     #
     # @return [Array[String]]
     def to_a
-      self.sort_by{|l| l.type}.map{|l| l.to_s}
+      sort_by(&:type).map(&:to_s)
     end
 
     # Convert the data structure to a String
@@ -286,7 +270,7 @@ class Pam < Inspec.resource(1)
       if !svc_name && @config_target.directory?
         raise PamError, 'You must pass ":service_name" as an option!'
       else
-        return @config_target.basename
+        @config_target.basename
       end
     end
   end
@@ -296,11 +280,10 @@ class Pam < Inspec.resource(1)
   # Rule equality is a fuzzy match that can accept regular expression matches
   # within the string to compare
   class Rule
-    attr_reader :to_s
-    attr_reader :service, :silent, :type, :control, :module_path, :module_arguments
+    attr_reader :to_s, :service, :silent, :type, :control, :module_path, :module_arguments
 
     def initialize(rule, opts = {})
-      @to_s = rule.strip.gsub(/\s+/,' ')
+      @to_s = rule.strip.gsub(/\s+/, " ")
 
       rule_regex = <<-'EOM'
         # Start of Rule
@@ -333,37 +316,35 @@ class Pam < Inspec.resource(1)
 
       match_data = rule.match(Regexp.new(rule_regex, Regexp::EXTENDED))
 
-      unless match_data
-        raise PamError, "Invalid PAM configuration rule: '#{rule}'"
-      end
+      raise PamError, "Invalid PAM configuration rule: '#{rule}'" unless match_data
 
-      @service          = opts[:service_name] ? opts[:service_name] : match_data[:service_name]
-      @silent           = match_data[:silent] == '-'
-      @type             = match_data[:type]
-      @control          = match_data[:control]
-      @module_path      = match_data[:module_path]
+      @service = opts[:service_name] || match_data[:service_name]
+      @silent = match_data[:silent] == "-"
+      @type = match_data[:type]
+      @control = match_data[:control]
+      @module_path = match_data[:module_path]
       @module_arguments = match_data[:module_args] ? match_data[:module_args].strip.split(/\s+/) : []
     end
 
     def match?(to_cmp)
-      to_cmp = Pam::Rule.new(to_cmp, {:service_name => @service}) if to_cmp.is_a?(String)
+      to_cmp = Pam::Rule.new(to_cmp, { service_name: @service }) if to_cmp.is_a?(String)
 
       # The simple match first
-      self.class == to_cmp.class &&
+      instance_of?(to_cmp.class) &&
         @service.match(Regexp.new("^#{to_cmp.service}$")) &&
         @type.match(Regexp.new("^#{to_cmp.type}$")) &&
         @control.match(Regexp.new("^#{to_cmp.control.gsub(/(\[|\])/, '\\\\\\1')}$")) &&
         @module_path.match(Regexp.new("^#{to_cmp.module_path}$")) &&
         (
-          # Quick test to pass if to_cmp module_arguments are a subset
+ # Quick test to pass if to_cmp module_arguments are a subset
           (to_cmp.module_arguments - @module_arguments).empty? ||
-            # All module_arguments in to_cmp should Regex match something
-            to_cmp.module_arguments.all? do |arg|
-              !@module_arguments.grep(Regexp.new("^#{arg}$")).empty?
-            end
-        )
+          # All module_arguments in to_cmp should Regex match something
+          to_cmp.module_arguments.all? do |arg|
+            !@module_arguments.grep(Regexp.new("^#{arg}$")).empty?
+          end)
     end
-    alias_method :==, :match?
-    alias_method :eql?, :==
+
+    alias == match?
+    alias eql? ==
   end
 end

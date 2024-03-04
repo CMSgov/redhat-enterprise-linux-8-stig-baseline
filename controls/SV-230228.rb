@@ -48,17 +48,36 @@ To restart the "rsyslog" service, run the following command:
   tag fix_id: 'F-32872r567431_fix'
   tag cci: ['CCI-000067']
   tag nist: ['AC-17 (1)']
+  tag 'host', 'container-conditional'
 
-  if virtualization.system.eql?('docker') && !file('/etc/ssh/sshd_config').exist?
-    impact 0.0
-    describe 'Control not applicable; remote access not configured within containerized RHEL' do
-      skip 'Control not applicable; remote access not configured within containerized RHEL'
-    end
-  else
-    describe command('grep -E \'(auth.*|authpriv.*|daemon.*)\' /etc/rsyslog.conf') do
-      its('stdout.strip') { should match %r{^[\s]*[a-z\.;\*]*auth(,[a-z,]+)*\.\*[\s]*\/*} }
-      its('stdout.strip') { should match %r{^[\s]*[a-z\.;\*]*authpriv(,[a-z,]+)*\.\*[\s]*\/*} }
-      its('stdout.strip') { should match %r{^[\s]*[a-z\.;\*]*daemon(,[a-z,]+)*\.\*[\s]*\/*} }
+  only_if('Control not applicable; remote access not configured within containerized RHEL', impact: 0.0) {
+    !(virtualization.system.eql?('docker') && !file('/etc/ssh/sshd_config').exist?)
+  }
+
+  rsyslog = file('/etc/rsyslog.conf')
+
+  describe rsyslog do
+    it { should exist }
+  end
+
+  if rsyslog.exist?
+
+    auth_pattern = %r{^\s*[a-z.;*]*auth(,[a-z,]+)*\.\*\s*/*}
+    authpriv_pattern = %r{^\s*[a-z.;*]*authpriv(,[a-z,]+)*\.\*\s*/*}
+    daemon_pattern = %r{^\s*[a-z.;*]*daemon(,[a-z,]+)*\.\*\s*/*}
+
+    rsyslog_conf = command('grep -E \'(auth.*|authpriv.*|daemon.*)\' /etc/rsyslog.conf')
+
+    describe 'Logged remote access methods' do
+      it 'should include auth.*' do
+        expect(rsyslog_conf.stdout).to match(auth_pattern), 'auth.* not configured for logging'
+      end
+      it 'should include authpriv.*' do
+        expect(rsyslog_conf.stdout).to match(authpriv_pattern), 'authpriv.* not configured for logging'
+      end
+      it 'should include daemon.*' do
+        expect(rsyslog_conf.stdout).to match(daemon_pattern), 'daemon.* not configured for logging'
+      end
     end
   end
 end

@@ -41,15 +41,19 @@ processing failure.
   tag fix_id: 'F-33033r567914_fix'
   tag cci: ['CCI-000139']
   tag nist: ['AU-5 a']
+  tag 'host'
 
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  if input('alternative_logging_method') != ''
+    describe 'Manual Review' do
+      skip 'Inputs indicate that an alternative logging method is in place. Verify with the ISSO that the method is documented and in use. If the method is not documented or in use, this is a finding.'
     end
   else
     describe command('grep "postmaster:\s*root$" /etc/aliases') do
-      its('stdout.strip') { should match /postmaster:\s*root/ }
+      its('stdout.strip') { should match(/postmaster:\s*root/) }
     end
   end
 end

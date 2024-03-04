@@ -39,14 +39,20 @@ requirement or remove it from the system with the following command:
   tag fix_id: 'F-40822r646889_fix'
   tag cci: ['CCI-000803']
   tag nist: ['IA-7']
+  tag 'host', 'container'
 
-  describe.one do
-    describe package('krb5-server') do
-      it { should_not be_installed }
+  if input('kerberos_required')
+    describe 'Manual' do
+      skip 'Inputs indicate that kerberos is required to be enabled. Manually review with the ISSO to confirm that this is a requirement for the mission.'
     end
-
-    describe package('krb5-server') do
-      its('version') { should cmp >= '1.17-9.el8' }
+  else
+    describe.one do
+      describe package('krb5-server') do
+        it { should_not be_installed }
+      end
+      describe package('krb5-server') do
+        its('version') { should cmp >= '1.17-9.el8' }
+      end
     end
   end
 end

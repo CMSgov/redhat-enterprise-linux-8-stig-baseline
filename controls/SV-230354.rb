@@ -69,13 +69,13 @@ file should be created under the appropriate subdirectory.
   tag fix_id: 'F-32998r743989_fix'
   tag cci: ['CCI-000057']
   tag nist: ['AC-11 a']
+  tag 'host'
 
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
-    end
-  elsif package('gnome-desktop3').installed?
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  if package('gnome-desktop3').installed?
     describe command('grep -i lock-delay /etc/dconf/db/local.d/locks/*') do
       its('stdout.split') { should include '/org/gnome/desktop/screensaver/lock-delay' }
     end

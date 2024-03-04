@@ -36,22 +36,20 @@ following command:
   tag fix_id: 'F-33176r619892_fix'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host'
+
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
 
   d = systemd_service('debug-shell.service')
 
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
+  describe.one do
+    describe d do
+      its('params.LoadState') { should eq 'masked' }
     end
-  else
-    describe.one do
-      describe d do
-        its('params.LoadState') { should eq 'masked' }
-      end
-      describe d do
-        its('params.LoadState') { should eq 'not-found' }
-      end
+    describe d do
+      its('params.LoadState') { should eq 'not-found' }
     end
   end
 end

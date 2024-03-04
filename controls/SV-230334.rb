@@ -70,14 +70,26 @@ restart the "sssd" service, run the following command:
   tag fix_id: 'F-32978r567749_fix'
   tag cci: ['CCI-000044']
   tag nist: ['AC-7 a']
+  tag 'host', 'container'
 
-  fail_interval = input('fail_interval')
+  only_if('This check applies to RHEL version 8.1 and earlier. If the system is
+  RHEL version 8.2 or newer, this check is Not Applicable.', impact: 0.0) {
+    (os.release.to_f) < 8.2
+  }
 
-  describe pam('/etc/pam.d/password-auth') do
-    its('lines') { should match_pam_rule('auth [default=die]|required pam_faillock.so preauth').all_with_integer_arg('fail_interval', '<=', fail_interval) }
+  pam_auth_files = input('pam_auth_files')
+
+  describe pam(pam_auth_files['password-auth']) do
+    its('lines') {
+      should match_pam_rule('auth [default=die]|required pam_faillock.so preauth').all_with_integer_arg('fail_interval',
+                                                                                                        '<=', input('fail_interval'))
+    }
   end
 
-  describe pam('/etc/pam.d/system-auth') do
-    its('lines') { should match_pam_rule('auth [default=die]|required pam_faillock.so preauth').all_with_integer_arg('fail_interval', '<=', fail_interval) }
+  describe pam(pam_auth_files['system-auth']) do
+    its('lines') {
+      should match_pam_rule('auth [default=die]|required pam_faillock.so preauth').all_with_integer_arg('fail_interval',
+                                                                                                        '<=', input('fail_interval'))
+    }
   end
 end

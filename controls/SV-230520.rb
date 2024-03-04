@@ -23,41 +23,43 @@ Executing files from untrusted file systems increases the opportunity for
 unprivileged users to attain unauthorized administrative access.'
   desc 'check', 'Verify "/var/tmp" is mounted with the "nodev" option:
 
-    $ sudo mount | grep /var/tmp
+$ sudo mount | grep /var/tmp
 
-    /dev/mapper/rhel-var-log-audit on /var/tmp type xfs
-(rw,nodev,nosuid,noexec,seclabel)
+/dev/mapper/rhel-var-tmp on /var/tmp type xfs (rw,nodev,nosuid,noexec,seclabel)
 
-    Verify that the "nodev" option is configured for /var/tmp:
+Verify that the "nodev" option is configured for /var/tmp:
 
-    $ sudo cat /etc/fstab | grep /var/tmp
+$ sudo cat /etc/fstab | grep /var/tmp
 
-    /dev/mapper/rhel-var-log-audit /var/tmp xfs defaults,nodev,nosuid,noexec 0 0
+/dev/mapper/rhel-var-tmp /var/tmp xfs defaults,nodev,nosuid,noexec 0 0
 
-    If results are returned and the "nodev" option is missing, or if /var/tmp
-is mounted without the "nodev" option, this is a finding.'
-  desc 'fix', 'Configure the system so that /var/tmp is mounted with the "nodev" option
-by adding /modifying the /etc/fstab with the following line:
+If results are returned and the "nodev" option is missing, or if /var/tmp is mounted without the "nodev" option, this is a finding.'
+  desc 'fix', 'Configure the system so that /var/tmp is mounted with the "nodev" option by adding /modifying the /etc/fstab with the following line:
 
-    /dev/mapper/rhel-var-log-audit /var/tmp xfs defaults,nodev,nosuid,noexec 0 0'
+/dev/mapper/rhel-var-tmp /var/tmp xfs defaults,nodev,nosuid,noexec 0 0'
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000368-GPOS-00154'
   tag gid: 'V-230520'
-  tag rid: 'SV-230520r627750_rule'
+  tag rid: 'SV-230520r854061_rule'
   tag stig_id: 'RHEL-08-040132'
-  tag fix_id: 'F-33164r568307_fix'
+  tag fix_id: 'F-33164r792926_fix'
   tag cci: ['CCI-001764']
   tag nist: ['CM-7 (2)']
+  tag 'host'
 
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
-    end
-  else
-    describe etc_fstab.where { mount_point == '/var/tmp' } do
-      its('mount_options.flatten') { should include 'nodev' }
-    end
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  path = '/var/tmp'
+  option = 'nodev'
+
+  describe mount(path) do
+    its('options') { should include option }
+  end
+
+  describe etc_fstab.where { mount_point == path } do
+    its('mount_options.flatten') { should include option }
   end
 end

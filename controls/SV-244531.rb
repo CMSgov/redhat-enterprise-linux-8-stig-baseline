@@ -33,16 +33,18 @@ directory with the following command:
   tag fix_id: 'F-47763r743841_fix'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host'
 
-  non_interactive_shells = input('non_interactive_shells')
-
-  ignore_shells = non_interactive_shells.join('|')
+  ignore_shells = input('non_interactive_shells').join('|')
+  exempt_home_users = input('exempt_home_users').join('|')
 
   findings = Set[]
-  users.where { !shell.match(ignore_shells) && (uid >= 1000 || uid == 0) }.entries.each do |user_info|
-    findings += command("find #{user_info.home} -xdev -not -name '.*' -perm /027").stdout.split("\n")
+  users.where { !username.match(exempt_home_users) && !shell.match(ignore_shells) && (uid >= 1000 || uid.zero?) }.entries.each do |user_info|
+    findings += command("find #{user_info.home} -xdev -not -name '.*' -perm /027 -type f").stdout.split("\n")
   end
-  describe findings do
-    it { should be_empty }
+  describe 'All files in the users home directory' do
+    it 'are expected to have permissions 0750 or better' do
+      expect(findings).to be_empty, 'Some files in the users home directory do not have correct permissions. Please ensure all files have permissions 0750 or better.'
+    end
   end
 end

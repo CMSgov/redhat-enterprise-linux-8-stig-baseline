@@ -29,13 +29,13 @@ the /boot directory.'
   tag fix_id: 'F-32944r567647_fix'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host'
 
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
-    end
-  elsif file('/sys/firmware/efi').exist?
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  if file('/sys/firmware/efi').exist?
     impact 0.0
     describe 'System running UEFI' do
       skip 'The System is running UEFI, this control is Not Applicable.'

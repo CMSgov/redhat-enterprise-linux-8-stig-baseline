@@ -8,34 +8,31 @@ files. Executing files from untrusted file systems increases the opportunity
 for unprivileged users to attain unauthorized administrative access.'
   desc 'check', %q(For systems that use BIOS, this is Not Applicable.
 
-    Verify the /boot/efi directory is mounted with the "nosuid" option with
-the following command:
+Verify the /boot/efi directory is mounted with the "nosuid" option with the following command:
 
-    $ sudo mount | grep '\s/boot/efi\s'
+$ sudo mount | grep '\s/boot/efi\s'
 
-    /dev/sda1 on /boot/efi type xfs
-(rw,nosuid,relatime,seclabe,attr2,inode64,noquota)
+/dev/sda1 on /boot/efi type vfat (rw,nosuid,relatime,fmask=0077,dmask=0077,codepage=437,iocharset=ascii,shortname=winnt,errors=remount-ro)
 
-    If the /boot/efi file system does not have the "nosuid" option set, this
-is a finding.)
+If the /boot/efi file system does not have the "nosuid" option set, this is a finding.)
   desc 'fix', 'Configure the "/etc/fstab" to use the "nosuid" option on
 the /boot/efi directory.'
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-244530'
-  tag rid: 'SV-244530r743839_rule'
+  tag rid: 'SV-244530r809336_rule'
   tag stig_id: 'RHEL-08-010572'
   tag fix_id: 'F-47762r743838_fix'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host'
 
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
-    end
-  elsif file('/sys/firmware/efi').exist?
+  only_if('This requirement is Not Applicable in the container', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  if file('/sys/firmware/efi').exist?
     describe mount('/boot/efi') do
       it { should be_mounted }
       its('options') { should include 'nosuid' }
@@ -43,7 +40,7 @@ the /boot/efi directory.'
   else
     impact 0.0
     describe 'System running BIOS' do
-      skip 'The System is running BIOS, this control is Not Applicable.'
+      skip 'The System is running a BIOS, this control is Not Applicable.'
     end
   end
 end

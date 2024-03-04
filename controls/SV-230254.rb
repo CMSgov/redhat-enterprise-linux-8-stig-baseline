@@ -48,23 +48,24 @@ this is a finding.'
   tag gtitle: 'SRG-OS-000250-GPOS-00093'
   tag satisfies: ['SRG-OS-000250-GPOS-00093', 'SRG-OS-000393-GPOS-00173', 'SRG-OS-000394-GPOS-00174', 'SRG-OS-000125-GPOS-00065']
   tag gid: 'V-230254'
-  tag rid: 'SV-230254r627750_rule'
+  tag rid: 'SV-230254r877394_rule'
   tag stig_id: 'RHEL-08-010293'
   tag fix_id: 'F-32898r567509_fix'
   tag cci: ['CCI-001453']
   tag nist: ['AC-17 (2)']
+  tag 'host', 'container-conditional'
 
-  if virtualization.system.eql?('docker') && !file('/etc/pki/tls/openssl.cnf').exist?
-    describe 'Manual review is required within a container' do
-      skip "Checking the host's FIPS compliance can't be done within the container and should be reveiwed manually."
-    end
-  else
-    describe bash('grep -i opensslcnf.config /etc/pki/tls/openssl.cnf') do
-      its('stdout.strip') { should match %r{^.include /etc/crypto-policies/back-ends/opensslcnf.config} }
-    end
+  only_if("Checking the host's FIPS compliance can't be done within the container and should be reveiwed manually.") {
+    !(virtualization.system.eql?('docker') && !file('/etc/pki/tls/openssl.cnf').exist?)
+  }
 
-    describe bash('update-crypto-policies --show') do
-      its('stdout.strip') { should eq 'FIPS' }
-    end
+  describe 'A line in the OpenSSL config file' do
+    subject { command('grep -i opensslcnf.config /etc/pki/tls/openssl.cnf').stdout.strip }
+    it { should match(/^\.include.*opensslcnf.config$/) }
+  end
+
+  describe 'System-wide crypto policy' do
+    subject { command('update-crypto-policies --show').stdout.strip }
+    it { should eq 'FIPS' }
   end
 end

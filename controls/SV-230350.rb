@@ -32,15 +32,12 @@ to remove any instances of tmux.'
   tag fix_id: 'F-32994r567797_fix'
   tag cci: ['CCI-000056']
   tag nist: ['AC-11 b']
+  tag 'host'
 
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
-    end
-  else
-    describe command('grep -i tmux /etc/shells') do
-      its('stdout.strip') { should be_empty }
-    end
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+  describe command('grep -i tmux /etc/shells') do
+    its('stdout.strip') { should be_empty }
   end
 end
