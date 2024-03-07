@@ -1022,7 +1022,7 @@ inputs:
       'fchmodat'                      : 'perm_mod',
       '/usr/bin/sudo'                 : 'priv_cmd',
       '/usr/sbin/usermod'             : 'priv_cmd',
-      '/usr/bin/chacl'                : 'priv_mod',
+      '/usr/bin/chacl'                : 'perm_mod',
       '/usr/bin/kmod'                 : 'modules',
       '/var/log/faillock'             : 'logins',
       '/var/log/lastlog'              : 'logins'
